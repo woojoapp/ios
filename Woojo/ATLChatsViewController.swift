@@ -42,13 +42,6 @@ class ATLChatsViewController: ATLConversationListViewController, ATLConversation
     
     // MARK - Actions
     
-    /*func composeButtonTapped(sender: AnyObject) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let controller = ChatViewController(layerClient: appDelegate.layerClient)
-        controller.displaysAddressBar = false
-        self.navigationController!.pushViewController(controller, animated: true)
-    }*/
-
     // MARK - ATLConversationListViewControllerDelegate Methods
     func conversationListViewController(_ conversationListViewController: ATLConversationListViewController, didSelect conversation:LYRConversation) {
         presentControllerWithConversation(conversation: conversation)
