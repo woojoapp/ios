@@ -13,7 +13,7 @@ import FirebaseDatabaseUI
 
 class EventsTableViewController: UITableViewController {
     
-    let ref: FIRDatabaseReference! = FIRDatabase.database().reference()
+    var ref: FIRDatabaseReference!
     var dataSource: FirebaseTableViewDataSource!
     
     let dateFormatter: DateFormatter = {
@@ -23,7 +23,8 @@ class EventsTableViewController: UITableViewController {
     }()
 
     override func viewDidLoad() {
-        super.viewDidLoad()
+        
+        ref = FIRDatabase.database().reference()
         
         tableView.delegate = self
         tableView.rowHeight = 100
@@ -31,7 +32,8 @@ class EventsTableViewController: UITableViewController {
         FIRAuth.auth()?.addStateDidChangeListener { auth, user in
             if let user = user {
                 self.setDataSource(for: user.uid)
-                //self.tableView.reloadData()
+                self.tableView.reloadData()
+                super.viewDidLoad()
             }
         }
         
@@ -73,12 +75,12 @@ class EventsTableViewController: UITableViewController {
 
     /*override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        //return dataSource.numberOfSections(in: tableView)
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        //return dataSource.tableView(tableView, numberOfRowsInSection: section)
     }*/
 
     /*override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

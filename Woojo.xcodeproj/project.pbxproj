@@ -21,10 +21,14 @@
 		85512B141DCB5B020072C1B8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85512B121DCB5B020072C1B8 /* Main.storyboard */; };
 		85512B161DCB5B020072C1B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85512B151DCB5B020072C1B8 /* Assets.xcassets */; };
 		85512B191DCB5B020072C1B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85512B171DCB5B020072C1B8 /* LaunchScreen.storyboard */; };
-		85512B211DCB5E9A0072C1B8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85512B201DCB5E9A0072C1B8 /* GoogleService-Info.plist */; };
 		85512B231DCB74DA0072C1B8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85512B221DCB74DA0072C1B8 /* LoginViewController.swift */; };
 		85E5D4C31DD4F166003E2376 /* ALChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4C21DD4F166003E2376 /* ALChatsViewController.swift */; };
 		85E5D4C51DD52D73003E2376 /* ALChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4C41DD52D73003E2376 /* ALChatManager.swift */; };
+		85E5D4CD1DD9EFBC003E2376 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4CC1DD9EFBC003E2376 /* User.swift */; };
+		85E5D4CF1DD9FA41003E2376 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4CE1DD9FA41003E2376 /* Gender.swift */; };
+		85E5D4D21DDA1231003E2376 /* PublicProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4D11DDA1231003E2376 /* PublicProfile.swift */; };
+		85E5D4D61DDA247D003E2376 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85E5D4D51DDA247D003E2376 /* GoogleService-Info.plist */; };
+		85E5D4D81DDA4803003E2376 /* ChatParticipant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4D71DDA4803003E2376 /* ChatParticipant.swift */; };
 		85ED4E621DCF586700F51857 /* ATLChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ED4E611DCF586700F51857 /* ATLChatViewController.swift */; };
 		85ED4E641DCFF7F200F51857 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ED4E631DCFF7F200F51857 /* MainTabBarController.swift */; };
 		85ED4E661DD1EC7D00F51857 /* AddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ED4E651DD1EC7D00F51857 /* AddEventViewController.swift */; };
@@ -49,10 +53,15 @@
 		85512B151DCB5B020072C1B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		85512B181DCB5B020072C1B8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		85512B1A1DCB5B020072C1B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		85512B201DCB5E9A0072C1B8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		85512B221DCB74DA0072C1B8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		85E5D4C21DD4F166003E2376 /* ALChatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ALChatsViewController.swift; sourceTree = "<group>"; };
 		85E5D4C41DD52D73003E2376 /* ALChatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ALChatManager.swift; sourceTree = "<group>"; };
+		85E5D4CC1DD9EFBC003E2376 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		85E5D4CE1DD9FA41003E2376 /* Gender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
+		85E5D4D01DDA0E8F003E2376 /* Woojo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Woojo.entitlements; sourceTree = "<group>"; };
+		85E5D4D11DDA1231003E2376 /* PublicProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicProfile.swift; sourceTree = "<group>"; };
+		85E5D4D51DDA247D003E2376 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		85E5D4D71DDA4803003E2376 /* ChatParticipant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatParticipant.swift; sourceTree = "<group>"; };
 		85ED4E611DCF586700F51857 /* ATLChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATLChatViewController.swift; sourceTree = "<group>"; };
 		85ED4E631DCFF7F200F51857 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		85ED4E651DD1EC7D00F51857 /* AddEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
@@ -112,6 +121,10 @@
 				8506A8A11DCCA61600C18EC3 /* Candidate.swift */,
 				8506A8A51DCCC85200C18EC3 /* Like.swift */,
 				8506A8A71DCCCB5E00C18EC3 /* Pass.swift */,
+				85E5D4CC1DD9EFBC003E2376 /* User.swift */,
+				85E5D4CE1DD9FA41003E2376 /* Gender.swift */,
+				85E5D4D11DDA1231003E2376 /* PublicProfile.swift */,
+				85E5D4D71DDA4803003E2376 /* ChatParticipant.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -137,6 +150,7 @@
 		85512B0B1DCB5B020072C1B8 /* Woojo */ = {
 			isa = PBXGroup;
 			children = (
+				85E5D4D01DDA0E8F003E2376 /* Woojo.entitlements */,
 				8506A89E1DCC89FA00C18EC3 /* Models */,
 				8506A89C1DCC89DF00C18EC3 /* Views */,
 				8506A89D1DCC89F200C18EC3 /* Controllers */,
@@ -144,7 +158,7 @@
 				85512B121DCB5B020072C1B8 /* Main.storyboard */,
 				85512B151DCB5B020072C1B8 /* Assets.xcassets */,
 				85512B171DCB5B020072C1B8 /* LaunchScreen.storyboard */,
-				85512B201DCB5E9A0072C1B8 /* GoogleService-Info.plist */,
+				85E5D4D51DDA247D003E2376 /* GoogleService-Info.plist */,
 				85512B1A1DCB5B020072C1B8 /* Info.plist */,
 			);
 			path = Woojo;
@@ -248,6 +262,11 @@
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = M73XDL363W;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -276,7 +295,7 @@
 			files = (
 				8506A89B1DCC87A400C18EC3 /* EventsTableViewCell.xib in Resources */,
 				85512B191DCB5B020072C1B8 /* LaunchScreen.storyboard in Resources */,
-				85512B211DCB5E9A0072C1B8 /* GoogleService-Info.plist in Resources */,
+				85E5D4D61DDA247D003E2376 /* GoogleService-Info.plist in Resources */,
 				85512B161DCB5B020072C1B8 /* Assets.xcassets in Resources */,
 				85512B141DCB5B020072C1B8 /* Main.storyboard in Resources */,
 			);
@@ -338,7 +357,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				85512B231DCB74DA0072C1B8 /* LoginViewController.swift in Sources */,
+				85E5D4D81DDA4803003E2376 /* ChatParticipant.swift in Sources */,
 				8506A8991DCBB9C000C18EC3 /* EventsTableViewCell.swift in Sources */,
+				85E5D4D21DDA1231003E2376 /* PublicProfile.swift in Sources */,
 				85512B111DCB5B020072C1B8 /* ATLChatsViewController.swift in Sources */,
 				85512B0D1DCB5B020072C1B8 /* AppDelegate.swift in Sources */,
 				8506A8A61DCCC85200C18EC3 /* Like.swift in Sources */,
@@ -351,8 +372,10 @@
 				85ED4E6E1DD229D600F51857 /* MyEventsTableViewController.swift in Sources */,
 				8506A8A81DCCCB5E00C18EC3 /* Pass.swift in Sources */,
 				8506A8971DCBB0CC00C18EC3 /* Event.swift in Sources */,
+				85E5D4CD1DD9EFBC003E2376 /* User.swift in Sources */,
 				85ED4E661DD1EC7D00F51857 /* AddEventViewController.swift in Sources */,
 				85ED4E621DCF586700F51857 /* ATLChatViewController.swift in Sources */,
+				85E5D4CF1DD9FA41003E2376 /* Gender.swift in Sources */,
 				8506A88D1DCB9A5D00C18EC3 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -477,11 +500,12 @@
 			baseConfigurationReference = DA30A4C6D15F53EBF70A92B4 /* Pods-Woojo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Woojo/Woojo.entitlements;
 				DEVELOPMENT_TEAM = M73XDL363W;
 				INFOPLIST_FILE = Woojo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tastyelectrons.Woojo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tastyelectrons.woojo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -492,11 +516,12 @@
 			baseConfigurationReference = DC1702E4FCCB65DE5615E8B3 /* Pods-Woojo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Woojo/Woojo.entitlements;
 				DEVELOPMENT_TEAM = M73XDL363W;
 				INFOPLIST_FILE = Woojo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tastyelectrons.Woojo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tastyelectrons.woojo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

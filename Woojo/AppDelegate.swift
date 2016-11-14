@@ -41,26 +41,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
+        FIRAuth.auth()?.addStateDidChangeListener { auth, user in
+            if let user = user {
+                FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, first_name, email, gender, picture"]).start { (connection, result, error) in
+                    if error  != nil {
+                        print("Error requesting user details from FB Graph")
+                    } else if let result = result {
+                        FIRDatabase.database().reference().child("users").child(user.uid).setValue(result)
+                    }
+                }
+            } else {
+                print("No user signed in")
+                self.window!.rootViewController?.performSegue(withIdentifier: "ShowLogin", sender: self.window!.rootViewController!)
+            }
+        }
+        
         self.layerClient.connect { (success, error) in
             if !success {
                 print("Failed to connect to Layer: \(error)")
             } else {
                 FIRAuth.auth()?.addStateDidChangeListener { auth, user in
                     if let user = user {
-                        print("Signed in user: \(user.uid)")
                         self.authenticateLayer(with: user.uid) { (success, error) in
                             if !success! {
                                 print("Failed to authenticate with Layer: \(error)")
+                            } else {
+                                print("Authenticated with Layer as \(self.layerClient.authenticatedUser!.userID)")
                             }
                         }
                     } else {
-                        print("No user signed in")
                         self.layerClient.deauthenticate() { (success, error) in
                             if let error = error {
                                 print("Failed to deauthenticate Layer \(error)")
                             }
                         }
-                        self.window!.rootViewController?.performSegue(withIdentifier: "ShowLogin", sender: self.window!.rootViewController)
                     }
                 }
             }
@@ -147,7 +161,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func authenticateLayer(with userID: String, completion: @escaping (Bool?, Error?) -> Void) {
         if let authenticatedUser = layerClient.authenticatedUser {
             if userID == authenticatedUser.userID {
-                print("Layer authenticated as user \(authenticatedUser.userID)")
+                print("Layer already authenticated as user \(authenticatedUser.userID)")
                 completion(true, nil)
                 return
             } else {

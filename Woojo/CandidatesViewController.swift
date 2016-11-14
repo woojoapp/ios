@@ -37,7 +37,7 @@ class CandidatesViewController: UIViewController, KolodaViewDelegate, KolodaView
                 if var candidate = Candidate.from(snapshot: candidateSnapshot as! FIRDataSnapshot) {
                     print(candidate)
                     candidate.getPicture { (image) in
-                        candidate.picture = image
+                        candidate.profilePhoto = image
                         self.candidates.append(candidate)
                         self.kolodaView.resetCurrentCardIndex()
                         print(self.candidates)
@@ -89,7 +89,7 @@ class CandidatesViewController: UIViewController, KolodaViewDelegate, KolodaView
     func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
         print("Asked for view for card \(index)")
         print("\(candidates.count) candidates")
-        return UIImageView(image: candidates[Int(index)].picture)
+        return UIImageView(image: candidates[Int(index)].profilePhoto)
     }
     
     func koloda(koloda: KolodaView, viewForCardOverlayAtIndex index: Int) -> OverlayView? {

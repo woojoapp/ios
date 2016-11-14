@@ -8,6 +8,7 @@
 
 import UIKit
 import Applozic
+import FirebaseAuth
 
 class ALChatsViewController: UIViewController, ALMessagesViewDelegate {
     

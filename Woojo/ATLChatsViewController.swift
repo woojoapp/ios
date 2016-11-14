@@ -16,9 +16,12 @@ class ATLChatsViewController: ATLConversationListViewController, ATLConversation
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        self.layerClient = appDelegate.layerClient
+        print(self.layerClient.authenticatedUser!.userID)
         let settingsItem = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(showSettings))
         self.navigationItem.setRightBarButton(settingsItem, animated: false)
-        self.title = "Chats"
+        self.title = "Atlas"
         self.displaysAvatarItem = false
         self.dataSource = self
         self.delegate = self
@@ -96,11 +99,16 @@ class ATLChatsViewController: ATLConversationListViewController, ATLConversation
     
     // MARK - ATLConversationListViewControllerDataSource Methods
     func conversationListViewController(_ conversationListViewController: ATLConversationListViewController, titleFor conversation: LYRConversation) -> String {
-        if let title = conversation.metadata?["title"] {
-            return title as! String
-        } else {
-            return "Conversation with \(conversation.participants.count) users..."
+        var title = "Unknown"
+        var participantStrings: [String] = []
+        print("Conversation \(conversation.participants.count)")
+        for participant in conversation.participants {
+            participantStrings.append(participant.identifier.lastPathComponent)
         }
+        if participantStrings.count > 0 {
+            title = participantStrings.joined(separator: ", ")
+        }
+        return title
     }
     
     func presentControllerWithConversation(conversation: LYRConversation) {

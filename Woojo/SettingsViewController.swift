@@ -17,6 +17,7 @@ class SettingsViewController: UIViewController {
     @IBAction func logout(sender: UIButton) {
         FBSDKLoginManager().logOut()
         try! FIRAuth.auth()!.signOut()
+        self.performSegue(withIdentifier: "ShowLoginFromSettings", sender: self)
     }
 
     override func viewDidLoad() {

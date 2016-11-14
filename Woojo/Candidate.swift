@@ -10,12 +10,15 @@ import UIKit
 import FirebaseDatabase
 import FirebaseStorage
 
+
+// TODO: Candidate should implement the PublicProfile protocol 
+
 struct Candidate {
     
     let uid: String
     let n: Int
     let created: Date
-    var picture: UIImage?
+    var profilePhoto: UIImage?
     
 }
 
@@ -32,7 +35,7 @@ extension Candidate {
         if let uid = value["uid"] as? String,
             let n = value["n"] as? Int,
             let created = value["created"] as? Double {
-            return Candidate(uid: uid, n: n, created: Date(timeIntervalSince1970: created as Double), picture: nil)
+            return Candidate(uid: uid, n: n, created: Date(timeIntervalSince1970: created as Double), profilePhoto: nil)
         }
         return nil
     }

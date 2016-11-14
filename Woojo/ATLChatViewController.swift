@@ -28,10 +28,22 @@ class ATLChatViewController: ATLConversationViewController, ATLConversationViewC
         self.configureUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        let mainTabBarController = UIApplication.shared.windows.first!.rootViewController as! MainTabBarController
+        mainTabBarController.tabBar.isHidden = true
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        let mainTabBarController = UIApplication.shared.windows.first!.rootViewController as! MainTabBarController
+        mainTabBarController.tabBar.isHidden = false
+        super.viewWillDisappear(animated)
+    }
+    
     // MARK - UI Configuration methods
     
     func configureUI() {
-        ATLOutgoingMessageCollectionViewCell.appearance().messageTextColor = .red
+        //ATLOutgoingMessageCollectionViewCell.appearance().messageTextColor = .red
     }
     
     // MARK - ATLConversationViewControllerDelegate methods
@@ -51,7 +63,12 @@ class ATLChatViewController: ATLConversationViewController, ATLConversationViewC
     // MARK - ATLConversationViewControllerDataSource methods
     
     func conversationViewController(_ conversationViewController: ATLConversationViewController, participantFor identity: LYRIdentity) -> ATLParticipant {
-        return "Doudou" as! ATLParticipant
+        var chatParticipant = ChatParticipant(userID: identity.userID)
+        ChatParticipant.get(uid: identity.userID) { (participant) in
+            chatParticipant = participant as! ChatParticipant
+            self.reloadCellsForMessagesSentByParticipant(withIdentifier: identity.userID)
+        }
+        return chatParticipant
     }
     
     func conversationViewController(_ conversationViewController: ATLConversationViewController, attributedStringForDisplayOf date: Date) -> NSAttributedString {
@@ -60,10 +77,33 @@ class ATLChatViewController: ATLConversationViewController, ATLConversationViewC
     }
     
     func conversationViewController(_ conversationViewController: ATLConversationViewController, attributedStringForDisplayOfRecipientStatus recipientStatus: [AnyHashable : Any]) -> NSAttributedString {
-        let checkmark: String = "✔︎"
-        let textColor: UIColor = UIColor.lightGray
-        let statusString: NSAttributedString = NSAttributedString(string: checkmark, attributes: [NSForegroundColorAttributeName: textColor])
-        return statusString
+        let mergedStatuses: NSMutableAttributedString = NSMutableAttributedString()
+        
+        let recipientStatusDict = recipientStatus as NSDictionary
+        let allKeys = recipientStatusDict.allKeys as NSArray
+        allKeys.enumerateObjects({ participant, _, _ in
+            let participantAsString = participant as! String
+            if (participantAsString == self.layerClient.authenticatedUser?.userID) {
+                return
+            }
+            
+            var text = ""
+            let textColor = UIColor.lightGray
+            let status = LYRRecipientStatus(rawValue: recipientStatusDict[participantAsString] as! Int)
+            switch status! {
+            case .sent:
+                text = "Sent"
+            case .delivered:
+                text = "Delivered"
+            case .read:
+                text = "Read"
+            default:
+                text = ""
+            }
+            let statusString: NSAttributedString = NSAttributedString(string: text, attributes: [NSForegroundColorAttributeName: textColor])
+            mergedStatuses.append(statusString)
+        })
+        return mergedStatuses;
     }
 
     

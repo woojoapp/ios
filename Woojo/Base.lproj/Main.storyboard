@@ -44,6 +44,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="logoutButton" destination="USm-Mh-TbO" id="Jp1-uZ-dKh"/>
+                        <segue destination="16N-xU-k8F" kind="presentation" identifier="ShowLoginFromSettings" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="4V1-vM-63Z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4pm-lV-Ndv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -462,14 +463,18 @@
         <!--View Controller-->
         <scene sceneID="HzT-xV-Nyz">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DbV-FO-g0E" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="VLm-Gw-OIx" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zu8-0Q-qgT"/>
+                        <viewControllerLayoutGuide type="bottom" id="60t-GM-WOl"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="0nW-ZP-sCp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DbV-FO-g0E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1" y="2479"/>
         </scene>
@@ -516,6 +521,7 @@
         <image name="icon_rounded" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Wif-5q-mgd"/>
         <segue reference="3PQ-xo-HWD"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -90,6 +90,15 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         FIRAuth.auth()?.signIn(with: credential) { (user, error) in
             if let user = user {
                 print("Login success \(user.uid)")
+                FIRAuth.auth()?.addStateDidChangeListener { auth, user in
+                    FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, first_name, email, gender, picture"]).start { (connection, result, error) in
+                        if error  != nil {
+                            print("Error requesting user details from FB Graph")
+                        } else if let result = result {
+                            print(result)
+                        }
+                    }
+                }
                 self.dismiss(animated: true, completion: nil)
             }
             if let error = error {
