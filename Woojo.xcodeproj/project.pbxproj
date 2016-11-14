@@ -7,23 +7,59 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8506A88D1DCB9A5D00C18EC3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A88C1DCB9A5D00C18EC3 /* SettingsViewController.swift */; };
+		8506A8951DCBA14C00C18EC3 /* EventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8941DCBA14C00C18EC3 /* EventsTableViewController.swift */; };
+		8506A8971DCBB0CC00C18EC3 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8961DCBB0CC00C18EC3 /* Event.swift */; };
+		8506A8991DCBB9C000C18EC3 /* EventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8981DCBB9C000C18EC3 /* EventsTableViewCell.swift */; };
+		8506A89B1DCC87A400C18EC3 /* EventsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8506A89A1DCC87A400C18EC3 /* EventsTableViewCell.xib */; };
+		8506A8A01DCC97F600C18EC3 /* CandidatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A89F1DCC97F600C18EC3 /* CandidatesViewController.swift */; };
+		8506A8A21DCCA61600C18EC3 /* Candidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8A11DCCA61600C18EC3 /* Candidate.swift */; };
+		8506A8A61DCCC85200C18EC3 /* Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8A51DCCC85200C18EC3 /* Like.swift */; };
+		8506A8A81DCCCB5E00C18EC3 /* Pass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8A71DCCCB5E00C18EC3 /* Pass.swift */; };
 		85512B0D1DCB5B020072C1B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85512B0C1DCB5B020072C1B8 /* AppDelegate.swift */; };
-		85512B0F1DCB5B020072C1B8 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85512B0E1DCB5B020072C1B8 /* FirstViewController.swift */; };
-		85512B111DCB5B020072C1B8 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85512B101DCB5B020072C1B8 /* SecondViewController.swift */; };
+		85512B111DCB5B020072C1B8 /* ATLChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85512B101DCB5B020072C1B8 /* ATLChatsViewController.swift */; };
 		85512B141DCB5B020072C1B8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85512B121DCB5B020072C1B8 /* Main.storyboard */; };
 		85512B161DCB5B020072C1B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85512B151DCB5B020072C1B8 /* Assets.xcassets */; };
 		85512B191DCB5B020072C1B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85512B171DCB5B020072C1B8 /* LaunchScreen.storyboard */; };
+		85512B211DCB5E9A0072C1B8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85512B201DCB5E9A0072C1B8 /* GoogleService-Info.plist */; };
+		85512B231DCB74DA0072C1B8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85512B221DCB74DA0072C1B8 /* LoginViewController.swift */; };
+		85E5D4C31DD4F166003E2376 /* ALChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4C21DD4F166003E2376 /* ALChatsViewController.swift */; };
+		85E5D4C51DD52D73003E2376 /* ALChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4C41DD52D73003E2376 /* ALChatManager.swift */; };
+		85ED4E621DCF586700F51857 /* ATLChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ED4E611DCF586700F51857 /* ATLChatViewController.swift */; };
+		85ED4E641DCFF7F200F51857 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ED4E631DCFF7F200F51857 /* MainTabBarController.swift */; };
+		85ED4E661DD1EC7D00F51857 /* AddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ED4E651DD1EC7D00F51857 /* AddEventViewController.swift */; };
+		85ED4E6E1DD229D600F51857 /* MyEventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ED4E6D1DD229D600F51857 /* MyEventsTableViewController.swift */; };
+		D4A39FA7A6A90074E8ADF2B7 /* Pods_Woojo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5F606FAEF706B6471319465 /* Pods_Woojo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8506A88C1DCB9A5D00C18EC3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		8506A8941DCBA14C00C18EC3 /* EventsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsTableViewController.swift; sourceTree = "<group>"; };
+		8506A8961DCBB0CC00C18EC3 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		8506A8981DCBB9C000C18EC3 /* EventsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsTableViewCell.swift; sourceTree = "<group>"; };
+		8506A89A1DCC87A400C18EC3 /* EventsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventsTableViewCell.xib; sourceTree = "<group>"; };
+		8506A89F1DCC97F600C18EC3 /* CandidatesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandidatesViewController.swift; sourceTree = "<group>"; };
+		8506A8A11DCCA61600C18EC3 /* Candidate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Candidate.swift; sourceTree = "<group>"; };
+		8506A8A51DCCC85200C18EC3 /* Like.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Like.swift; sourceTree = "<group>"; };
+		8506A8A71DCCCB5E00C18EC3 /* Pass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pass.swift; sourceTree = "<group>"; };
 		85512B091DCB5B020072C1B8 /* Woojo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Woojo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85512B0C1DCB5B020072C1B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		85512B0E1DCB5B020072C1B8 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		85512B101DCB5B020072C1B8 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		85512B101DCB5B020072C1B8 /* ATLChatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLChatsViewController.swift; sourceTree = "<group>"; };
 		85512B131DCB5B020072C1B8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		85512B151DCB5B020072C1B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		85512B181DCB5B020072C1B8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		85512B1A1DCB5B020072C1B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		85512B201DCB5E9A0072C1B8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		85512B221DCB74DA0072C1B8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		85E5D4C21DD4F166003E2376 /* ALChatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ALChatsViewController.swift; sourceTree = "<group>"; };
+		85E5D4C41DD52D73003E2376 /* ALChatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ALChatManager.swift; sourceTree = "<group>"; };
+		85ED4E611DCF586700F51857 /* ATLChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATLChatViewController.swift; sourceTree = "<group>"; };
+		85ED4E631DCFF7F200F51857 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		85ED4E651DD1EC7D00F51857 /* AddEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
+		85ED4E6D1DD229D600F51857 /* MyEventsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyEventsTableViewController.swift; sourceTree = "<group>"; };
+		D5F606FAEF706B6471319465 /* Pods_Woojo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Woojo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA30A4C6D15F53EBF70A92B4 /* Pods-Woojo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Woojo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Woojo/Pods-Woojo.debug.xcconfig"; sourceTree = "<group>"; };
+		DC1702E4FCCB65DE5615E8B3 /* Pods-Woojo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Woojo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Woojo/Pods-Woojo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +67,62 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4A39FA7A6A90074E8ADF2B7 /* Pods_Woojo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C753C8067535E2992FF69D9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DA30A4C6D15F53EBF70A92B4 /* Pods-Woojo.debug.xcconfig */,
+				DC1702E4FCCB65DE5615E8B3 /* Pods-Woojo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		8506A89C1DCC89DF00C18EC3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8506A89A1DCC87A400C18EC3 /* EventsTableViewCell.xib */,
+				8506A8981DCBB9C000C18EC3 /* EventsTableViewCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		8506A89D1DCC89F200C18EC3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				85E5D4C71DD720FE003E2376 /* Events */,
+				85E5D4C81DD7211A003E2376 /* Candidates */,
+				85E5D4C61DD720F2003E2376 /* Chats */,
+				85E5D4C91DD72127003E2376 /* Settings */,
+				85512B221DCB74DA0072C1B8 /* LoginViewController.swift */,
+				85ED4E631DCFF7F200F51857 /* MainTabBarController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		8506A89E1DCC89FA00C18EC3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8506A8961DCBB0CC00C18EC3 /* Event.swift */,
+				8506A8A11DCCA61600C18EC3 /* Candidate.swift */,
+				8506A8A51DCCC85200C18EC3 /* Like.swift */,
+				8506A8A71DCCCB5E00C18EC3 /* Pass.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		85512B001DCB5B020072C1B8 = {
 			isa = PBXGroup;
 			children = (
 				85512B0B1DCB5B020072C1B8 /* Woojo */,
 				85512B0A1DCB5B020072C1B8 /* Products */,
+				2C753C8067535E2992FF69D9 /* Pods */,
+				DD7E3B4C401DB42693CCCB61 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +137,78 @@
 		85512B0B1DCB5B020072C1B8 /* Woojo */ = {
 			isa = PBXGroup;
 			children = (
+				8506A89E1DCC89FA00C18EC3 /* Models */,
+				8506A89C1DCC89DF00C18EC3 /* Views */,
+				8506A89D1DCC89F200C18EC3 /* Controllers */,
 				85512B0C1DCB5B020072C1B8 /* AppDelegate.swift */,
-				85512B0E1DCB5B020072C1B8 /* FirstViewController.swift */,
-				85512B101DCB5B020072C1B8 /* SecondViewController.swift */,
 				85512B121DCB5B020072C1B8 /* Main.storyboard */,
 				85512B151DCB5B020072C1B8 /* Assets.xcassets */,
 				85512B171DCB5B020072C1B8 /* LaunchScreen.storyboard */,
+				85512B201DCB5E9A0072C1B8 /* GoogleService-Info.plist */,
 				85512B1A1DCB5B020072C1B8 /* Info.plist */,
 			);
 			path = Woojo;
+			sourceTree = "<group>";
+		};
+		85E5D4C61DD720F2003E2376 /* Chats */ = {
+			isa = PBXGroup;
+			children = (
+				85E5D4CA1DD724EF003E2376 /* Atlas */,
+				85E5D4CB1DD724F9003E2376 /* Applozic */,
+			);
+			name = Chats;
+			sourceTree = "<group>";
+		};
+		85E5D4C71DD720FE003E2376 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				8506A8941DCBA14C00C18EC3 /* EventsTableViewController.swift */,
+				85ED4E651DD1EC7D00F51857 /* AddEventViewController.swift */,
+				85ED4E6D1DD229D600F51857 /* MyEventsTableViewController.swift */,
+			);
+			name = Events;
+			sourceTree = "<group>";
+		};
+		85E5D4C81DD7211A003E2376 /* Candidates */ = {
+			isa = PBXGroup;
+			children = (
+				8506A89F1DCC97F600C18EC3 /* CandidatesViewController.swift */,
+			);
+			name = Candidates;
+			sourceTree = "<group>";
+		};
+		85E5D4C91DD72127003E2376 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				8506A88C1DCB9A5D00C18EC3 /* SettingsViewController.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		85E5D4CA1DD724EF003E2376 /* Atlas */ = {
+			isa = PBXGroup;
+			children = (
+				85512B101DCB5B020072C1B8 /* ATLChatsViewController.swift */,
+				85ED4E611DCF586700F51857 /* ATLChatViewController.swift */,
+			);
+			name = Atlas;
+			sourceTree = "<group>";
+		};
+		85E5D4CB1DD724F9003E2376 /* Applozic */ = {
+			isa = PBXGroup;
+			children = (
+				85E5D4C21DD4F166003E2376 /* ALChatsViewController.swift */,
+				85E5D4C41DD52D73003E2376 /* ALChatManager.swift */,
+			);
+			name = Applozic;
+			sourceTree = "<group>";
+		};
+		DD7E3B4C401DB42693CCCB61 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D5F606FAEF706B6471319465 /* Pods_Woojo.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +218,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 85512B1D1DCB5B020072C1B8 /* Build configuration list for PBXNativeTarget "Woojo" */;
 			buildPhases = (
+				56AD2237892EFC74C7B10F5D /* [CP] Check Pods Manifest.lock */,
 				85512B051DCB5B020072C1B8 /* Sources */,
 				85512B061DCB5B020072C1B8 /* Frameworks */,
 				85512B071DCB5B020072C1B8 /* Resources */,
+				B2287BD2131C4AC2AE393CB2 /* [CP] Embed Pods Frameworks */,
+				3763E354D725B59D6D8059D2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -127,7 +274,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8506A89B1DCC87A400C18EC3 /* EventsTableViewCell.xib in Resources */,
 				85512B191DCB5B020072C1B8 /* LaunchScreen.storyboard in Resources */,
+				85512B211DCB5E9A0072C1B8 /* GoogleService-Info.plist in Resources */,
 				85512B161DCB5B020072C1B8 /* Assets.xcassets in Resources */,
 				85512B141DCB5B020072C1B8 /* Main.storyboard in Resources */,
 			);
@@ -135,14 +284,76 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3763E354D725B59D6D8059D2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Woojo/Pods-Woojo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		56AD2237892EFC74C7B10F5D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B2287BD2131C4AC2AE393CB2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Woojo/Pods-Woojo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		85512B051DCB5B020072C1B8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				85512B111DCB5B020072C1B8 /* SecondViewController.swift in Sources */,
+				85512B231DCB74DA0072C1B8 /* LoginViewController.swift in Sources */,
+				8506A8991DCBB9C000C18EC3 /* EventsTableViewCell.swift in Sources */,
+				85512B111DCB5B020072C1B8 /* ATLChatsViewController.swift in Sources */,
 				85512B0D1DCB5B020072C1B8 /* AppDelegate.swift in Sources */,
-				85512B0F1DCB5B020072C1B8 /* FirstViewController.swift in Sources */,
+				8506A8A61DCCC85200C18EC3 /* Like.swift in Sources */,
+				85E5D4C51DD52D73003E2376 /* ALChatManager.swift in Sources */,
+				8506A8951DCBA14C00C18EC3 /* EventsTableViewController.swift in Sources */,
+				8506A8A01DCC97F600C18EC3 /* CandidatesViewController.swift in Sources */,
+				85ED4E641DCFF7F200F51857 /* MainTabBarController.swift in Sources */,
+				85E5D4C31DD4F166003E2376 /* ALChatsViewController.swift in Sources */,
+				8506A8A21DCCA61600C18EC3 /* Candidate.swift in Sources */,
+				85ED4E6E1DD229D600F51857 /* MyEventsTableViewController.swift in Sources */,
+				8506A8A81DCCCB5E00C18EC3 /* Pass.swift in Sources */,
+				8506A8971DCBB0CC00C18EC3 /* Event.swift in Sources */,
+				85ED4E661DD1EC7D00F51857 /* AddEventViewController.swift in Sources */,
+				85ED4E621DCF586700F51857 /* ATLChatViewController.swift in Sources */,
+				8506A88D1DCB9A5D00C18EC3 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,10 +474,12 @@
 		};
 		85512B1E1DCB5B020072C1B8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DA30A4C6D15F53EBF70A92B4 /* Pods-Woojo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = M73XDL363W;
 				INFOPLIST_FILE = Woojo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tastyelectrons.Woojo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -276,10 +489,12 @@
 		};
 		85512B1F1DCB5B020072C1B8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DC1702E4FCCB65DE5615E8B3 /* Pods-Woojo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = M73XDL363W;
 				INFOPLIST_FILE = Woojo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tastyelectrons.Woojo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -306,6 +521,7 @@
 				85512B1F1DCB5B020072C1B8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
