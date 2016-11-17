@@ -18,7 +18,7 @@ class ChatParticipant: NSObject, ATLParticipant, ATLAvatarItem {
     var avatarImage: UIImage?
     var avatarInitials: String? {
         get {
-            return firstName[firstName.startIndex] as? String
+            return String(firstName[firstName.startIndex])
         }
     }
     var displayName: String {
@@ -27,12 +27,4 @@ class ChatParticipant: NSObject, ATLParticipant, ATLAvatarItem {
         }
     }
     
-    init(userID: String) {
-        super.init()
-        self.userID = userID
-    }
-
-    static func get(uid: String, completion: (ATLParticipant) -> Void) {
-        
-    }
 }

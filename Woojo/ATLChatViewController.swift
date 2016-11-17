@@ -44,6 +44,11 @@ class ATLChatViewController: ATLConversationViewController, ATLConversationViewC
     
     func configureUI() {
         //ATLOutgoingMessageCollectionViewCell.appearance().messageTextColor = .red
+        for participant in self.conversation.participants {
+            if participant.userID != LayerManager.layerClient.authenticatedUser?.userID {
+                self.navigationItem.title = participant.displayName
+            }
+        }
     }
     
     // MARK - ATLConversationViewControllerDelegate methods
@@ -63,11 +68,9 @@ class ATLChatViewController: ATLConversationViewController, ATLConversationViewC
     // MARK - ATLConversationViewControllerDataSource methods
     
     func conversationViewController(_ conversationViewController: ATLConversationViewController, participantFor identity: LYRIdentity) -> ATLParticipant {
-        var chatParticipant = ChatParticipant(userID: identity.userID)
-        ChatParticipant.get(uid: identity.userID) { (participant) in
-            chatParticipant = participant as! ChatParticipant
-            self.reloadCellsForMessagesSentByParticipant(withIdentifier: identity.userID)
-        }
+        let chatParticipant = ChatParticipant()
+        chatParticipant.avatarImageURL = identity.avatarImageURL
+        chatParticipant.firstName = identity.firstName
         return chatParticipant
     }
     
@@ -83,7 +86,7 @@ class ATLChatViewController: ATLConversationViewController, ATLConversationViewC
         let allKeys = recipientStatusDict.allKeys as NSArray
         allKeys.enumerateObjects({ participant, _, _ in
             let participantAsString = participant as! String
-            if (participantAsString == self.layerClient.authenticatedUser?.userID) {
+            if (participantAsString == LayerManager.layerClient.authenticatedUser?.userID) {
                 return
             }
             

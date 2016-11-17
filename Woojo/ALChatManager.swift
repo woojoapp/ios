@@ -44,7 +44,7 @@ class ALChatManager: NSObject {
             }
             else if(response?.message.isEqual("PASSWORD_INVALID"))!
             {
-                ALUtilityClass.showAlertMessage("Invalid Passoword", andTitle: "Oops!!!")
+                ALUtilityClass.showAlertMessage("Invalid Password", andTitle: "Oops!!!")
             }
             else
             {
@@ -72,7 +72,7 @@ class ALChatManager: NSObject {
             }
             else if(response?.message.isEqual("PASSWORD_INVALID"))!
             {
-                ALUtilityClass.showAlertMessage("Invalid Passoword", andTitle: "Oops!!!")
+                ALUtilityClass.showAlertMessage("Invalid Password", andTitle: "Oops!!!")
             }
             else
             {

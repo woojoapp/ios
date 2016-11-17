@@ -16,6 +16,9 @@
 		8506A8A21DCCA61600C18EC3 /* Candidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8A11DCCA61600C18EC3 /* Candidate.swift */; };
 		8506A8A61DCCC85200C18EC3 /* Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8A51DCCC85200C18EC3 /* Like.swift */; };
 		8506A8A81DCCCB5E00C18EC3 /* Pass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8A71DCCCB5E00C18EC3 /* Pass.swift */; };
+		8545A5FC1DDCCD09008F3DD2 /* LayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8545A5FB1DDCCD09008F3DD2 /* LayerManager.swift */; };
+		8545A5FE1DDCCF79008F3DD2 /* UserProfileGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8545A5FD1DDCCF79008F3DD2 /* UserProfileGraphRequest.swift */; };
+		8545A6011DDCEF9E008F3DD2 /* UserProfilePhotoGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8545A6001DDCEF9E008F3DD2 /* UserProfilePhotoGraphRequest.swift */; };
 		85512B0D1DCB5B020072C1B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85512B0C1DCB5B020072C1B8 /* AppDelegate.swift */; };
 		85512B111DCB5B020072C1B8 /* ATLChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85512B101DCB5B020072C1B8 /* ATLChatsViewController.swift */; };
 		85512B141DCB5B020072C1B8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85512B121DCB5B020072C1B8 /* Main.storyboard */; };
@@ -24,7 +27,7 @@
 		85512B231DCB74DA0072C1B8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85512B221DCB74DA0072C1B8 /* LoginViewController.swift */; };
 		85E5D4C31DD4F166003E2376 /* ALChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4C21DD4F166003E2376 /* ALChatsViewController.swift */; };
 		85E5D4C51DD52D73003E2376 /* ALChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4C41DD52D73003E2376 /* ALChatManager.swift */; };
-		85E5D4CD1DD9EFBC003E2376 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4CC1DD9EFBC003E2376 /* User.swift */; };
+		85E5D4CD1DD9EFBC003E2376 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4CC1DD9EFBC003E2376 /* CurrentUser.swift */; };
 		85E5D4CF1DD9FA41003E2376 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4CE1DD9FA41003E2376 /* Gender.swift */; };
 		85E5D4D21DDA1231003E2376 /* PublicProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4D11DDA1231003E2376 /* PublicProfile.swift */; };
 		85E5D4D61DDA247D003E2376 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85E5D4D51DDA247D003E2376 /* GoogleService-Info.plist */; };
@@ -46,6 +49,9 @@
 		8506A8A11DCCA61600C18EC3 /* Candidate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Candidate.swift; sourceTree = "<group>"; };
 		8506A8A51DCCC85200C18EC3 /* Like.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Like.swift; sourceTree = "<group>"; };
 		8506A8A71DCCCB5E00C18EC3 /* Pass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pass.swift; sourceTree = "<group>"; };
+		8545A5FB1DDCCD09008F3DD2 /* LayerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerManager.swift; sourceTree = "<group>"; };
+		8545A5FD1DDCCF79008F3DD2 /* UserProfileGraphRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileGraphRequest.swift; sourceTree = "<group>"; };
+		8545A6001DDCEF9E008F3DD2 /* UserProfilePhotoGraphRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfilePhotoGraphRequest.swift; sourceTree = "<group>"; };
 		85512B091DCB5B020072C1B8 /* Woojo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Woojo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85512B0C1DCB5B020072C1B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85512B101DCB5B020072C1B8 /* ATLChatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATLChatsViewController.swift; sourceTree = "<group>"; };
@@ -56,7 +62,7 @@
 		85512B221DCB74DA0072C1B8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		85E5D4C21DD4F166003E2376 /* ALChatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ALChatsViewController.swift; sourceTree = "<group>"; };
 		85E5D4C41DD52D73003E2376 /* ALChatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ALChatManager.swift; sourceTree = "<group>"; };
-		85E5D4CC1DD9EFBC003E2376 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		85E5D4CC1DD9EFBC003E2376 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		85E5D4CE1DD9FA41003E2376 /* Gender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
 		85E5D4D01DDA0E8F003E2376 /* Woojo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Woojo.entitlements; sourceTree = "<group>"; };
 		85E5D4D11DDA1231003E2376 /* PublicProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicProfile.swift; sourceTree = "<group>"; };
@@ -121,12 +127,22 @@
 				8506A8A11DCCA61600C18EC3 /* Candidate.swift */,
 				8506A8A51DCCC85200C18EC3 /* Like.swift */,
 				8506A8A71DCCCB5E00C18EC3 /* Pass.swift */,
-				85E5D4CC1DD9EFBC003E2376 /* User.swift */,
+				85E5D4CC1DD9EFBC003E2376 /* CurrentUser.swift */,
 				85E5D4CE1DD9FA41003E2376 /* Gender.swift */,
 				85E5D4D11DDA1231003E2376 /* PublicProfile.swift */,
 				85E5D4D71DDA4803003E2376 /* ChatParticipant.swift */,
+				8545A5FF1DDCDADC008F3DD2 /* GraphRequests */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		8545A5FF1DDCDADC008F3DD2 /* GraphRequests */ = {
+			isa = PBXGroup;
+			children = (
+				8545A5FD1DDCCF79008F3DD2 /* UserProfileGraphRequest.swift */,
+				8545A6001DDCEF9E008F3DD2 /* UserProfilePhotoGraphRequest.swift */,
+			);
+			name = GraphRequests;
 			sourceTree = "<group>";
 		};
 		85512B001DCB5B020072C1B8 = {
@@ -155,6 +171,7 @@
 				8506A89C1DCC89DF00C18EC3 /* Views */,
 				8506A89D1DCC89F200C18EC3 /* Controllers */,
 				85512B0C1DCB5B020072C1B8 /* AppDelegate.swift */,
+				8545A5FB1DDCCD09008F3DD2 /* LayerManager.swift */,
 				85512B121DCB5B020072C1B8 /* Main.storyboard */,
 				85512B151DCB5B020072C1B8 /* Assets.xcassets */,
 				85512B171DCB5B020072C1B8 /* LaunchScreen.storyboard */,
@@ -266,6 +283,9 @@
 							com.apple.Keychain = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
 						};
 					};
 				};
@@ -359,20 +379,23 @@
 				85512B231DCB74DA0072C1B8 /* LoginViewController.swift in Sources */,
 				85E5D4D81DDA4803003E2376 /* ChatParticipant.swift in Sources */,
 				8506A8991DCBB9C000C18EC3 /* EventsTableViewCell.swift in Sources */,
+				8545A5FE1DDCCF79008F3DD2 /* UserProfileGraphRequest.swift in Sources */,
 				85E5D4D21DDA1231003E2376 /* PublicProfile.swift in Sources */,
 				85512B111DCB5B020072C1B8 /* ATLChatsViewController.swift in Sources */,
 				85512B0D1DCB5B020072C1B8 /* AppDelegate.swift in Sources */,
 				8506A8A61DCCC85200C18EC3 /* Like.swift in Sources */,
 				85E5D4C51DD52D73003E2376 /* ALChatManager.swift in Sources */,
 				8506A8951DCBA14C00C18EC3 /* EventsTableViewController.swift in Sources */,
+				8545A5FC1DDCCD09008F3DD2 /* LayerManager.swift in Sources */,
 				8506A8A01DCC97F600C18EC3 /* CandidatesViewController.swift in Sources */,
 				85ED4E641DCFF7F200F51857 /* MainTabBarController.swift in Sources */,
 				85E5D4C31DD4F166003E2376 /* ALChatsViewController.swift in Sources */,
+				8545A6011DDCEF9E008F3DD2 /* UserProfilePhotoGraphRequest.swift in Sources */,
 				8506A8A21DCCA61600C18EC3 /* Candidate.swift in Sources */,
 				85ED4E6E1DD229D600F51857 /* MyEventsTableViewController.swift in Sources */,
 				8506A8A81DCCCB5E00C18EC3 /* Pass.swift in Sources */,
 				8506A8971DCBB0CC00C18EC3 /* Event.swift in Sources */,
-				85E5D4CD1DD9EFBC003E2376 /* User.swift in Sources */,
+				85E5D4CD1DD9EFBC003E2376 /* CurrentUser.swift in Sources */,
 				85ED4E661DD1EC7D00F51857 /* AddEventViewController.swift in Sources */,
 				85ED4E621DCF586700F51857 /* ATLChatViewController.swift in Sources */,
 				85E5D4CF1DD9FA41003E2376 /* Gender.swift in Sources */,

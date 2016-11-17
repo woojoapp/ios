@@ -14,9 +14,9 @@ target 'Woojo' do
 
   pod 'Bolts'
 
-  pod 'FBSDKCoreKit'
-  pod 'FBSDKLoginKit'
-  pod 'FBSDKShareKit'
+  pod 'FacebookCore'
+  pod 'FacebookLogin'
+  pod 'FacebookShare'
 
   pod 'Koloda', :git=> 'https://github.com/Yalantis/Koloda.git', :branch => 'swift-3'
 

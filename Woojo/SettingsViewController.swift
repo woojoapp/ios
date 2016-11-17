@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FBSDKLoginKit
+import FacebookLogin
 import FirebaseAuth
 
 class SettingsViewController: UIViewController {
@@ -15,7 +15,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var logoutButton: UIButton!
     
     @IBAction func logout(sender: UIButton) {
-        FBSDKLoginManager().logOut()
+        LoginManager().logOut()
         try! FIRAuth.auth()!.signOut()
         self.performSegue(withIdentifier: "ShowLoginFromSettings", sender: self)
     }

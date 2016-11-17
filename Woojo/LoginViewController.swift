@@ -8,10 +8,10 @@
 
 import UIKit
 import FirebaseAuth
-import FBSDKCoreKit
-import FBSDKLoginKit
+import FacebookCore
+import FacebookLogin
 
-extension UIImage {
+/*extension UIImage {
     func drawInRectAspectFill(rect: CGRect) {
         let targetSize = rect.size
         if targetSize == CGSize.zero {
@@ -30,35 +30,26 @@ extension UIImage {
         UIGraphicsEndImageContext()
         scaledImage?.draw(in: rect)
     }
-}
+}*/
 
-class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
+class LoginViewController: UIViewController, LoginButtonDelegate {
     
-    var loginButton: FBSDKLoginButton!
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        UIGraphicsBeginImageContext(self.view.frame.size)
+        /*UIGraphicsBeginImageContext(self.view.frame.size)
         #imageLiteral(resourceName: "background_square").drawInRectAspectFill(rect: self.view.bounds)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        self.view.backgroundColor = UIColor.init(patternImage: image!)
+        self.view.backgroundColor = UIColor.init(patternImage: image!)*/
 
-        self.loginButton = FBSDKLoginButton(type: .roundedRect)
-        self.loginButton.readPermissions = [ "public_profile", "user_events", "user_photos", "user_friends"]
-        self.loginButton.delegate = self
-        self.loginButton.center = self.view.center
-        self.view.addSubview(self.loginButton)
+        let loginButton = LoginButton(readPermissions: [.publicProfile, .userFriends, .custom("user_events"), .custom("user_photos")])
+        loginButton.delegate = self
+        loginButton.center = self.view.center
+        self.view.addSubview(loginButton)
         // Do any additional setup after loading the view.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
 
     /*
     // MARK: - Navigation
@@ -70,17 +61,35 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     }
     */
     
-    // MARK: - FBSDKLoginButtonDelegate
+    // MARK: - LoginButtonDelegate
     
-    func loginButtonWillLogin(_ loginButton: FBSDKLoginButton!) -> Bool {
-        return true
+    func loginButtonDidCompleteLogin(_ loginButton: LoginButton, result: LoginResult) {
+        switch result {
+        case .success(_, _, let accessToken):
+            print("Facebook login success")
+            let credential = FIRFacebookAuthProvider.credential(withAccessToken: accessToken.authenticationToken)
+            FIRAuth.auth()?.signIn(with: credential) { (user, error) in
+                if let user = user {
+                    print("Firebase login success \(user.uid)")
+                    self.dismiss(animated: true, completion: nil)
+                }
+                if let error = error {
+                    print("Firebase login failure \(error.localizedDescription)")
+                }
+            }
+        case .failed(let error):
+            print("Facebook login error: \(error.localizedDescription)")
+        case .cancelled:
+            print("Facebook login cancelled.")
+        }
     }
     
-    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
+    func loginButtonDidLogOut(_ loginButton: LoginButton) {
         try! FIRAuth.auth()!.signOut()
     }
     
-    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+    
+    /*func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
         if let error = error {
             print(error.localizedDescription)
             return
@@ -90,21 +99,12 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         FIRAuth.auth()?.signIn(with: credential) { (user, error) in
             if let user = user {
                 print("Login success \(user.uid)")
-                FIRAuth.auth()?.addStateDidChangeListener { auth, user in
-                    FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, first_name, email, gender, picture"]).start { (connection, result, error) in
-                        if error  != nil {
-                            print("Error requesting user details from FB Graph")
-                        } else if let result = result {
-                            print(result)
-                        }
-                    }
-                }
                 self.dismiss(animated: true, completion: nil)
             }
             if let error = error {
                 print("Login failure \(error.localizedDescription)")
             }
         }
-    }
+    }*/
 
 }

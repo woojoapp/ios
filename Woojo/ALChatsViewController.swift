@@ -21,9 +21,9 @@ class ALChatsViewController: UIViewController, ALMessagesViewDelegate {
 
         let alUser : ALUser =  ALUser();
         alUser.applicationId = ALChatManager.applicationId
-        alUser.userId = "facebook:10153119132691273".addingPercentEncoding(withAllowedCharacters: .alphanumerics)       // NOTE : +,*,? are not allowed chars in userId.
-        alUser.imageLink = "https://scontent.xx.fbcdn.net/v/t1.0-1/p100x100/12688079_10153744084976273_775629085733201561_n.jpg?oh=e12db3a3f4738ee11cc32c85a6a46293&oe=58D58AC3"    // User's profile image link.
-        alUser.displayName = "Edouard"  // User's Display Name
+        alUser.userId = FIRAuth.auth()?.currentUser?.uid.addingPercentEncoding(withAllowedCharacters: .alphanumerics)       // NOTE : +,*,? are not allowed chars in userId.
+        alUser.imageLink = FIRAuth.auth()?.currentUser?.photoURL?.absoluteString    // User's profile image link.
+        alUser.displayName = FIRAuth.auth()?.currentUser?.displayName  // User's Display Name
         
         ALUserDefaultsHandler.setUserId(alUser.userId)
         ALUserDefaultsHandler.setDisplayName(alUser.displayName)

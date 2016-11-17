@@ -9,6 +9,7 @@
 import UIKit
 import LayerKit
 import Atlas
+import UserNotifications
 
 class ATLChatsViewController: ATLConversationListViewController, ATLConversationListViewControllerDelegate, ATLConversationListViewControllerDataSource {
     
@@ -16,17 +17,32 @@ class ATLChatsViewController: ATLConversationListViewController, ATLConversation
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        self.layerClient = appDelegate.layerClient
-        print(self.layerClient.authenticatedUser!.userID)
+        
+        /*if ([application respondsToSelector:@selector(registerForRemoteNotifications)]) {
+            // Register device for iOS8
+            UIUserNotificationSettings *notificationSettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
+            [application registerUserNotificationSettings:notificationSettings];
+            [application registerForRemoteNotifications];
+        } else {
+            // Register device for iOS7
+            [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeBadge];
+        }*/
+        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+            if error == nil {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+        }
+        
         let settingsItem = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(showSettings))
         self.navigationItem.setRightBarButton(settingsItem, animated: false)
         self.title = "Atlas"
-        self.displaysAvatarItem = false
+        self.layerClient = LayerManager.layerClient
+        self.displaysAvatarItem = true
         self.dataSource = self
         self.delegate = self
         self.allowsEditing = false
-        self.shouldDisplaySearchController = false
+        self.shouldDisplaySearchController = false // Doesn't work??
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,28 +90,16 @@ class ATLChatsViewController: ATLConversationListViewController, ATLConversation
         }
     }*/
     
-    /*func conversationListViewController(conversationListViewController: ATLConversationListViewController!, avatarItemForConversation conversation: LYRConversation!) -> ATLAvatarItem! {
-        guard let lastMessage = conversation.lastMessage else {
-            return nil
+    func conversationListViewController(_ conversationListViewController: ATLConversationListViewController, avatarItemFor conversation: LYRConversation) -> ATLAvatarItem {
+        let chatParticipant = ChatParticipant()
+        for participant in conversation.participants {
+            if participant.userID != layerClient.authenticatedUser?.userID {
+                chatParticipant.avatarImageURL = participant.avatarImageURL
+                chatParticipant.firstName = participant.firstName
+            }
         }
-        guard let userID: String = lastMessage.sender.userID else {
-            return nil
-        }
-        if userID == PFUser.currentUser()?.objectId {
-            return PFUser.currentUser()
-        }
-        let user: PFUser? = UserManager.sharedManager.cachedUserForUserID(userID)
-        if user == nil {
-            UserManager.sharedManager.queryAndCacheUsersWithIDs([userID], completion: { (participants, error) in
-                if participants != nil && error == nil {
-                    self.reloadCellForConversation(conversation)
-                } else {
-                    print("Error querying for users: \(error)")
-                }
-            })
-        }
-        return user;
-    }*/
+        return chatParticipant
+    }
     
     // MARK - ATLConversationListViewControllerDataSource Methods
     func conversationListViewController(_ conversationListViewController: ATLConversationListViewController, titleFor conversation: LYRConversation) -> String {
@@ -103,7 +107,9 @@ class ATLChatsViewController: ATLConversationListViewController, ATLConversation
         var participantStrings: [String] = []
         print("Conversation \(conversation.participants.count)")
         for participant in conversation.participants {
-            participantStrings.append(participant.identifier.lastPathComponent)
+            if participant.userID != layerClient.authenticatedUser?.userID {
+                participantStrings.append(participant.displayName)
+            }
         }
         if participantStrings.count > 0 {
             title = participantStrings.joined(separator: ", ")
@@ -112,8 +118,7 @@ class ATLChatsViewController: ATLConversationListViewController, ATLConversation
     }
     
     func presentControllerWithConversation(conversation: LYRConversation) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let conversationViewController: ATLChatViewController = ATLChatViewController(layerClient: appDelegate.layerClient)
+        let conversationViewController: ATLChatViewController = ATLChatViewController(layerClient: LayerManager.layerClient)
         conversationViewController.displaysAddressBar = false
         conversationViewController.conversation = conversation
         
