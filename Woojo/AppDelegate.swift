@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 import FacebookCore
-import LayerKit
+//import LayerKit
 import Applozic
 
 @UIApplicationMain
@@ -26,14 +26,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         FacebookCore.SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+        print("FB TOKEN \(AccessToken.current)")
         // Authentication state change listener
         FIRAuth.auth()?.addStateDidChangeListener { auth, user in
-            if let user = user {
-                // Get user data and store it in NSUserDefaults
+            if user != nil {
+                // Start observing candidates
+                if !CurrentUser.isObserving {
+                    CurrentUser.startObserving()
+                }
+                
+                // Refresh user data from Facebook
                 CurrentUser.Profile.loadDataFromFacebook()
                 CurrentUser.Profile.loadPhotoFromFacebook()
+                
                 // Connect the Layer client and authenticate
-                if LayerManager.layerClient.isConnected {
+                /*if LayerManager.layerClient.isConnected {
                     LayerManager.authenticateLayer(uid: user.uid)
                 } else if !LayerManager.layerClient.isConnecting {
                     LayerManager.layerClient.connect { (success, error) in
@@ -43,17 +50,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             LayerManager.authenticateLayer(uid: user.uid)
                         }
                     }
-                }
+                }*/
             } else {
                 print("No user signed in")
+                
+                // Stop observing candidates for the previous user
+                CurrentUser.stopObserving()
+                
                 // De-authenticate the Layer client
-                if LayerManager.layerClient.isConnected {
+                /*if LayerManager.layerClient.isConnected {
                     LayerManager.layerClient.deauthenticate() { (success, error) in
                         if let error = error {
                             print("Failed to deauthenticate Layer \(error)")
                         }
                     }
-                }
+                }*/
                 
                 let registerUserClientService: ALRegisterUserClientService = ALRegisterUserClientService()
                 registerUserClientService.logout {
@@ -65,8 +76,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        let alApplocalNotificationHnadler : ALAppLocalNotifications =  ALAppLocalNotifications.appLocalNotificationHandler();
-        alApplocalNotificationHnadler.dataConnectionNotificationHandler();
+        let alAppLocalNotificationHandler : ALAppLocalNotifications =  ALAppLocalNotifications.appLocalNotificationHandler();
+        alAppLocalNotificationHandler.dataConnectionNotificationHandler();
         
         if (launchOptions != nil) {
             let dictionary = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? NSDictionary
@@ -88,27 +99,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         
-        print("DEVICE_TOKEN_DATA :: \(deviceToken.description)")
-        
         var deviceTokenString: String = ""
         for i in 0..<deviceToken.count {
             deviceTokenString += String(format: "%02.2hhx", deviceToken[i] as CVarArg)
         }
         
-        print("DEVICE_TOKEN_STRING :: \(deviceTokenString)")
-        
         if (ALUserDefaultsHandler.getApnDeviceToken() != deviceTokenString) {
             let alRegisterUserClientService: ALRegisterUserClientService = ALRegisterUserClientService()
             alRegisterUserClientService.updateApnDeviceToken(withCompletion: deviceTokenString, withCompletion: { (response, error) in
-                print (response)
+                
             })
         }
         
-        do {
+        /*do {
             try LayerManager.layerClient.updateRemoteNotificationDeviceToken(deviceToken)
         } catch {
             print("Failed to send device push token to Layer \(error.localizedDescription)")
-        }
+        }*/
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {

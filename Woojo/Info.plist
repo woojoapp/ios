@@ -2,14 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>You can send your location in chats</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>You can use photos from your library in your profile and in chats.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>You can use photos taken with your camera in your profile and in chats.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>CFBundleDisplayName</key>
 	<string>Woojo</string>
 	<key>CFBundleExecutable</key>
@@ -34,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>3</string>
 	<key>FacebookAppID</key>
 	<string>1421871194795951</string>
 	<key>FacebookDisplayName</key>
@@ -48,6 +44,18 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>You can use photos taken with your camera in your profile and in chats.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Your contacts are used for chats</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>You can send your location in chats</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>You can use photos from your library in your profile and in chats.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

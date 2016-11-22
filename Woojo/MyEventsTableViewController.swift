@@ -12,11 +12,15 @@ import FBSDKLoginKit
 
 class MyEventsTableViewController: UITableViewController {
     
-    var events: [[String: Any]]?
+    var events: [Event]?
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.rowHeight = 100
         
         tableView.refreshControl = UIRefreshControl()
         tableView.refreshControl?.addTarget(self, action: #selector(loadFacebookEvents), for: UIControlEvents.valueChanged)
@@ -25,9 +29,6 @@ class MyEventsTableViewController: UITableViewController {
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
     override func didReceiveMemoryWarning() {
@@ -58,7 +59,6 @@ class MyEventsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         if let events = events {
             return events.count
         } else {
@@ -67,26 +67,36 @@ class MyEventsTableViewController: UITableViewController {
     }
     
     func loadFacebookEvents() {
-        //(UIApplication.shared.delegate as! AppDelegate).ensureFacebookAuth()
-        let fields = ["fields": "id,name"]
-        let graphRequest = FBSDKGraphRequest.init(graphPath: "me/events", parameters: fields, tokenString: FBSDKAccessToken.current().tokenString, version: "v2.8", httpMethod: "GET")
-        _ = graphRequest?.start() { (connection, result, error) in
-            if error != nil {
-                print("Error performing graph request: \(error)")
-            } else if let result = result as? [String: Any] {
-                self.events = result["data"] as? [[String: Any]]
-                self.tableView.reloadData()
-                self.tableView.refreshControl?.endRefreshing()
-            }
+        CurrentUser.getEventsFromFacebook { events in
+            self.events = events
+            self.tableView.reloadData()
+            self.tableView.refreshControl?.endRefreshing()
         }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "fbEventCell", for: indexPath)
 
-        print("ASKED FOR CELL")
         if let event = self.events?[indexPath.row] {
-            cell.textLabel?.text = event["name"] as? String
+            cell.textLabel?.text = event.name
+            var placeString = "Unknown location"
+            if let place = event.place, let placeName = place.name {
+                placeString = placeName
+            }
+            if let location = event.place?.location, let city = location.city {
+                if placeString != "Unknown location" {
+                    placeString = "\(placeString) (\(city))"
+                } else {
+                    placeString = city
+                }
+            }
+            //cell.accessoryType
+            cell.detailTextLabel?.text = placeString
+            if let pictureURL = event.pictureURL {
+                cell.imageView?.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_40x40"))
+            } else {
+                cell.imageView?.image = #imageLiteral(resourceName: "placeholder_40x40")
+            }
         }
 
         return cell

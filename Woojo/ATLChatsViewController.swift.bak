@@ -10,6 +10,7 @@ import UIKit
 import LayerKit
 import Atlas
 import UserNotifications
+import SDWebImage
 
 class ATLChatsViewController: ATLConversationListViewController, ATLConversationListViewControllerDelegate, ATLConversationListViewControllerDataSource {
     
@@ -34,8 +35,14 @@ class ATLChatsViewController: ATLConversationListViewController, ATLConversation
             }
         }
         
-        let settingsItem = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(showSettings))
-        self.navigationItem.setRightBarButton(settingsItem, animated: false)
+        let settingsItem = UIBarButtonItem()
+        let settingsButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        settingsButton.layer.cornerRadius = settingsButton.frame.width / 2
+        settingsButton.layer.masksToBounds = true
+        settingsButton.sd_setImage(with: CurrentUser.Profile.photoURL!, for: .normal)
+        settingsButton.addTarget(self, action: #selector(showSettings), for: .touchUpInside)
+        settingsItem.customView = settingsButton
+        self.navigationItem.setRightBarButton(settingsItem, animated: true)
         self.title = "Atlas"
         self.layerClient = LayerManager.layerClient
         self.displaysAvatarItem = true

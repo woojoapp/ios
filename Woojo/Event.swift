@@ -11,64 +11,78 @@ import FirebaseDatabase
 
 struct Event {
     
-    let id: String
-    let name: String
-    let start: Date
-    let end: Date?
-    let place: [String:Any]?
-    let picture: [String:Any]
-    var pictureData: Data? {
-        get {
-            let data = picture["data"] as! [String:Any]
-            return Data(base64Encoded: data["base64"] as! String, options: .ignoreUnknownCharacters)
-        }
-    }
-    
-    /*init(id: String, name: String, start: Date, place: [String:Any], picture: [String:Any]) {
-        self.id = id
-        self.name = name
-        self.start = start
-        self.place = place
-        self.picture = picture
-    }*/
+    var id: String?
+    var name: String?
+    var start: Date?
+    var end: Date?
+    var place: Place?
+    var pictureURL: URL?
+    var description: String?
     
 }
 
 extension Event {
-    static var firebasePath = "events"
     static let dateFormatter: DateFormatter = {
         let formatter: DateFormatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZ"
+        formatter.dateFormat = Constants.Event.dateFormat
         return formatter
     }()
     
-    static func from(snapshot: FIRDataSnapshot) -> Event? {
-        let value = snapshot.value as! [String:Any]
-        var endTime: Date?
-        if let end = value["end_time"] as? String {
-            endTime = Event.dateFormatter.date(from: end)
+    static func from(firebase snapshot: FIRDataSnapshot) -> Event? {
+        if let value = snapshot.value as? [String:Any] {
+            var event = Event()
+            event.id = value[Constants.Event.properties.firebaseNodes.id] as? String
+            event.name = value[Constants.Event.properties.firebaseNodes.name] as? String
+            event.description = value[Constants.Event.properties.firebaseNodes.description] as? String
+            if let pictureURLString = value[Constants.Event.properties.firebaseNodes.pictureURL] as? String {
+                event.pictureURL = URL(string: pictureURLString)
+            }
+            if let startTimeString = value[Constants.Event.properties.firebaseNodes.start] as? String {
+                event.start = Event.dateFormatter.date(from: startTimeString)
+            }
+            if let endTimeString = value[Constants.Event.properties.firebaseNodes.end] as? String {
+                event.end = Event.dateFormatter.date(from: endTimeString)
+            }
+            event.place = Place.from(firebase: snapshot.childSnapshot(forPath: Constants.Event.Place.firebaseNode))
+            return event
+        } else {
+            print("Failed to create Event from Firebase snapshot.", snapshot)
+            return nil
         }
-        let place = value["place"] as! [String : Any]?
-        if let id = value["id"] as? String,
-            let name = value["name"] as? String,
-            let start = value["start_time"] as? String,
-            let picture = value["picture"] as? [String:Any] {
-            return Event(id: id, name: name, start: Event.dateFormatter.date(from: start)!, end: endTime, place: place, picture: picture)
-        }
-        return nil
     }
     
-    func toAny() -> Any {
-        var any = [
-            "id": self.id,
-            "name": self.name,
-            "start_time": Event.dateFormatter.string(from: self.start),
-        ]
-        
-        if let end = self.end {
-            any["end"] = Event.dateFormatter.string(from: end)
+    static func from(graphAPI dict: [String:Any]?) -> Event? {
+        if let dict = dict {
+            var event = Event()
+            event.id = dict[Constants.Event.properties.graphAPIKeys.id] as? String
+            event.name = dict[Constants.Event.properties.graphAPIKeys.name] as? String
+            event.description = dict[Constants.Event.properties.graphAPIKeys.description] as? String
+            if let startTimeString = dict[Constants.Event.properties.graphAPIKeys.start] as? String {
+                event.start = Event.dateFormatter.date(from: startTimeString)
+            }
+            if let endTimeString = dict[Constants.Event.properties.graphAPIKeys.end] as? String {
+                event.end = Event.dateFormatter.date(from: endTimeString)
+            }
+            if let picture = dict[Constants.Event.properties.graphAPIKeys.picture] as? [String:Any] {
+                if let pictureData = picture[Constants.Event.properties.graphAPIKeys.pictureData] as? [String:Any] {
+                    if let url = pictureData[Constants.Event.properties.graphAPIKeys.pictureDataURL] as? String {
+                        event.pictureURL = URL(string: url)
+                    }
+                }
+            }
+            event.place = Place.from(graphAPI: dict[Constants.Event.Place.graphAPIKey] as? [String:Any])
+            return event
+        } else {
+            print("Failed to create Event from Graph API dictionary.", dict as Any)
+            return nil
         }
-        
-        return any
+
     }
+    
+    static func get(for id: String, completion: @escaping (Event?) -> Void) {
+        FIRDatabase.database().reference().child(Constants.Event.firebaseNode).child(id).observeSingleEvent(of: .value, with: { snapshot in
+            completion(from(firebase: snapshot))
+        })
+    }
+
 }

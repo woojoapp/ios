@@ -54,6 +54,7 @@ class ATLChatViewController: ATLConversationViewController, ATLConversationViewC
     // MARK - ATLConversationViewControllerDelegate methods
     
     func conversationViewController(_ viewController: ATLConversationViewController, didSend message: LYRMessage) {
+        print("Layer connected? \(LayerManager.layerClient.isConnected)")
         print("Message sent!")
     }
     

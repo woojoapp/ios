@@ -13,6 +13,7 @@ import FirebaseAuth
 class SettingsViewController: UIViewController {
     
     @IBOutlet weak var logoutButton: UIButton!
+    @IBOutlet weak var testLabel: UILabel!
     
     @IBAction func logout(sender: UIButton) {
         LoginManager().logOut()
@@ -22,7 +23,6 @@ class SettingsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
 

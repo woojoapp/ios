@@ -10,21 +10,27 @@
 //
 
 import Foundation
-import Firebase
-import Atlas
+import FirebaseAuth
+import FirebaseDatabase
+import FirebaseStorage
+//import Atlas
 import FacebookCore
 
 class CurrentUser {
     
-    static var uid: String {
+    static var uid: String? {
         get {
-            return (FIRAuth.auth()?.currentUser?.uid)!
+            return FIRAuth.auth()?.currentUser?.uid
         }
     }
     
-    static var ref: FIRDatabaseReference {
+    static var ref: FIRDatabaseReference? {
         get {
-            return FIRDatabase.database().reference().child("users").child(uid)
+            if let uid = uid {
+                return FIRDatabase.database().reference().child(Constants.User.firebaseNode).child(uid)
+            } else {
+                return nil
+            }
         }
     }
     
@@ -34,106 +40,331 @@ class CurrentUser {
         }
     }
     
-    static var storageRef: FIRStorageReference {
+    static var storageRef: FIRStorageReference? {
         get {
-            return FIRStorage.storage().reference().child("users").child(uid)
+            if let uid = uid {
+                return FIRStorage.storage().reference().child(Constants.User.firebaseNode).child(uid)
+            } else {
+                return nil
+            }
         }
     }
     
+    static var isObserving = false
+    
+    static func startObserving() {
+        self.isObserving = true
+        self.Activity.startObserving()
+        self.Profile.startObserving()
+        self.startObservingEvents()
+        self.startObservingCandidates()
+    }
+    
+    static func stopObserving() {
+        self.Activity.stopObserving()
+        self.Profile.stopObserving()
+        self.stopObservingEvents()
+        self.stopObservingCandidates()
+        self.isObserving = false
+    }
+    
+    // MARK: - Candidates
+    
+    static var candidatesRef: FIRDatabaseReference? {
+        get {
+            if let ref = ref {
+                return ref.child(Constants.User.Candidate.firebaseNode)
+            } else {
+                return nil
+            }
+        }
+    }
+    
+    static var isStartingToObserveCandidates: Bool = false
+    static var isObservingCandidates: Bool = false
+    static var candidates: [Candidate] = []
+    static var candidatesDelegate: CandidatesDelegate?
+    
+    static func startObservingCandidates() {
+        isStartingToObserveCandidates = true
+        candidatesRef?.observe(.childAdded, with: { snapshot in
+            Candidate.get(for: snapshot.key) { candidate in
+                if let candidate = candidate {
+                    candidates.append(candidate)
+                    candidatesDelegate?.didUpdateCandidates()
+                }
+            }
+        })
+        isStartingToObserveCandidates = false
+        isObservingCandidates = true
+    }
+    
+    static func stopObservingCandidates() {
+        candidatesRef?.removeAllObservers()
+        isObservingCandidates = false
+    }
+
+    // MARK: - Events
+    
+    static var eventsRef: FIRDatabaseReference? {
+        get {
+            if let ref = ref {
+                return ref.child(Constants.User.Event.firebaseNode)
+            } else {
+                return nil
+            }
+        }
+    }
+    
+    static var isStartingToObserveEvents: Bool = false
+    static var isObservingEvents: Bool = false
+    static var events: [Event] = []
+    static var eventsDelegate: EventsDelegate?
+    
+    static func startObservingEvents() {
+        isStartingToObserveEvents = true
+        eventsRef?.observe(.childAdded, with: { snapshot in
+            Event.get(for: snapshot.key) { event in
+                if let event = event {
+                    events.append(event)
+                    eventsDelegate?.didUpdateEvents()
+                }
+            }
+        })
+        eventsRef?.observe(.childRemoved, with: { snapshot in
+            if let index = events.index(where: { event in
+                return event.id == snapshot.key
+            }) {
+                events.remove(at: index)
+            }
+        })
+        isStartingToObserveCandidates = false
+        isObservingCandidates = true
+    }
+    
+    static func stopObservingEvents() {
+        eventsRef?.removeAllObservers()
+        isObservingEvents = false
+    }
+    
+    static func getEventsFromFacebook(completion: @escaping ([Event]) -> Void) {
+        if AccessToken.current != nil {
+            if firebaseAuthUser != nil {
+                let userEventsGraphRequest = UserEventsGraphRequest()
+                userEventsGraphRequest.start { response, result in
+                    switch result {
+                    case .success(let response):
+                        completion(response.events)
+                    case .failed(let error):
+                        print("UserEventsGraphRequest failed: \(error.localizedDescription)")
+                    }
+                }
+            } else {
+                print("Failed to load user events data from Facebook: No authenticated Firebase user.")
+            }
+        } else {
+            print("Failed to load user events from Facebook: No Facebook access token.")
+        }
+    }
+    
+    // MARK: - Activity
+    
+    struct Activity {
+        
+        private static var _activity = Woojo.Activity()
+        
+        static var ref: FIRDatabaseReference? {
+            get {
+                if let userRef = CurrentUser.ref {
+                    return userRef.child(Constants.User.Activity.firebaseNode)
+                } else {
+                    return nil
+                }
+            }
+        }
+        
+        static var lastSeen: Date? {
+            get {
+                return _activity.lastSeen
+            }
+            set {
+                if let newValue = newValue {
+                    ref?.child(Constants.User.Activity.properties.firebaseNodes.lastSeen).setValue(Woojo.Activity.dateFormatter.string(from: newValue))
+                }
+                _activity.lastSeen = newValue
+            }
+        }
+        
+        static var signUp: Date? {
+            get {
+                return _activity.signUp
+            }
+            set {
+                if let newValue = newValue {
+                    ref?.child(Constants.User.Activity.properties.firebaseNodes.signUp).setValue(Woojo.Activity.dateFormatter.string(from: newValue))
+                }
+                _activity.signUp = newValue
+            }
+        }
+        
+        static var isObserving = false
+        static func startObserving() {
+            ref?.observe(.value, with: { snapshot in
+                if let activity = Woojo.Activity.from(firebase: snapshot) {
+                    //_activity.lastSeen = activity.lastSeen
+                    //_activity.signUp = activity.signUp
+                    _activity = activity
+                }
+            })
+            isObserving = true
+        }
+        
+        static func stopObserving() {
+            ref?.removeAllObservers()
+            isObserving = false
+        }
+        
+    }
+    
+    // MARK: - Profile
+    
     struct Profile {
         
-        var displayName: String? {
-            get {
-                return FIRAuth.auth()?.currentUser?.displayName
-            }
-        }
-        var photoURL: URL? {
-            get {
-                return FIRAuth.auth()?.currentUser?.photoURL
-            }
-        }
-        var gender: Gender?
-        var ageRange: (min: Int, max: Int)?
-        var description: String?
-        var city: String?
-        var country: String?
-        var photoID: String?
+        private static var _profile = Woojo.Profile()
         
-        static var ref: FIRDatabaseReference {
+        static var displayName: String? {
             get {
-                return CurrentUser.ref.child("profile")
+                return CurrentUser.firebaseAuthUser?.displayName
+            }
+            set {
+                let profileChangeRequest = CurrentUser.firebaseAuthUser?.profileChangeRequest()
+                profileChangeRequest?.displayName = newValue
+                profileChangeRequest?.commitChanges { error in
+                    if let error = error {
+                        print("Failed to update Firebase user profile display name: \(error.localizedDescription)")
+                    }
+                }
+                ref?.child(Constants.User.Profile.properties.firebaseNodes.firstName).setValue(newValue)
+                _profile.displayName = newValue
             }
         }
         
-        static var storageRef: FIRStorageReference {
-            get {
-                return CurrentUser.storageRef.child("profile")
+        static func photoDownloadURL(completion: @escaping (URL?, Error?) -> Void) {
+            if let url = CurrentUser.firebaseAuthUser?.photoURL {
+                FIRStorage.storage().reference(forURL: url.absoluteString).downloadURL(completion: completion)
             }
+        }
+        
+        static var gender: Gender? {
+            get {
+                return _profile.gender
+            }
+            set {
+                ref?.child(Constants.User.Profile.properties.firebaseNodes.gender).setValue(newValue?.rawValue)
+                _profile.gender = newValue
+                print("set", _profile.gender)
+            }
+        }
+        static var ageRange: (min: Int?, max: Int?)
+        static var description: String?
+        static var city: String?
+        static var country: String?
+        static var photoID: String?
+        
+        static var ref: FIRDatabaseReference? {
+            get {
+                if let userRef = CurrentUser.ref {
+                    return userRef.child(Constants.User.Profile.firebaseNode)
+                } else {
+                    return nil
+                }
+            }
+        }
+        
+        static var storageRef: FIRStorageReference? {
+            get {
+                if let userRef = CurrentUser.storageRef {
+                    return userRef.child(Constants.User.Profile.firebaseNode)
+                } else {
+                    return nil
+                }
+            }
+        }
+        
+        static var isObserving = false
+        static func startObserving() {
+            ref?.observe(.value, with: { snapshot in
+                if let profile = Woojo.Profile.from(firebase: snapshot) {
+                    _profile.gender = profile.gender
+                    print(_profile.gender)
+                    description = profile.gender?.rawValue
+                    /*Profile.ageRange = profile.ageRange
+                     Profile.description = profile.description
+                     Profile.city = profile.city
+                     Profile.country = profile.country
+                     Profile.photoID = profile.photoID*/
+                }
+            })
+            isObserving = true
+        }
+        
+        static func stopObserving() {
+            ref?.removeAllObservers()
+            isObserving = false
         }
         
         static func loadDataFromFacebook() {
-            if let user = firebaseAuthUser {
-                let userProfileGraphRequest = UserProfileGraphRequest()
-                userProfileGraphRequest.start { response, result in
-                    switch result {
-                    case.success(let response):
-                        // Update Firebase with the data loaded from Facebook
-                        let profileChangeRequest = user.profileChangeRequest()
-                        if let firstName = response.firstName {
-                            profileChangeRequest.displayName = firstName
-                        }
-                        profileChangeRequest.commitChanges { (error) in
-                            if let error = error {
-                                print("Failed to update Firebase user profile display name: \(error.localizedDescription)")
-                            }
-                        }
-                        if let responseAsDictionary = response.dictionaryValue {
-                            ref.updateChildValues(responseAsDictionary) { error, _ in
-                                if let error = error {
-                                    print("Failed to update user profile in database: \(error)")
-                                }
-                            }
-                        }
-                    case .failed(let error):
-                        print("UserProfileGraphRequest failed: \(error.localizedDescription)")
-                    }
-                }
-                
-            } else {
-                print("Failed to load profile data from Facebook: No authenticated Firebase user.")
-            }
-        }
-        
-        static func loadPhotoFromFacebook() {
-            if let user = firebaseAuthUser {
-                let userProfilePhotoGraphRequest = UserProfilePhotoGraphRequest()
-                userProfilePhotoGraphRequest.start { response, result in
-                    switch result {
-                    case .success(let response):
-                        print("Photo URL: \(response.photoURL?.absoluteString)")
-                        print("Thumbnail URL: \(response.thumbnailURL?.absoluteString)")
-                        if let photoID = response.photoID {
-                            if let photoURL = response.photoURL {
-                                let photoRef = storageRef.child("photos").child(photoID)
-                                DispatchQueue.global().async {
-                                    photoRef.put(try! Data(contentsOf: photoURL), metadata: nil) { metadata, error in
-                                        if let error = error {
-                                            print("Failed to upload profile photo to Firebase Storage: \(error)")
-                                        }
+            if AccessToken.current != nil {
+                if let user = firebaseAuthUser {
+                    let userProfileGraphRequest = UserProfileGraphRequest()
+                    userProfileGraphRequest.start { response, result in
+                        switch result {
+                        case.success(let response):
+                            // Update Firebase with the data loaded from Facebook
+                            Profile.displayName = response.profile?.displayName
+                            if let responseAsDictionary = response.profile?.toDictionary() {
+                                ref?.updateChildValues(responseAsDictionary) { error, _ in
+                                    if let error = error {
+                                        print("Failed to update user profile in database: \(error)")
                                     }
                                 }
+                                CurrentUser.ref?.child(Constants.User.Properties.fbAppScopedID).setValue(response.fbAppScopedID)
                             }
-                            if let thumbnailURL = response.thumbnailURL {
-                                let thumbnailRef = storageRef.child("thumbnails").child(photoID)
-                                DispatchQueue.global().async {
-                                    thumbnailRef.put(try! Data(contentsOf: thumbnailURL), metadata: nil) { metadata, error in
-                                        if let error = error {
-                                            print("Failed to upload profile photo to Firebase Storage: \(error)")
-                                        } else {
-                                            ref.child("photoID").setValue(photoID)
-                                            if let metadata = metadata, let downloadURL = metadata.downloadURL() {
+                            if Activity.signUp == nil {
+                                Activity.signUp = Date()
+                            }
+                        case .failed(let error):
+                            print("UserProfileGraphRequest failed: \(error.localizedDescription) \(AccessToken.current)")
+                        }
+                    }
+                } else {
+                    print("Failed to load profile data from Facebook: No authenticated Firebase user.")
+                }
+            } else {
+                print("Failed to load profile data from Facebook: No Facebook access token.")
+            }
+        }
+    
+        static func loadPhotoFromFacebook() {
+            if AccessToken.current != nil {
+                if let user = firebaseAuthUser {
+                    let userProfilePhotoGraphRequest = UserProfilePhotoGraphRequest()
+                    userProfilePhotoGraphRequest.start { response, result in
+                        switch result {
+                        case .success(let response):
+                            print("Photo URL: \(response.photoURL?.absoluteString)")
+                            print("Thumbnail URL: \(response.thumbnailURL?.absoluteString)")
+                            if let photoID = response.photoID {
+                                ref?.child(Constants.User.Profile.properties.firebaseNodes.photoID).setValue(photoID)
+                                if let photoURL = response.photoURL {
+                                    let photoRef = storageRef?.child("photos").child(photoID)
+                                    DispatchQueue.global().async {
+                                        photoRef?.put(try! Data(contentsOf: photoURL), metadata: nil) { metadata, error in
+                                            if let error = error {
+                                                print("Failed to upload profile photo to Firebase Storage: \(error)")
+                                            } else {
                                                 let profileChangeRequest = user.profileChangeRequest()
-                                                profileChangeRequest.photoURL = downloadURL
+                                                profileChangeRequest.photoURL = metadata?.downloadURL()
                                                 profileChangeRequest.commitChanges { error in
                                                     if let error = error {
                                                         print("Failed to update Firebase user profile photo URL: \(error.localizedDescription)")
@@ -143,74 +374,28 @@ class CurrentUser {
                                         }
                                     }
                                 }
+                                if let thumbnailURL = response.thumbnailURL {
+                                    let thumbnailRef = storageRef?.child("thumbnails").child(photoID)
+                                    DispatchQueue.global().async {
+                                        thumbnailRef?.put(try! Data(contentsOf: thumbnailURL), metadata: nil) { metadata, error in
+                                            if let error = error {
+                                                print("Failed to upload profile photo to Firebase Storage: \(error)")
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                            
-                        }                        
-                    case .failed(let error):
-                        print("UserProfileGraphRequest failed: \(error.localizedDescription)")
+                        case .failed(let error):
+                            print("UserProfilePhotoGraphRequest failed: \(error.localizedDescription)")
+                        }
                     }
+                } else {
+                    print("Failed to load profile photo from Facebook: No authenticated Firebase user.")
                 }
             } else {
-                print("Failed to load profile data from Facebook: No authenticated Firebase user.")
+                print("Failed to load profile photo from Facebook: No Facebook access token.")
             }
         }
-        
     }
 
-    
 }
-
-/*extension User {
-    static let firebasePath = "users"
-    static let dateFormatter: DateFormatter = {
-        let formatter: DateFormatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZ"
-        return formatter
-    }() 
-    
-    static func from(snapshot: FIRDataSnapshot) -> User? {
-        let value = snapshot.value as! [String:Any]
-        
-        let testUser = User()
-        testUser.userID = snapshot.key
-        
-        guard let account = value["account"] as? [String:Any] else {
-            print("Can't create a user without account data.")
-            return nil
-        }
-        
-        guard let profile = account["profile"] as? [String:Any] else {
-            print("Can't create a user without account profile data.")
-            return nil
-        }
-        
-        testUser.avatarImageURL = URL(string: profile["profileImageURL"] as! String)
-        
-        guard let cachedUserProfile = profile["cachedUserProfile"] as? [String:Any] else {
-            print("Can't create a user without account profile cachedUserProfile data.")
-            return nil
-        }
-        
-        testUser.firstName = cachedUserProfile["first_name"] as! String
-        testUser.lastName = cachedUserProfile["last_name"] as! String
-        testUser.gender = Gender(rawValue: cachedUserProfile["gender"] as! String)!
-        
-        return testUser
-    }
-    
-    static func get(by uid: String, completion: @escaping (User) -> Void) {
-        FIRDatabase.database().reference().child(User.firebasePath).child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-            if let user = User.from(snapshot: snapshot) {
-                completion(user)
-            } else {
-                print("Failed to get user with uid \(uid)")
-            }
-        })
-    }
-    
-    func toAny() -> Any {
-        let any = [String:Any]()
-        
-        return any
-    }
-}*/

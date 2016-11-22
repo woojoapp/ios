@@ -9,12 +9,12 @@
 import UIKit
 import FirebaseAuth
 import FirebaseDatabase
-import FirebaseDatabaseUI
 
 class EventsTableViewController: UITableViewController {
     
-    var ref: FIRDatabaseReference!
-    var dataSource: FirebaseTableViewDataSource!
+    //var dataSource: FUITableViewDataSource!
+    
+    var authStateDidChangeListenerHandle: FIRAuthStateDidChangeListenerHandle?
     
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -23,42 +23,61 @@ class EventsTableViewController: UITableViewController {
     }()
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         
-        ref = FIRDatabase.database().reference()
-        
+        tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = 100
         
-        FIRAuth.auth()?.addStateDidChangeListener { auth, user in
+        if let authStateDidChangeListenerHandle = authStateDidChangeListenerHandle {
+            FIRAuth.auth()?.removeStateDidChangeListener(authStateDidChangeListenerHandle)
+        }
+        authStateDidChangeListenerHandle = FIRAuth.auth()?.addStateDidChangeListener { auth, user in
             if let user = user {
-                self.setDataSource(for: user.uid)
                 self.tableView.reloadData()
-                super.viewDidLoad()
+                if let avatarSettingsButton = self.navigationItem.rightBarButtonItem?.customView as? UIButton {
+                    CurrentUser.Profile.photoDownloadURL { url, error in
+                        if let url = url {
+                            avatarSettingsButton.sd_setImage(with: url, for: .normal)
+                        }
+                    }
+                }
             }
         }
         
+        let settingsItem = UIBarButtonItem()
+        let settingsButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        settingsButton.layer.cornerRadius = settingsButton.frame.width / 2
+        settingsButton.layer.masksToBounds = true
+        settingsButton.addTarget(self, action: #selector(showSettings), for: .touchUpInside)
+        settingsItem.customView = settingsButton
+        self.navigationItem.setRightBarButton(settingsItem, animated: true)
+        
+    }
+    
+    func showSettings(sender : Any?) {
+        print(CurrentUser.Activity.signUp)
+        let settingsController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "settingsNavigation")
+        self.present(settingsController, animated: true, completion: nil)
     }
     
     func setDataSource(for uid: String) {
         print("Setting events dataSource for \(uid)")
-        
-        self.dataSource = FirebaseTableViewDataSource(ref: ref.child("users").child(uid).child("events"),
-                                                      modelClass: FIRDataSnapshot.self,
-                                                      nibNamed: "EventsTableViewCell",
-                                                      cellReuseIdentifier: "EventCell",
-                                                      view: self.tableView)
-        self.dataSource.populateCell { (cell: UITableViewCell, obj: NSObject) in
-            let snap = obj as! FIRDataSnapshot
-            let eventCell = cell as! EventsTableViewCell
-            let eventRef = self.ref.child("events").child(snap.key)
-            eventRef.keepSynced(true)
-            eventRef.observe(.value) { (eventSnap: FIRDataSnapshot) in
-                let event = Event.from(snapshot: eventSnap)!
-                eventCell.populate(with: event)
+        /*if let ref = CurrentUser.ref {
+            self.dataSource = FUITableViewDataSource(
+            self.dataSource.populateCell { (cell: UITableViewCell, obj: NSObject) in
+                let snap = obj as! FIRDataSnapshot
+                let eventCell = cell as! EventsTableViewCell
+                let eventRef = FIRDatabase.database().reference().child("events").child(snap.key)
+                eventRef.keepSynced(true)
+                eventRef.observe(.value) { (eventSnap: FIRDataSnapshot) in
+                    let event = Event.from(snapshot: eventSnap)!
+                    eventCell.populate(with: event)
+                }
             }
-        }
-        
-        self.tableView.dataSource = self.dataSource
+            
+            self.tableView.dataSource = self.dataSource
+        }*/
     }
 
     override func didReceiveMemoryWarning() {

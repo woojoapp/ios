@@ -43,7 +43,19 @@ class ALChatsViewController: UIViewController, ALMessagesViewDelegate {
                // self.showViewControllerInContainerView(chatController)
             }
         }
-        //chatManager.registerUserAndLaunchChat(alUser, fromController: self, forUser: nil)
+        
+        let settingsItem = UIBarButtonItem()
+        let settingsButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        settingsButton.layer.cornerRadius = settingsButton.frame.width / 2
+        settingsButton.layer.masksToBounds = true
+        CurrentUser.Profile.photoDownloadURL { url, error in
+            if let url = url {
+                settingsButton.sd_setImage(with: url, for: .normal)
+            }
+        }
+        settingsButton.addTarget(self, action: #selector(showSettings), for: .touchUpInside)
+        settingsItem.customView = settingsButton
+        self.navigationItem.setRightBarButton(settingsItem, animated: true) 
 
     }
     

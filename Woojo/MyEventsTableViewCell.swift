@@ -1,14 +1,14 @@
 //
-//  EventsTableViewCell.swift
+//  MyEventsTableViewCell.swift
 //  Woojo
 //
-//  Created by Edouard Goossens on 03/11/2016.
+//  Created by Edouard Goossens on 21/11/2016.
 //  Copyright © 2016 Tasty Electrons. All rights reserved.
 //
 
 import UIKit
 
-class EventsTableViewCell: UITableViewCell {
+class MyEventsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var placeLabel: UILabel!
@@ -21,10 +21,9 @@ class EventsTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
     
@@ -39,5 +38,5 @@ class EventsTableViewCell: UITableViewCell {
             thumbnailView.sd_setImage(with: pictureURL)
         }
     }
-
+    
 }

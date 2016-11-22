@@ -43,8 +43,13 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
         UIGraphicsEndImageContext()
         
         self.view.backgroundColor = UIColor.init(patternImage: image!)*/
-
-        let loginButton = LoginButton(readPermissions: [.publicProfile, .userFriends, .custom("user_events"), .custom("user_photos")])
+        let readPermissions: [FacebookCore.ReadPermission] = [.publicProfile,
+                                                              .userFriends,
+                                                              .custom("user_events"),
+                                                              .custom("user_photos"),
+                                                              .custom("user_location"),
+                                                              .custom("user_birthday")]
+        let loginButton = LoginButton(readPermissions: readPermissions)
         loginButton.delegate = self
         loginButton.center = self.view.center
         self.view.addSubview(loginButton)

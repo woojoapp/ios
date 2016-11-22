@@ -8,6 +8,7 @@
 
 import Foundation
 import FacebookCore
+import FirebaseAuth
 
 struct UserProfileGraphRequest: GraphRequestProtocol {
     
@@ -16,28 +17,25 @@ struct UserProfileGraphRequest: GraphRequestProtocol {
         init(rawResponse: Any?) {
             self.rawResponse = rawResponse
             if let rawResponse = rawResponse as? [String:Any] {
-                self.firstName = rawResponse["first_name"] as? String
-                if let gender = rawResponse["gender"] as? String {
-                    self.gender = Gender(rawValue: gender)
-                }
-                if let ageRange = rawResponse["age_range"] as? [String:Any] {
-                    self.ageRange = (ageRange["min"] as? Int, ageRange["max"] as? Int)
-                }
+                profile = Profile.from(graphAPI: rawResponse)
+                fbAppScopedID = rawResponse["id"] as? String
             }
         }
         
-        var dictionaryValue: [String : Any]? {
-            return rawResponse as? [String : Any]
-        }
         var rawResponse: Any?
-        var firstName: String?
-        var gender: Gender?
-        var ageRange: (min: Int?, max: Int?)
+        var profile: Profile?
+        var fbAppScopedID: String?
         
     }
     
-    var graphPath = "/me"
-    var parameters: [String: Any]? = ["fields": "id, first_name, age_range, birthday, gender"]
+    var graphPath = Constants.GraphRequest.UserProfile.path
+    var parameters: [String: Any]? = {
+        let fields = [Constants.GraphRequest.UserProfile.fieldID,
+                      Constants.User.Profile.properties.graphAPIKeys.firstName,
+                      Constants.User.Profile.properties.graphAPIKeys.ageRange,
+                      Constants.User.Profile.properties.graphAPIKeys.gender]
+        return [Constants.GraphRequest.fields:fields.joined(separator: Constants.GraphRequest.fieldsSeparator)]
+    }()
     var accessToken: AccessToken? = AccessToken.current
     var httpMethod: GraphRequestHTTPMethod = .GET
     var apiVersion: GraphAPIVersion = .defaultVersion

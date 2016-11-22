@@ -1,0 +1,57 @@
+
+/* Class = "UINavigationItem"; title = "Candidates"; ObjectID = "CDk-lZ-eUH"; */
+"CDk-lZ-eUH.title" = "Candidates";
+
+/* Class = "UITabBarItem"; title = "Candidates"; ObjectID = "M3j-qo-Hg0"; */
+"M3j-qo-Hg0.title" = "Candidates";
+
+/* Class = "UISegmentedControl"; ObE-Ru-LMb.segmentTitles[0] = "Explore"; ObjectID = "ObE-Ru-LMb"; */
+"ObE-Ru-LMb.segmentTitles[0]" = "Explore";
+
+/* Class = "UISegmentedControl"; ObE-Ru-LMb.segmentTitles[1] = "My Events"; ObjectID = "ObE-Ru-LMb"; */
+"ObE-Ru-LMb.segmentTitles[1]" = "My Events";
+
+/* Class = "UISegmentedControl"; ObE-Ru-LMb.segmentTitles[2] = "Search All"; ObjectID = "ObE-Ru-LMb"; */
+"ObE-Ru-LMb.segmentTitles[2]" = "Search All";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "RxL-h2-NNI"; */
+"RxL-h2-NNI.title" = "Settings";
+
+/* Class = "UINavigationItem"; title = "Applozic Chats"; ObjectID = "SrP-NJ-Wbv"; */
+"SrP-NJ-Wbv.title" = "Chats";
+
+/* Class = "UIButton"; normalTitle = "Logout"; ObjectID = "USm-Mh-TbO"; */
+"USm-Mh-TbO.normalTitle" = "Logout";
+
+/* Class = "UIBarButtonItem"; title = "Settings"; ObjectID = "V3t-aW-lJa"; */
+"V3t-aW-lJa.title" = "Settings";
+
+/* Class = "UIButton"; normalTitle = "Pass"; ObjectID = "VSF-JD-26R"; */
+"VSF-JD-26R.normalTitle" = "Pass";
+
+/* Class = "UIViewController"; title = "Candidates"; ObjectID = "Vc7-JZ-mOB"; */
+"Vc7-JZ-mOB.title" = "Candidates";
+
+/* Class = "UITabBarItem"; title = "Events"; ObjectID = "YPH-LB-F4X"; */
+"YPH-LB-F4X.title" = "Events";
+
+/* Class = "UINavigationItem"; title = "Events"; ObjectID = "Zfg-wB-Sx2"; */
+"Zfg-wB-Sx2.title" = "Events";
+
+/* Class = "UITableViewController"; title = "Events"; ObjectID = "b1O-qF-xd8"; */
+"b1O-qF-xd8.title" = "Events";
+
+/* Class = "UITabBarItem"; title = "Applozic"; ObjectID = "gzh-7A-ZYM"; */
+"gzh-7A-ZYM.title" = "Chats";
+
+/* Class = "UINavigationItem"; title = "Add event"; ObjectID = "hcK-4s-VgH"; */
+"hcK-4s-VgH.title" = "Add event";
+
+/* Class = "UIButton"; normalTitle = "Like"; ObjectID = "jxu-fz-kAz"; */
+"jxu-fz-kAz.normalTitle" = "Like";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "nUe-ch-gUY"; */
+"nUe-ch-gUY.text" = "Title";
+
+/* Class = "UIBarButtonItem"; title = "Settings"; ObjectID = "pQK-fE-H3o"; */
+"pQK-fE-H3o.title" = "Settings";

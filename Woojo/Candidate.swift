@@ -10,53 +10,70 @@ import UIKit
 import FirebaseDatabase
 import FirebaseStorage
 
-
-// TODO: Candidate should implement the PublicProfile protocol 
-
-struct Candidate {
+struct Candidate: User, Equatable {
     
-    let uid: String
-    let n: Int
-    let created: Date
-    var profilePhoto: UIImage?
+    var uid: String?
+    var profile: Profile?
+    var activity: Activity?
     
+}
+
+func == (left: Candidate, right: Candidate) -> Bool {
+    return left.uid == right.uid
 }
 
 extension Candidate {
     
-    static let dateFormatter: DateFormatter = {
-        let formatter: DateFormatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZ"
-        return formatter
-    }()
-    
-    static func from(snapshot: FIRDataSnapshot) -> Candidate? {
-        let value = snapshot.value as! [String:Any]
-        if let uid = value["uid"] as? String,
-            let n = value["n"] as? Int,
-            let created = value["created"] as? Double {
-            return Candidate(uid: uid, n: n, created: Date(timeIntervalSince1970: created as Double), profilePhoto: nil)
+    /*static func from(snapshot: FIRDataSnapshot) -> Candidate? {
+        if let value = snapshot.value as? [String:Any] {
+            var candidate = Candidate()
+            candidate.uid = value["uid"] as? String
+            
+            return candidate
+        } else {
+            print("Failed to create Candidate from snapshot.")
+            return nil
         }
-        return nil
-    }
+    }*/
     
-    func toAny() -> Any {
-        return [
-            "uid": self.uid,
-            "n": self.n,
-            "created": self.created.timeIntervalSince1970
-        ]
-    }
-    
-    func getPicture(handler: @escaping (_ image:UIImage?) -> Void) {
-        let storageRef = FIRStorage.storage().reference(forURL: "gs://resplendent-fire-3481.appspot.com")
-        let pictureRef = storageRef.child("images").child("prospects").child(self.uid)
-        pictureRef.data(withMaxSize: 1 * 1024 * 1024) { (data, error) in
-            if error != nil {
-                print("Error getting picture for \(self.uid)")
-            } else {
-                handler(UIImage(data: data!))
+    var ref: FIRDatabaseReference? {
+        get {
+            if let userCandidatesRef = CurrentUser.candidatesRef, let uid = uid {
+                return userCandidatesRef.child(uid)
             }
+            return  nil
         }
     }
+    
+    static func get(for uid: String, completion: @escaping (Candidate?) -> Void) {
+        var candidate = Candidate()
+        candidate.uid = uid
+        Profile.get(for: uid) { profile in
+            candidate.profile = profile
+            candidate.profile?.user = candidate
+            completion(candidate)
+        }
+    }
+    
+    func like(completion: ((Error?, FIRDatabaseReference) -> Void)? = nil) {
+        // Like the candidate
+        print("Liked \(uid)")
+        remove(completion: completion)
+    }
+    
+    func pass(completion: ((Error?, FIRDatabaseReference) -> Void)? = nil) {
+        // Pass on the candidate
+        print("Passed \(uid)")
+        remove(completion: completion)
+    }
+    
+    func remove(completion: ((Error?, FIRDatabaseReference) -> Void)? = nil) {
+        ref?.removeValue { error, ref in
+            if let error = error {
+                print("Failed to remove candidate: \(error)")
+            }
+            completion?(error, ref)
+        }
+    }
+    
 }
