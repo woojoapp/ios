@@ -175,27 +175,27 @@ extension User {
                                     photoRef?.put(try Data(contentsOf: photoURL), metadata: nil) { metadata, error in
                                         if let error = error {
                                             print("Failed to upload profile photo to Firebase Storage: \(error)")
+                                        } else {
+                                            if let thumbnailURL = response.thumbnailURL {
+                                                let thumbnailRef = self.storageRef?.child(Constants.User.Profile.Thumbnail.firebaseNode).child(photoID)
+                                                DispatchQueue.global().async {
+                                                    do {
+                                                        thumbnailRef?.put(try Data(contentsOf: thumbnailURL), metadata: nil) { metadata, error in
+                                                            if let error = error {
+                                                                print("Failed to upload profile photo thumbnail to Firebase Storage: \(error)")
+                                                            }
+                                                            completion?(error)
+                                                        }
+                                                    } catch {
+                                                        print("Failed to download profile photo thumbnail from Facebook: \(error)")
+                                                        completion?(error)
+                                                    }
+                                                }
+                                            }
                                         }
-                                        completion?(error)
                                     }
                                 } catch {
                                     print("Failed to download profile photo from Facebook: \(error)")
-                                    completion?(error)
-                                }
-                            }
-                        }
-                        if let thumbnailURL = response.thumbnailURL {
-                            let thumbnailRef = self.storageRef?.child(Constants.User.Profile.Thumbnail.firebaseNode).child(photoID)
-                            DispatchQueue.global().async {
-                                do {
-                                    thumbnailRef?.put(try Data(contentsOf: thumbnailURL), metadata: nil) { metadata, error in
-                                        if let error = error {
-                                            print("Failed to upload profile photo thumbnail to Firebase Storage: \(error)")
-                                        }
-                                        completion?(error)
-                                    }
-                                } catch {
-                                    print("Failed to download profile photo thumbnail from Facebook: \(error)")
                                     completion?(error)
                                 }
                             }

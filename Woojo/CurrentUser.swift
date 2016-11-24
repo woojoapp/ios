@@ -36,6 +36,15 @@ class CurrentUser: User {
         }
     }
     
+    override var fbAccessToken: AccessToken? {
+        get {
+            return AccessToken.current
+        }
+        set {
+            super.fbAccessToken = newValue
+        }
+    }
+    
     var firebaseAuthUser: FIRUser? {
         get {
             return FIRAuth.auth()?.currentUser

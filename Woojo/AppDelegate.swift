@@ -35,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 // Authenticated user changed
                 if Woojo.User.current == nil || Woojo.User.current?.uid != user.uid {
+                    print("Authenticated user changed", Woojo.User.current, user)
                     Woojo.User.current = CurrentUser()
                     let group = DispatchGroup()
                     group.enter()
@@ -46,7 +47,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         group.leave()
                     })
                     group.notify(queue: .main, execute: {
-                        Woojo.User.current?.profile.loadFromFirebase()
+                        Woojo.User.current?.profile.loadFromFirebase(completion: { _, _ in
+                            // Notify authenticated user observers
+                        })
                     })
                 }
                 // Start observing candidates
