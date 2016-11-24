@@ -9,80 +9,335 @@
 import Foundation
 import FirebaseDatabase
 import FirebaseStorage
+import FacebookCore
 
-struct Profile {
-    
-    var displayName: String?
-    var photoID: String?
-    var gender: Gender?
-    var ageRange: (min: Int?, max: Int?)
-    var description: String?
-    var city: String?
-    var country: String?
-    var user: User?
-    
-    func photoDownloadURL(completion: @escaping (URL?, Error?) -> Void) {
-        if let user = user, let uid = user.uid, let photoID = photoID {
-            FIRStorage.storage().reference().child(Constants.User.firebaseNode).child(uid).child(Constants.User.Profile.firebaseNode).child(Constants.User.Profile.Photo.firebaseNode).child(photoID).downloadURL(completion: completion)
+extension User {
+ 
+    class Profile {
+        
+        // MARK: - Properties
+        
+        var displayName: String?
+        var photoID: String?
+        var gender: Gender?
+        var ageRange: (min: Int?, max: Int?)
+        var description: String?
+        var city: String?
+        var country: String?
+        var user: User
+        
+        var isObserved = false
+        
+        var ref: FIRDatabaseReference? {
+            get {
+                return user.ref.child(Constants.User.Profile.firebaseNode)
+            }
         }
+        
+        var storageRef: FIRStorageReference? {
+            get {
+                return user.storageRef.child(Constants.User.Profile.firebaseNode)
+            }
+        }
+        
+        init(for user: User) {
+            self.user = user
+        }
+        
+        // MARK: - Methods
+        
+        func generatePhotoDownloadURL(completion: @escaping (URL?, Error?) -> Void) {
+            if let photoID = photoID {
+                storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(photoID).downloadURL(completion: completion)
+            }
+        }
+        
+        func loadFrom(firebase snapshot: FIRDataSnapshot) {
+            if let value = snapshot.value as? [String:Any] {
+                displayName = value[Constants.User.Profile.properties.firebaseNodes.firstName] as? String
+                photoID = value[Constants.User.Profile.properties.firebaseNodes.photoID] as? String
+                if let genderString = value[Constants.User.Profile.properties.firebaseNodes.gender] as? String {
+                    gender = Gender(rawValue: genderString)
+                }
+                description = value[Constants.User.Profile.properties.firebaseNodes.description] as? String
+                city = value[Constants.User.Profile.properties.firebaseNodes.city] as? String
+                country = value[Constants.User.Profile.properties.firebaseNodes.country] as? String
+            } else {
+                print("Failed to create Profile from Firebase snapshot.", snapshot)
+            }
+        }
+        
+        /*static func from(firebase snapshot: FIRDataSnapshot) -> Profile? {
+            let profile = Profile()
+            profile.loadFrom(firebase: snapshot)
+            return profile
+        }*/
+        
+        func loadFrom(graphAPI dict: [String:Any]?) {
+            if let dict = dict {
+                displayName = dict[Constants.User.Profile.properties.graphAPIKeys.firstName] as? String
+                if let genderString = dict[Constants.User.Profile.properties.graphAPIKeys.gender] as? String {
+                    gender = Gender(rawValue: genderString)
+                }
+                if let ageRangeDict = dict[Constants.User.Profile.properties.graphAPIKeys.ageRange] as? [String:Any] {
+                    ageRange = (ageRangeDict[Constants.User.Profile.properties.graphAPIKeys.ageRangeMin] as? Int, ageRangeDict[Constants.User.Profile.properties.graphAPIKeys.ageRangeMax] as? Int)
+                }
+            } else {
+                print("Failed to create Profile from Graph API dictionary.", dict as Any)
+            }
+        }
+        
+        /*static func from(graphAPI dict: [String:Any]?) -> Profile? {
+            let profile = Profile()
+            profile.loadFrom(graphAPI: dict)
+            return profile
+        }*/
+        
+        /*static func get(for uid: String, completion: ((Profile?, Error?) -> Void)?) {
+            FIRDatabase.database().reference().child(Constants.User.firebaseNode).child(uid).child(Constants.User.Profile.firebaseNode).observeSingleEvent(of: .value, with: { snapshot in
+                completion?(from(firebase: snapshot), nil)
+            }, withCancel: { error in
+                print("Failed to get profile from uid: \(error.localizedDescription)")
+                completion?(nil, error)
+            })
+        }*/
+        
+        func loadFromFirebase(completion: ((Profile?, Error?) -> Void)? = nil) {
+            ref?.observeSingleEvent(of: .value, with: { snapshot in
+                self.loadFrom(firebase: snapshot)
+                completion?(self, nil)
+            }, withCancel: { error in
+                print("Failed to load profile from Firebase: \(error.localizedDescription)")
+                completion?(self, error)
+            })
+        }
+        
+        func toDictionary() -> [String:Any] {
+            var dict: [String:Any] = [:]
+            dict[Constants.User.Profile.properties.firebaseNodes.firstName] = self.displayName
+            dict[Constants.User.Profile.properties.firebaseNodes.photoID] = self.photoID
+            dict[Constants.User.Profile.properties.firebaseNodes.gender] = self.gender?.rawValue
+            dict[Constants.User.Profile.properties.firebaseNodes.ageRange] = [Constants.User.Profile.properties.firebaseNodes.ageRangeMin:self.ageRange.min,
+                                                                              Constants.User.Profile.properties.firebaseNodes.ageRangeMax:self.ageRange.max]
+            dict[Constants.User.Profile.properties.firebaseNodes.description] = self.description
+            dict[Constants.User.Profile.properties.firebaseNodes.city] = self.city
+            dict[Constants.User.Profile.properties.firebaseNodes.country] = self.country
+            return dict
+        }
+        
+        func startObserving() {
+            isObserved = true
+            ref?.observe(.value, with: { snapshot in
+                self.loadFrom(firebase: snapshot)
+            }, withCancel: { error in
+                print("Failed to observe profile: \(error.localizedDescription)")
+                self.isObserved = false
+            })
+        }
+        
+        func stopObserving() {
+            ref?.removeAllObservers()
+            isObserved = false
+        }
+        
+        func updateFromFacebook(completion: ((Error?) -> Void)?) {
+            User.Profile.GraphRequest(profile: self)?.start { response, result in
+                switch result {
+                case.success(let response):
+                    // Update Firebase with the data loaded from Facebook
+                    self.displayName = response.profile?.displayName
+                    if let responseAsDictionary = response.profile?.toDictionary() {
+                        self.ref?.updateChildValues(responseAsDictionary) { error, _ in
+                            if let error = error {
+                                print("Failed to update user profile in database: \(error)")
+                            }
+                            completion?(error)
+                        }
+                        self.ref?.child(Constants.User.Properties.fbAppScopedID).setValue(response.fbAppScopedID)
+                    }
+                case .failed(let error):
+                    print("UserProfileGraphRequest failed: \(error.localizedDescription) \(AccessToken.current)")
+                    completion?(error)
+                }
+            }
+        }
+        
+        func updatePhotoFromFacebook(completion: ((Error?) -> Void)?) {
+            User.Profile.PhotoGraphRequest(profile: self)?.start { response, result in
+                switch result {
+                case .success(let response):
+                    if let photoID = response.photoID {
+                        self.ref?.child(Constants.User.Profile.properties.firebaseNodes.photoID).setValue(photoID)
+                        if let photoURL = response.photoURL {
+                            let photoRef = self.storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(photoID)
+                            DispatchQueue.global().async {
+                                do {
+                                    photoRef?.put(try Data(contentsOf: photoURL), metadata: nil) { metadata, error in
+                                        if let error = error {
+                                            print("Failed to upload profile photo to Firebase Storage: \(error)")
+                                        }
+                                        completion?(error)
+                                    }
+                                } catch {
+                                    print("Failed to download profile photo from Facebook: \(error)")
+                                    completion?(error)
+                                }
+                            }
+                        }
+                        if let thumbnailURL = response.thumbnailURL {
+                            let thumbnailRef = self.storageRef?.child(Constants.User.Profile.Thumbnail.firebaseNode).child(photoID)
+                            DispatchQueue.global().async {
+                                do {
+                                    thumbnailRef?.put(try Data(contentsOf: thumbnailURL), metadata: nil) { metadata, error in
+                                        if let error = error {
+                                            print("Failed to upload profile photo thumbnail to Firebase Storage: \(error)")
+                                        }
+                                        completion?(error)
+                                    }
+                                } catch {
+                                    print("Failed to download profile photo thumbnail from Facebook: \(error)")
+                                    completion?(error)
+                                }
+                            }
+                        }
+                    }
+                case .failed(let error):
+                    print("UserProfilePhotoGraphRequest failed: \(error.localizedDescription)")
+                    completion?(error)
+                }
+            }
+        }
+        
     }
     
 }
 
-extension Profile {
+// MARK: - Graph requests
 
-    static func from(firebase snapshot: FIRDataSnapshot) -> Profile? {
-        if let value = snapshot.value as? [String:Any] {
-            var profile = Profile()
-            profile.displayName = value[Constants.User.Profile.properties.firebaseNodes.firstName] as? String
-            profile.photoID = value[Constants.User.Profile.properties.firebaseNodes.photoID] as? String
-            if let genderString = value[Constants.User.Profile.properties.firebaseNodes.gender] as? String {
-                profile.gender = Gender(rawValue: genderString)
+extension User.Profile {
+    
+    struct GraphRequest: GraphRequestProtocol {
+        
+        struct Response: GraphResponseProtocol {
+            
+            init(rawResponse: Any?) {
+                self.rawResponse = rawResponse
+                if let rawResponse = rawResponse as? [String:Any] {
+                    profile = User.Profile(for: User(uid: "_"))
+                    profile.loadFrom(graphAPI: rawResponse)
+                    fbAppScopedID = rawResponse["id"] as? String
+                }
             }
-            profile.description = value[Constants.User.Profile.properties.firebaseNodes.description] as? String
-            profile.city = value[Constants.User.Profile.properties.firebaseNodes.city] as? String
-            profile.country = value[Constants.User.Profile.properties.firebaseNodes.country] as? String
-            return profile
-        } else {
-            print("Failed to create Profile from Firebase snapshot.", snapshot)
-            return nil
+            
+            var rawResponse: Any?
+            var profile: User.Profile!
+            var fbAppScopedID: String?
+            
         }
-    }
-    
-    static func from(graphAPI dict: [String:Any]?) -> Profile? {
-        if let dict = dict {
-            var profile = Profile()
-            profile.displayName = dict[Constants.User.Profile.properties.graphAPIKeys.firstName] as? String
-            if let gender = dict[Constants.User.Profile.properties.graphAPIKeys.gender] as? String {
-                profile.gender = Gender(rawValue: gender)
+        
+        init?(profile: User.Profile) {
+            if let fbAppScopedID = profile.user.fbAppScopedID {
+                self.fbAppScopedID = fbAppScopedID
+            } else {
+                print("Failed to initialize User.Profile.GraphRequest from profile. Missing FB app scoped ID.", profile)
+                return nil
             }
-            if let ageRange = dict[Constants.User.Profile.properties.graphAPIKeys.ageRange] as? [String:Any] {
-                profile.ageRange = (ageRange[Constants.User.Profile.properties.graphAPIKeys.ageRangeMin] as? Int, ageRange[Constants.User.Profile.properties.graphAPIKeys.ageRangeMax] as? Int)
+            if let fbAccessToken = profile.user.fbAccessToken {
+                self.accessToken = fbAccessToken
+            } else {
+                print("Failed to initialize User.Profile.GraphRequest from profile. Missing FB access token.", profile)
+                return nil
             }
-            return profile
-        } else {
-            print("Failed to create Profile from Graph API dictionary.", dict as Any)
-            return nil
+            self.profile = profile
         }
+        
+        var profile: User.Profile
+        var fbAppScopedID: String
+        var accessToken: AccessToken?
+        var graphPath: String {
+            get {
+                return "/\(fbAppScopedID)"
+            }
+        }
+        var parameters: [String: Any]? = {
+            let fields = [Constants.GraphRequest.UserProfile.fieldID,
+                          Constants.User.Profile.properties.graphAPIKeys.firstName,
+                          Constants.User.Profile.properties.graphAPIKeys.ageRange,
+                          Constants.User.Profile.properties.graphAPIKeys.gender]
+            return [Constants.GraphRequest.fields:fields.joined(separator: Constants.GraphRequest.fieldsSeparator)]
+        }()
+        var httpMethod: GraphRequestHTTPMethod = .GET
+        var apiVersion: GraphAPIVersion = .defaultVersion
+        
     }
     
-    static func get(for uid: String, completion: @escaping (Profile?) -> Void) {
-        FIRDatabase.database().reference().child(Constants.User.firebaseNode).child(uid).child(Constants.User.Profile.firebaseNode).observeSingleEvent(of: .value, with: { snapshot in
-            completion(from(firebase: snapshot))
-        })
+    struct PhotoGraphRequest: GraphRequestProtocol {
+        
+        struct Response: GraphResponseProtocol {
+            
+            init(rawResponse: Any?) {
+                self.rawResponse = rawResponse
+                if let dict = rawResponse as? [String:Any] {
+                    let albums = dict[Constants.GraphRequest.UserProfilePhoto.keys.data] as! NSArray
+                    for album in albums {
+                        if let album = album as? [String:Any] {
+                            if let albumType = album[Constants.GraphRequest.UserProfilePhoto.keys.type] as? String {
+                                if albumType == Constants.GraphRequest.UserProfilePhoto.keys.typeProfile {
+                                    if let albumCover = album[Constants.GraphRequest.UserProfilePhoto.keys.coverPhoto] as? [String:Any] {
+                                        if let url = albumCover[Constants.GraphRequest.UserProfilePhoto.keys.coverPhotoSource] as? String {
+                                            self.photoURL = URL(string: url)
+                                        }
+                                        if let id = albumCover[Constants.GraphRequest.UserProfilePhoto.keys.coverPhotoID] as? String {
+                                            self.photoID = id
+                                        }
+                                    }
+                                    if let picture = album[Constants.GraphRequest.UserProfilePhoto.keys.picture] as? [String:Any] {
+                                        if let pictureData = picture[Constants.GraphRequest.UserProfilePhoto.keys.pictureData] as? [String:Any] {
+                                            if let url = pictureData[Constants.GraphRequest.UserProfilePhoto.keys.pictureDataURL] as? String {
+                                                self.thumbnailURL = URL(string: url)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            var rawResponse: Any?
+            var photoURL: URL?
+            var photoID: String?
+            var thumbnailURL: URL?
+            
+        }
+        
+        init?(profile: User.Profile) {
+            if let fbAppScopedID = profile.user.fbAppScopedID {
+                self.fbAppScopedID = fbAppScopedID
+            } else {
+                print("Failed to initialize User.Profile.GraphRequest from profile. Missing FB app scoped ID.", profile)
+                return nil
+            }
+            if let fbAccessToken = profile.user.fbAccessToken {
+                self.fbAccessToken = fbAccessToken
+            } else {
+                print("Failed to initialize User.Profile.GraphRequest from profile. Missing FB access token.", profile)
+                return nil
+            }
+        }
+        
+        var fbAppScopedID: String
+        var fbAccessToken: AccessToken?
+        var graphPath: String {
+            get {
+                return "/\(fbAppScopedID)/\(Constants.GraphRequest.UserProfilePhoto.path)"
+            }
+        }
+        var parameters: [String:Any]? = [Constants.GraphRequest.fields:Constants.GraphRequest.UserProfilePhoto.fields]
+        var accessToken: AccessToken? = AccessToken.current
+        var httpMethod: GraphRequestHTTPMethod = .GET
+        var apiVersion: GraphAPIVersion = .defaultVersion
+        
     }
-    
-    func toDictionary() -> [String:Any] {
-        var dict: [String:Any] = [:]
-        dict[Constants.User.Profile.properties.firebaseNodes.firstName] = self.displayName
-        dict[Constants.User.Profile.properties.firebaseNodes.photoID] = self.photoID
-        dict[Constants.User.Profile.properties.firebaseNodes.gender] = self.gender?.rawValue
-        dict[Constants.User.Profile.properties.firebaseNodes.ageRange] = [Constants.User.Profile.properties.firebaseNodes.ageRangeMin:self.ageRange.min,
-                                                                          Constants.User.Profile.properties.firebaseNodes.ageRangeMax:self.ageRange.max]
-        dict[Constants.User.Profile.properties.firebaseNodes.description] = self.description
-        dict[Constants.User.Profile.properties.firebaseNodes.city] = self.city
-        dict[Constants.User.Profile.properties.firebaseNodes.country] = self.country
-        return dict
-    }
-
 }

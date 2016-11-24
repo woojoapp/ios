@@ -33,13 +33,11 @@ class EventsTableViewController: UITableViewController {
             FIRAuth.auth()?.removeStateDidChangeListener(authStateDidChangeListenerHandle)
         }
         authStateDidChangeListenerHandle = FIRAuth.auth()?.addStateDidChangeListener { auth, user in
-            if let user = user {
-                self.tableView.reloadData()
-                if let avatarSettingsButton = self.navigationItem.rightBarButtonItem?.customView as? UIButton {
-                    CurrentUser.Profile.photoDownloadURL { url, error in
-                        if let url = url {
-                            avatarSettingsButton.sd_setImage(with: url, for: .normal)
-                        }
+            self.tableView.reloadData()
+            if let avatarSettingsButton = self.navigationItem.rightBarButtonItem?.customView as? UIButton {
+                User.current?.profile.generatePhotoDownloadURL { url, error in
+                    if let url = url {
+                        avatarSettingsButton.sd_setImage(with: url, for: .normal)
                     }
                 }
             }
@@ -56,7 +54,7 @@ class EventsTableViewController: UITableViewController {
     }
     
     func showSettings(sender : Any?) {
-        print(CurrentUser.Activity.signUp)
+        print(User.current?.activity.signUp)
         let settingsController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "settingsNavigation")
         self.present(settingsController, animated: true, completion: nil)
     }

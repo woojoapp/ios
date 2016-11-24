@@ -48,7 +48,7 @@ class ALChatsViewController: UIViewController, ALMessagesViewDelegate {
         let settingsButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         settingsButton.layer.cornerRadius = settingsButton.frame.width / 2
         settingsButton.layer.masksToBounds = true
-        CurrentUser.Profile.photoDownloadURL { url, error in
+        User.current?.profile.generatePhotoDownloadURL { url, error in
             if let url = url {
                 settingsButton.sd_setImage(with: url, for: .normal)
             }

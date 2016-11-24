@@ -24,6 +24,15 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        setupUI()
+        /*CurrentUser.Profile.observers.append({ [unowned self] (profile: Profile) in
+            self.setupUI()
+        })*/
+    }
+    
+    func setupUI() {
+        print(User.current?.profile.gender?.rawValue)
+        testLabel.text = User.current?.profile.gender?.rawValue
     }
 
     override func didReceiveMemoryWarning() {

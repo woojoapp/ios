@@ -25,19 +25,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        // Initialize Facebook SDK
         FacebookCore.SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
-        print("FB TOKEN \(AccessToken.current)")
+        
         // Authentication state change listener
         FIRAuth.auth()?.addStateDidChangeListener { auth, user in
-            if user != nil {
-                // Start observing candidates
-                if !CurrentUser.isObserving {
-                    CurrentUser.startObserving()
-                }
+            if let user = user {
                 
-                // Refresh user data from Facebook
-                CurrentUser.Profile.loadDataFromFacebook()
-                CurrentUser.Profile.loadPhotoFromFacebook()
+                // Authenticated user changed
+                if Woojo.User.current == nil || Woojo.User.current?.uid != user.uid {
+                    Woojo.User.current = CurrentUser()
+                    let group = DispatchGroup()
+                    group.enter()
+                    Woojo.User.current?.profile.updateFromFacebook(completion: { _ in
+                        group.leave()
+                    })
+                    group.enter()
+                    Woojo.User.current?.profile.updatePhotoFromFacebook(completion: { _ in
+                        group.leave()
+                    })
+                    group.notify(queue: .main, execute: {
+                        Woojo.User.current?.profile.loadFromFirebase()
+                    })
+                }
+                // Start observing candidates
+                /*if !CurrentUser.isObserving {
+                    CurrentUser.startObserving()
+                }*/
                 
                 // Connect the Layer client and authenticate
                 /*if LayerManager.layerClient.isConnected {
@@ -55,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("No user signed in")
                 
                 // Stop observing candidates for the previous user
-                CurrentUser.stopObserving()
+                //CurrentUser.stopObserving()
                 
                 // De-authenticate the Layer client
                 /*if LayerManager.layerClient.isConnected {

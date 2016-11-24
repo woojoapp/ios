@@ -31,6 +31,9 @@ struct Constants {
             struct Photo {
                 static let firebaseNode = "photos"
             }
+            struct Thumbnail {
+                static let firebaseNode = "thumbnails"
+            }
             struct properties {
                 struct firebaseNodes {
                     static let firstName = "first_name"
@@ -144,12 +147,11 @@ struct Constants {
         static let fieldsSeparator = ","
         
         struct UserProfile {
-            static let path = "/me"
             static let fieldID = "id"
         }
         
         struct UserProfilePhoto {
-            static let path = "/me/albums"
+            static let path = "albums"
             static let fields = "type, picture.type(small), cover_photo{source}"
             struct keys {
                 static let data = "data"

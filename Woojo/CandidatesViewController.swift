@@ -29,20 +29,20 @@ class CandidatesViewController: UIViewController, KolodaViewDelegate, KolodaView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        CurrentUser.candidatesDelegate = self
+        //CurrentUser.candidatesDelegate = self
         
         kolodaView.dataSource = self
         kolodaView.delegate = self
         
         self.shouldApplyAppearAnimation = false
         
-        print("Candidates \(CurrentUser.candidates)")
+        print("Candidates \(User.current?.candidates)")
         
         let settingsItem = UIBarButtonItem()
         let settingsButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         settingsButton.layer.cornerRadius = settingsButton.frame.width / 2
         settingsButton.layer.masksToBounds = true
-        CurrentUser.Profile.photoDownloadURL { url, error in
+        User.current?.profile.generatePhotoDownloadURL { url, error in
             if let url = url {
                 settingsButton.sd_setImage(with: url, for: .normal)
             }
@@ -69,10 +69,10 @@ class CandidatesViewController: UIViewController, KolodaViewDelegate, KolodaView
     // MARK: - KolodaViewDelegate
     
     func koloda(_ koloda: KolodaView, didSwipeCardAt index: Int, in direction: SwipeResultDirection) {
-        print("Swiped at \(index) out of \(CurrentUser.candidates.count)")
+        print("Swiped at \(index) out of \(User.current?.candidates.count)")
         switch direction {
         case .left:
-            CurrentUser.candidates[index].pass { error, ref in
+            User.current?.candidates[index].pass { error, ref in
                 if let error = error {
                     print("Failed to pass candidate: \(error)")
                 } else {
@@ -81,13 +81,13 @@ class CandidatesViewController: UIViewController, KolodaViewDelegate, KolodaView
             }
             //CurrentUser.candidates[index] = Candidate()
             print(index..<index)
-            CurrentUser.candidates.remove(at: index)
+            User.current?.candidates.remove(at: index)
             print(kolodaView.countOfCards, kolodaView.dataSource?.kolodaNumberOfCards(kolodaView))
             kolodaView.removeCardInIndexRange(index..<index, animated: false)
             print(kolodaView.countOfCards, kolodaView.dataSource?.kolodaNumberOfCards(kolodaView))
             kolodaView.currentCardIndex = 0
         case .right:
-            CurrentUser.candidates[index].like { error, ref in
+            User.current?.candidates[index].like { error, ref in
                 if let error = error {
                     print("Failed to like candidate: \(error)")
                 } else {
@@ -95,7 +95,7 @@ class CandidatesViewController: UIViewController, KolodaViewDelegate, KolodaView
                 }
             }
             //CurrentUser.candidates[index] = Candidate()
-            CurrentUser.candidates.remove(at: index)
+            User.current?.candidates.remove(at: index)
             kolodaView.removeCardInIndexRange(index..<index, animated: false)
             kolodaView.currentCardIndex = 0
         default:
@@ -119,15 +119,15 @@ class CandidatesViewController: UIViewController, KolodaViewDelegate, KolodaView
     // MARK: - KolodaViewDataSource
     
     func kolodaNumberOfCards(_ koloda:KolodaView) -> Int {
-        return CurrentUser.candidates.count
+        return User.current!.candidates.count
     }
     
     func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
         print("Asked for view for card \(index)")
-        print("\(CurrentUser.candidates.count) candidates")
+        print("\(User.current?.candidates.count) candidates")
         let imageView = UIImageView()
         DispatchQueue.global(qos: .userInitiated).async {
-            CurrentUser.candidates[index].profile?.photoDownloadURL { url, error in
+            User.current?.candidates[index].profile?.generatePhotoDownloadURL { url, error in
                 if let url = url {
                     do {
                         let image = UIImage(data: try Data(contentsOf: url))

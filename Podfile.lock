@@ -73,11 +73,6 @@ PODS:
   - Koloda (3.1.2):
     - pop (~> 1.0)
   - pop (1.0.9)
-  - ReactiveCocoa (5.0.0-alpha.3):
-    - ReactiveSwift (~> 1.0.0-alpha.3)
-  - ReactiveSwift (1.0.0-alpha.3):
-    - Result (~> 3.0)
-  - Result (3.0.0)
 
 DEPENDENCIES:
   - Applozic
@@ -90,7 +85,6 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Storage
   - Koloda (from `https://github.com/woojoapp/Koloda.git`, commit `dadc9212aec2c46963bcd99012d955c981cdb021`, branch `swift-3`)
-  - ReactiveCocoa (= 5.0.0-alpha.3)
 
 EXTERNAL SOURCES:
   Koloda:
@@ -125,10 +119,7 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
   Koloda: 5aee353329cd1605540f1215a4c1975481dc7a37
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
-  ReactiveCocoa: d8a03d3deae0dd76410a30589946328d76ab9d2b
-  ReactiveSwift: d67b677f9574ba614d94022a88fcf456e77fa515
-  Result: 1b3e431f37cbcd3ad89c6aa9ab0ae55515fae3b6
 
-PODFILE CHECKSUM: 4e910c4960b03294e772678a858105d33692288f
+PODFILE CHECKSUM: 276cdf63e1edb037d842012da9f2eef86b9e1237
 
 COCOAPODS: 1.1.1

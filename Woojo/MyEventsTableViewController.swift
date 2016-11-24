@@ -67,7 +67,7 @@ class MyEventsTableViewController: UITableViewController {
     }
     
     func loadFacebookEvents() {
-        CurrentUser.getEventsFromFacebook { events in
+        User.current?.getEventsFromFacebook { events in
             self.events = events
             self.tableView.reloadData()
             self.tableView.refreshControl?.endRefreshing()

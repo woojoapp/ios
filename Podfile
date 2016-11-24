@@ -23,6 +23,4 @@ target 'Woojo' do
 
   pod 'Applozic'
 
-  pod 'ReactiveCocoa', '5.0.0-alpha.3'
-
 end

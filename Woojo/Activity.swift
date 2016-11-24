@@ -9,31 +9,36 @@
 import Foundation
 import FirebaseDatabase
 
-struct Activity {
+
+extension User {
     
-    var lastSeen: Date?
-    var signUp: Date?
+    class Activity {
     
-    static let dateFormatter: DateFormatter = {
-        let formatter: DateFormatter = DateFormatter()
-        formatter.dateFormat = Constants.User.Activity.dateFormat
-        return formatter
-    }()
+        var lastSeen: Date?
+        var signUp: Date?
+        var user: User
     
-    static func from(firebase snapshot: FIRDataSnapshot) -> Activity? {
-        if let value = snapshot.value as? [String:Any] {
-            var activity = Activity()
-            if let lastSeenString = value[Constants.User.Activity.properties.firebaseNodes.lastSeen] as? String {
-                activity.lastSeen = Activity.dateFormatter.date(from: lastSeenString)
-            }
-            if let signUpString = value[Constants.User.Activity.properties.firebaseNodes.signUp] as? String {
-                activity.signUp = Activity.dateFormatter.date(from: signUpString)
-            }
-            return activity
-        } else {
-            print("Failed to create Activity from Firebase snapshot.", snapshot)
-            return nil
+        static let dateFormatter: DateFormatter = {
+            let formatter: DateFormatter = DateFormatter()
+            formatter.dateFormat = Constants.User.Activity.dateFormat
+            return formatter
+        }()
+        
+        init(for user: User) {
+            self.user = user
         }
+        
+        func from(firebase snapshot: FIRDataSnapshot) {
+            if let value = snapshot.value as? [String:Any] {
+                if let lastSeenString = value[Constants.User.Activity.properties.firebaseNodes.lastSeen] as? String {
+                    self.lastSeen = Activity.dateFormatter.date(from: lastSeenString)
+                }
+                if let signUpString = value[Constants.User.Activity.properties.firebaseNodes.signUp] as? String {
+                    self.signUp = Activity.dateFormatter.date(from: signUpString)
+                }
+            }
+        }
+        
     }
     
 }

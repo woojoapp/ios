@@ -20,8 +20,6 @@
 		851CDBE81DDEF29900B887C0 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851CDBE71DDEF29900B887C0 /* Place.swift */; };
 		851CDBEA1DDEF2B100B887C0 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851CDBE91DDEF2B100B887C0 /* Location.swift */; };
 		8545A5FC1DDCCD09008F3DD2 /* LayerManager.swift.bak in Sources */ = {isa = PBXBuildFile; fileRef = 8545A5FB1DDCCD09008F3DD2 /* LayerManager.swift.bak */; };
-		8545A5FE1DDCCF79008F3DD2 /* UserProfileGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8545A5FD1DDCCF79008F3DD2 /* UserProfileGraphRequest.swift */; };
-		8545A6011DDCEF9E008F3DD2 /* UserProfilePhotoGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8545A6001DDCEF9E008F3DD2 /* UserProfilePhotoGraphRequest.swift */; };
 		854DDABD1DE364D400655EFC /* MyEventsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 854DDABC1DE364D400655EFC /* MyEventsTableViewCell.xib */; };
 		854DDABF1DE3654E00655EFC /* MyEventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854DDABE1DE3654E00655EFC /* MyEventsTableViewCell.swift */; };
 		854DDAC11DE43E0E00655EFC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854DDAC01DE43E0E00655EFC /* Constants.swift */; };
@@ -63,8 +61,6 @@
 		851CDBE71DDEF29900B887C0 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		851CDBE91DDEF2B100B887C0 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		8545A5FB1DDCCD09008F3DD2 /* LayerManager.swift.bak */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LayerManager.swift.bak; sourceTree = "<group>"; };
-		8545A5FD1DDCCF79008F3DD2 /* UserProfileGraphRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileGraphRequest.swift; sourceTree = "<group>"; };
-		8545A6001DDCEF9E008F3DD2 /* UserProfilePhotoGraphRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfilePhotoGraphRequest.swift; sourceTree = "<group>"; };
 		8545A6061DDDDBCC008F3DD2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		854DDABC1DE364D400655EFC /* MyEventsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyEventsTableViewCell.xib; sourceTree = "<group>"; };
 		854DDABE1DE3654E00655EFC /* MyEventsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyEventsTableViewCell.swift; sourceTree = "<group>"; };
@@ -157,10 +153,10 @@
 				851CDBE71DDEF29900B887C0 /* Place.swift */,
 				851CDBE91DDEF2B100B887C0 /* Location.swift */,
 				85EB2EE31DE20BCF00F0A55C /* Profile.swift */,
+				854DDAC41DE47DE500655EFC /* User.swift */,
 				8545A5FF1DDCDADC008F3DD2 /* GraphRequests */,
 				85EB2EE71DE3150C00F0A55C /* CandidatesDelegate.swift */,
 				854DDAC21DE46F7A00655EFC /* EventsDelegate.swift */,
-				854DDAC41DE47DE500655EFC /* User.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -168,8 +164,6 @@
 		8545A5FF1DDCDADC008F3DD2 /* GraphRequests */ = {
 			isa = PBXGroup;
 			children = (
-				8545A5FD1DDCCF79008F3DD2 /* UserProfileGraphRequest.swift */,
-				8545A6001DDCEF9E008F3DD2 /* UserProfilePhotoGraphRequest.swift */,
 				851CDBE51DDEF18A00B887C0 /* UserEventsGraphRequest.swift */,
 			);
 			name = GraphRequests;
@@ -417,12 +411,11 @@
 				85EB2EE61DE20DAE00F0A55C /* Activity.swift in Sources */,
 				85E5D4D81DDA4803003E2376 /* ChatParticipant.swift.bak in Sources */,
 				8506A8991DCBB9C000C18EC3 /* EventsTableViewCell.swift in Sources */,
-				8545A5FE1DDCCF79008F3DD2 /* UserProfileGraphRequest.swift in Sources */,
+				854DDAC51DE47DE500655EFC /* User.swift in Sources */,
 				85512B111DCB5B020072C1B8 /* ATLChatsViewController.swift.bak in Sources */,
 				854DDABF1DE3654E00655EFC /* MyEventsTableViewCell.swift in Sources */,
 				854DDAC11DE43E0E00655EFC /* Constants.swift in Sources */,
 				85512B0D1DCB5B020072C1B8 /* AppDelegate.swift in Sources */,
-				854DDAC51DE47DE500655EFC /* User.swift in Sources */,
 				8506A8A61DCCC85200C18EC3 /* Like.swift in Sources */,
 				85E5D4C51DD52D73003E2376 /* ALChatManager.swift in Sources */,
 				8506A8951DCBA14C00C18EC3 /* EventsTableViewController.swift in Sources */,
@@ -431,7 +424,6 @@
 				851CDBEA1DDEF2B100B887C0 /* Location.swift in Sources */,
 				85ED4E641DCFF7F200F51857 /* MainTabBarController.swift in Sources */,
 				85E5D4C31DD4F166003E2376 /* ALChatsViewController.swift in Sources */,
-				8545A6011DDCEF9E008F3DD2 /* UserProfilePhotoGraphRequest.swift in Sources */,
 				85EB2EE41DE20BCF00F0A55C /* Profile.swift in Sources */,
 				851CDBE61DDEF18A00B887C0 /* UserEventsGraphRequest.swift in Sources */,
 				8506A8A21DCCA61600C18EC3 /* Candidate.swift in Sources */,
