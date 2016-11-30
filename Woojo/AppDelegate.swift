@@ -9,18 +9,23 @@
 import UIKit
 import Firebase
 import FacebookCore
+import FacebookLogin
 //import LayerKit
 import Applozic
+import RxSwift
+import RxCocoa
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let loginViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
     //var chatManager: ALChatManager
     
     override init() {
         FIRApp.configure()
-        FIRDatabase.database().persistenceEnabled = true        
+        FIRDatabase.database().persistenceEnabled = true
+        loginViewController.modalTransitionStyle = .flipHorizontal
         //self.chatManager = ALChatManager(applicationKey: "woojoa4cb24509376f2a59dd5e56caf935bf7")
     }
 
@@ -29,68 +34,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize Facebook SDK
         FacebookCore.SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        // Authentication state change listener
+        if AccessToken.current == nil {
+            self.window?.makeKeyAndVisible()
+            self.window?.rootViewController?.present(loginViewController, animated: true, completion: nil)
+        }
+        
         FIRAuth.auth()?.addStateDidChangeListener { auth, user in
-            if let user = user {
-                
-                // Authenticated user changed
-                if Woojo.User.current == nil || Woojo.User.current?.uid != user.uid {
-                    print("Authenticated user changed", Woojo.User.current, user)
-                    Woojo.User.current = CurrentUser()
-                    let group = DispatchGroup()
-                    group.enter()
-                    Woojo.User.current?.profile.updateFromFacebook(completion: { _ in
-                        group.leave()
-                    })
-                    group.enter()
-                    Woojo.User.current?.profile.updatePhotoFromFacebook(completion: { _ in
-                        group.leave()
-                    })
-                    group.notify(queue: .main, execute: {
-                        Woojo.User.current?.profile.loadFromFirebase(completion: { _, _ in
-                            // Notify authenticated user observers
-                        })
-                    })
-                }
-                // Start observing candidates
-                /*if !CurrentUser.isObserving {
-                    CurrentUser.startObserving()
-                }*/
-                
-                // Connect the Layer client and authenticate
-                /*if LayerManager.layerClient.isConnected {
-                    LayerManager.authenticateLayer(uid: user.uid)
-                } else if !LayerManager.layerClient.isConnecting {
-                    LayerManager.layerClient.connect { (success, error) in
-                        if !success {
-                            print("Failed to connect to Layer: \(error)")
-                        } else {
-                            LayerManager.authenticateLayer(uid: user.uid)
-                        }
+            if Woojo.User.current.value == nil || (Woojo.User.current.value != nil && !Woojo.User.current.value!.isLoading.value && Woojo.User.current.value!.uid != user?.uid) {
+                if let currentUser = CurrentUser() {
+                    currentUser.load {
+                        self.loginViewController.dismiss(animated: true, completion: nil)
                     }
-                }*/
-            } else {
-                print("No user signed in")
-                
-                // Stop observing candidates for the previous user
-                //CurrentUser.stopObserving()
-                
-                // De-authenticate the Layer client
-                /*if LayerManager.layerClient.isConnected {
-                    LayerManager.layerClient.deauthenticate() { (success, error) in
-                        if let error = error {
-                            print("Failed to deauthenticate Layer \(error)")
-                        }
+                } else {
+                    print("No user signed in")
+                    let registerUserClientService: ALRegisterUserClientService = ALRegisterUserClientService()
+                    registerUserClientService.logout {
+                        
                     }
-                }*/
-                
-                let registerUserClientService: ALRegisterUserClientService = ALRegisterUserClientService()
-                registerUserClientService.logout {
-                    
+                    // Show the login controller
+                    if self.window?.rootViewController?.presentedViewController != self.loginViewController {
+                        self.window?.makeKeyAndVisible()
+                        self.window?.rootViewController?.present(self.loginViewController, animated: true, completion: nil)
+                    }
                 }
-
-                // Show the login controller
-                self.window!.rootViewController?.performSegue(withIdentifier: "ShowLogin", sender: self.window!.rootViewController!)
             }
         }
         
@@ -116,24 +82,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        
         var deviceTokenString: String = ""
         for i in 0..<deviceToken.count {
             deviceTokenString += String(format: "%02.2hhx", deviceToken[i] as CVarArg)
         }
-        
         if (ALUserDefaultsHandler.getApnDeviceToken() != deviceTokenString) {
             let alRegisterUserClientService: ALRegisterUserClientService = ALRegisterUserClientService()
             alRegisterUserClientService.updateApnDeviceToken(withCompletion: deviceTokenString, withCompletion: { (response, error) in
                 
             })
         }
-        
-        /*do {
-            try LayerManager.layerClient.updateRemoteNotificationDeviceToken(deviceToken)
-        } catch {
-            print("Failed to send device push token to Layer \(error.localizedDescription)")
-        }*/
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {

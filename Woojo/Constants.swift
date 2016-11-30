@@ -168,7 +168,7 @@ struct Constants {
         
         struct UserEvents {
             static let path = "/me/events"
-            static let fieldPictureUrl = "picture{url}"
+            static let fieldPictureUrl = "picture.type(normal){url}"
             struct keys {
                 static let data = "data"
             }

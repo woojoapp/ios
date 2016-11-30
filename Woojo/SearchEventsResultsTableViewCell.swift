@@ -1,14 +1,14 @@
 //
-//  MyEventsTableViewCell.swift
+//  SearchEventsTableViewCell.swift
 //  Woojo
 //
-//  Created by Edouard Goossens on 21/11/2016.
+//  Created by Edouard Goossens on 28/11/2016.
 //  Copyright © 2016 Tasty Electrons. All rights reserved.
 //
 
 import UIKit
 
-class MyEventsTableViewCell: UITableViewCell {
+class SearchEventsResultsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var placeLabel: UILabel!
@@ -54,6 +54,7 @@ class MyEventsTableViewCell: UITableViewCell {
         if let start = event?.start {
             dateLabel?.text = Event.dateFormatter.string(from: start)
         }
+
     }
     
 }

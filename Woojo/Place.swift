@@ -24,7 +24,6 @@ extension Place {
             place.location = Location.from(firebase: snapshot.childSnapshot(forPath: Constants.Event.Place.properties.firebaseNodes.location))
             return place
         } else {
-            print("Failed to create Place from snapshot.", snapshot)
             return nil
         }
     }
@@ -36,8 +35,14 @@ extension Place {
             place.location = Location.from(graphAPI: dict[Constants.Event.Place.properties.graphAPIKeys.location] as? [String:Any])
             return place
         } else {
-            print("Failed to create Place from Graph API dictionary.", dict as Any)
             return nil
         }
+    }
+    
+    func toDictionary() -> [String:Any] {
+        var dict: [String:Any] = [:]
+        dict[Constants.Event.Place.properties.firebaseNodes.name] = self.name
+        dict[Constants.Event.Place.properties.firebaseNodes.location] = self.location?.toDictionary()
+        return dict
     }
 }

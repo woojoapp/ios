@@ -7,12 +7,13 @@
 //
 
 import UIKit
-import FBSDKCoreKit
-import FBSDKLoginKit
+import RxSwift
+import RxCocoa
 
 class MyEventsTableViewController: UITableViewController {
     
     var events: [Event]?
+    let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         
@@ -21,11 +22,16 @@ class MyEventsTableViewController: UITableViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = 100
+        tableView.register(UINib(nibName: "MyEventsTableViewCell", bundle: nil), forCellReuseIdentifier: "fbEventCell")
         
         tableView.refreshControl = UIRefreshControl()
         tableView.refreshControl?.addTarget(self, action: #selector(loadFacebookEvents), for: UIControlEvents.valueChanged)
         
         loadFacebookEvents()
+        
+        Woojo.User.current.value?.events.asObservable().subscribe(onNext: { _ in
+            self.tableView.reloadData()
+        }).addDisposableTo(disposeBag)
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -67,7 +73,7 @@ class MyEventsTableViewController: UITableViewController {
     }
     
     func loadFacebookEvents() {
-        User.current?.getEventsFromFacebook { events in
+        Woojo.User.current.value?.getEventsFromFacebook { events in
             self.events = events
             self.tableView.reloadData()
             self.tableView.refreshControl?.endRefreshing()
@@ -75,31 +81,25 @@ class MyEventsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "fbEventCell", for: indexPath)
-
-        if let event = self.events?[indexPath.row] {
-            cell.textLabel?.text = event.name
-            var placeString = "Unknown location"
-            if let place = event.place, let placeName = place.name {
-                placeString = placeName
-            }
-            if let location = event.place?.location, let city = location.city {
-                if placeString != "Unknown location" {
-                    placeString = "\(placeString) (\(city))"
-                } else {
-                    placeString = city
-                }
-            }
-            //cell.accessoryType
-            cell.detailTextLabel?.text = placeString
-            if let pictureURL = event.pictureURL {
-                cell.imageView?.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_40x40"))
+        let cell = tableView.dequeueReusableCell(withIdentifier: "fbEventCell", for: indexPath) as! MyEventsTableViewCell
+        cell.event = self.events?[indexPath.row]
+        if let isUserEvent = Woojo.User.current.value?.events.value.contains(where: { $0.id == cell.event?.id }) {
+            cell.accessoryType = isUserEvent ? .checkmark : .none
+        }
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let event = self.events?[indexPath.row], let isUserEvent = Woojo.User.current.value?.events.value.contains(where: { $0.id == event.id }) {
+            let completion = { (error: Error?) -> Void in tableView.reloadRows(at: [indexPath], with: .none) }
+            if isUserEvent {
+                Woojo.User.current.value?.remove(event: event, completion: completion)
+                tableView.cellForRow(at: indexPath)?.accessoryType = .none
             } else {
-                cell.imageView?.image = #imageLiteral(resourceName: "placeholder_40x40")
+                Woojo.User.current.value?.add(event: event, completion: completion)
+                tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
             }
         }
-
-        return cell
     }
 
     /*

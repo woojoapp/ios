@@ -15,7 +15,11 @@ class EventsTableViewCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var thumbnailView: UIImageView!
     
-    var event: Event?
+    var event: Event? {
+        didSet {
+            populate(with: event)
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,15 +32,28 @@ class EventsTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func populate(with event: Event) {
-        self.event = event
-        nameLabel?.text = event.name
-        placeLabel?.text = event.place?.name
-        if let start = event.start {
-            dateLabel?.text = Event.dateFormatter.string(from: start)
+    func populate(with event: Event?) {
+        nameLabel.text = event?.name
+        var placeString = "Unknown location"
+        if let place = event?.place, let placeName = place.name {
+            placeString = placeName
         }
-        if let pictureURL = event.pictureURL {
-            thumbnailView.sd_setImage(with: pictureURL)
+        if let location = event?.place?.location, let city = location.city {
+            if placeString != "Unknown location" {
+                placeString = "\(placeString) (\(city))"
+            } else {
+                placeString = city
+            }
+        }
+        //cell.accessoryType
+        placeLabel.text = placeString
+        if let pictureURL = event?.pictureURL {
+            thumbnailView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_40x40"))
+        } else {
+            thumbnailView.image = #imageLiteral(resourceName: "placeholder_40x40")
+        }
+        if let start = event?.start {
+            dateLabel?.text = Event.dateFormatter.string(from: start)
         }
     }
 

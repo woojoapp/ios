@@ -19,8 +19,11 @@ target 'Woojo' do
   pod 'FacebookLogin'
   pod 'FacebookShare'
 
-  pod 'Koloda', :git=> 'https://github.com/woojoapp/Koloda.git', :branch => 'swift-3', :commit => 'dadc9212aec2c46963bcd99012d955c981cdb021'
+  pod 'Koloda', :git=> 'https://github.com/woojoapp/Koloda.git', :branch => 'swift-3', :commit => '584d70b02a8fdc202d0c0a38c860da9a917fe7b2'
 
   pod 'Applozic'
+
+  pod 'RxSwift'
+  pod 'RxCocoa'
 
 end

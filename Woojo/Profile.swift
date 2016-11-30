@@ -10,6 +10,9 @@ import Foundation
 import FirebaseDatabase
 import FirebaseStorage
 import FacebookCore
+import RxSwift
+import RxCocoa
+import Applozic
 
 extension User {
  
@@ -49,6 +52,32 @@ extension User {
         func generatePhotoDownloadURL(completion: @escaping (URL?, Error?) -> Void) {
             if let photoID = photoID {
                 storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(photoID).downloadURL(completion: completion)
+            }
+        }
+        
+        func generatePhoto() -> Observable<UIImage> {
+            return Observable<UIImage>.deferred {
+                Observable<UIImage>.create { observer in
+                    if let photoID = self.photoID {
+                        self.storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(photoID).downloadURL { downloadURL, error in
+                            if let error = error {
+                                observer.onError(woojoError("Failed to generate a download URL: \(error)"))
+                            } else if let downloadURL = downloadURL {
+                                SDWebImageManager.shared().downloadImage(with: downloadURL, options: [], progress: nil, completed: { image, _, _, _, _ in
+                                    if let image = image {
+                                        observer.onNext(image)
+                                        observer.onCompleted()
+                                    }
+                                })
+                            } else {
+                                observer.onError(woojoError("Failed to generate a download URL. Returned nil."))
+                            }
+                        }
+                    } else {
+                        observer.onError(woojoError("Failed to generate a download URL without an photo ID"))
+                    }
+                    return Disposables.create()
+                }
             }
         }
         
@@ -316,13 +345,13 @@ extension User.Profile {
             if let fbAppScopedID = profile.user.fbAppScopedID {
                 self.fbAppScopedID = fbAppScopedID
             } else {
-                print("Failed to initialize User.Profile.GraphRequest from profile. Missing FB app scoped ID.", profile)
+                print("Failed to initialize User.Profile.PhotoGraphRequest from profile. Missing FB app scoped ID.", profile)
                 return nil
             }
             if let fbAccessToken = profile.user.fbAccessToken {
                 self.fbAccessToken = fbAccessToken
             } else {
-                print("Failed to initialize User.Profile.GraphRequest from profile. Missing FB access token.", profile)
+                print("Failed to initialize User.Profile.PhotoGraphRequest from profile. Missing FB access token.", profile)
                 return nil
             }
         }

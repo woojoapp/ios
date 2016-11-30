@@ -10,6 +10,8 @@ import UIKit
 import FirebaseAuth
 import FacebookCore
 import FacebookLogin
+import RxCocoa
+import RxSwift
 
 /*extension UIImage {
     func drawInRectAspectFill(rect: CGRect) {
@@ -34,6 +36,15 @@ import FacebookLogin
 
 class LoginViewController: UIViewController, LoginButtonDelegate {
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    let disposeBag = DisposeBag()
+    var loginView: UIView?
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,6 +64,28 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
         loginButton.delegate = self
         loginButton.center = self.view.center
         self.view.addSubview(loginButton)
+        
+        activityIndicator.isHidden = true
+        
+        let activityDriver = Woojo.User.current.asObservable()
+            .flatMap { user -> Observable<Bool> in
+                if let currentUser = user {
+                    return currentUser.isLoading.asObservable()
+                } else {
+                    return Variable(false).asObservable()
+                }
+            }
+            .asDriver(onErrorJustReturn: false)
+        
+        activityDriver
+            .drive(self.activityIndicator.rx.isAnimating)
+            .addDisposableTo(disposeBag)
+        
+        /*activityDriver
+            .map{ !$0 }
+            .drive(self.activityIndicator.rx.isHidden)
+            .addDisposableTo(disposeBag)*/
+        
         // Do any additional setup after loading the view.
     }
 
@@ -69,6 +102,7 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
     // MARK: - LoginButtonDelegate
     
     func loginButtonDidCompleteLogin(_ loginButton: LoginButton, result: LoginResult) {
+        activityIndicator.startAnimating()
         switch result {
         case .success(_, _, let accessToken):
             print("Facebook login success")
@@ -76,21 +110,24 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
             FIRAuth.auth()?.signIn(with: credential) { (user, error) in
                 if let user = user {
                     print("Firebase login success \(user.uid)")
-                    self.dismiss(animated: true, completion: nil)
+                    //self.dismiss(animated: true, completion: nil)
                 }
                 if let error = error {
                     print("Firebase login failure \(error.localizedDescription)")
                 }
             }
         case .failed(let error):
+            activityIndicator.stopAnimating()
             print("Facebook login error: \(error.localizedDescription)")
         case .cancelled:
+            activityIndicator.stopAnimating()
             print("Facebook login cancelled.")
         }
     }
     
     func loginButtonDidLogOut(_ loginButton: LoginButton) {
-        try! FIRAuth.auth()!.signOut()
+        Woojo.User.current.value?.logOut()
+        activityIndicator.stopAnimating()
     }
     
     

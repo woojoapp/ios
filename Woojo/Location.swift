@@ -33,7 +33,6 @@ extension Location {
             location.longitude = value[Constants.Event.Place.Location.properties.firebaseNodes.longitude] as? Float
             return location
         } else {
-            print("Failed to create Location from Firebase snapshot.", snapshot)
             return nil
         }
     }
@@ -50,8 +49,19 @@ extension Location {
             location.name = dict[Constants.Event.Place.Location.properties.graphAPIKeys.name] as? String
             return location
         } else {
-            print("Failed to create Location from Graph API dictionary.", dict as Any)
             return nil
         }
+    }
+    
+    func toDictionary() -> [String:Any] {
+        var dict: [String:Any] = [:]
+        dict[Constants.Event.Place.Location.properties.firebaseNodes.name] = self.name
+        dict[Constants.Event.Place.Location.properties.firebaseNodes.country] = self.country
+        dict[Constants.Event.Place.Location.properties.firebaseNodes.city] = self.city
+        dict[Constants.Event.Place.Location.properties.firebaseNodes.zip] = self.zip
+        dict[Constants.Event.Place.Location.properties.firebaseNodes.street] = self.street
+        dict[Constants.Event.Place.Location.properties.firebaseNodes.latitude] = self.latitude
+        dict[Constants.Event.Place.Location.properties.firebaseNodes.longitude] = self.longitude
+        return dict
     }
 }

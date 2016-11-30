@@ -16,9 +16,8 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var testLabel: UILabel!
     
     @IBAction func logout(sender: UIButton) {
-        LoginManager().logOut()
-        try! FIRAuth.auth()!.signOut()
-        self.performSegue(withIdentifier: "ShowLoginFromSettings", sender: self)
+        self.dismiss(animated: true, completion: nil)
+        Woojo.User.current.value?.logOut()
     }
 
     override func viewDidLoad() {
@@ -31,8 +30,8 @@ class SettingsViewController: UIViewController {
     }
     
     func setupUI() {
-        print(User.current?.profile.gender?.rawValue)
-        testLabel.text = User.current?.profile.gender?.rawValue
+        //print(User.current?.profile.gender?.rawValue)
+        //testLabel.text = User.current?.profile.gender?.rawValue
     }
 
     override func didReceiveMemoryWarning() {

@@ -9,5 +9,5 @@
 import Foundation
 
 protocol CandidatesDelegate {
-    func didUpdateCandidates()
+    func didAddCandidate()
 }
