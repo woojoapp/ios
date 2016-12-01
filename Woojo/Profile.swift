@@ -28,6 +28,7 @@ extension User {
         var city: String?
         var country: String?
         var user: User
+        var photo: Variable<UIImage> = Variable(#imageLiteral(resourceName: "placeholder_40x40"))
         
         var isObserved = false
         
@@ -55,36 +56,20 @@ extension User {
             }
         }
         
-        func generatePhoto() -> Observable<UIImage> {
-            return Observable<UIImage>.deferred {
-                Observable<UIImage>.create { observer in
-                    if let photoID = self.photoID {
-                        self.storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(photoID).downloadURL { downloadURL, error in
-                            if let error = error {
-                                observer.onError(woojoError("Failed to generate a download URL: \(error)"))
-                            } else if let downloadURL = downloadURL {
-                                SDWebImageManager.shared().downloadImage(with: downloadURL, options: [], progress: nil, completed: { image, _, _, _, _ in
-                                    if let image = image {
-                                        observer.onNext(image)
-                                        observer.onCompleted()
-                                    }
-                                })
-                            } else {
-                                observer.onError(woojoError("Failed to generate a download URL. Returned nil."))
-                            }
-                        }
-                    } else {
-                        observer.onError(woojoError("Failed to generate a download URL without an photo ID"))
-                    }
-                    return Disposables.create()
-                }
-            }
-        }
-        
         func loadFrom(firebase snapshot: FIRDataSnapshot) {
             if let value = snapshot.value as? [String:Any] {
                 displayName = value[Constants.User.Profile.properties.firebaseNodes.firstName] as? String
                 photoID = value[Constants.User.Profile.properties.firebaseNodes.photoID] as? String
+                // Download and cache profile photo only for the current user
+                if self.user is CurrentUser {
+                    generatePhotoDownloadURL { downloadURL, error in
+                        SDWebImageManager.shared().downloadImage(with: downloadURL, options: [], progress: nil, completed: { image, _, _, _, _ in
+                            if let image = image {
+                                self.photo.value = image
+                            }
+                        })
+                    }
+                }
                 if let genderString = value[Constants.User.Profile.properties.firebaseNodes.gender] as? String {
                     gender = Gender(rawValue: genderString)
                 }
@@ -95,12 +80,6 @@ extension User {
                 print("Failed to create Profile from Firebase snapshot.", snapshot)
             }
         }
-        
-        /*static func from(firebase snapshot: FIRDataSnapshot) -> Profile? {
-            let profile = Profile()
-            profile.loadFrom(firebase: snapshot)
-            return profile
-        }*/
         
         func loadFrom(graphAPI dict: [String:Any]?) {
             if let dict = dict {
@@ -115,21 +94,6 @@ extension User {
                 print("Failed to create Profile from Graph API dictionary.", dict as Any)
             }
         }
-        
-        /*static func from(graphAPI dict: [String:Any]?) -> Profile? {
-            let profile = Profile()
-            profile.loadFrom(graphAPI: dict)
-            return profile
-        }*/
-        
-        /*static func get(for uid: String, completion: ((Profile?, Error?) -> Void)?) {
-            FIRDatabase.database().reference().child(Constants.User.firebaseNode).child(uid).child(Constants.User.Profile.firebaseNode).observeSingleEvent(of: .value, with: { snapshot in
-                completion?(from(firebase: snapshot), nil)
-            }, withCancel: { error in
-                print("Failed to get profile from uid: \(error.localizedDescription)")
-                completion?(nil, error)
-            })
-        }*/
         
         func loadFromFirebase(completion: ((Profile?, Error?) -> Void)? = nil) {
             ref?.observeSingleEvent(of: .value, with: { snapshot in

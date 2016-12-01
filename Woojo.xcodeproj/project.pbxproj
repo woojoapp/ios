@@ -19,6 +19,10 @@
 		851CDBE61DDEF18A00B887C0 /* UserEventsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851CDBE51DDEF18A00B887C0 /* UserEventsGraphRequest.swift */; };
 		851CDBE81DDEF29900B887C0 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851CDBE71DDEF29900B887C0 /* Place.swift */; };
 		851CDBEA1DDEF2B100B887C0 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851CDBE91DDEF2B100B887C0 /* Location.swift */; };
+		85407D9C1DF028D50033E696 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85407D9B1DF028D50033E696 /* Main.storyboard */; };
+		85407DA01DF03FD90033E696 /* CandidateOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85407D9F1DF03FD90033E696 /* CandidateOverlayView.xib */; };
+		85407DA21DF040070033E696 /* CandidateCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85407DA11DF040070033E696 /* CandidateCardView.xib */; };
+		85407DA41DF042A00033E696 /* CandidateCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85407DA31DF042A00033E696 /* CandidateCardView.swift */; };
 		854DDABD1DE364D400655EFC /* MyEventsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 854DDABC1DE364D400655EFC /* MyEventsTableViewCell.xib */; };
 		854DDABF1DE3654E00655EFC /* MyEventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854DDABE1DE3654E00655EFC /* MyEventsTableViewCell.swift */; };
 		854DDAC11DE43E0E00655EFC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854DDAC01DE43E0E00655EFC /* Constants.swift */; };
@@ -33,8 +37,9 @@
 		85685F781DEC7B8D009BAEE0 /* SearchEventsResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85685F771DEC7B8D009BAEE0 /* SearchEventsResultsTableViewCell.swift */; };
 		85685F7A1DEC94FA009BAEE0 /* Woojo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85685F791DEC94FA009BAEE0 /* Woojo.swift */; };
 		85685F811DEF0BE9009BAEE0 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85685F801DEF0BE9009BAEE0 /* LoginViewController.xib */; };
-		85685F831DEF0DEB009BAEE0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85685F821DEF0DEB009BAEE0 /* Main.storyboard */; };
 		85685F871DEF3310009BAEE0 /* CandidatesDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85685F861DEF3310009BAEE0 /* CandidatesDelegate.swift */; };
+		85685F891DEF4A2E009BAEE0 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85685F881DEF4A2E009BAEE0 /* TabViewController.swift */; };
+		85685F8B1DEF4AF9009BAEE0 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85685F8A1DEF4AF9009BAEE0 /* SettingsViewController.xib */; };
 		85E5D4C31DD4F166003E2376 /* ALChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4C21DD4F166003E2376 /* ALChatsViewController.swift */; };
 		85E5D4C51DD52D73003E2376 /* ALChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4C41DD52D73003E2376 /* ALChatManager.swift */; };
 		85E5D4CD1DD9EFBC003E2376 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4CC1DD9EFBC003E2376 /* CurrentUser.swift */; };
@@ -61,6 +66,10 @@
 		851CDBE51DDEF18A00B887C0 /* UserEventsGraphRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEventsGraphRequest.swift; sourceTree = "<group>"; };
 		851CDBE71DDEF29900B887C0 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		851CDBE91DDEF2B100B887C0 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		85407D9B1DF028D50033E696 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		85407D9F1DF03FD90033E696 /* CandidateOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CandidateOverlayView.xib; sourceTree = "<group>"; };
+		85407DA11DF040070033E696 /* CandidateCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CandidateCardView.xib; sourceTree = "<group>"; };
+		85407DA31DF042A00033E696 /* CandidateCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandidateCardView.swift; sourceTree = "<group>"; };
 		854DDABC1DE364D400655EFC /* MyEventsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyEventsTableViewCell.xib; sourceTree = "<group>"; };
 		854DDABE1DE3654E00655EFC /* MyEventsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyEventsTableViewCell.swift; sourceTree = "<group>"; };
 		854DDAC01DE43E0E00655EFC /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -77,8 +86,9 @@
 		85685F771DEC7B8D009BAEE0 /* SearchEventsResultsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchEventsResultsTableViewCell.swift; sourceTree = "<group>"; };
 		85685F791DEC94FA009BAEE0 /* Woojo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Woojo.swift; sourceTree = "<group>"; };
 		85685F801DEF0BE9009BAEE0 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
-		85685F821DEF0DEB009BAEE0 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		85685F861DEF3310009BAEE0 /* CandidatesDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandidatesDelegate.swift; sourceTree = "<group>"; };
+		85685F881DEF4A2E009BAEE0 /* TabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
+		85685F8A1DEF4AF9009BAEE0 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		85E5D4C21DD4F166003E2376 /* ALChatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ALChatsViewController.swift; sourceTree = "<group>"; };
 		85E5D4C41DD52D73003E2376 /* ALChatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ALChatManager.swift; sourceTree = "<group>"; };
 		85E5D4CC1DD9EFBC003E2376 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
@@ -134,6 +144,7 @@
 				85512B221DCB74DA0072C1B8 /* LoginViewController.swift */,
 				85685F801DEF0BE9009BAEE0 /* LoginViewController.xib */,
 				85ED4E631DCFF7F200F51857 /* MainTabBarController.swift */,
+				85685F881DEF4A2E009BAEE0 /* TabViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -195,7 +206,7 @@
 				85512B0C1DCB5B020072C1B8 /* AppDelegate.swift */,
 				854DDAC01DE43E0E00655EFC /* Constants.swift */,
 				85685F791DEC94FA009BAEE0 /* Woojo.swift */,
-				85685F821DEF0DEB009BAEE0 /* Main.storyboard */,
+				85407D9B1DF028D50033E696 /* Main.storyboard */,
 				85512B151DCB5B020072C1B8 /* Assets.xcassets */,
 				85512B171DCB5B020072C1B8 /* LaunchScreen.storyboard */,
 				85E5D4D51DDA247D003E2376 /* GoogleService-Info.plist */,
@@ -241,6 +252,9 @@
 			isa = PBXGroup;
 			children = (
 				8506A89F1DCC97F600C18EC3 /* CandidatesViewController.swift */,
+				85407D9F1DF03FD90033E696 /* CandidateOverlayView.xib */,
+				85407DA11DF040070033E696 /* CandidateCardView.xib */,
+				85407DA31DF042A00033E696 /* CandidateCardView.swift */,
 			);
 			name = Candidates;
 			sourceTree = "<group>";
@@ -249,6 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				8506A88C1DCB9A5D00C18EC3 /* SettingsViewController.swift */,
+				85685F8A1DEF4AF9009BAEE0 /* SettingsViewController.xib */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -336,13 +351,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				8506A89B1DCC87A400C18EC3 /* EventsTableViewCell.xib in Resources */,
+				85407DA01DF03FD90033E696 /* CandidateOverlayView.xib in Resources */,
+				85685F8B1DEF4AF9009BAEE0 /* SettingsViewController.xib in Resources */,
 				85685F761DEC7B69009BAEE0 /* SearchEventsResultsTableViewCell.xib in Resources */,
+				85407D9C1DF028D50033E696 /* Main.storyboard in Resources */,
 				85685F811DEF0BE9009BAEE0 /* LoginViewController.xib in Resources */,
 				85512B191DCB5B020072C1B8 /* LaunchScreen.storyboard in Resources */,
 				854DDABD1DE364D400655EFC /* MyEventsTableViewCell.xib in Resources */,
 				85E5D4D61DDA247D003E2376 /* GoogleService-Info.plist in Resources */,
+				85407DA21DF040070033E696 /* CandidateCardView.xib in Resources */,
 				85512B161DCB5B020072C1B8 /* Assets.xcassets in Resources */,
-				85685F831DEF0DEB009BAEE0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +423,7 @@
 				85685F781DEC7B8D009BAEE0 /* SearchEventsResultsTableViewCell.swift in Sources */,
 				851CDBE81DDEF29900B887C0 /* Place.swift in Sources */,
 				85EB2EE61DE20DAE00F0A55C /* Activity.swift in Sources */,
+				85407DA41DF042A00033E696 /* CandidateCardView.swift in Sources */,
 				8506A8991DCBB9C000C18EC3 /* EventsTableViewCell.swift in Sources */,
 				854DDAC51DE47DE500655EFC /* User.swift in Sources */,
 				854DDABF1DE3654E00655EFC /* MyEventsTableViewCell.swift in Sources */,
@@ -423,6 +442,7 @@
 				85EB2EE41DE20BCF00F0A55C /* Profile.swift in Sources */,
 				851CDBE61DDEF18A00B887C0 /* UserEventsGraphRequest.swift in Sources */,
 				8506A8A21DCCA61600C18EC3 /* Candidate.swift in Sources */,
+				85685F891DEF4A2E009BAEE0 /* TabViewController.swift in Sources */,
 				85ED4E6E1DD229D600F51857 /* MyEventsTableViewController.swift in Sources */,
 				8506A8A81DCCCB5E00C18EC3 /* Pass.swift in Sources */,
 				8506A8971DCBB0CC00C18EC3 /* Event.swift in Sources */,

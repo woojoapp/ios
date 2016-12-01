@@ -38,23 +38,15 @@ struct SearchEventsGraphRequest: GraphRequestProtocol {
     }
     
     var query: String
-    var graphPath: String {
+    var graphPath = "/search"
+    var parameters: [String:Any]? {
         get {
-            return "/search?q=\(query)&type=event&fields=name,start_time,attending_count,end_time,rsvp_status,place,picture.type(normal)&since="
+            return ["q": query,
+                    "type": "event",
+                    "fields": "name,start_time,attending_count,end_time,rsvp_status,place,picture.type(normal)",
+                    "since": Event.dateFormatter.string(from: Calendar.current.date(byAdding: .month, value: -1, to: Date())!)]
         }
     }
-    /*var parameters: [String: Any]? = {
-        let fields = [Constants.Event.properties.graphAPIKeys.id,
-                      Constants.Event.properties.graphAPIKeys.name,
-                      Constants.Event.properties.graphAPIKeys.start,
-                      Constants.Event.properties.graphAPIKeys.end,
-                      Constants.Event.properties.graphAPIKeys.place,
-                      Constants.GraphRequest.UserEvents.fieldPictureUrl]
-        return [Constants.GraphRequest.fields:fields.joined(separator: Constants.GraphRequest.fieldsSeparator)]
-    }()*/
-    var parameters: [String:Any]? =  {
-        return ["type":"event", "fields":"name,start_time,attending_count,end_time,rsvp_status,place,picture.type(normal)"]
-    }()
     var accessToken: AccessToken? = AccessToken.current
     var httpMethod: GraphRequestHTTPMethod = .GET
     var apiVersion: GraphAPIVersion = .defaultVersion
