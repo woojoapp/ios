@@ -34,13 +34,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize Facebook SDK
         FacebookCore.SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        if AccessToken.current == nil {
-            self.window?.makeKeyAndVisible()
-            self.window?.rootViewController?.present(loginViewController, animated: true, completion: nil)
-        }
-        
         FIRAuth.auth()?.addStateDidChangeListener { auth, user in
-            if Woojo.User.current.value == nil || (Woojo.User.current.value != nil && !Woojo.User.current.value!.isLoading.value && Woojo.User.current.value!.uid != user?.uid) {
+            if AccessToken.current == nil {
+                self.window?.makeKeyAndVisible()
+                self.window?.rootViewController?.present(self.loginViewController, animated: true, completion: nil)
+            } else if Woojo.User.current.value == nil || (Woojo.User.current.value != nil && !Woojo.User.current.value!.isLoading.value && Woojo.User.current.value!.uid != user?.uid) {
                 if let currentUser = CurrentUser() {
                     currentUser.load {
                         self.loginViewController.dismiss(animated: true, completion: nil)

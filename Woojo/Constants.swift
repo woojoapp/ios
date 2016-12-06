@@ -42,9 +42,7 @@ struct Constants {
                     static let city = "city"
                     static let country = "country"
                     static let photoID = "photoID"
-                    static let ageRange = "age_range"
-                    static let ageRangeMin = "min"
-                    static let ageRangeMax = "max"
+                    static let birthday = "birthday"
                 }
                 struct graphAPIKeys {
                     static let firstName = "first_name"
@@ -53,9 +51,7 @@ struct Constants {
                     static let city = "city"
                     static let country = "country"
                     static let photoURL = "photoURL"
-                    static let ageRange = "age_range"
-                    static let ageRangeMin = "min"
-                    static let ageRangeMax = "max"
+                    static let birthday = "birthday"
                 }
             }
         }
@@ -72,6 +68,17 @@ struct Constants {
             struct properties {
                 struct firebaseNodes {
                     static let id = "id"
+                }
+            }
+        }
+        struct Preferences {
+            static let firebaseNode = "preferences"
+            struct properties {
+                struct firebaseNodes {
+                    static let gender = "gender"
+                    static let ageRange = "age_range"
+                    static let ageRangeMin = "min"
+                    static let ageRangeMax = "max"
                 }
             }
         }

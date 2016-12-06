@@ -72,6 +72,7 @@ PODS:
   - GTMSessionFetcher/Core (1.1.7)
   - Koloda (3.1.2):
     - pop (~> 1.0)
+  - NMRangeSlider (1.2.1)
   - pop (1.0.9)
   - RxCocoa (3.0.1):
     - RxSwift (~> 3.0)
@@ -88,6 +89,7 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Storage
   - Koloda (from `https://github.com/woojoapp/Koloda.git`, commit `584d70b02a8fdc202d0c0a38c860da9a917fe7b2`, branch `swift-3`)
+  - NMRangeSlider
   - RxCocoa
   - RxSwift
 
@@ -123,10 +125,11 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
   GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
   Koloda: 5aee353329cd1605540f1215a4c1975481dc7a37
+  NMRangeSlider: 317ded652431eb90501c8421d9cddc3930d891e6
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
   RxCocoa: 15a52fc590dcc700cb4a690a633b5c5184ce3a78
   RxSwift: af5680055c4ad04480189c52d28385b1029493a6
 
-PODFILE CHECKSUM: dfe154a20146199aab80c8a14f554508e2f6fa2b
+PODFILE CHECKSUM: 90017e5c80f30787ff9904d6bb96b93d11defa7d
 
 COCOAPODS: 1.1.1

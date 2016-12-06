@@ -48,10 +48,8 @@ class TabViewController: UIViewController {
     }
     
     func showSettings(sender : Any?) {
-        let navigationController = UINavigationController()
-        let settingsViewController = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
-        navigationController.pushViewController(settingsViewController, animated: false)
-        self.present(navigationController, animated: true, completion: nil)
+        let settingsNavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SettingsNavigationController")
+        self.present(settingsNavigationController, animated: true, completion: nil)
     }
 
 }

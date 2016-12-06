@@ -26,4 +26,6 @@ target 'Woojo' do
   pod 'RxSwift'
   pod 'RxCocoa'
 
+  pod 'NMRangeSlider'
+
 end

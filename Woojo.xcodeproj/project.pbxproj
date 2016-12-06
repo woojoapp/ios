@@ -23,6 +23,8 @@
 		85407DA01DF03FD90033E696 /* CandidateOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85407D9F1DF03FD90033E696 /* CandidateOverlayView.xib */; };
 		85407DA21DF040070033E696 /* CandidateCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85407DA11DF040070033E696 /* CandidateCardView.xib */; };
 		85407DA41DF042A00033E696 /* CandidateCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85407DA31DF042A00033E696 /* CandidateCardView.swift */; };
+		85407DA61DF1B0D00033E696 /* ProfilePhotoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85407DA51DF1B0D00033E696 /* ProfilePhotoImageView.swift */; };
+		85407DA81DF307990033E696 /* SettingsTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85407DA71DF307990033E696 /* SettingsTableHeaderView.xib */; };
 		854DDABD1DE364D400655EFC /* MyEventsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 854DDABC1DE364D400655EFC /* MyEventsTableViewCell.xib */; };
 		854DDABF1DE3654E00655EFC /* MyEventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854DDABE1DE3654E00655EFC /* MyEventsTableViewCell.swift */; };
 		854DDAC11DE43E0E00655EFC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854DDAC01DE43E0E00655EFC /* Constants.swift */; };
@@ -39,7 +41,10 @@
 		85685F811DEF0BE9009BAEE0 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85685F801DEF0BE9009BAEE0 /* LoginViewController.xib */; };
 		85685F871DEF3310009BAEE0 /* CandidatesDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85685F861DEF3310009BAEE0 /* CandidatesDelegate.swift */; };
 		85685F891DEF4A2E009BAEE0 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85685F881DEF4A2E009BAEE0 /* TabViewController.swift */; };
-		85685F8B1DEF4AF9009BAEE0 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85685F8A1DEF4AF9009BAEE0 /* SettingsViewController.xib */; };
+		85DC3D6B1DF4A39900116159 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D6A1DF4A39900116159 /* PreferencesViewController.swift */; };
+		85DC3D6D1DF5C00E00116159 /* RangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D6C1DF5C00E00116159 /* RangeSlider.swift */; };
+		85DC3D6F1DF6CF8F00116159 /* ExploreEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D6E1DF6CF8F00116159 /* ExploreEventsViewController.swift */; };
+		85DC3D731DF70A6A00116159 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D721DF70A6A00116159 /* Preferences.swift */; };
 		85E5D4C31DD4F166003E2376 /* ALChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4C21DD4F166003E2376 /* ALChatsViewController.swift */; };
 		85E5D4C51DD52D73003E2376 /* ALChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4C41DD52D73003E2376 /* ALChatManager.swift */; };
 		85E5D4CD1DD9EFBC003E2376 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4CC1DD9EFBC003E2376 /* CurrentUser.swift */; };
@@ -70,6 +75,8 @@
 		85407D9F1DF03FD90033E696 /* CandidateOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CandidateOverlayView.xib; sourceTree = "<group>"; };
 		85407DA11DF040070033E696 /* CandidateCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CandidateCardView.xib; sourceTree = "<group>"; };
 		85407DA31DF042A00033E696 /* CandidateCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandidateCardView.swift; sourceTree = "<group>"; };
+		85407DA51DF1B0D00033E696 /* ProfilePhotoImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePhotoImageView.swift; sourceTree = "<group>"; };
+		85407DA71DF307990033E696 /* SettingsTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsTableHeaderView.xib; sourceTree = "<group>"; };
 		854DDABC1DE364D400655EFC /* MyEventsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyEventsTableViewCell.xib; sourceTree = "<group>"; };
 		854DDABE1DE3654E00655EFC /* MyEventsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyEventsTableViewCell.swift; sourceTree = "<group>"; };
 		854DDAC01DE43E0E00655EFC /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -88,7 +95,10 @@
 		85685F801DEF0BE9009BAEE0 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		85685F861DEF3310009BAEE0 /* CandidatesDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandidatesDelegate.swift; sourceTree = "<group>"; };
 		85685F881DEF4A2E009BAEE0 /* TabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
-		85685F8A1DEF4AF9009BAEE0 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		85DC3D6A1DF4A39900116159 /* PreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
+		85DC3D6C1DF5C00E00116159 /* RangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSlider.swift; sourceTree = "<group>"; };
+		85DC3D6E1DF6CF8F00116159 /* ExploreEventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreEventsViewController.swift; sourceTree = "<group>"; };
+		85DC3D721DF70A6A00116159 /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		85E5D4C21DD4F166003E2376 /* ALChatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ALChatsViewController.swift; sourceTree = "<group>"; };
 		85E5D4C41DD52D73003E2376 /* ALChatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ALChatManager.swift; sourceTree = "<group>"; };
 		85E5D4CC1DD9EFBC003E2376 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
@@ -130,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				85685F7B1DEDA1D6009BAEE0 /* Events */,
+				85407DA71DF307990033E696 /* SettingsTableHeaderView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -163,6 +174,7 @@
 				851CDBE91DDEF2B100B887C0 /* Location.swift */,
 				85EB2EE31DE20BCF00F0A55C /* Profile.swift */,
 				854DDAC41DE47DE500655EFC /* User.swift */,
+				85DC3D721DF70A6A00116159 /* Preferences.swift */,
 				8545A5FF1DDCDADC008F3DD2 /* GraphRequests */,
 			);
 			name = Models;
@@ -244,6 +256,7 @@
 				85ED4E651DD1EC7D00F51857 /* AddEventViewController.swift */,
 				85ED4E6D1DD229D600F51857 /* MyEventsTableViewController.swift */,
 				85685F711DEC758A009BAEE0 /* SearchEventsViewController.swift */,
+				85DC3D6E1DF6CF8F00116159 /* ExploreEventsViewController.swift */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -263,7 +276,9 @@
 			isa = PBXGroup;
 			children = (
 				8506A88C1DCB9A5D00C18EC3 /* SettingsViewController.swift */,
-				85685F8A1DEF4AF9009BAEE0 /* SettingsViewController.xib */,
+				85407DA51DF1B0D00033E696 /* ProfilePhotoImageView.swift */,
+				85DC3D6A1DF4A39900116159 /* PreferencesViewController.swift */,
+				85DC3D6C1DF5C00E00116159 /* RangeSlider.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -352,8 +367,8 @@
 			files = (
 				8506A89B1DCC87A400C18EC3 /* EventsTableViewCell.xib in Resources */,
 				85407DA01DF03FD90033E696 /* CandidateOverlayView.xib in Resources */,
-				85685F8B1DEF4AF9009BAEE0 /* SettingsViewController.xib in Resources */,
 				85685F761DEC7B69009BAEE0 /* SearchEventsResultsTableViewCell.xib in Resources */,
+				85407DA81DF307990033E696 /* SettingsTableHeaderView.xib in Resources */,
 				85407D9C1DF028D50033E696 /* Main.storyboard in Resources */,
 				85685F811DEF0BE9009BAEE0 /* LoginViewController.xib in Resources */,
 				85512B191DCB5B020072C1B8 /* LaunchScreen.storyboard in Resources */,
@@ -420,12 +435,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				85512B231DCB74DA0072C1B8 /* LoginViewController.swift in Sources */,
+				85DC3D6F1DF6CF8F00116159 /* ExploreEventsViewController.swift in Sources */,
 				85685F781DEC7B8D009BAEE0 /* SearchEventsResultsTableViewCell.swift in Sources */,
 				851CDBE81DDEF29900B887C0 /* Place.swift in Sources */,
 				85EB2EE61DE20DAE00F0A55C /* Activity.swift in Sources */,
 				85407DA41DF042A00033E696 /* CandidateCardView.swift in Sources */,
 				8506A8991DCBB9C000C18EC3 /* EventsTableViewCell.swift in Sources */,
 				854DDAC51DE47DE500655EFC /* User.swift in Sources */,
+				85407DA61DF1B0D00033E696 /* ProfilePhotoImageView.swift in Sources */,
+				85DC3D731DF70A6A00116159 /* Preferences.swift in Sources */,
 				854DDABF1DE3654E00655EFC /* MyEventsTableViewCell.swift in Sources */,
 				854DDAC11DE43E0E00655EFC /* Constants.swift in Sources */,
 				85685F721DEC758A009BAEE0 /* SearchEventsViewController.swift in Sources */,
@@ -437,12 +455,14 @@
 				8506A8A01DCC97F600C18EC3 /* CandidatesViewController.swift in Sources */,
 				85685F7A1DEC94FA009BAEE0 /* Woojo.swift in Sources */,
 				851CDBEA1DDEF2B100B887C0 /* Location.swift in Sources */,
+				85DC3D6B1DF4A39900116159 /* PreferencesViewController.swift in Sources */,
 				85ED4E641DCFF7F200F51857 /* MainTabBarController.swift in Sources */,
 				85E5D4C31DD4F166003E2376 /* ALChatsViewController.swift in Sources */,
 				85EB2EE41DE20BCF00F0A55C /* Profile.swift in Sources */,
 				851CDBE61DDEF18A00B887C0 /* UserEventsGraphRequest.swift in Sources */,
 				8506A8A21DCCA61600C18EC3 /* Candidate.swift in Sources */,
 				85685F891DEF4A2E009BAEE0 /* TabViewController.swift in Sources */,
+				85DC3D6D1DF5C00E00116159 /* RangeSlider.swift in Sources */,
 				85ED4E6E1DD229D600F51857 /* MyEventsTableViewController.swift in Sources */,
 				8506A8A81DCCCB5E00C18EC3 /* Pass.swift in Sources */,
 				8506A8971DCBB0CC00C18EC3 /* Event.swift in Sources */,

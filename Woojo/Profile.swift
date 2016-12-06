@@ -23,14 +23,25 @@ extension User {
         var displayName: String?
         var photoID: String?
         var gender: Gender?
-        var ageRange: (min: Int?, max: Int?)
+        var birthday: Date?
         var description: String?
         var city: String?
         var country: String?
         var user: User
         var photo: Variable<UIImage> = Variable(#imageLiteral(resourceName: "placeholder_40x40"))
+        var age: Int {
+            get {
+                print(birthday)
+                return Calendar.current.dateComponents([Calendar.Component.year], from: birthday!, to: Date()).year!
+            }
+        }
         
         var isObserved = false
+        var birthdayFormatter: DateFormatter = {
+            let birthdayFormatter = DateFormatter()
+            birthdayFormatter.dateFormat = "MM/dd/yyyy"
+            return birthdayFormatter
+        }()
         
         var ref: FIRDatabaseReference? {
             get {
@@ -76,6 +87,9 @@ extension User {
                 description = value[Constants.User.Profile.properties.firebaseNodes.description] as? String
                 city = value[Constants.User.Profile.properties.firebaseNodes.city] as? String
                 country = value[Constants.User.Profile.properties.firebaseNodes.country] as? String
+                if let birthdayString = value[Constants.User.Profile.properties.firebaseNodes.birthday] as? String {
+                    birthday = birthdayFormatter.date(from: birthdayString)
+                }
             } else {
                 print("Failed to create Profile from Firebase snapshot.", snapshot)
             }
@@ -87,8 +101,11 @@ extension User {
                 if let genderString = dict[Constants.User.Profile.properties.graphAPIKeys.gender] as? String {
                     gender = Gender(rawValue: genderString)
                 }
-                if let ageRangeDict = dict[Constants.User.Profile.properties.graphAPIKeys.ageRange] as? [String:Any] {
+                /*if let ageRangeDict = dict[Constants.User.Profile.properties.graphAPIKeys.ageRange] as? [String:Any] {
                     ageRange = (ageRangeDict[Constants.User.Profile.properties.graphAPIKeys.ageRangeMin] as? Int, ageRangeDict[Constants.User.Profile.properties.graphAPIKeys.ageRangeMax] as? Int)
+                }*/
+                if let birthdayString = dict[Constants.User.Profile.properties.graphAPIKeys.birthday] as? String {
+                    birthday = birthdayFormatter.date(from: birthdayString)
                 }
             } else {
                 print("Failed to create Profile from Graph API dictionary.", dict as Any)
@@ -110,8 +127,9 @@ extension User {
             dict[Constants.User.Profile.properties.firebaseNodes.firstName] = self.displayName
             dict[Constants.User.Profile.properties.firebaseNodes.photoID] = self.photoID
             dict[Constants.User.Profile.properties.firebaseNodes.gender] = self.gender?.rawValue
-            dict[Constants.User.Profile.properties.firebaseNodes.ageRange] = [Constants.User.Profile.properties.firebaseNodes.ageRangeMin:self.ageRange.min,
-                                                                              Constants.User.Profile.properties.firebaseNodes.ageRangeMax:self.ageRange.max]
+            if let birthday = birthday {
+                dict[Constants.User.Profile.properties.firebaseNodes.birthday] = birthdayFormatter.string(from: birthday)
+            }
             dict[Constants.User.Profile.properties.firebaseNodes.description] = self.description
             dict[Constants.User.Profile.properties.firebaseNodes.city] = self.city
             dict[Constants.User.Profile.properties.firebaseNodes.country] = self.country
@@ -255,7 +273,7 @@ extension User.Profile {
         var parameters: [String: Any]? = {
             let fields = [Constants.GraphRequest.UserProfile.fieldID,
                           Constants.User.Profile.properties.graphAPIKeys.firstName,
-                          Constants.User.Profile.properties.graphAPIKeys.ageRange,
+                          Constants.User.Profile.properties.graphAPIKeys.birthday,
                           Constants.User.Profile.properties.graphAPIKeys.gender]
             return [Constants.GraphRequest.fields:fields.joined(separator: Constants.GraphRequest.fieldsSeparator)]
         }()

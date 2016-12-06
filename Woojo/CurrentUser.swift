@@ -52,14 +52,15 @@ class CurrentUser: User {
         }
     }
     
-    //var candidates: Variable<[Candidate]> = Variable([])
+    var preferences: Preferences!
     var candidates: [Candidate] = []
     var events: Variable<[Event]> = Variable([])
     var isLoading: Variable<Bool> = Variable(false)
     
     init?() {
         if let uid = FIRAuth.auth()?.currentUser?.uid {
-            super.init(uid: uid)            
+            super.init(uid: uid)
+            self.preferences = Preferences(gender: .all, ageRange: (min: 18, max: 60))
         } else {
             print("Failed to initialize CurrentUser. No UID. Is the user authenticated?")
             return nil
@@ -76,7 +77,22 @@ class CurrentUser: User {
         Woojo.User.current.value = nil
     }
     
+    func deleteAccount() {
+        print(ref)
+        ref.removeValue()
+        self.logOut()
+    }
+    
     func load(completion: (() -> Void)? = nil) {
+        
+        func finish() {
+            self.startObservingEvents()
+            self.startObservingCandidates()
+            self.isLoading.value = false
+            print("User loaded.")
+            completion?()
+        }
+        
         print("Starting to load user...")
         Woojo.User.current.value = self
         isLoading.value = true
@@ -95,21 +111,20 @@ class CurrentUser: User {
         group.enter()
         activity.loadFromFirebase(completion: { _, _ in
             print("Loaded activity")
-            if self.activity.signUp == nil {
-                self.performSignUpActions { _ in
-                    print("Performed signUp actions")
-                    group.leave()
-                }
-            } else {
-                group.leave()
-            }
+            group.leave()
         })
         group.notify(queue: .main, execute: {
-            self.startObservingEvents()
-            self.startObservingCandidates()
-            self.isLoading.value = false
-            print("User loaded.")
-            completion?()
+            self.preferences.loadFromFirebase(completion: { _, _ in
+                print("Loaded preferences")
+                if self.activity.signUp == nil {
+                    self.performSignUpActions { _ in
+                        print("Performed signUp actions")
+                        finish()
+                    }
+                } else {
+                    finish()
+                }
+            })
         })
     }
     
@@ -119,6 +134,16 @@ class CurrentUser: User {
         activity.setSignUp { _ in group.leave() }
         group.enter()
         activity.setLastSeen { _ in group.leave() }
+        group.enter()
+        preferences.setDefaults()
+        preferences.save { error in
+            if let error = error {
+                print("Failed to save default preferences to Firebase: \(error.localizedDescription)")
+                group.leave()
+            } else {
+                group.leave()
+            }
+        }
         group.enter()
         getEventsFromFacebook { events in
             let saveEventsGroup = DispatchGroup()
