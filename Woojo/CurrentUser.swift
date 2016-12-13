@@ -68,6 +68,9 @@ class CurrentUser: User {
     }
     
     func logOut() {
+        self.profile.stopObserving()
+        self.stopObservingEvents()
+        self.stopObservingCandidates()
         LoginManager().logOut()
         do {
             try FIRAuth.auth()?.signOut()
@@ -86,6 +89,7 @@ class CurrentUser: User {
     func load(completion: (() -> Void)? = nil) {
         
         func finish() {
+            self.profile.startObserving()
             self.startObservingEvents()
             self.startObservingCandidates()
             self.isLoading.value = false
@@ -278,5 +282,25 @@ class CurrentUser: User {
             }
             completion?(error)
         })
+    }
+    
+    func getAlbumsFromFacebook(completion: @escaping ([Album]) -> Void) {
+        if AccessToken.current != nil {
+            if firebaseAuthUser != nil {
+                let userAlbumsGraphRequest = UserAlbumsGraphRequest()
+                userAlbumsGraphRequest.start { response, result in
+                    switch result {
+                    case .success(let response):
+                        completion(response.albums)
+                    case .failed(let error):
+                        print("UserAlbumsGraphRequest failed: \(error.localizedDescription)")
+                    }
+                }
+            } else {
+                print("Failed to load user albums data from Facebook: No authenticated Firebase user.")
+            }
+        } else {
+            print("Failed to load user albums from Facebook: No Facebook access token.")
+        }
     }
 }

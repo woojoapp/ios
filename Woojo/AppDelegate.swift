@@ -36,8 +36,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FIRAuth.auth()?.addStateDidChangeListener { auth, user in
             if AccessToken.current == nil {
-                self.window?.makeKeyAndVisible()
-                self.window?.rootViewController?.present(self.loginViewController, animated: true, completion: nil)
+                if self.window?.rootViewController?.presentedViewController != self.loginViewController {
+                    self.window?.makeKeyAndVisible()
+                    self.window?.rootViewController?.present(self.loginViewController, animated: true, completion: nil)
+                }
             } else if Woojo.User.current.value == nil || (Woojo.User.current.value != nil && !Woojo.User.current.value!.isLoading.value && Woojo.User.current.value!.uid != user?.uid) {
                 if let currentUser = CurrentUser() {
                     currentUser.load {

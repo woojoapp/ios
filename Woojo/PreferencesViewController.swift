@@ -23,6 +23,10 @@ class PreferencesViewController: UITableViewController, UIPickerViewDelegate, UI
     let ageRangeSlider = RangeSlider(frame: CGRect.zero)
     let disposeBag = DisposeBag()
     
+    @IBAction func dismiss(sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         ageRangeSliderWrapper.addSubview(ageRangeSlider)

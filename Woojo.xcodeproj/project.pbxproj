@@ -41,10 +41,16 @@
 		85685F811DEF0BE9009BAEE0 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85685F801DEF0BE9009BAEE0 /* LoginViewController.xib */; };
 		85685F871DEF3310009BAEE0 /* CandidatesDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85685F861DEF3310009BAEE0 /* CandidatesDelegate.swift */; };
 		85685F891DEF4A2E009BAEE0 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85685F881DEF4A2E009BAEE0 /* TabViewController.swift */; };
+		858FEE371E0025A400322E8E /* AlbumsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE361E0025A400322E8E /* AlbumsTableViewController.swift */; };
 		85DC3D6B1DF4A39900116159 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D6A1DF4A39900116159 /* PreferencesViewController.swift */; };
 		85DC3D6D1DF5C00E00116159 /* RangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D6C1DF5C00E00116159 /* RangeSlider.swift */; };
 		85DC3D6F1DF6CF8F00116159 /* ExploreEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D6E1DF6CF8F00116159 /* ExploreEventsViewController.swift */; };
 		85DC3D731DF70A6A00116159 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D721DF70A6A00116159 /* Preferences.swift */; };
+		85DC3D751DF7FDB700116159 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D741DF7FDB700116159 /* ProfileViewController.swift */; };
+		85DC3D771DF81D6B00116159 /* BioTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D761DF81D6B00116159 /* BioTableViewCell.swift */; };
+		85DC3D791DFF4A6300116159 /* ProfilePhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D781DFF4A6300116159 /* ProfilePhotoCollectionViewCell.swift */; };
+		85DC3D7B1E00088F00116159 /* UserAlbumsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D7A1E00088F00116159 /* UserAlbumsGraphRequest.swift */; };
+		85DC3D7D1E0008B900116159 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D7C1E0008B900116159 /* Album.swift */; };
 		85E5D4C31DD4F166003E2376 /* ALChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4C21DD4F166003E2376 /* ALChatsViewController.swift */; };
 		85E5D4C51DD52D73003E2376 /* ALChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4C41DD52D73003E2376 /* ALChatManager.swift */; };
 		85E5D4CD1DD9EFBC003E2376 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4CC1DD9EFBC003E2376 /* CurrentUser.swift */; };
@@ -95,10 +101,16 @@
 		85685F801DEF0BE9009BAEE0 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		85685F861DEF3310009BAEE0 /* CandidatesDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandidatesDelegate.swift; sourceTree = "<group>"; };
 		85685F881DEF4A2E009BAEE0 /* TabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
+		858FEE361E0025A400322E8E /* AlbumsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumsTableViewController.swift; sourceTree = "<group>"; };
 		85DC3D6A1DF4A39900116159 /* PreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		85DC3D6C1DF5C00E00116159 /* RangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSlider.swift; sourceTree = "<group>"; };
 		85DC3D6E1DF6CF8F00116159 /* ExploreEventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreEventsViewController.swift; sourceTree = "<group>"; };
 		85DC3D721DF70A6A00116159 /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		85DC3D741DF7FDB700116159 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		85DC3D761DF81D6B00116159 /* BioTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BioTableViewCell.swift; sourceTree = "<group>"; };
+		85DC3D781DFF4A6300116159 /* ProfilePhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		85DC3D7A1E00088F00116159 /* UserAlbumsGraphRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAlbumsGraphRequest.swift; sourceTree = "<group>"; };
+		85DC3D7C1E0008B900116159 /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		85E5D4C21DD4F166003E2376 /* ALChatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ALChatsViewController.swift; sourceTree = "<group>"; };
 		85E5D4C41DD52D73003E2376 /* ALChatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ALChatManager.swift; sourceTree = "<group>"; };
 		85E5D4CC1DD9EFBC003E2376 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
@@ -176,6 +188,7 @@
 				854DDAC41DE47DE500655EFC /* User.swift */,
 				85DC3D721DF70A6A00116159 /* Preferences.swift */,
 				8545A5FF1DDCDADC008F3DD2 /* GraphRequests */,
+				85DC3D7C1E0008B900116159 /* Album.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -185,6 +198,7 @@
 			children = (
 				851CDBE51DDEF18A00B887C0 /* UserEventsGraphRequest.swift */,
 				85685F731DEC7833009BAEE0 /* SearchEventsGraphRequest.swift */,
+				85DC3D7A1E00088F00116159 /* UserAlbumsGraphRequest.swift */,
 			);
 			name = GraphRequests;
 			sourceTree = "<group>";
@@ -240,6 +254,26 @@
 			name = Events;
 			sourceTree = "<group>";
 		};
+		858FEE381E00271400322E8E /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				85DC3D6A1DF4A39900116159 /* PreferencesViewController.swift */,
+				85DC3D6C1DF5C00E00116159 /* RangeSlider.swift */,
+			);
+			name = Preferences;
+			sourceTree = "<group>";
+		};
+		858FEE391E00272800322E8E /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				85DC3D741DF7FDB700116159 /* ProfileViewController.swift */,
+				85DC3D761DF81D6B00116159 /* BioTableViewCell.swift */,
+				85DC3D781DFF4A6300116159 /* ProfilePhotoCollectionViewCell.swift */,
+				858FEE361E0025A400322E8E /* AlbumsTableViewController.swift */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
 		85E5D4C61DD720F2003E2376 /* Chats */ = {
 			isa = PBXGroup;
 			children = (
@@ -277,8 +311,8 @@
 			children = (
 				8506A88C1DCB9A5D00C18EC3 /* SettingsViewController.swift */,
 				85407DA51DF1B0D00033E696 /* ProfilePhotoImageView.swift */,
-				85DC3D6A1DF4A39900116159 /* PreferencesViewController.swift */,
-				85DC3D6C1DF5C00E00116159 /* RangeSlider.swift */,
+				858FEE381E00271400322E8E /* Preferences */,
+				858FEE391E00272800322E8E /* Profile */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -459,13 +493,19 @@
 				85ED4E641DCFF7F200F51857 /* MainTabBarController.swift in Sources */,
 				85E5D4C31DD4F166003E2376 /* ALChatsViewController.swift in Sources */,
 				85EB2EE41DE20BCF00F0A55C /* Profile.swift in Sources */,
+				85DC3D7D1E0008B900116159 /* Album.swift in Sources */,
 				851CDBE61DDEF18A00B887C0 /* UserEventsGraphRequest.swift in Sources */,
+				85DC3D7B1E00088F00116159 /* UserAlbumsGraphRequest.swift in Sources */,
 				8506A8A21DCCA61600C18EC3 /* Candidate.swift in Sources */,
+				85DC3D771DF81D6B00116159 /* BioTableViewCell.swift in Sources */,
 				85685F891DEF4A2E009BAEE0 /* TabViewController.swift in Sources */,
+				85DC3D751DF7FDB700116159 /* ProfileViewController.swift in Sources */,
 				85DC3D6D1DF5C00E00116159 /* RangeSlider.swift in Sources */,
 				85ED4E6E1DD229D600F51857 /* MyEventsTableViewController.swift in Sources */,
 				8506A8A81DCCCB5E00C18EC3 /* Pass.swift in Sources */,
+				85DC3D791DFF4A6300116159 /* ProfilePhotoCollectionViewCell.swift in Sources */,
 				8506A8971DCBB0CC00C18EC3 /* Event.swift in Sources */,
+				858FEE371E0025A400322E8E /* AlbumsTableViewController.swift in Sources */,
 				85E5D4CD1DD9EFBC003E2376 /* CurrentUser.swift in Sources */,
 				85ED4E661DD1EC7D00F51857 /* AddEventViewController.swift in Sources */,
 				85E5D4CF1DD9FA41003E2376 /* Gender.swift in Sources */,

@@ -84,6 +84,20 @@ struct Constants {
         }
     }
     
+    struct Album {
+        struct properties {
+            struct graphAPIKeys {
+                static let id = "id"
+                static let name = "name"
+                static let picture = "picture"
+                static let pictureData = "data"
+                static let pictureDataURL = "url"
+                static let data = "data"
+                static let count = "count"
+            }
+        }
+    }
+    
     struct Event {
         static let firebaseNode = "events"
         static let dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZ"
@@ -178,6 +192,20 @@ struct Constants {
             static let fieldPictureUrl = "picture.type(normal){url}"
             struct keys {
                 static let data = "data"
+            }
+        }
+        
+        struct UserAlbums {
+            static let path = "/me/albums"
+            static let fields = "id,name,count,picture.type(small){url}"
+            struct keys {
+                static let data = "data"
+                /*static let id = "id"
+                static let name = "name"
+                static let count = "count"
+                static let picture = "picture"
+                static let pictureData = "data"
+                static let pictureDataURL = "url"*/
             }
         }
         

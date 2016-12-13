@@ -24,14 +24,14 @@ extension User {
         var photoID: String?
         var gender: Gender?
         var birthday: Date?
-        var description: String?
+        var description: Variable<String> = Variable("")
         var city: String?
         var country: String?
         var user: User
         var photo: Variable<UIImage> = Variable(#imageLiteral(resourceName: "placeholder_40x40"))
+        var photos: Variable<[Photo]> = Variable([])
         var age: Int {
             get {
-                print(birthday)
                 return Calendar.current.dateComponents([Calendar.Component.year], from: birthday!, to: Date()).year!
             }
         }
@@ -84,7 +84,7 @@ extension User {
                 if let genderString = value[Constants.User.Profile.properties.firebaseNodes.gender] as? String {
                     gender = Gender(rawValue: genderString)
                 }
-                description = value[Constants.User.Profile.properties.firebaseNodes.description] as? String
+                description.value = value[Constants.User.Profile.properties.firebaseNodes.description] as? String ?? "ini"
                 city = value[Constants.User.Profile.properties.firebaseNodes.city] as? String
                 country = value[Constants.User.Profile.properties.firebaseNodes.country] as? String
                 if let birthdayString = value[Constants.User.Profile.properties.firebaseNodes.birthday] as? String {
@@ -101,9 +101,6 @@ extension User {
                 if let genderString = dict[Constants.User.Profile.properties.graphAPIKeys.gender] as? String {
                     gender = Gender(rawValue: genderString)
                 }
-                /*if let ageRangeDict = dict[Constants.User.Profile.properties.graphAPIKeys.ageRange] as? [String:Any] {
-                    ageRange = (ageRangeDict[Constants.User.Profile.properties.graphAPIKeys.ageRangeMin] as? Int, ageRangeDict[Constants.User.Profile.properties.graphAPIKeys.ageRangeMax] as? Int)
-                }*/
                 if let birthdayString = dict[Constants.User.Profile.properties.graphAPIKeys.birthday] as? String {
                     birthday = birthdayFormatter.date(from: birthdayString)
                 }
@@ -122,6 +119,24 @@ extension User {
             })
         }
         
+        func loadPhotos(completion: ((Profile?, Error?) -> Void)? = nil) {
+            ref?.child(Constants.User.Profile.Photo.firebaseNode).observeSingleEvent(of: .value, with: { snapshot in
+                let photoIDs = snapshot.children
+                while let photoID = photoIDs.nextObject() as? FIRDataSnapshot {
+                    if let photoID = photoID.value as? String {
+                        let photo = Photo(profile: self)!
+                        self.storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(photoID).downloadURL(completion: { downloadURL, error in
+                            SDWebImageManager.shared().downloadImage(with: downloadURL, options: [], progress: nil, completed: { image, _, _, _, _ in
+                                if let image = image {
+                                    photo.image = image
+                                }
+                            })
+                        })
+                    }
+                }
+            })
+        }
+        
         func toDictionary() -> [String:Any] {
             var dict: [String:Any] = [:]
             dict[Constants.User.Profile.properties.firebaseNodes.firstName] = self.displayName
@@ -130,7 +145,9 @@ extension User {
             if let birthday = birthday {
                 dict[Constants.User.Profile.properties.firebaseNodes.birthday] = birthdayFormatter.string(from: birthday)
             }
-            dict[Constants.User.Profile.properties.firebaseNodes.description] = self.description
+            if self.description.value != "" {
+                dict[Constants.User.Profile.properties.firebaseNodes.description] = self.description.value
+            }
             dict[Constants.User.Profile.properties.firebaseNodes.city] = self.city
             dict[Constants.User.Profile.properties.firebaseNodes.country] = self.country
             return dict
@@ -151,6 +168,15 @@ extension User {
             isObserved = false
         }
         
+        func setDescription(description: String, completion: ((Error?) -> Void)? = nil) {
+            ref?.child(Constants.User.Profile.properties.firebaseNodes.description).setValue(description, withCompletionBlock: { error, ref in
+                if let error = error {
+                    print("Failed to save user profile description: \(error.localizedDescription)")
+                }
+                completion?(error)
+            })
+        }
+        
         func updateFromFacebook(completion: ((Error?) -> Void)?) {
             User.Profile.GraphRequest(profile: self)?.start { response, result in
                 switch result {
@@ -158,6 +184,7 @@ extension User {
                     // Update Firebase with the data loaded from Facebook
                     self.displayName = response.profile?.displayName
                     if let responseAsDictionary = response.profile?.toDictionary() {
+                        print(responseAsDictionary)
                         self.ref?.updateChildValues(responseAsDictionary) { error, _ in
                             if let error = error {
                                 print("Failed to update user profile in database: \(error)")
@@ -218,6 +245,25 @@ extension User {
                 }
             }
         }
+        
+    }
+    
+}
+
+extension User.Profile {
+    
+    class Photo {
+        
+        init?(profile: User.Profile?) {
+            if let profile = profile {
+                self.profile = profile
+            } else {
+                return nil
+            }
+        }
+        
+        var profile: User.Profile
+        var image: UIImage?
         
     }
     

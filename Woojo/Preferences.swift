@@ -68,7 +68,7 @@ extension CurrentUser {
                     dmin = 8
                     dmax = 2
                 }
-                self.ageRange = (min: profile.age - dmin, max: profile.age + dmax)
+                self.ageRange = (min: max(profile.age - dmin, 18), max: min(profile.age + dmax, 60))
             } else {
                 print("Failed to set default preferences")
             }
