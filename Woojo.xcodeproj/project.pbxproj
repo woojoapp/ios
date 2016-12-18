@@ -24,7 +24,6 @@
 		85407DA21DF040070033E696 /* CandidateCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85407DA11DF040070033E696 /* CandidateCardView.xib */; };
 		85407DA41DF042A00033E696 /* CandidateCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85407DA31DF042A00033E696 /* CandidateCardView.swift */; };
 		85407DA61DF1B0D00033E696 /* ProfilePhotoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85407DA51DF1B0D00033E696 /* ProfilePhotoImageView.swift */; };
-		85407DA81DF307990033E696 /* SettingsTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85407DA71DF307990033E696 /* SettingsTableHeaderView.xib */; };
 		854DDABD1DE364D400655EFC /* MyEventsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 854DDABC1DE364D400655EFC /* MyEventsTableViewCell.xib */; };
 		854DDABF1DE3654E00655EFC /* MyEventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854DDABE1DE3654E00655EFC /* MyEventsTableViewCell.swift */; };
 		854DDAC11DE43E0E00655EFC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854DDAC01DE43E0E00655EFC /* Constants.swift */; };
@@ -42,6 +41,11 @@
 		85685F871DEF3310009BAEE0 /* CandidatesDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85685F861DEF3310009BAEE0 /* CandidatesDelegate.swift */; };
 		85685F891DEF4A2E009BAEE0 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85685F881DEF4A2E009BAEE0 /* TabViewController.swift */; };
 		858FEE371E0025A400322E8E /* AlbumsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE361E0025A400322E8E /* AlbumsTableViewController.swift */; };
+		858FEE3C1E02A40C00322E8E /* AlbumsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE3A1E02A40C00322E8E /* AlbumsTableViewCell.swift */; };
+		858FEE3D1E02A40C00322E8E /* AlbumsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 858FEE3B1E02A40C00322E8E /* AlbumsTableViewCell.xib */; };
+		858FEE401E02ACF400322E8E /* PhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE3F1E02ACF400322E8E /* PhotoCollectionViewController.swift */; };
+		858FEE421E02B5E600322E8E /* AlbumPhotosGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE411E02B5E500322E8E /* AlbumPhotosGraphRequest.swift */; };
+		858FEE441E04250C00322E8E /* AlbumPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE431E04250B00322E8E /* AlbumPhotoCollectionViewCell.swift */; };
 		85DC3D6B1DF4A39900116159 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D6A1DF4A39900116159 /* PreferencesViewController.swift */; };
 		85DC3D6D1DF5C00E00116159 /* RangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D6C1DF5C00E00116159 /* RangeSlider.swift */; };
 		85DC3D6F1DF6CF8F00116159 /* ExploreEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D6E1DF6CF8F00116159 /* ExploreEventsViewController.swift */; };
@@ -82,7 +86,6 @@
 		85407DA11DF040070033E696 /* CandidateCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CandidateCardView.xib; sourceTree = "<group>"; };
 		85407DA31DF042A00033E696 /* CandidateCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandidateCardView.swift; sourceTree = "<group>"; };
 		85407DA51DF1B0D00033E696 /* ProfilePhotoImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePhotoImageView.swift; sourceTree = "<group>"; };
-		85407DA71DF307990033E696 /* SettingsTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsTableHeaderView.xib; sourceTree = "<group>"; };
 		854DDABC1DE364D400655EFC /* MyEventsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyEventsTableViewCell.xib; sourceTree = "<group>"; };
 		854DDABE1DE3654E00655EFC /* MyEventsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyEventsTableViewCell.swift; sourceTree = "<group>"; };
 		854DDAC01DE43E0E00655EFC /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -102,6 +105,11 @@
 		85685F861DEF3310009BAEE0 /* CandidatesDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandidatesDelegate.swift; sourceTree = "<group>"; };
 		85685F881DEF4A2E009BAEE0 /* TabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
 		858FEE361E0025A400322E8E /* AlbumsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumsTableViewController.swift; sourceTree = "<group>"; };
+		858FEE3A1E02A40C00322E8E /* AlbumsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumsTableViewCell.swift; sourceTree = "<group>"; };
+		858FEE3B1E02A40C00322E8E /* AlbumsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlbumsTableViewCell.xib; sourceTree = "<group>"; };
+		858FEE3F1E02ACF400322E8E /* PhotoCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewController.swift; sourceTree = "<group>"; };
+		858FEE411E02B5E500322E8E /* AlbumPhotosGraphRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumPhotosGraphRequest.swift; sourceTree = "<group>"; };
+		858FEE431E04250B00322E8E /* AlbumPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		85DC3D6A1DF4A39900116159 /* PreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		85DC3D6C1DF5C00E00116159 /* RangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSlider.swift; sourceTree = "<group>"; };
 		85DC3D6E1DF6CF8F00116159 /* ExploreEventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreEventsViewController.swift; sourceTree = "<group>"; };
@@ -152,7 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				85685F7B1DEDA1D6009BAEE0 /* Events */,
-				85407DA71DF307990033E696 /* SettingsTableHeaderView.xib */,
+				858FEE3E1E02A41000322E8E /* Settings */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -199,6 +207,7 @@
 				851CDBE51DDEF18A00B887C0 /* UserEventsGraphRequest.swift */,
 				85685F731DEC7833009BAEE0 /* SearchEventsGraphRequest.swift */,
 				85DC3D7A1E00088F00116159 /* UserAlbumsGraphRequest.swift */,
+				858FEE411E02B5E500322E8E /* AlbumPhotosGraphRequest.swift */,
 			);
 			name = GraphRequests;
 			sourceTree = "<group>";
@@ -269,9 +278,28 @@
 				85DC3D741DF7FDB700116159 /* ProfileViewController.swift */,
 				85DC3D761DF81D6B00116159 /* BioTableViewCell.swift */,
 				85DC3D781DFF4A6300116159 /* ProfilePhotoCollectionViewCell.swift */,
-				858FEE361E0025A400322E8E /* AlbumsTableViewController.swift */,
+				858FEE451E04251400322E8E /* Photos */,
 			);
 			name = Profile;
+			sourceTree = "<group>";
+		};
+		858FEE3E1E02A41000322E8E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				858FEE3A1E02A40C00322E8E /* AlbumsTableViewCell.swift */,
+				858FEE3B1E02A40C00322E8E /* AlbumsTableViewCell.xib */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		858FEE451E04251400322E8E /* Photos */ = {
+			isa = PBXGroup;
+			children = (
+				858FEE361E0025A400322E8E /* AlbumsTableViewController.swift */,
+				858FEE3F1E02ACF400322E8E /* PhotoCollectionViewController.swift */,
+				858FEE431E04250B00322E8E /* AlbumPhotoCollectionViewCell.swift */,
+			);
+			name = Photos;
 			sourceTree = "<group>";
 		};
 		85E5D4C61DD720F2003E2376 /* Chats */ = {
@@ -402,9 +430,9 @@
 				8506A89B1DCC87A400C18EC3 /* EventsTableViewCell.xib in Resources */,
 				85407DA01DF03FD90033E696 /* CandidateOverlayView.xib in Resources */,
 				85685F761DEC7B69009BAEE0 /* SearchEventsResultsTableViewCell.xib in Resources */,
-				85407DA81DF307990033E696 /* SettingsTableHeaderView.xib in Resources */,
 				85407D9C1DF028D50033E696 /* Main.storyboard in Resources */,
 				85685F811DEF0BE9009BAEE0 /* LoginViewController.xib in Resources */,
+				858FEE3D1E02A40C00322E8E /* AlbumsTableViewCell.xib in Resources */,
 				85512B191DCB5B020072C1B8 /* LaunchScreen.storyboard in Resources */,
 				854DDABD1DE364D400655EFC /* MyEventsTableViewCell.xib in Resources */,
 				85E5D4D61DDA247D003E2376 /* GoogleService-Info.plist in Resources */,
@@ -477,6 +505,7 @@
 				8506A8991DCBB9C000C18EC3 /* EventsTableViewCell.swift in Sources */,
 				854DDAC51DE47DE500655EFC /* User.swift in Sources */,
 				85407DA61DF1B0D00033E696 /* ProfilePhotoImageView.swift in Sources */,
+				858FEE421E02B5E600322E8E /* AlbumPhotosGraphRequest.swift in Sources */,
 				85DC3D731DF70A6A00116159 /* Preferences.swift in Sources */,
 				854DDABF1DE3654E00655EFC /* MyEventsTableViewCell.swift in Sources */,
 				854DDAC11DE43E0E00655EFC /* Constants.swift in Sources */,
@@ -487,6 +516,7 @@
 				8506A8951DCBA14C00C18EC3 /* EventsViewController.swift in Sources */,
 				85685F741DEC7833009BAEE0 /* SearchEventsGraphRequest.swift in Sources */,
 				8506A8A01DCC97F600C18EC3 /* CandidatesViewController.swift in Sources */,
+				858FEE3C1E02A40C00322E8E /* AlbumsTableViewCell.swift in Sources */,
 				85685F7A1DEC94FA009BAEE0 /* Woojo.swift in Sources */,
 				851CDBEA1DDEF2B100B887C0 /* Location.swift in Sources */,
 				85DC3D6B1DF4A39900116159 /* PreferencesViewController.swift in Sources */,
@@ -498,6 +528,7 @@
 				85DC3D7B1E00088F00116159 /* UserAlbumsGraphRequest.swift in Sources */,
 				8506A8A21DCCA61600C18EC3 /* Candidate.swift in Sources */,
 				85DC3D771DF81D6B00116159 /* BioTableViewCell.swift in Sources */,
+				858FEE441E04250C00322E8E /* AlbumPhotoCollectionViewCell.swift in Sources */,
 				85685F891DEF4A2E009BAEE0 /* TabViewController.swift in Sources */,
 				85DC3D751DF7FDB700116159 /* ProfileViewController.swift in Sources */,
 				85DC3D6D1DF5C00E00116159 /* RangeSlider.swift in Sources */,
@@ -507,6 +538,7 @@
 				8506A8971DCBB0CC00C18EC3 /* Event.swift in Sources */,
 				858FEE371E0025A400322E8E /* AlbumsTableViewController.swift in Sources */,
 				85E5D4CD1DD9EFBC003E2376 /* CurrentUser.swift in Sources */,
+				858FEE401E02ACF400322E8E /* PhotoCollectionViewController.swift in Sources */,
 				85ED4E661DD1EC7D00F51857 /* AddEventViewController.swift in Sources */,
 				85E5D4CF1DD9FA41003E2376 /* Gender.swift in Sources */,
 				85685F871DEF3310009BAEE0 /* CandidatesDelegate.swift in Sources */,

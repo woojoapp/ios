@@ -29,11 +29,18 @@ class TabViewController: UIViewController {
     
     func setupDataSource() {
         Woojo.User.current.asObservable()
-            .flatMap { user -> Observable<UIImage> in
+            .flatMap { user -> Observable<[User.Profile.Photo?]> in
                 if let currentUser = user {
-                    return currentUser.profile.photo.asObservable()
+                    return currentUser.profile.photos.asObservable()
                 } else {
-                    return Variable(#imageLiteral(resourceName: "placeholder_40x40")).asObservable()
+                    return Variable([nil]).asObservable()
+                }
+            }
+            .map { photos -> UIImage in
+                if let profilePhoto = photos[0], let image = profilePhoto.images[User.Profile.Photo.Size.thumbnail] {
+                    return image
+                } else {
+                    return #imageLiteral(resourceName: "placeholder_40x40")
                 }
             }
             .subscribe(onNext: { image in

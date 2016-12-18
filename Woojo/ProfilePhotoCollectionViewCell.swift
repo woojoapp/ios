@@ -11,7 +11,8 @@ import UIKit
 class ProfilePhotoCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var addButton: UIButton!
+    
+    var photo: User.Profile.Photo?
     
 }

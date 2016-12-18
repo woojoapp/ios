@@ -52,6 +52,15 @@ class PreferencesViewController: UITableViewController, UIPickerViewDelegate, UI
                 self.ageRangeSliderValueChanged(self.ageRangeSlider)
             })
             .addDisposableTo(disposeBag)
+        
+        Woojo.User.current.asObservable()
+            .map{ $0?.preferences.gender }
+            .subscribe(onNext: { gender in
+                if let gender = gender, let index = self.genderPickerData.index(of: gender) {
+                    self.genderPicker.selectRow(index, inComponent: 0, animated: true)
+                }
+            })
+            .addDisposableTo(disposeBag)
     }
     
     override func viewDidLayoutSubviews() {

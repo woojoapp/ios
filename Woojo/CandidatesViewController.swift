@@ -133,7 +133,7 @@ class CandidatesViewController: TabViewController, KolodaViewDelegate, KolodaVie
         let candidate = User.current.value?.candidates[index]
         cardView.nameLabel.text = candidate?.profile.displayName
         DispatchQueue.global(qos: .userInitiated).async {
-            User.current.value?.candidates[index].profile?.generatePhotoDownloadURL { url, error in
+            /*User.current.value?.candidates[index].profile?.generatePhotoDownloadURL { url, error in
                 if let url = url {
                     do {
                         let image = UIImage(data: try Data(contentsOf: url))
@@ -147,7 +147,7 @@ class CandidatesViewController: TabViewController, KolodaViewDelegate, KolodaVie
                         print("Failed to get candidate image from URL: \(error.localizedDescription)")
                     }
                 }
-            }
+            }*/
         }
         return cardView
     }

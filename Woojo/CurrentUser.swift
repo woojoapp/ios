@@ -69,6 +69,7 @@ class CurrentUser: User {
     
     func logOut() {
         self.profile.stopObserving()
+        self.profile.stopObservingPhotos()
         self.stopObservingEvents()
         self.stopObservingCandidates()
         LoginManager().logOut()
@@ -90,6 +91,7 @@ class CurrentUser: User {
         
         func finish() {
             self.profile.startObserving()
+            self.profile.startObservingPhotos()
             self.startObservingEvents()
             self.startObservingCandidates()
             self.isLoading.value = false
@@ -102,15 +104,9 @@ class CurrentUser: User {
         isLoading.value = true
         let group = DispatchGroup()
         group.enter()
-        profile.updateFromFacebook(completion: { _ in
-            print("Updated profile data from Facebook")
-            self.profile.updatePhotoFromFacebook(completion: { _ in
-                print("Updated profile photo from Facebook")
-                self.profile.loadFromFirebase(completion: { _, _ in
-                    print("Loaded profile")
-                    group.leave()
-                })
-            })
+        self.profile.loadFromFirebase(completion: { _, _ in
+            print("Loaded profile")
+            group.leave()
         })
         group.enter()
         activity.loadFromFirebase(completion: { _, _ in
@@ -134,6 +130,17 @@ class CurrentUser: User {
     
     func performSignUpActions(completion: ((Error?) -> Void)? = nil) {
         let group = DispatchGroup()
+        group.enter()
+        profile.updateFromFacebook(completion: { _ in
+            print("Updated profile data from Facebook")
+            self.profile.updatePhotoFromFacebook(completion: { _ in
+                print("Updated profile photo from Facebook")
+                self.profile.loadFromFirebase(completion: { _, _ in
+                    print("Loaded profile")
+                    group.leave()
+                })
+            })
+        })
         group.enter()
         activity.setSignUp { _ in group.leave() }
         group.enter()
@@ -303,4 +310,5 @@ class CurrentUser: User {
             print("Failed to load user albums from Facebook: No Facebook access token.")
         }
     }
+
 }

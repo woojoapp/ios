@@ -73,7 +73,9 @@ PODS:
   - Koloda (3.1.2):
     - pop (~> 1.0)
   - NMRangeSlider (1.2.1)
+  - PKHUD (4.0.0)
   - pop (1.0.9)
+  - RSKImageCropper (1.5.2)
   - RxCocoa (3.0.1):
     - RxSwift (~> 3.0)
   - RxSwift (3.0.1)
@@ -90,6 +92,8 @@ DEPENDENCIES:
   - Firebase/Storage
   - Koloda (from `https://github.com/woojoapp/Koloda.git`, commit `584d70b02a8fdc202d0c0a38c860da9a917fe7b2`, branch `swift-3`)
   - NMRangeSlider
+  - PKHUD (~> 4.0)
+  - RSKImageCropper
   - RxCocoa
   - RxSwift
 
@@ -126,10 +130,12 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
   Koloda: 5aee353329cd1605540f1215a4c1975481dc7a37
   NMRangeSlider: 317ded652431eb90501c8421d9cddc3930d891e6
+  PKHUD: 2bb45c936bb8afa39f3cd33ec14e8cc89f624255
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
+  RSKImageCropper: 27d0e7efa800b509720163c3561fe08a04853780
   RxCocoa: 15a52fc590dcc700cb4a690a633b5c5184ce3a78
   RxSwift: af5680055c4ad04480189c52d28385b1029493a6
 
-PODFILE CHECKSUM: 90017e5c80f30787ff9904d6bb96b93d11defa7d
+PODFILE CHECKSUM: 08ed7a376366eff50a420b8a0761a9230dd49081
 
 COCOAPODS: 1.1.1

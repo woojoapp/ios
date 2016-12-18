@@ -28,8 +28,8 @@ extension User {
         var city: String?
         var country: String?
         var user: User
-        var photo: Variable<UIImage> = Variable(#imageLiteral(resourceName: "placeholder_40x40"))
-        var photos: Variable<[Photo]> = Variable([])
+        //var photo: Variable<UIImage> = Variable(#imageLiteral(resourceName: "placeholder_40x40"))
+        var photos: Variable<[Photo?]> = Variable([nil, nil, nil, nil, nil, nil])
         var age: Int {
             get {
                 return Calendar.current.dateComponents([Calendar.Component.year], from: birthday!, to: Date()).year!
@@ -61,24 +61,19 @@ extension User {
         
         // MARK: - Methods
         
-        func generatePhotoDownloadURL(completion: @escaping (URL?, Error?) -> Void) {
-            if let photoID = photoID {
-                storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(photoID).downloadURL(completion: completion)
-            }
-        }
-        
         func loadFrom(firebase snapshot: FIRDataSnapshot) {
             if let value = snapshot.value as? [String:Any] {
                 displayName = value[Constants.User.Profile.properties.firebaseNodes.firstName] as? String
-                photoID = value[Constants.User.Profile.properties.firebaseNodes.photoID] as? String
-                // Download and cache profile photo only for the current user
-                if self.user is CurrentUser {
-                    generatePhotoDownloadURL { downloadURL, error in
-                        SDWebImageManager.shared().downloadImage(with: downloadURL, options: [], progress: nil, completed: { image, _, _, _, _ in
-                            if let image = image {
-                                self.photo.value = image
+                if let photos = value[Constants.User.Profile.Photo.firebaseNode] as? [String:String] {
+                    for (photoIndex, photoID) in photos {
+                        if let index = Int(photoIndex) {
+                            let photo = Photo(profile: self, index: index, id: photoID)
+                            // Download and cache profile photo only
+                            if index == 0 {
+                                photo?.download(size: .full)
                             }
-                        })
+                            self.photos.value[index] = photo
+                        }
                     }
                 }
                 if let genderString = value[Constants.User.Profile.properties.firebaseNodes.gender] as? String {
@@ -119,22 +114,38 @@ extension User {
             })
         }
         
-        func loadPhotos(completion: ((Profile?, Error?) -> Void)? = nil) {
-            ref?.child(Constants.User.Profile.Photo.firebaseNode).observeSingleEvent(of: .value, with: { snapshot in
-                let photoIDs = snapshot.children
-                while let photoID = photoIDs.nextObject() as? FIRDataSnapshot {
-                    if let photoID = photoID.value as? String {
-                        let photo = Photo(profile: self)!
-                        self.storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(photoID).downloadURL(completion: { downloadURL, error in
-                            SDWebImageManager.shared().downloadImage(with: downloadURL, options: [], progress: nil, completed: { image, _, _, _, _ in
-                                if let image = image {
-                                    photo.image = image
-                                }
-                            })
-                        })
+        func startObservingPhotos() {
+            ref?.child(Constants.User.Profile.Photo.firebaseNode).child("0").observe(.value, with: { snapshot in
+                if let photoID = snapshot.value as? String,
+                    let photo = Photo(profile: self, index: 0, id: photoID) {
+                    photo.download() {
+                        self.photos.value[0] = photo
                     }
                 }
             })
+            ref?.child(Constants.User.Profile.Photo.firebaseNode).observe(.childAdded, with: { snapshot in
+                if let photoID = snapshot.value as? String,
+                    let photoIndex = Int(snapshot.key),
+                    let photo = Photo(profile: self, index: photoIndex, id: photoID) {
+                    photo.download() {
+                        self.photos.value[photoIndex] = photo
+                    }
+                }
+            }, withCancel: { error in
+                print("Cancelled observing childAdded for profile photos: \(error.localizedDescription)")
+            })
+            ref?.child(Constants.User.Profile.Photo.firebaseNode).observe(.childRemoved, with: { snapshot in
+                if let photoIndex = Int(snapshot.key) {
+                    self.photos.value[photoIndex] = nil
+                }
+            }, withCancel: { error in
+                print("Cancelled observing childRemoved for profile photos: \(error.localizedDescription)")
+            })
+        }
+        
+        func stopObservingPhotos() {
+            ref?.child(Constants.User.Profile.Photo.firebaseNode).removeAllObservers()
+            ref?.child(Constants.User.Profile.Photo.firebaseNode).child("0").removeAllObservers()
         }
         
         func toDictionary() -> [String:Any] {
@@ -207,30 +218,15 @@ extension User {
                     if let photoID = response.photoID {
                         self.ref?.child(Constants.User.Profile.properties.firebaseNodes.photoID).setValue(photoID)
                         if let photoURL = response.photoURL {
-                            let photoRef = self.storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(photoID)
                             DispatchQueue.global().async {
                                 do {
-                                    photoRef?.put(try Data(contentsOf: photoURL), metadata: nil) { metadata, error in
-                                        if let error = error {
-                                            print("Failed to upload profile photo to Firebase Storage: \(error)")
-                                        } else {
-                                            if let thumbnailURL = response.thumbnailURL {
-                                                let thumbnailRef = self.storageRef?.child(Constants.User.Profile.Thumbnail.firebaseNode).child(photoID)
-                                                DispatchQueue.global().async {
-                                                    do {
-                                                        thumbnailRef?.put(try Data(contentsOf: thumbnailURL), metadata: nil) { metadata, error in
-                                                            if let error = error {
-                                                                print("Failed to upload profile photo thumbnail to Firebase Storage: \(error)")
-                                                            }
-                                                            completion?(error)
-                                                        }
-                                                    } catch {
-                                                        print("Failed to download profile photo thumbnail from Facebook: \(error)")
-                                                        completion?(error)
-                                                    }
-                                                }
-                                            }
+                                    let data = try Data(contentsOf: photoURL)
+                                    if let image = UIImage(data: data) {
+                                        self.setPhoto(photo: image, id: photoID, index: 0) { _, error in
+                                            completion?(error)
                                         }
+                                    } else {
+                                        completion?(nil)
                                     }
                                 } catch {
                                     print("Failed to download profile photo from Facebook: \(error)")
@@ -246,6 +242,36 @@ extension User {
             }
         }
         
+        func set(photo: Photo, at index: Int, completion: ((Error?) -> Void)? = nil) {
+            Woojo.User.current.value?.profile.photos.value[index] = photo
+            ref?.child(Constants.User.Profile.Photo.firebaseNode).child(String(index)).setValue(photo.id, withCompletionBlock: { error, ref in
+                completion?(error)
+            })
+        }
+        
+        func remove(photoAt index: Int, completion: ((Error?) -> Void)? = nil) {
+            Woojo.User.current.value?.profile.photos.value[index] = nil
+            ref?.child(Constants.User.Profile.Photo.firebaseNode).child(String(index)).observeSingleEvent(of: .value, with: { snapshot in
+                if let id = snapshot.value as? String {
+                    self.storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(id).child(Constants.User.Profile.Photo.properties.full).delete { error in
+                        if let error = error {
+                            print("Failed to delete photo file: \(error.localizedDescription)")
+                        }
+                        self.storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(id).child(Constants.User.Profile.Photo.properties.thumbnail).delete { error in
+                            if let error = error {
+                                print("Failed to delete photo file: \(error.localizedDescription)")
+                            }
+                            self.ref?.child(Constants.User.Profile.Photo.firebaseNode).child(String(index)).removeValue(completionBlock: { error, ref in
+                                completion?(error)
+                            })
+                        }
+                    }
+                }
+            })
+            
+        }
+        
+        
     }
     
 }
@@ -254,16 +280,137 @@ extension User.Profile {
     
     class Photo {
         
-        init?(profile: User.Profile?) {
+        init?(profile: User.Profile?, index: Int, id: String) {
             if let profile = profile {
                 self.profile = profile
+                self.index = index
+                self.id = id
             } else {
                 return nil
             }
         }
         
         var profile: User.Profile
-        var image: UIImage?
+        var images: [Size:UIImage] = [:]
+        var index: Int
+        var id: String
+        
+        enum Size: Int {
+            case thumbnail = 100
+            case full = 414
+        }
+        
+        func generatePhotoDownloadURL(size: Size, completion: @escaping (URL?, Error?) -> Void) {
+            let path: String
+            switch size {
+            case .thumbnail:
+                path = Constants.User.Profile.Photo.properties.thumbnail
+            default:
+                path = Constants.User.Profile.Photo.properties.full
+            }
+            profile.storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(id).child(path).downloadURL(completion: completion)
+        }
+        
+        func download(size: Size, completion: (() -> Void)? = nil) {
+            generatePhotoDownloadURL(size: size) { url, error in
+                SDWebImageManager.shared().downloadImage(with: url, options: [], progress: nil, completed: { image, _, _, _, _ in
+                    if let image = image {
+                        self.images[size] = image
+                        completion?()
+                    }
+                })
+            }
+        }
+        
+        func download(completion: (() -> Void)? = nil) {
+            let group = DispatchGroup()
+            group.enter()
+            download(size: .full, completion: {
+                group.leave()
+            })
+            group.enter()
+            download(size: .thumbnail, completion: {
+                group.leave()
+            })
+            group.notify(queue: .main) {
+                completion?()
+            }
+        }
+        
+    }
+    
+    fileprivate func resize(image: UIImage, targetSize: CGSize) -> UIImage? {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / image.size.width
+        let heightRatio = targetSize.height / image.size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
+    }
+    
+    func setPhoto(photo: UIImage, id: String, index: Int, completion: ((Photo?, Error?) -> Void)? = nil) {
+        // Resize image to the maximum size we'll need
+        let group = DispatchGroup()
+        
+        group.enter()
+        guard let fullImage = resize(image: photo, targetSize: CGSize(width: User.Profile.Photo.Size.full.rawValue, height: User.Profile.Photo.Size.full.rawValue)), let fullImageJPEGData = UIImageJPEGRepresentation(fullImage, 0.9) else {
+            print("Failed to resize photo to full size")
+            return
+        }
+        storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(id).child(Constants.User.Profile.Photo.properties.full).put(fullImageJPEGData, metadata: nil, completion: { _, error in
+            if let error = error {
+                print("Failed to store full size photo: \(error.localizedDescription)")
+                completion?(nil, error)
+            }
+            group.leave()
+        })
+        
+        group.enter()
+        guard let thumbnailImage = resize(image: photo, targetSize: CGSize(width: User.Profile.Photo.Size.thumbnail.rawValue, height: User.Profile.Photo.Size.thumbnail.rawValue)), let thumbnailImageJPEGData = UIImageJPEGRepresentation(thumbnailImage, 0.9) else {
+            print("Failed to resize photo to thumbnail size")
+            return
+        }
+        storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(id).child(Constants.User.Profile.Photo.properties.thumbnail).put(thumbnailImageJPEGData, metadata: nil, completion: { _, error in
+            if let error = error {
+                print("Failed to store photo thumbnail: \(error.localizedDescription)")
+                completion?(nil, error)
+            }
+            group.leave()
+        })
+        
+        group.notify(queue: DispatchQueue.main, execute: {
+            self.ref?.child(Constants.User.Profile.Photo.firebaseNode).child(String(index)).setValue(id, withCompletionBlock: { error, ref in
+                if let error = error {
+                    print("Failed to set full size photo id: \(error.localizedDescription)")
+                    completion?(nil, error)
+                }
+                if let photo = Photo(profile: self, index: index, id: id) {
+                    photo.images[User.Profile.Photo.Size.full] = fullImage
+                    photo.images[User.Profile.Photo.Size.thumbnail] = thumbnailImage
+                    self.photos.value[index] = photo
+                    completion?(photo, nil)
+                } else {
+                    completion?(nil, nil)
+                }
+            })
+        })
         
     }
     

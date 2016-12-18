@@ -27,5 +27,7 @@ target 'Woojo' do
   pod 'RxCocoa'
 
   pod 'NMRangeSlider'
+  pod 'RSKImageCropper'
+  pod 'PKHUD', '~> 4.0'
 
 end
