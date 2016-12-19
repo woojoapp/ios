@@ -22,6 +22,7 @@ struct SearchEventsGraphRequest: GraphRequestProtocol {
                         self.events.append(event)
                     }
                 }
+                self.events = self.events.sorted(by: { ($0.attendingCount ?? 0) > ($1.attendingCount ?? 0) })
             }
         }
         

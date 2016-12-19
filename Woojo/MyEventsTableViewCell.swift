@@ -14,6 +14,7 @@ class MyEventsTableViewCell: UITableViewCell {
     @IBOutlet weak var placeLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var thumbnailView: UIImageView!
+    @IBOutlet weak var attendingLabel: UILabel!
     
     var event: Event? {
         didSet {
@@ -53,6 +54,13 @@ class MyEventsTableViewCell: UITableViewCell {
         }
         if let start = event?.start {
             dateLabel?.text = Event.dateFormatter.string(from: start)
+        }
+        if let attendingCount = event?.attendingCount {
+            let people: String
+            if attendingCount == 0 { people = "No one" }
+            else if attendingCount == 1 { people = "1 person" }
+            else { people = "\(attendingCount) people" }
+            attendingLabel.text = "\(people) attending"
         }
     }
     

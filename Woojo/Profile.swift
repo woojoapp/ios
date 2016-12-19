@@ -28,11 +28,14 @@ extension User {
         var city: String?
         var country: String?
         var user: User
-        //var photo: Variable<UIImage> = Variable(#imageLiteral(resourceName: "placeholder_40x40"))
         var photos: Variable<[Photo?]> = Variable([nil, nil, nil, nil, nil, nil])
         var age: Int {
             get {
-                return Calendar.current.dateComponents([Calendar.Component.year], from: birthday!, to: Date()).year!
+                if let birthday = birthday {
+                    return Calendar.current.dateComponents([Calendar.Component.year], from: birthday, to: Date()).year!
+                } else {
+                    return 0
+                }
             }
         }
         
@@ -64,22 +67,23 @@ extension User {
         func loadFrom(firebase snapshot: FIRDataSnapshot) {
             if let value = snapshot.value as? [String:Any] {
                 displayName = value[Constants.User.Profile.properties.firebaseNodes.firstName] as? String
-                if let photos = value[Constants.User.Profile.Photo.firebaseNode] as? [String:String] {
-                    for (photoIndex, photoID) in photos {
-                        if let index = Int(photoIndex) {
-                            let photo = Photo(profile: self, index: index, id: photoID)
-                            // Download and cache profile photo only
-                            if index == 0 {
-                                photo?.download(size: .full)
-                            }
-                            self.photos.value[index] = photo
+                let photosSnap = snapshot.childSnapshot(forPath: Constants.User.Profile.Photo.firebaseNode)
+                for item in photosSnap.children {
+                    print(item)
+                    if let photoSnap = item as? FIRDataSnapshot, let index = Int(photoSnap.key), let id = photoSnap.value as? String {
+                        let photo = Photo(profile: self, index: index, id: id)
+                        // Download and cache profile photo only
+                        if index == 0 {
+                            photo?.download(size: .full)
                         }
+                        self.photos.value[index] = photo
                     }
                 }
                 if let genderString = value[Constants.User.Profile.properties.firebaseNodes.gender] as? String {
                     gender = Gender(rawValue: genderString)
                 }
-                description.value = value[Constants.User.Profile.properties.firebaseNodes.description] as? String ?? "ini"
+                description.value = value[Constants.User.Profile.properties.firebaseNodes.description] as? String ?? ""
+                print(description.value)
                 city = value[Constants.User.Profile.properties.firebaseNodes.city] as? String
                 country = value[Constants.User.Profile.properties.firebaseNodes.country] as? String
                 if let birthdayString = value[Constants.User.Profile.properties.firebaseNodes.birthday] as? String {
@@ -106,6 +110,7 @@ extension User {
         
         func loadFromFirebase(completion: ((Profile?, Error?) -> Void)? = nil) {
             ref?.observeSingleEvent(of: .value, with: { snapshot in
+                print("LAOD", snapshot)
                 self.loadFrom(firebase: snapshot)
                 completion?(self, nil)
             }, withCancel: { error in
@@ -337,6 +342,12 @@ extension User.Profile {
             }
         }
         
+    }
+    
+    func downloadAllPhotos(size: User.Profile.Photo.Size) {
+        for photo in self.photos.value {
+            photo?.download(size: size)
+        }
     }
     
     fileprivate func resize(image: UIImage, targetSize: CGSize) -> UIImage? {

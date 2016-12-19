@@ -122,6 +122,7 @@ struct Constants {
                 static let pictureData = "data"
                 static let pictureDataURL = "url"
                 static let description = "description"
+                static let attendingCount = "attending_count"
             }
         }
         struct Place {

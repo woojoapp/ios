@@ -20,6 +20,7 @@ class Event {
     var place: Place?
     var pictureURL: URL?
     var description: String?
+    var attendingCount: Int?
     
     var ref: FIRDatabaseReference {
         get {
@@ -73,7 +74,7 @@ extension Event {
             let id = dict[Constants.Event.properties.graphAPIKeys.id] as? String,
             let name = dict[Constants.Event.properties.graphAPIKeys.name] as? String,
             let startTimeString = dict[Constants.Event.properties.graphAPIKeys.start] as? String,
-            let start = Event.dateFormatter.date(from: startTimeString) {
+            let start = Event.dateFormatter.date(from: startTimeString){
             
             let event = Event(id: id, name: name, start: start)
             event.description = dict[Constants.Event.properties.graphAPIKeys.description] as? String
@@ -88,6 +89,9 @@ extension Event {
                 }
             }
             event.place = Place.from(graphAPI: dict[Constants.Event.Place.graphAPIKey] as? [String:Any])
+            if let attendingCount = dict[Constants.Event.properties.graphAPIKeys.attendingCount] as? Int {
+                event.attendingCount = attendingCount
+            }
             return event
             
         } else {

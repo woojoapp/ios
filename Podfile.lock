@@ -79,6 +79,7 @@ PODS:
   - RxCocoa (3.0.1):
     - RxSwift (~> 3.0)
   - RxSwift (3.0.1)
+  - TGLParallaxCarousel (1.0.0)
 
 DEPENDENCIES:
   - Applozic
@@ -96,17 +97,23 @@ DEPENDENCIES:
   - RSKImageCropper
   - RxCocoa
   - RxSwift
+  - TGLParallaxCarousel (from `https://github.com/woojoapp/TGLParallaxCarousel`)
 
 EXTERNAL SOURCES:
   Koloda:
     :branch: swift-3
     :commit: 584d70b02a8fdc202d0c0a38c860da9a917fe7b2
     :git: https://github.com/woojoapp/Koloda.git
+  TGLParallaxCarousel:
+    :git: https://github.com/woojoapp/TGLParallaxCarousel
 
 CHECKOUT OPTIONS:
   Koloda:
     :commit: 584d70b02a8fdc202d0c0a38c860da9a917fe7b2
     :git: https://github.com/woojoapp/Koloda.git
+  TGLParallaxCarousel:
+    :commit: a3a8b134b559522f98f5862bb0b20f1a7b512aaf
+    :git: https://github.com/woojoapp/TGLParallaxCarousel
 
 SPEC CHECKSUMS:
   Applozic: ed9896ba4e58752d47de17935600396bfe4ccb19
@@ -135,7 +142,8 @@ SPEC CHECKSUMS:
   RSKImageCropper: 27d0e7efa800b509720163c3561fe08a04853780
   RxCocoa: 15a52fc590dcc700cb4a690a633b5c5184ce3a78
   RxSwift: af5680055c4ad04480189c52d28385b1029493a6
+  TGLParallaxCarousel: 94c8b4f271f0c1a1a3d973da1206f31771255e44
 
-PODFILE CHECKSUM: 08ed7a376366eff50a420b8a0761a9230dd49081
+PODFILE CHECKSUM: 92423b4bd4f278692e97da9607c478e81835a355
 
 COCOAPODS: 1.1.1

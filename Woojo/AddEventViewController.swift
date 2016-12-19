@@ -51,6 +51,7 @@ class AddEventViewController: UIViewController {
         self.containerViewC.alpha = 0
         super.viewDidLoad()
         tapGestureRecognizer.addTarget(self, action: #selector(tap))
+        tapGestureRecognizer.cancelsTouchesInView = false
     }
 
     override func didReceiveMemoryWarning() {

@@ -91,6 +91,7 @@ class MyEventsTableViewController: UITableViewController {
     // MARK: - Table view delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Tapped")
         if let event = self.events?[indexPath.row], let isUserEvent = Woojo.User.current.value?.events.value.contains(where: { $0.id == event.id }) {
             let completion = { (error: Error?) -> Void in tableView.reloadRows(at: [indexPath], with: .none) }
             if isUserEvent {

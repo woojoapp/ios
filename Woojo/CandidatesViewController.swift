@@ -94,64 +94,51 @@ class CandidatesViewController: TabViewController, KolodaViewDelegate, KolodaVie
     
     func koloda(_ koloda: KolodaView, didSelectCardAt index: Int) {
         print("Clicked on card at index \(index)")
+        let candidateDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CandidateDetailsViewController") as! CandidateDetailsViewController
+        if let candidate = User.current.value?.candidates[index] {
+            candidateDetailsViewController.candidate = candidate
+            self.present(candidateDetailsViewController, animated: true, completion: nil)
+        }
     }
     
     // MARK: - KolodaViewDataSource
     
     func kolodaNumberOfCards(_ koloda:KolodaView) -> Int {
-        return User.current.value!.candidates.count
+        return User.current.value?.candidates.count ?? 0
     }
     
-    /*func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
-        print("Asked for view for card \(index)")
-        let imageView = UIImageView()
-        if index >= User.current.value?.candidates.count ?? 0 { return imageView }
-        DispatchQueue.global(qos: .userInitiated).async {
-            User.current.value?.candidates[index].profile?.generatePhotoDownloadURL { url, error in
-                if let url = url {
-                    do {
-                        let image = UIImage(data: try Data(contentsOf: url))
-                        DispatchQueue.main.async {
-                            imageView.image = image
-                            if index == 0 {
-                                self.showKolodaAndHideLoading()
-                            }
-                        }
-                    } catch {
-                        print("Failed to get candidate image from URL: \(error.localizedDescription)")
-                    }
-                }
-            }
-        }
-        return imageView
-    }*/
-    
     func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
+        
         print("Asked for view for card \(index)")
         if index >= User.current.value?.candidates.count ?? 0 { return UIImageView(image: #imageLiteral(resourceName: "icon_rounded")) }
         let cardView = CandidateCardView(frame: CGRect.zero)
         let candidate = User.current.value?.candidates[index]
         cardView.nameLabel.text = candidate?.profile.displayName
+        print("Loading \(candidate?.profile.photos.value[0])")
+        
+        func setImage(image: UIImage?) {
+            DispatchQueue.main.async {
+                cardView.imageView.image = image
+                if index == 0 {
+                    self.showKolodaAndHideLoading()
+                }
+            }
+        }
+        
         DispatchQueue.global(qos: .userInitiated).async {
-            /*User.current.value?.candidates[index].profile?.generatePhotoDownloadURL { url, error in
-                if let url = url {
-                    do {
-                        let image = UIImage(data: try Data(contentsOf: url))
-                        DispatchQueue.main.async {
-                            cardView.imageView.image = image
-                            if index == 0 {
-                                self.showKolodaAndHideLoading()
-                            }
-                        }
-                    } catch {
-                        print("Failed to get candidate image from URL: \(error.localizedDescription)")
+            if let photo = candidate?.profile.photos.value[0] {
+                if let fullImage = photo.images[.full] {
+                    setImage(image: fullImage)
+                } else {
+                    photo.download {
+                        setImage(image: photo.images[.full])
                     }
                 }
-            }*/
+            } else { print("No photo") }
         }
         return cardView
     }
-    
+
     func koloda(koloda: KolodaView, viewForCardOverlayAtIndex index: Int) -> OverlayView? {
         return Bundle.main.loadNibNamed("OverlayView", owner: self, options: nil)?[0] as? OverlayView
     }

@@ -90,16 +90,42 @@ class CurrentUser: User {
     func load(completion: (() -> Void)? = nil) {
         
         func finish() {
-            self.profile.startObserving()
-            self.profile.startObservingPhotos()
-            self.startObservingEvents()
-            self.startObservingCandidates()
-            self.isLoading.value = false
-            print("User loaded.")
-            completion?()
+            let group = DispatchGroup()
+            group.enter()
+            self.preferences.loadFromFirebase(completion: { _, _ in
+                print("Loaded preferences")
+                group.leave()
+            })
+            group.notify(queue: .main, execute: {
+                self.profile.startObserving()
+                self.profile.startObservingPhotos()
+                self.startObservingEvents()
+                self.startObservingCandidates()
+                self.isLoading.value = false
+                print("User loaded.")
+                completion?()
+            })
         }
         
-        print("Starting to load user...")
+        Woojo.User.current.value = self
+        isLoading.value = true
+        
+        activity.loadFromFirebase(completion: { _, _ in
+            print("Loaded activity")
+            if self.activity.signUp == nil {
+                self.performSignUpActions { _ in
+                    print("Performed signUp actions")
+                    finish()
+                }
+            } else {
+                self.profile.loadFromFirebase(completion: { _, _ in
+                    print("Loaded profile")
+                    finish()
+                })
+            }
+        })
+        
+        /*print("Starting to load user...")
         Woojo.User.current.value = self
         isLoading.value = true
         let group = DispatchGroup()
@@ -125,7 +151,7 @@ class CurrentUser: User {
                     finish()
                 }
             })
-        })
+        })*/
     }
     
     func performSignUpActions(completion: ((Error?) -> Void)? = nil) {
@@ -137,7 +163,13 @@ class CurrentUser: User {
                 print("Updated profile photo from Facebook")
                 self.profile.loadFromFirebase(completion: { _, _ in
                     print("Loaded profile")
-                    group.leave()
+                    self.preferences.setDefaults()
+                    self.preferences.save { error in
+                        if let error = error {
+                            print("Failed to save default preferences to Firebase: \(error.localizedDescription)")
+                        }
+                        group.leave()
+                    }
                 })
             })
         })
@@ -146,18 +178,29 @@ class CurrentUser: User {
         group.enter()
         activity.setLastSeen { _ in group.leave() }
         group.enter()
-        preferences.setDefaults()
-        preferences.save { error in
-            if let error = error {
-                print("Failed to save default preferences to Firebase: \(error.localizedDescription)")
-                group.leave()
-            } else {
-                group.leave()
-            }
-        }
-        group.enter()
         getEventsFromFacebook { events in
             let saveEventsGroup = DispatchGroup()
+            for event in events {
+                saveEventsGroup.enter()
+                /*self.eventsRef.child(event.id).setValue(true) { error, ref in
+                    if let error = error {
+                        print("Failed to add event to User events: \(error.localizedDescription)")
+                    } else {
+                        // Wait for the backend app to fetch event data from Facebook - this will return also if the event is already present
+                        event.ref.observeSingleEvent(of: .childAdded, with: { snapshot in
+                            print("ADDED CHILD UNDER EVENT \(event.id)")
+                            saveEventsGroup.leave()
+                        })
+                    }
+                }*/
+                self.add(event: event) { error in
+                    if let error = error {
+                        print("Failed to add event to User events: \(error.localizedDescription)")
+                    }
+                    saveEventsGroup.leave()
+                }
+            }
+            /*let saveEventsGroup = DispatchGroup()
             for event in events {
                 saveEventsGroup.enter()
                 event.save { error in
@@ -173,7 +216,7 @@ class CurrentUser: User {
                         }
                     }
                 }
-            }
+            }*/
             saveEventsGroup.notify(queue: .main, execute: {
                 group.leave()
             })
@@ -253,14 +296,14 @@ class CurrentUser: User {
         isObservingEvents = false
     }
     
-    func getEventsFromFacebook(completion: @escaping ([Event]) -> Void) {
+    func getEventsFromFacebook(completion: (([Event]) -> Void)? = nil) {
         if AccessToken.current != nil {
             if firebaseAuthUser != nil {
                 let userEventsGraphRequest = UserEventsGraphRequest()
                 userEventsGraphRequest.start { response, result in
                     switch result {
                     case .success(let response):
-                        completion(response.events)
+                        completion?(response.events)
                     case .failed(let error):
                         print("UserEventsGraphRequest failed: \(error.localizedDescription)")
                     }
@@ -286,8 +329,16 @@ class CurrentUser: User {
         eventsRef.child(event.id).setValue(true, withCompletionBlock: { error, ref in
             if let error = error {
                 print("Failed to add user event: \(error.localizedDescription)")
+                completion?(error)
+            } else {
+                // Wait for the backend app to fetch event data from Facebook - this will return also if the event is already present
+                event.ref.observeSingleEvent(of: .childAdded, with: { snapshot in
+                    if snapshot.key == "name" {
+                        print("ADDED CHILD UNDER EVENT \(event.id)")
+                        completion?(nil)
+                    }
+                })
             }
-            completion?(error)
         })
     }
     
