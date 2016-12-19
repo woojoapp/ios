@@ -18,7 +18,7 @@ struct Constants {
         }
         struct Activity {
             static let firebaseNode = "activity"
-            static let dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZ"
+            static let dateFormat = "yyyy-MM-dd'T'HH:mm:ssxx"
             struct properties {
                 struct firebaseNodes {
                     static let lastSeen = "last_seen"
@@ -83,6 +83,26 @@ struct Constants {
                 }
             }
         }
+        struct Like {
+            static let firebaseNode = "likes"
+            static let dateFormat = "yyyy-MM-dd'T'HH:mm:ssxx"
+            struct properties {
+                struct firebaseNodes {
+                    static let created = "created"
+                    static let visible = "visible"
+                    static let message = "message"
+                }
+            }
+        }
+        struct Pass {
+            static let firebaseNode = "passes"
+            static let dateFormat = "yyyy-MM-dd'T'HH:mm:ssxx"
+            struct properties {
+                struct firebaseNodes {
+                    static let created = "created"
+                }
+            }
+        }
     }
     
     struct Album {
@@ -101,7 +121,7 @@ struct Constants {
     
     struct Event {
         static let firebaseNode = "events"
-        static let dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZ"
+        static let dateFormat = "yyyy-MM-dd'T'HH:mm:ssxx"
         struct properties {
             struct firebaseNodes {
                 static let id = "id"

@@ -7,21 +7,56 @@
 //
 
 import Foundation
-import FirebaseAuth
 import FirebaseDatabase
 
-struct Like {
-    
-    static func on(user uid: String, in event: Event) {
-        let byId = FIRAuth.auth()!.currentUser!.uid
-        let likeId = "\(byId)♥\(uid)"
-        let like: [String:Any] = [
-            "onId": uid,
-            "byId": byId,
-            "eventId": event.id,
-            "created": Date().timeIntervalSince1970 * 1000
-        ]
-        FIRDatabase.database().reference().child("likes").child(likeId).setValue(like)
+extension User {
+    class Like {
+        
+        static let dateFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.calendar = Calendar(identifier: .iso8601)
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
+            formatter.dateFormat = Constants.User.Like.dateFormat
+            return formatter
+        }()
+        
+        var by: String
+        var on: String
+        var created: Date = Date()
+        var visible: Bool?
+        var message: String?
+        var ref: FIRDatabaseReference {
+            get {
+                return FIRDatabase.database().reference().child(Constants.User.Like.firebaseNode).child(by).child(on)
+            }
+        }
+        
+        init(by: String, on: String, visible: Bool? = nil, message: String? = nil) {
+            self.by = by
+            self.on = on
+            self.created = Date()
+            self.visible = visible
+            self.message = message
+        }
+        
+        func save(completion: ((Error?) -> Void)? = nil) {
+            ref.setValue(toDictionary()) { error, ref in
+                completion?(error)
+            }
+        }
+        
+        func toDictionary() -> [String:Any] {
+            var dict: [String:Any] = [:]
+            dict[Constants.User.Like.properties.firebaseNodes.created] = Like.dateFormatter.string(from: created)
+            if let visible = visible {
+                dict[Constants.User.Like.properties.firebaseNodes.visible] = String(describing: visible)
+            }
+            if let message = message {
+                dict[Constants.User.Like.properties.firebaseNodes.message] = message
+            }
+            return dict
+        }
+        
     }
-    
 }

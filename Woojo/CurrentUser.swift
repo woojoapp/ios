@@ -124,34 +124,7 @@ class CurrentUser: User {
                 })
             }
         })
-        
-        /*print("Starting to load user...")
-        Woojo.User.current.value = self
-        isLoading.value = true
-        let group = DispatchGroup()
-        group.enter()
-        self.profile.loadFromFirebase(completion: { _, _ in
-            print("Loaded profile")
-            group.leave()
-        })
-        group.enter()
-        activity.loadFromFirebase(completion: { _, _ in
-            print("Loaded activity")
-            group.leave()
-        })
-        group.notify(queue: .main, execute: {
-            self.preferences.loadFromFirebase(completion: { _, _ in
-                print("Loaded preferences")
-                if self.activity.signUp == nil {
-                    self.performSignUpActions { _ in
-                        print("Performed signUp actions")
-                        finish()
-                    }
-                } else {
-                    finish()
-                }
-            })
-        })*/
+
     }
     
     func performSignUpActions(completion: ((Error?) -> Void)? = nil) {
@@ -182,17 +155,6 @@ class CurrentUser: User {
             let saveEventsGroup = DispatchGroup()
             for event in events {
                 saveEventsGroup.enter()
-                /*self.eventsRef.child(event.id).setValue(true) { error, ref in
-                    if let error = error {
-                        print("Failed to add event to User events: \(error.localizedDescription)")
-                    } else {
-                        // Wait for the backend app to fetch event data from Facebook - this will return also if the event is already present
-                        event.ref.observeSingleEvent(of: .childAdded, with: { snapshot in
-                            print("ADDED CHILD UNDER EVENT \(event.id)")
-                            saveEventsGroup.leave()
-                        })
-                    }
-                }*/
                 self.add(event: event) { error in
                     if let error = error {
                         print("Failed to add event to User events: \(error.localizedDescription)")
@@ -200,23 +162,6 @@ class CurrentUser: User {
                     saveEventsGroup.leave()
                 }
             }
-            /*let saveEventsGroup = DispatchGroup()
-            for event in events {
-                saveEventsGroup.enter()
-                event.save { error in
-                    if let error = error {
-                        print("Failed to save event to Firebase: \(error.localizedDescription)")
-                        saveEventsGroup.leave()
-                    } else {
-                        self.eventsRef.child(event.id).setValue(true) { error, ref in
-                            if let error = error {
-                                print("Failed to add event to User events: \(error.localizedDescription)")
-                            }
-                            saveEventsGroup.leave()
-                        }
-                    }
-                }
-            }*/
             saveEventsGroup.notify(queue: .main, execute: {
                 group.leave()
             })
@@ -360,6 +305,16 @@ class CurrentUser: User {
         } else {
             print("Failed to load user albums from Facebook: No Facebook access token.")
         }
+    }
+    
+    func like(candidate uid: String, visible: Bool? = nil, message: String? = nil, completion: ((Error?) -> Void)? = nil) {
+        let like = Like(by: self.uid, on: uid, visible: visible, message: message)
+        like.save(completion: completion)
+    }
+    
+    func pass(candidate uid: String, completion: ((Error?) -> Void)? = nil) {
+        let pass = Pass(by: self.uid, on: uid)
+        pass.save(completion: completion)
     }
 
 }

@@ -134,7 +134,10 @@ class CandidatesViewController: TabViewController, KolodaViewDelegate, KolodaVie
                         setImage(image: photo.images[.full])
                     }
                 }
-            } else { print("No photo") }
+            } else {
+                print("No photo")
+                self.showKolodaAndHideLoading()
+            }
         }
         return cardView
     }

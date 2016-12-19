@@ -28,24 +28,28 @@ extension CurrentUser {
             super.init(uid: uid)
         }
         
-        func like(completion: ((Error?, FIRDatabaseReference) -> Void)? = nil) {
+        func like(visible: Bool? = nil, message: String? = nil, completion: ((Error?) -> Void)? = nil) {
             // Like the candidate
-            print("Liked \(uid)")
-            remove(completion: completion)
+            Woojo.User.current.value?.like(candidate: self.uid, visible: visible, message: message) { error in
+                // Remove it from the list
+                self.remove(completion: completion)
+            }
         }
         
-        func pass(completion: ((Error?, FIRDatabaseReference) -> Void)? = nil) {
+        func pass(completion: ((Error?) -> Void)? = nil) {
             // Pass on the candidate
-            print("Passed \(uid)")
-            remove(completion: completion)
+            Woojo.User.current.value?.pass(candidate: self.uid) { error in
+                // Remove it from the list
+                self.remove(completion: completion)
+            }
         }
         
-        func remove(completion: ((Error?, FIRDatabaseReference) -> Void)? = nil) {
+        func remove(completion: ((Error?) -> Void)? = nil) {
             candidateRef.removeValue { error, ref in
                 if let error = error {
                     print("Failed to remove candidate: \(error)")
                 }
-                completion?(error, ref)
+                completion?(error)
             }
         }
         

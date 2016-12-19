@@ -38,7 +38,10 @@ class Event {
 
 extension Event {
     static let dateFormatter: DateFormatter = {
-        let formatter: DateFormatter = DateFormatter()
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
         formatter.dateFormat = Constants.Event.dateFormat
         return formatter
     }()
