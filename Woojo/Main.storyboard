@@ -1277,7 +1277,7 @@ Try another search</string>
         <!--About Web-->
         <scene sceneID="2fn-5l-okE">
             <objects>
-                <viewController storyboardIdentifier="AboutWebViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Wnq-1g-jhX" customClass="AboutWebViewController" customModule="Woojo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AboutWebViewController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Wnq-1g-jhX" customClass="AboutWebViewController" customModule="Woojo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qsl-oz-ZMH"/>
                         <viewControllerLayoutGuide type="bottom" id="kN3-bY-E8m"/>
@@ -1287,17 +1287,17 @@ Try another search</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" allowsInlineMediaPlayback="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RMf-W9-QML">
-                                <rect key="frame" x="16" y="20" width="343" height="647"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="kN3-bY-E8m" firstAttribute="top" secondItem="RMf-W9-QML" secondAttribute="bottom" id="6P1-xw-YOC"/>
-                            <constraint firstItem="RMf-W9-QML" firstAttribute="top" secondItem="qsl-oz-ZMH" secondAttribute="bottom" id="9Uy-Zm-Fx1"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="RMf-W9-QML" secondAttribute="trailing" id="Yz2-jh-QvR"/>
-                            <constraint firstItem="RMf-W9-QML" firstAttribute="leading" secondItem="Suv-JQ-5fm" secondAttribute="leadingMargin" id="lva-YA-svy"/>
+                            <constraint firstAttribute="trailing" secondItem="RMf-W9-QML" secondAttribute="trailing" id="Kgv-Dd-i2e"/>
+                            <constraint firstItem="RMf-W9-QML" firstAttribute="top" secondItem="qsl-oz-ZMH" secondAttribute="bottom" id="h4o-nu-fch"/>
+                            <constraint firstItem="RMf-W9-QML" firstAttribute="leading" secondItem="Suv-JQ-5fm" secondAttribute="leading" id="zUo-NW-CdA"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="About Web" id="f8I-Hc-QWC">

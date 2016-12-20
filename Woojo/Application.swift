@@ -7,7 +7,10 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseCore
+import FirebaseDatabase
+import FirebaseAuth
+import FirebaseRemoteConfig
 import FacebookCore
 import FacebookLogin
 //import LayerKit
@@ -16,20 +19,23 @@ import RxSwift
 import RxCocoa
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class Application: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     let loginViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
     //var chatManager: ALChatManager
+    static var remoteConfig: FIRRemoteConfig = FIRRemoteConfig.remoteConfig()
     
     override init() {
         FIRApp.configure()
         FIRDatabase.database().persistenceEnabled = true
-        loginViewController.modalTransitionStyle = .flipHorizontal
+        //Application.remoteConfig = FIRRemoteConfig.remoteConfig()
         //self.chatManager = ALChatManager(applicationKey: "woojoa4cb24509376f2a59dd5e56caf935bf7")
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        setupRemoteConfig()
         
         // Initialize Facebook SDK
         FacebookCore.SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -150,7 +156,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         return FacebookCore.SDKApplicationDelegate.shared.application(app, open: url, options: options)
     }
-
+    
+    // MARK: - Remote config
+    
+    func setupRemoteConfig() {
+        
+        func activateDebugMode() {
+            let debugSettings = FIRRemoteConfigSettings(developerModeEnabled: true)
+            Application.remoteConfig.configSettings = debugSettings!
+        }
+        
+        let defaults = [
+            Constants.App.RemoteConfig.Keys.termsURL:"https://www.woojo.ooo/terms.html",
+            Constants.App.RemoteConfig.Keys.privacyURL:"https://www.woojo.ooo/privacy.html"
+        ]
+        // Change next 2 lines for production
+        activateDebugMode()
+        let expirationDuration: TimeInterval = 0
+        
+        Application.remoteConfig.setDefaults(defaults as [String : NSObject]?)
+        Application.remoteConfig.fetch(withExpirationDuration: expirationDuration, completionHandler: { status, error in
+            print("Remote config", status.rawValue)
+            if status == FIRRemoteConfigFetchStatus.success {
+                Application.remoteConfig.activateFetched()
+            }
+            if let error = error {
+                print("Failed to fetch remote config: \(error.localizedDescription)")
+            }
+        })
+    }
 
 }
 

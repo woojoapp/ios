@@ -38,6 +38,15 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    override var modalTransitionStyle: UIModalTransitionStyle {
+        get {
+            return .flipHorizontal
+        }
+        set {
+            super.modalTransitionStyle = .flipHorizontal
+        }
+    }
+    
     let disposeBag = DisposeBag()
     var loginView: UIView?
     

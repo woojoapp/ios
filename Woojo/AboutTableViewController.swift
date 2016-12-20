@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseRemoteConfig
 
 class AboutTableViewController: UITableViewController {
 
@@ -32,15 +33,25 @@ class AboutTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.row {
-        case 0: openPage(title: "Terms & Conditions", url: URL(string: "https://www.woojo.ooo/terms.html"))
-            break
-        case 1: openPage(title: "Privacy Policy", url: URL(string: "https://www.woojo.ooo/privacy.html"))
-            break
-        /*case 2: openPage(title: "Saftey", url: URL(string: "https://www.woojo.ooo/safety.html"))
-            break*/
-        default:
-            return
+        if let contentView = tableView.cellForRow(at: indexPath)?.contentView {
+            if contentView.subviews.count > 0 {
+                if let label = contentView.subviews[0] as? UILabel, let title = label.text {
+                    switch indexPath.row {
+                    case 0:
+                        if let termsURL = Application.remoteConfig.configValue(forKey: Constants.App.RemoteConfig.Keys.termsURL).stringValue {
+                            openPage(title: title, url: URL(string: termsURL))
+                        }
+                        break
+                    case 1:
+                        if let privacyURL = Application.remoteConfig.configValue(forKey: Constants.App.RemoteConfig.Keys.privacyURL).stringValue {
+                            openPage(title: title, url: URL(string: privacyURL))
+                        }
+                        break
+                    default:
+                        return
+                    }
+                }
+            }
         }
     }
     

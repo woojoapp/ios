@@ -10,6 +10,15 @@ import Foundation
 
 struct Constants {
     
+    struct App {
+        struct RemoteConfig {
+            struct Keys {
+                static let termsURL = "terms_url"
+                static let privacyURL = "privacy_url"
+            }
+        }
+    }
+    
     struct User {
         static let firebaseNode = "users"
         struct Properties {
