@@ -46,8 +46,6 @@ class SettingsViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.navigationItem.title = "Settings"
-        //self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismiss(sender:)))
         setupDataSource()
     }
     
@@ -98,29 +96,6 @@ class SettingsViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    /*override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        let header = view as! UITableViewHeaderFooterView
-        header.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 200)
-    }*/
-    
-    /*override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UITableViewHeaderFooterView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 200))
-        headerView.contentView.backgroundColor = UIColor.white
-        let imageView = ProfilePhotoImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        imageView.image = #imageLiteral(resourceName: "icon_rounded")
-        headerView.contentView.addSubview(imageView)
-        let imageViewCenterHorizontally = NSLayoutConstraint(item: headerView.contentView, attribute: .centerX, relatedBy: .equal, toItem: imageView, attribute: .centerX, multiplier: 1, constant: 0)
-        let imageViewCenterVertically = NSLayoutConstraint(item: headerView.contentView, attribute: .centerY, relatedBy: .equal, toItem: imageView, attribute: .centerY, multiplier: 1, constant: 0)
-        /*let imageViewWidth = NSLayoutConstraint(item: imageView, attribute: .height, relatedBy: .equal, toItem: headerView, attribute: .height, multiplier: 0.2, constant: 0)
-        let imageViewAspectRatio = NSLayoutConstraint(item: imageView, attribute: .width, relatedBy: .equal, toItem: imageView, attribute: .height, multiplier: 1, constant: 0)*/
-        headerView.contentView.addConstraints([imageViewCenterHorizontally, imageViewCenterVertically])
-        return headerView
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 100.0
-    }*/
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()

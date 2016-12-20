@@ -47,6 +47,8 @@
 		858FEE421E02B5E600322E8E /* AlbumPhotosGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE411E02B5E500322E8E /* AlbumPhotosGraphRequest.swift */; };
 		858FEE441E04250C00322E8E /* AlbumPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE431E04250B00322E8E /* AlbumPhotoCollectionViewCell.swift */; };
 		858FEE471E07115400322E8E /* CandidateDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE461E07115400322E8E /* CandidateDetailsViewController.swift */; };
+		85A4A9141E098651002AD1D0 /* AboutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A4A9131E098651002AD1D0 /* AboutTableViewController.swift */; };
+		85A4A9161E0989FE002AD1D0 /* AboutWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A4A9151E0989FE002AD1D0 /* AboutWebViewController.swift */; };
 		85DC3D6B1DF4A39900116159 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D6A1DF4A39900116159 /* PreferencesViewController.swift */; };
 		85DC3D6D1DF5C00E00116159 /* RangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D6C1DF5C00E00116159 /* RangeSlider.swift */; };
 		85DC3D6F1DF6CF8F00116159 /* ExploreEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D6E1DF6CF8F00116159 /* ExploreEventsViewController.swift */; };
@@ -112,6 +114,8 @@
 		858FEE411E02B5E500322E8E /* AlbumPhotosGraphRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumPhotosGraphRequest.swift; sourceTree = "<group>"; };
 		858FEE431E04250B00322E8E /* AlbumPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		858FEE461E07115400322E8E /* CandidateDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandidateDetailsViewController.swift; sourceTree = "<group>"; };
+		85A4A9131E098651002AD1D0 /* AboutTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutTableViewController.swift; sourceTree = "<group>"; };
+		85A4A9151E0989FE002AD1D0 /* AboutWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutWebViewController.swift; sourceTree = "<group>"; };
 		85DC3D6A1DF4A39900116159 /* PreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		85DC3D6C1DF5C00E00116159 /* RangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSlider.swift; sourceTree = "<group>"; };
 		85DC3D6E1DF6CF8F00116159 /* ExploreEventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreEventsViewController.swift; sourceTree = "<group>"; };
@@ -304,6 +308,15 @@
 			name = Photos;
 			sourceTree = "<group>";
 		};
+		85A4A9171E098A04002AD1D0 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				85A4A9131E098651002AD1D0 /* AboutTableViewController.swift */,
+				85A4A9151E0989FE002AD1D0 /* AboutWebViewController.swift */,
+			);
+			name = About;
+			sourceTree = "<group>";
+		};
 		85E5D4C61DD720F2003E2376 /* Chats */ = {
 			isa = PBXGroup;
 			children = (
@@ -344,6 +357,7 @@
 				85407DA51DF1B0D00033E696 /* ProfilePhotoImageView.swift */,
 				858FEE381E00271400322E8E /* Preferences */,
 				858FEE391E00272800322E8E /* Profile */,
+				85A4A9171E098A04002AD1D0 /* About */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -517,10 +531,12 @@
 				85512B0D1DCB5B020072C1B8 /* AppDelegate.swift in Sources */,
 				8506A8A61DCCC85200C18EC3 /* Like.swift in Sources */,
 				85E5D4C51DD52D73003E2376 /* ALChatManager.swift in Sources */,
+				85A4A9141E098651002AD1D0 /* AboutTableViewController.swift in Sources */,
 				8506A8951DCBA14C00C18EC3 /* EventsViewController.swift in Sources */,
 				85685F741DEC7833009BAEE0 /* SearchEventsGraphRequest.swift in Sources */,
 				8506A8A01DCC97F600C18EC3 /* CandidatesViewController.swift in Sources */,
 				858FEE3C1E02A40C00322E8E /* AlbumsTableViewCell.swift in Sources */,
+				85A4A9161E0989FE002AD1D0 /* AboutWebViewController.swift in Sources */,
 				85685F7A1DEC94FA009BAEE0 /* Woojo.swift in Sources */,
 				851CDBEA1DDEF2B100B887C0 /* Location.swift in Sources */,
 				85DC3D6B1DF4A39900116159 /* PreferencesViewController.swift in Sources */,
