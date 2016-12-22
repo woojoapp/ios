@@ -221,7 +221,7 @@ extension User {
                 switch result {
                 case .success(let response):
                     if let photoID = response.photoID {
-                        self.ref?.child(Constants.User.Profile.properties.firebaseNodes.photoID).setValue(photoID)
+                        //self.ref?.child(Constants.User.Profile.properties.firebaseNodes.photoID).setValue(photoID)
                         if let photoURL = response.photoURL {
                             DispatchQueue.global().async {
                                 do {

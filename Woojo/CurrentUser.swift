@@ -271,20 +271,22 @@ class CurrentUser: User {
     }
     
     func add(event: Event, completion: ((Error?) -> Void)?) {
-        eventsRef.child(event.id).setValue(true, withCompletionBlock: { error, ref in
-            if let error = error {
-                print("Failed to add user event: \(error.localizedDescription)")
-                completion?(error)
-            } else {
-                // Wait for the backend app to fetch event data from Facebook - this will return also if the event is already present
-                event.ref.observeSingleEvent(of: .childAdded, with: { snapshot in
-                    if snapshot.key == "name" {
-                        print("ADDED CHILD UNDER EVENT \(event.id)")
+        ref.child(Constants.User.Properties.fbAccessToken).setValue(AccessToken.current?.authenticationToken) { error, ref in
+            self.eventsRef.child(event.id).setValue(true, withCompletionBlock: { error, ref in
+                if let error = error {
+                    print("Failed to add user event: \(error.localizedDescription)")
+                    completion?(error)
+                } else {
+                    // Wait for the backend app to fetch event data from Facebook - this will return also if the event is already present
+                    event.ref.child(Constants.Event.properties.firebaseNodes.name).observeSingleEvent(of: .childAdded, with: { snapshot in
+                        //if snapshot.key == "name" {
+                        print("ADDED CHILD UNDER EVENT", snapshot)
                         completion?(nil)
-                    }
-                })
-            }
-        })
+                        //}
+                    })
+                }
+            })
+        }
     }
     
     func getAlbumsFromFacebook(completion: @escaping ([Album]) -> Void) {

@@ -24,6 +24,7 @@ struct Constants {
         struct Properties {
             static let uid = "uid"
             static let fbAppScopedID = "app_scoped_id"
+            static let fbAccessToken = "fb_access_token"
         }
         struct Activity {
             static let firebaseNode = "activity"
