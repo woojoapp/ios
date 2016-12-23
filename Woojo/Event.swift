@@ -118,13 +118,14 @@ extension Event {
         return dict
     }
     
-    static func get(for id: String, completion: @escaping (Event?) -> Void) {
-        FIRDatabase.database().reference().child(Constants.Event.firebaseNode).child(id).observeSingleEvent(of: .value, with: { snapshot in
-            completion(from(firebase: snapshot))
+    static func get(for id: String, completion: ((Event?) -> Void)? = nil) {
+        let ref = FIRDatabase.database().reference().child(Constants.Event.firebaseNode).child(id)
+        ref.observeSingleEvent(of: .value, with: { snapshot in
+            completion?(from(firebase: snapshot))
         })
     }
     
-    func save(completion: ((Error?) -> Void)?) {
+    func save(completion: ((Error?) -> Void)? = nil) {
         ref.setValue(toDictionary(), withCompletionBlock: { error, ref in
             completion?(error)
         })

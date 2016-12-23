@@ -10,8 +10,9 @@ import Foundation
 import UIKit
 import RxSwift
 import RxCocoa
+import DZNEmptyDataSet
 
-class SearchEventsViewController: UIViewController, UITableViewDelegate {
+class SearchEventsViewController: UIViewController, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
 
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var resultsTableView: UITableView!
@@ -31,6 +32,9 @@ class SearchEventsViewController: UIViewController, UITableViewDelegate {
         resultsTableView.rowHeight = 100
         
         setupDataSource()
+        
+        self.resultsTableView.emptyDataSetDelegate = self
+        self.resultsTableView.emptyDataSetSource = self
     }
     
     func setupDataSource() {
@@ -64,16 +68,16 @@ class SearchEventsViewController: UIViewController, UITableViewDelegate {
             }
             .addDisposableTo(disposeBag)
         
-        results
+        /*results
             .map { $0.count != 0 }
             .drive(self.emptyView.rx.isHidden)
-            .addDisposableTo(disposeBag)
+            .addDisposableTo(disposeBag)*/
         
-        results
+        /*results
             .asObservable()
             .map { $0.count != 0 }
             .subscribe(onNext: { self.resultsTableView.isScrollEnabled = $0 })
-            .addDisposableTo(disposeBag)
+            .addDisposableTo(disposeBag)*/
         
         resultsTableView.rx.itemSelected
             .subscribe(onNext: { indexPath in
@@ -94,5 +98,25 @@ class SearchEventsViewController: UIViewController, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return tableView.dequeueReusableHeaderFooterView(withIdentifier: "reuseSearchheader")
     }
+    
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        return NSAttributedString(string: "Search Events", attributes: Constants.App.Appearance.EmptyDatasets.titleStringAttributes)
+    }
+    
+    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        return NSAttributedString(string: "Find all events matching your query", attributes: Constants.App.Appearance.EmptyDatasets.descriptionStringAttributes)
+    }
+    
+    func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
+        return #imageLiteral(resourceName: "search_events")
+    }
+    
+    func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView!) -> Bool {
+        return true
+    }
+    
+    /*func backgroundColor(forEmptyDataSet scrollView: UIScrollView!) -> UIColor! {
+        return UIColor(colorLiteralRed: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+    }*/
 
 }

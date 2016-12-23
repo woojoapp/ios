@@ -60,14 +60,19 @@ class ProfileViewController: UITableViewController, UITextViewDelegate {
                 }
             }
             
-        userPhotos.map { photos -> UIImage in
-            if let profilePhoto = photos[0], let image = profilePhoto.images[User.Profile.Photo.Size.thumbnail] {
-                return image
+        userPhotos.subscribe(onNext: { photos in
+            if let profilePhoto = photos[0] {
+                if let image = profilePhoto.images[User.Profile.Photo.Size.thumbnail] {
+                    self.profilePhotoImageView.image = image
+                } else {
+                    profilePhoto.download(size: .thumbnail) {
+                        self.profilePhotoImageView.image = profilePhoto.images[User.Profile.Photo.Size.thumbnail]
+                    }
+                }
             } else {
-                return #imageLiteral(resourceName: "placeholder_40x40")
+                self.profilePhotoImageView.image = #imageLiteral(resourceName: "placeholder_40x40")
             }
-        }
-        .bindTo(profilePhotoImageView.rx.image)
+        })
         .addDisposableTo(disposeBag)
         
         Woojo.User.current.asObservable()
@@ -130,7 +135,6 @@ class ProfileViewController: UITableViewController, UITextViewDelegate {
         if let count = count {
             let s = count != 249 ? "s" : ""
             self.tableView.footerView(forSection: 0)?.textLabel?.text = "\(max(250 - count, 0)) character\(s) left"
-            //self.tableView.footerView(forSection: 0)?.textLabel?.font = UIFont(name: <#T##String#>, size: <#T##CGFloat#>)
         }
     }
 
@@ -218,6 +222,11 @@ class ProfileViewController: UITableViewController, UITextViewDelegate {
                 break
             }
             if selectedIndexPath.row == 0 { return }
+            if let cell = self.photosCollectionView.cellForItem(at: selectedIndexPath) as? ProfilePhotoCollectionViewCell {
+                if cell.photo == nil {
+                    return
+                }
+            }
             photosCollectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
             photosCollectionView.cellForItem(at: selectedIndexPath)?.layer.shadowOpacity = 0.5
             photosCollectionView.cellForItem(at: selectedIndexPath)?.layer.shadowRadius = 5.0
@@ -273,10 +282,12 @@ extension ProfileViewController: UICollectionViewDelegate {
                 let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 let removeButton = UIAlertAction(title: "Remove", style: .destructive, handler: { (action) -> Void in
                     HUD.show(.progress)
-                    Woojo.User.current.value?.profile.remove(photoAt: indexPath.row) { _ in
-                        self.photosCollectionView.reloadItems(at: [indexPath])
-                        HUD.show(.success)
-                        HUD.hide(afterDelay: 1.0)
+                    Woojo.User.current.value?.profile.deleteFiles(forPhotoAt: indexPath.row) { _ in
+                        Woojo.User.current.value?.profile.remove(photoAt: indexPath.row) { _ in
+                            self.photosCollectionView.reloadItems(at: [indexPath])
+                            HUD.show(.success)
+                            HUD.hide(afterDelay: 1.0)
+                        }
                     }
                 })
                 let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -299,7 +310,6 @@ extension ProfileViewController: UICollectionViewDelegate {
                     let libraryButton = UIAlertAction(title: "Photo Library", style: .default, handler: { (action) -> Void in
                         self.imagePickerController.allowsEditing = false
                         self.imagePickerController.sourceType = .photoLibrary
-                        //self.imagePickerController.na
                         self.present(self.imagePickerController, animated: true, completion: nil)
                     })
                     actionSheetController.addAction(libraryButton)
@@ -358,7 +368,16 @@ extension ProfileViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        return indexPath.row != 0
+        var canMove = false
+        if let cell = collectionView.cellForItem(at: indexPath) as? ProfilePhotoCollectionViewCell {
+            if cell.photo != nil {
+                canMove = true
+            }
+        }
+        if indexPath.row == 0 {
+            canMove = false
+        }
+        return canMove
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {

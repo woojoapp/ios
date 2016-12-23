@@ -47,10 +47,11 @@ class EventsTableViewCell: UITableViewCell {
         }
         //cell.accessoryType
         placeLabel.text = placeString
+        print("URL", event?.pictureURL)
         if let pictureURL = event?.pictureURL {
-            thumbnailView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_40x40"))
+            thumbnailView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_100x100"))
         } else {
-            thumbnailView.image = #imageLiteral(resourceName: "placeholder_40x40")
+            thumbnailView.image = #imageLiteral(resourceName: "placeholder_100x100")
         }
         if let start = event?.start {
             dateLabel?.text = Event.dateFormatter.string(from: start)

@@ -31,5 +31,6 @@ target 'Woojo' do
   pod 'RSKImageCropper'
   pod 'PKHUD', '~> 4.0'
   pod 'TGLParallaxCarousel', :git=>'https://github.com/woojoapp/TGLParallaxCarousel'
+  pod 'DZNEmptyDataSet'
 
 end

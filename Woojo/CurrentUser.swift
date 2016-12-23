@@ -16,6 +16,7 @@ import FacebookCore
 import FacebookLogin
 import RxSwift
 import RxCocoa
+import PKHUD
 
 class CurrentUser: User {
     
@@ -214,11 +215,9 @@ class CurrentUser: User {
     func startObservingEvents() {
         isObservingEvents = true
         eventsRef.observe(.childAdded, with: { snapshot in
+            print("childAdded in events", snapshot)
             Event.get(for: snapshot.key) { event in
-                if let event = event {
-                    self.events.value.append(event)
-                    self.events.value.sort(by: { $0.start > $1.start })
-                }
+                self.append(event: event)
             }
         }, withCancel: { error in
             print("Cancelled observing events.childAdded: \(error)")
@@ -271,21 +270,38 @@ class CurrentUser: User {
     }
     
     func add(event: Event, completion: ((Error?) -> Void)?) {
+        HUD.show(.labeledProgress(title: "Add Event", subtitle: "Adding event..."))
         ref.child(Constants.User.Properties.fbAccessToken).setValue(AccessToken.current?.authenticationToken) { error, ref in
             self.eventsRef.child(event.id).setValue(true, withCompletionBlock: { error, ref in
                 if let error = error {
                     print("Failed to add user event: \(error.localizedDescription)")
                     completion?(error)
                 } else {
+                    print("Waiting")
                     // Wait for the backend app to fetch event data from Facebook - this will return also if the event is already present
-                    event.ref.child(Constants.Event.properties.firebaseNodes.name).observeSingleEvent(of: .childAdded, with: { snapshot in
-                        //if snapshot.key == "name" {
+                    let nameRef = event.ref.child(Constants.Event.properties.firebaseNodes.name)
+                    var listenerHandle: UInt = 0
+                    listenerHandle = nameRef.observe(.value, with: { snapshot in
                         print("ADDED CHILD UNDER EVENT", snapshot)
-                        completion?(nil)
-                        //}
+                        if snapshot.value != nil {
+                            nameRef.removeObserver(withHandle: listenerHandle)
+                            print("Removed observer")
+                            self.append(event: event)
+                            HUD.show(.labeledSuccess(title: "Add Event", subtitle: "Event added!"))
+                            HUD.hide(afterDelay: 1.0, completion: { _ in
+                                completion?(nil)
+                            })
+                        }
                     })
                 }
             })
+        }
+    }
+    
+    func append(event: Event?) {
+        if let event = event {
+            self.events.value.append(event)
+            self.events.value.sort(by: { $0.start > $1.start })
         }
     }
     

@@ -6,6 +6,7 @@ PODS:
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
+  - DZNEmptyDataSet (1.8.1)
   - FacebookCore (0.2.0):
     - Bolts (~> 1.8)
     - FBSDKCoreKit (~> 4.15)
@@ -93,6 +94,7 @@ PODS:
 DEPENDENCIES:
   - Applozic
   - Bolts
+  - DZNEmptyDataSet
   - FacebookCore
   - FacebookLogin
   - FacebookShare
@@ -128,6 +130,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Applozic: ed9896ba4e58752d47de17935600396bfe4ccb19
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
   FacebookLogin: c9d606504735780a9e3002465a615512e0a691a5
   FacebookShare: 8e9ee8ea06505e6a1d3d719b0cc63e840fb8aaeb
@@ -155,6 +158,6 @@ SPEC CHECKSUMS:
   RxSwift: af5680055c4ad04480189c52d28385b1029493a6
   TGLParallaxCarousel: 94c8b4f271f0c1a1a3d973da1206f31771255e44
 
-PODFILE CHECKSUM: e6059f68e46f658ffae7bdbf561f3ef85e4bd308
+PODFILE CHECKSUM: dc246ad81e3abf53dabff3137f214ac2a687d36b
 
 COCOAPODS: 1.1.1

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct Constants {
     
@@ -15,6 +16,35 @@ struct Constants {
             struct Keys {
                 static let termsURL = "terms_url"
                 static let privacyURL = "privacy_url"
+            }
+        }
+        struct Appearance {
+            struct EmptyDatasets {
+                static var titleStringAttributes: [String:Any] {
+                    get {
+                        let paragraphStyle = NSMutableParagraphStyle()
+                        paragraphStyle.alignment = .center
+                        let attributes = [
+                            NSFontAttributeName: UIFont.boldSystemFont(ofSize: 20.0),
+                            NSForegroundColorAttributeName: UIColor.lightGray,
+                            NSParagraphStyleAttributeName: paragraphStyle
+                        ]
+                        return attributes
+                    }
+                }
+                static var descriptionStringAttributes: [String:Any] {
+                    get {
+                        let paragraphStyle = NSMutableParagraphStyle()
+                        paragraphStyle.lineBreakMode = .byWordWrapping
+                        paragraphStyle.alignment = .center
+                        let attributes = [
+                            NSFontAttributeName: UIFont.systemFont(ofSize: 13.0),
+                            NSForegroundColorAttributeName: UIColor.lightGray,
+                            NSParagraphStyleAttributeName: paragraphStyle
+                        ]
+                        return attributes
+                    }
+                }
             }
         }
     }
@@ -139,7 +169,7 @@ struct Constants {
                 static let place = "place"
                 static let start = "start_time"
                 static let end = "end_time"
-                static let pictureURL = "pictureURL"
+                static let pictureURL = "picture_url"
                 static let description = "description"
             }
             struct graphAPIKeys {

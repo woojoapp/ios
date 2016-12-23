@@ -110,7 +110,6 @@ extension User {
         
         func loadFromFirebase(completion: ((Profile?, Error?) -> Void)? = nil) {
             ref?.observeSingleEvent(of: .value, with: { snapshot in
-                print("LAOD", snapshot)
                 self.loadFrom(firebase: snapshot)
                 completion?(self, nil)
             }, withCancel: { error in
@@ -255,6 +254,12 @@ extension User {
         }
         
         func remove(photoAt index: Int, completion: ((Error?) -> Void)? = nil) {
+            self.ref?.child(Constants.User.Profile.Photo.firebaseNode).child(String(index)).removeValue(completionBlock: { error, ref in
+                completion?(error)
+            })
+        }
+        
+        func deleteFiles(forPhotoAt index: Int, completion: ((Error?) -> Void)? = nil) {
             Woojo.User.current.value?.profile.photos.value[index] = nil
             ref?.child(Constants.User.Profile.Photo.firebaseNode).child(String(index)).observeSingleEvent(of: .value, with: { snapshot in
                 if let id = snapshot.value as? String {
@@ -266,14 +271,11 @@ extension User {
                             if let error = error {
                                 print("Failed to delete photo file: \(error.localizedDescription)")
                             }
-                            self.ref?.child(Constants.User.Profile.Photo.firebaseNode).child(String(index)).removeValue(completionBlock: { error, ref in
-                                completion?(error)
-                            })
+                            completion?(error)
                         }
                     }
                 }
             })
-            
         }
         
         
