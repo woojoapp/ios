@@ -20,6 +20,8 @@ target 'Woojo' do
   pod 'FacebookLogin'
   pod 'FacebookShare'
 
+  pod 'SDWebImage'
+
   pod 'Koloda', :git=> 'https://github.com/woojoapp/Koloda.git', :branch => 'swift-3', :commit => '584d70b02a8fdc202d0c0a38c860da9a917fe7b2'
 
   pod 'Applozic'
@@ -31,6 +33,9 @@ target 'Woojo' do
   pod 'RSKImageCropper'
   pod 'PKHUD', '~> 4.0'
   pod 'TGLParallaxCarousel', :git=>'https://github.com/woojoapp/TGLParallaxCarousel'
-  pod 'DZNEmptyDataSet'
+  pod 'DZNEmptyDataSet' 
+  pod 'HMSegmentedControl'
+  pod 'DOFavoriteButton', :git=>'https://github.com/sveinhal/DOFavoriteButton'
+  pod 'RPCircularProgress'
 
 end

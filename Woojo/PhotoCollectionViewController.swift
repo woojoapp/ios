@@ -10,6 +10,7 @@ import UIKit
 import Applozic
 import RSKImageCropper
 import PKHUD
+import SDWebImage
 
 class PhotoCollectionViewController: UICollectionViewController {
     
@@ -85,7 +86,7 @@ class PhotoCollectionViewController: UICollectionViewController {
                                 }
                 }
             )
-        }
+        }        
         return cell
     }
 

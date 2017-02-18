@@ -13,20 +13,28 @@ import FirebaseStorage
 import Koloda
 import RxSwift
 import RxCocoa
+import DOFavoriteButton
+import RPCircularProgress
 
-class CandidatesViewController: TabViewController, KolodaViewDelegate, KolodaViewDataSource, CandidatesDelegate {
+class CandidatesViewController: UIViewController, ShowsSettingsButton, KolodaViewDelegate, KolodaViewDataSource, CandidatesDelegate {
     
     @IBOutlet weak var kolodaView: KolodaView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var loadingLabel: UILabel!
+    //@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    //@IBOutlet weak var loadingLabel: UILabel!
+    @IBOutlet weak var likeButton: DOFavoriteButton!
+    @IBOutlet weak var passButton: DOFavoriteButton!
+    @IBOutlet weak var loadingContainerView: UIView!
+    @IBOutlet weak var loadingView: RPCircularProgress!
+    
+    var disposeBag = DisposeBag()
     
     var shouldApplyAppearAnimation = true
     
-    @IBAction func likePressed(_ sender: Any) {
+    @IBAction func likePressed(_ sender: DOFavoriteButton) {
         kolodaView?.swipe(.right)
     }
     
-    @IBAction func passPressed(_ sender: Any) {
+    @IBAction func passPressed(_ sender: DOFavoriteButton) {
         kolodaView?.swipe(.left)
     }
     
@@ -43,7 +51,23 @@ class CandidatesViewController: TabViewController, KolodaViewDelegate, KolodaVie
         
         self.view.bringSubview(toFront: kolodaView)
         
-        super.setupDataSource()
+        self.showSettingsButton()
+        let settingsButton = self.navigationItem.rightBarButtonItem?.customView as? UIButton
+        settingsButton?.addTarget(self, action: #selector(showSettings(sender:)), for: .touchUpInside)
+        
+        loadingContainerView.layer.borderWidth = 1.0
+        loadingContainerView.layer.borderColor = UIColor.lightGray.cgColor
+        loadingContainerView.layer.cornerRadius = 24.0
+        
+        loadingView.layer.borderColor = UIColor.lightGray.cgColor
+        loadingView.layer.cornerRadius = loadingView.frame.size.width / 2
+        loadingView.layer.borderWidth = 1.0
+        loadingView.enableIndeterminate()
+    }
+    
+    func showSettings(sender : Any?) {
+        let settingsNavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SettingsNavigationController")
+        self.present(settingsNavigationController, animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,24 +81,34 @@ class CandidatesViewController: TabViewController, KolodaViewDelegate, KolodaVie
     
     func hideKolodaAndShowLoading() {
         self.kolodaView.isHidden = true
-        self.activityIndicator.isHidden = false
-        self.loadingLabel.isHidden = false
+        //self.activityIndicator.isHidden = false
+        //self.loadingLabel.isHidden = false
+        self.loadingContainerView.isHidden = false
     }
     
     func showKolodaAndHideLoading() {
         self.kolodaView.isHidden = false
-        self.activityIndicator.isHidden = true
-        self.loadingLabel.isHidden = true
+        //self.activityIndicator.isHidden = true
+        //self.loadingLabel.isHidden = true
+        self.loadingContainerView.isHidden = true
     }
     
     // MARK: - KolodaViewDelegate
     
     func koloda(_ koloda: KolodaView, didSwipeCardAt index: Int, in direction: SwipeResultDirection) {
         switch direction {
-        case .left: User.current.value?.candidates[index].pass()
-        case .right: User.current.value?.candidates[index].like()
+        case .left:
+            User.current.value?.candidates[index].pass()
+            passButton.select()
+        case .right:
+            User.current.value?.candidates[index].like()
+            likeButton.select()
         default: break
         }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            self.likeButton.deselect()
+            self.passButton.deselect()
+        })
         User.current.value?.candidates.remove(at: index)
         kolodaView.removeCardInIndexRange(index..<index, animated: false)
         kolodaView.currentCardIndex = 0

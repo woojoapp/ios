@@ -162,6 +162,7 @@ struct Constants {
     struct Event {
         static let firebaseNode = "events"
         static let dateFormat = "yyyy-MM-dd'T'HH:mm:ssxx"
+        static let humanDateFormat = "dd MMM yyyy, HH:mm"
         struct properties {
             struct firebaseNodes {
                 static let id = "id"

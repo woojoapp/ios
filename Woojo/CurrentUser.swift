@@ -16,7 +16,6 @@ import FacebookCore
 import FacebookLogin
 import RxSwift
 import RxCocoa
-import PKHUD
 
 class CurrentUser: User {
     
@@ -241,6 +240,7 @@ class CurrentUser: User {
     }
     
     func getEventsFromFacebook(completion: (([Event]) -> Void)? = nil) {
+        print("GETTING EVENTS")
         if AccessToken.current != nil {
             if firebaseAuthUser != nil {
                 let userEventsGraphRequest = UserEventsGraphRequest()
@@ -270,7 +270,6 @@ class CurrentUser: User {
     }
     
     func add(event: Event, completion: ((Error?) -> Void)?) {
-        HUD.show(.labeledProgress(title: "Add Event", subtitle: "Adding event..."))
         ref.child(Constants.User.Properties.fbAccessToken).setValue(AccessToken.current?.authenticationToken) { error, ref in
             self.eventsRef.child(event.id).setValue(true, withCompletionBlock: { error, ref in
                 if let error = error {
@@ -286,11 +285,8 @@ class CurrentUser: User {
                         if snapshot.value != nil {
                             nameRef.removeObserver(withHandle: listenerHandle)
                             print("Removed observer")
-                            self.append(event: event)
-                            HUD.show(.labeledSuccess(title: "Add Event", subtitle: "Event added!"))
-                            HUD.hide(afterDelay: 1.0, completion: { _ in
-                                completion?(nil)
-                            })
+                            //self.append(event: event)
+                            completion?(nil)
                         }
                     })
                 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import HMSegmentedControl
 
 class AddEventViewController: UIViewController {
     
@@ -14,11 +15,12 @@ class AddEventViewController: UIViewController {
     @IBOutlet weak var containerViewB: UIView!
     @IBOutlet weak var containerViewC: UIView!
     
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    //@IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var segmentedControl: HMSegmentedControl!
     
     @IBOutlet weak var tapGestureRecognizer: UITapGestureRecognizer!
     
-    @IBAction func showComponent(sender: UISegmentedControl) {
+    @IBAction func showComponent(sender: HMSegmentedControl) {
         self.containerViewC.endEditing(true)
         if sender.selectedSegmentIndex == 0 {
             UIView.animate(withDuration: 0.5, animations: {
@@ -46,6 +48,13 @@ class AddEventViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        self.segmentedControl.sectionTitles = ["Explore", "Interested/Going", "Search"]
+        self.segmentedControl.selectionIndicatorColor = self.view.tintColor
+        self.segmentedControl.selectionStyle = .fullWidthStripe
+        self.segmentedControl.selectionIndicatorLocation = .up
+        self.segmentedControl.selectionIndicatorHeight = 2.0
+        self.segmentedControl.titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 12.0)]
+        
         self.containerViewA.alpha = 1
         self.containerViewB.alpha = 0
         self.containerViewC.alpha = 0

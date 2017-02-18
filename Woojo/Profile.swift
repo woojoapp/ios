@@ -13,6 +13,7 @@ import FacebookCore
 import RxSwift
 import RxCocoa
 import Applozic
+import SDWebImage
 
 extension User {
  

@@ -39,7 +39,7 @@ class EventsTableViewCell: UITableViewCell {
             placeString = placeName
         }
         if let location = event?.place?.location, let city = location.city {
-            if placeString != "Unknown location" {
+            if placeString != "Unknown location" && placeString != city {
                 placeString = "\(placeString) (\(city))"
             } else {
                 placeString = city
@@ -48,13 +48,15 @@ class EventsTableViewCell: UITableViewCell {
         //cell.accessoryType
         placeLabel.text = placeString
         print("URL", event?.pictureURL)
+        thumbnailView.layer.cornerRadius = 20.0
+        thumbnailView.layer.masksToBounds = true
         if let pictureURL = event?.pictureURL {
             thumbnailView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_100x100"))
         } else {
             thumbnailView.image = #imageLiteral(resourceName: "placeholder_100x100")
         }
         if let start = event?.start {
-            dateLabel?.text = Event.dateFormatter.string(from: start)
+            dateLabel?.text = Event.humanDateFormatter.string(from: start)
         }
     }
 

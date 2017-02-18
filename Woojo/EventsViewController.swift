@@ -11,12 +11,14 @@ import FirebaseAuth
 import FirebaseDatabase
 import RxSwift
 import DZNEmptyDataSet
+import PKHUD
 
-class EventsViewController: TabViewController, UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+class EventsViewController: UIViewController, ShowsSettingsButton, UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
     var events: [Event] = []
+    var disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,10 +33,18 @@ class EventsViewController: TabViewController, UITableViewDataSource, UITableVie
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         tableView.tableFooterView = UIView()
+        
+        self.showSettingsButton()
+        let settingsButton = self.navigationItem.rightBarButtonItem?.customView as? UIButton
+        settingsButton?.addTarget(self, action: #selector(showSettings(sender:)), for: .touchUpInside)
     }
     
-    override func setupDataSource() {
-        super.setupDataSource()
+    func showSettings(sender : Any?) {
+        let settingsNavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SettingsNavigationController")
+        self.present(settingsNavigationController, animated: true, completion: nil)
+    }
+    
+    func setupDataSource() {
         Woojo.User.current.asObservable()
             .flatMap { user -> Observable<[Event]> in
                 if let currentUser = user {
@@ -70,9 +80,15 @@ class EventsViewController: TabViewController, UITableViewDataSource, UITableVie
     }
 
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: { action, indexPath in
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Remove", handler: { action, indexPath in
             if let cell = self.tableView.cellForRow(at: indexPath) as? EventsTableViewCell, let event = cell.event {
-                Woojo.User.current.value?.remove(event: event, completion: nil)
+                HUD.show(.labeledProgress(title: "Remove Event", subtitle: "Removing event..."))
+                Woojo.User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
+                    //cell.checkView.isHidden = true
+                    //tableView.reloadRows(at: [indexPath], with: .none)
+                    HUD.show(.labeledSuccess(title: "Remove Event", subtitle: "Event removed!"))
+                    HUD.hide(afterDelay: 1.0)
+                })
             }
         })
         return [deleteAction]

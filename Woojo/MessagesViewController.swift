@@ -1,24 +1,25 @@
 //
-//  SecondViewController.swift
+//  MessagesViewController.swift
 //  Woojo
 //
-//  Created by Edouard Goossens on 03/11/2016.
-//  Copyright © 2016 Tasty Electrons. All rights reserved.
+//  Created by Edouard Goossens on 15/02/2017.
+//  Copyright © 2017 Tasty Electrons. All rights reserved.
 //
 
 import UIKit
 import Applozic
 import FirebaseAuth
+import RxSwift
 
-class ALChatsViewController: TabViewController, ALMessagesViewDelegate {
+class MessagesViewController: ALMessagesViewController, ShowsSettingsButton {
     
-    @IBOutlet weak var containerView: UIView!
+    var disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let chatManager = ALChatManager(applicationKey: "woojoa4cb24509376f2a59dd5e56caf935bf7")
-
+        
         let alUser : ALUser =  ALUser();
         alUser.applicationId = ALChatManager.applicationId
         alUser.userId = FIRAuth.auth()?.currentUser?.uid.addingPercentEncoding(withAllowedCharacters: .alphanumerics)       // NOTE : +,*,? are not allowed chars in userId.
@@ -41,41 +42,21 @@ class ALChatsViewController: TabViewController, ALMessagesViewDelegate {
             }
         }
         
-        super.setupDataSource()
-
-    }
-    
-    func handleCustomAction(fromMsgVC chatView: UIViewController, andWith alMessage:ALMessage) {
-        let launcherDelegate = NSClassFromString(String(describing: ALApplozicSettings.self))
-        launcherDelegate?.handleCustomAction(chatView, andWith: alMessage)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        self.showSettingsButton()
+        let settingsButton = self.navigationItem.rightBarButtonItem?.customView as? UIButton
+        settingsButton?.addTarget(self, action: #selector(showSettings(sender:)), for: .touchUpInside)        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let frameworkBundle = Bundle(for: ALMessagesViewController.self)
-        let storyboard = UIStoryboard(name: "Applozic", bundle: frameworkBundle)
-        let chatController = storyboard.instantiateViewController(withIdentifier: "ALViewController")
-        showViewControllerInContainerView(chatController)
+        self.navigationController?.navigationBar.layer.shadowOpacity = 0.0
+        self.navigationController?.navigationBar.titleTextAttributes = [:]
     }
     
-    fileprivate func showViewControllerInContainerView(_ viewController: UIViewController){
-        
-        for vc in self.childViewControllers{
-            vc.willMove(toParentViewController: nil)
-            vc.view.removeFromSuperview()
-            vc.removeFromParentViewController()
-        }
-        self.addChildViewController(viewController)
-        viewController.view.frame = CGRect(x: 0, y: 0, width: containerView.frame.size.width, height: containerView.frame.size.height);
-        containerView.addSubview(viewController.view)
-        viewController.didMove(toParentViewController: self)
-        
+    func showSettings(sender : Any?) {
+        let settingsNavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SettingsNavigationController")
+        self.present(settingsNavigationController, animated: true, completion: nil)
     }
     
 }

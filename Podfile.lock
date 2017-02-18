@@ -1,11 +1,13 @@
 PODS:
-  - Applozic (3.6.1)
+  - Applozic (3.8.3):
+    - SDWebImage (~> 3.8)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
+  - DOFavoriteButton (0.0.4)
   - DZNEmptyDataSet (1.8.1)
   - FacebookCore (0.2.0):
     - Bolts (~> 1.8)
@@ -20,80 +22,80 @@ PODS:
     - FacebookCore (~> 0.2)
     - FBSDKCoreKit (~> 4.15)
     - FBSDKShareKit (~> 4.15)
-  - FBSDKCoreKit (4.17.0):
+  - FBSDKCoreKit (4.19.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.17.0):
+  - FBSDKLoginKit (4.19.0):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.17.0):
+  - FBSDKShareKit (4.19.0):
     - FBSDKCoreKit
-  - Firebase/Auth (3.9.0):
+  - Firebase/Auth (3.13.0):
     - Firebase/Core
-    - FirebaseAuth (= 3.0.6)
-  - Firebase/Core (3.9.0):
-    - FirebaseAnalytics (= 3.5.1)
-    - FirebaseCore (= 3.4.4)
-  - Firebase/Database (3.9.0):
+    - FirebaseAuth (= 3.1.1)
+  - Firebase/Core (3.13.0):
+    - FirebaseAnalytics (= 3.7.0)
+    - FirebaseCore (= 3.5.0)
+  - Firebase/Database (3.13.0):
     - Firebase/Core
-    - FirebaseDatabase (= 3.1.0)
-  - Firebase/RemoteConfig (3.9.0):
+    - FirebaseDatabase (= 3.1.2)
+  - Firebase/RemoteConfig (3.13.0):
     - Firebase/Core
-    - FirebaseRemoteConfig (= 1.3.1)
-  - Firebase/Storage (3.9.0):
+    - FirebaseRemoteConfig (= 1.3.3)
+  - Firebase/Storage (3.13.0):
     - Firebase/Core
-    - FirebaseStorage (= 1.0.4)
-  - FirebaseAnalytics (3.5.1):
-    - FirebaseCore (~> 3.4)
+    - FirebaseStorage (= 1.0.6)
+  - FirebaseAnalytics (3.7.0):
+    - FirebaseCore (~> 3.5)
     - FirebaseInstanceID (~> 1.0)
-    - GoogleInterchangeUtilities (~> 1.2)
-    - GoogleSymbolUtilities (~> 1.1)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseAuth (3.0.6):
-    - FirebaseAnalytics (~> 3.4)
+  - FirebaseAuth (3.1.1):
+    - FirebaseAnalytics (~> 3.7)
     - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (3.4.4):
-    - GoogleInterchangeUtilities (~> 1.2)
+  - FirebaseCore (3.5.0):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseDatabase (3.1.0):
-    - FirebaseAnalytics (~> 3.4)
-  - FirebaseInstanceID (1.0.8)
-  - FirebaseRemoteConfig (1.3.1):
-    - FirebaseAnalytics (~> 3.4)
+  - FirebaseDatabase (3.1.2):
+    - FirebaseAnalytics (~> 3.7)
+  - FirebaseInstanceID (1.0.9)
+  - FirebaseRemoteConfig (1.3.3):
+    - FirebaseAnalytics (~> 3.7)
     - FirebaseInstanceID (~> 1.0)
-    - GoogleInterchangeUtilities (~> 1.2)
-    - GoogleSymbolUtilities (~> 1.1)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseStorage (1.0.4):
-    - FirebaseAnalytics (~> 3.4)
+    - Protobuf (~> 3.1)
+  - FirebaseStorage (1.0.6):
+    - FirebaseAnalytics (~> 3.7)
     - GTMSessionFetcher/Core (~> 1.1)
-  - GoogleInterchangeUtilities (1.2.2):
-    - GoogleSymbolUtilities (~> 1.1)
-  - GoogleSymbolUtilities (1.1.2)
-  - GoogleToolboxForMac/DebugUtils (2.1.0):
-    - GoogleToolboxForMac/Defines (= 2.1.0)
-  - GoogleToolboxForMac/Defines (2.1.0)
-  - GoogleToolboxForMac/NSData+zlib (2.1.0):
-    - GoogleToolboxForMac/Defines (= 2.1.0)
-  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.0):
-    - GoogleToolboxForMac/DebugUtils (= 2.1.0)
-    - GoogleToolboxForMac/Defines (= 2.1.0)
-    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.0)
-  - GoogleToolboxForMac/NSString+URLArguments (2.1.0)
-  - GTMSessionFetcher/Core (1.1.7)
+  - GoogleToolboxForMac/DebugUtils (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
+  - GoogleToolboxForMac/Defines (2.1.1)
+  - GoogleToolboxForMac/NSData+zlib (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
+  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.1):
+    - GoogleToolboxForMac/DebugUtils (= 2.1.1)
+    - GoogleToolboxForMac/Defines (= 2.1.1)
+    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
+  - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
+  - GTMSessionFetcher/Core (1.1.8)
+  - HMSegmentedControl (1.5.3)
   - Koloda (3.1.2):
     - pop (~> 1.0)
   - NMRangeSlider (1.2.1)
-  - PKHUD (4.0.0)
+  - PKHUD (4.2.0)
   - pop (1.0.9)
-  - RSKImageCropper (1.5.2)
-  - RxCocoa (3.0.1):
-    - RxSwift (~> 3.0)
-  - RxSwift (3.0.1)
+  - Protobuf (3.2.0)
+  - RPCircularProgress (0.3.0)
+  - RSKImageCropper (1.6.0)
+  - RxCocoa (3.2.0):
+    - RxSwift (~> 3.1)
+  - RxSwift (3.2.0)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
   - TGLParallaxCarousel (1.0.0)
 
 DEPENDENCIES:
   - Applozic
   - Bolts
+  - DOFavoriteButton (from `https://github.com/sveinhal/DOFavoriteButton`)
   - DZNEmptyDataSet
   - FacebookCore
   - FacebookLogin
@@ -103,15 +105,20 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/RemoteConfig
   - Firebase/Storage
+  - HMSegmentedControl
   - Koloda (from `https://github.com/woojoapp/Koloda.git`, commit `584d70b02a8fdc202d0c0a38c860da9a917fe7b2`, branch `swift-3`)
   - NMRangeSlider
   - PKHUD (~> 4.0)
+  - RPCircularProgress
   - RSKImageCropper
   - RxCocoa
   - RxSwift
+  - SDWebImage
   - TGLParallaxCarousel (from `https://github.com/woojoapp/TGLParallaxCarousel`)
 
 EXTERNAL SOURCES:
+  DOFavoriteButton:
+    :git: https://github.com/sveinhal/DOFavoriteButton
   Koloda:
     :branch: swift-3
     :commit: 584d70b02a8fdc202d0c0a38c860da9a917fe7b2
@@ -120,6 +127,9 @@ EXTERNAL SOURCES:
     :git: https://github.com/woojoapp/TGLParallaxCarousel
 
 CHECKOUT OPTIONS:
+  DOFavoriteButton:
+    :commit: ec6dce39c54e8f6174ffabcd0002343f9caa424f
+    :git: https://github.com/sveinhal/DOFavoriteButton
   Koloda:
     :commit: 584d70b02a8fdc202d0c0a38c860da9a917fe7b2
     :git: https://github.com/woojoapp/Koloda.git
@@ -128,36 +138,39 @@ CHECKOUT OPTIONS:
     :git: https://github.com/woojoapp/TGLParallaxCarousel
 
 SPEC CHECKSUMS:
-  Applozic: ed9896ba4e58752d47de17935600396bfe4ccb19
+  Applozic: 9acedca0e6e5f759c10d4e1f42ed9127ba4705d6
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  DOFavoriteButton: 866e15af173d2dd5233971a1f657a5f31d2491d5
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
   FacebookLogin: c9d606504735780a9e3002465a615512e0a691a5
   FacebookShare: 8e9ee8ea06505e6a1d3d719b0cc63e840fb8aaeb
-  FBSDKCoreKit: 30a21d2d7b92984b3d80497113433c00824c35e9
-  FBSDKLoginKit: 42b7129ac0373ca99eaf4cbebf4d07bd42371f59
-  FBSDKShareKit: 9b573d03fbee36cbaf42d5bb1f2bc019e0d72347
-  Firebase: ff77ffb77b317c3720fef57a60e9335cebf962e6
-  FirebaseAnalytics: 6e58fc9b397664369ac7617fb0ba93fab6ba7b5b
-  FirebaseAuth: 96e9674ff31d6e1f826d53e26aa003a57cab0295
-  FirebaseCore: d0ed25f27b6f9158eccc439f1be6f92e81207e28
-  FirebaseDatabase: 3ebb2edb6007c3f0f87b248f3fa212bde56a1468
-  FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
-  FirebaseRemoteConfig: 383a9afe0a9291ada949e3f615257928a823b594
-  FirebaseStorage: c50aa353bf484072704e73b4aff1bd47adb735c4
-  GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
-  GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
-  GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
-  GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
+  FBSDKCoreKit: 894b2b6eda6a4c8c4204e92e59cc355709ef045c
+  FBSDKLoginKit: 83ca4d8f12a2022570af9fd6aacf27f6b425b99f
+  FBSDKShareKit: 5953758366278430dc322d5cdc906db361ed7f81
+  Firebase: 5bc34d7b5ff5792e3386c8b28dc6265deeab0da4
+  FirebaseAnalytics: 0d1b7d81d5021155be37702a94ba1ec16d45365d
+  FirebaseAuth: cc8a1824170adbd351edb7f994490a3fb5c18be6
+  FirebaseCore: 1c0a13bf59bb95cdd19577252499f0ec6a03e999
+  FirebaseDatabase: 05c96d7b43a7368dc91c07791adb49683e1738d1
+  FirebaseInstanceID: 2d0518b1378fe9d685ef40cbdd63d2fdc1125339
+  FirebaseRemoteConfig: f8625d0693b8a6737cdd867a9c6e9ea0e3c70a6a
+  FirebaseStorage: 63628572a5fde258f8e933b5fb42697468da0158
+  GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
+  GTMSessionFetcher: 6f8d8b28b7e345549ac471071608170b31cb4977
+  HMSegmentedControl: 7c6145afb50f26cec5f3243082f6f12b9f41318f
   Koloda: 5aee353329cd1605540f1215a4c1975481dc7a37
   NMRangeSlider: 317ded652431eb90501c8421d9cddc3930d891e6
-  PKHUD: 2bb45c936bb8afa39f3cd33ec14e8cc89f624255
+  PKHUD: 48af884cf00c2213b0313b739d914e6cab1c0f5e
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
-  RSKImageCropper: 27d0e7efa800b509720163c3561fe08a04853780
-  RxCocoa: 15a52fc590dcc700cb4a690a633b5c5184ce3a78
-  RxSwift: af5680055c4ad04480189c52d28385b1029493a6
+  Protobuf: 745f59e122e5de98d4d7ef291e264a0eef80f58e
+  RPCircularProgress: 46bee24642e0cb8de53f49e6c85733b9c45dee33
+  RSKImageCropper: 6903235c7a8a79acb1e1f3490e2c911b858f8208
+  RxCocoa: ccdf43101a70407097a29082f648ba1676075b30
+  RxSwift: 46574f70d416b7923c237195939cc488a7fbf3a0
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   TGLParallaxCarousel: 94c8b4f271f0c1a1a3d973da1206f31771255e44
 
-PODFILE CHECKSUM: dc246ad81e3abf53dabff3137f214ac2a687d36b
+PODFILE CHECKSUM: 87b84821af09e5d5c7c2aa5ff4b87c9b8a4f7ddc
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.0

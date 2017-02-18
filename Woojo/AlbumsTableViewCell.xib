@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -27,13 +27,13 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H0e-Ba-eiA">
-                        <rect key="frame" x="99" y="58" width="235" height="15"/>
+                        <rect key="frame" x="99" y="53" width="235" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bsx-nR-yGv">
-                        <rect key="frame" x="99" y="23.5" width="235" height="21"/>
+                        <rect key="frame" x="99" y="30" width="235" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -46,9 +46,9 @@
                     <constraint firstAttribute="bottomMargin" secondItem="SHZ-Zs-BWM" secondAttribute="bottom" id="VTF-J4-256"/>
                     <constraint firstAttribute="trailingMargin" secondItem="bsx-nR-yGv" secondAttribute="trailing" id="Xhl-Cr-qjA"/>
                     <constraint firstAttribute="trailingMargin" secondItem="H0e-Ba-eiA" secondAttribute="trailing" id="cD8-py-FDD"/>
-                    <constraint firstItem="H0e-Ba-eiA" firstAttribute="centerY" secondItem="Ope-T6-yog" secondAttribute="centerY" constant="16" id="cp9-gp-Eqk"/>
+                    <constraint firstItem="H0e-Ba-eiA" firstAttribute="centerY" secondItem="Ope-T6-yog" secondAttribute="centerY" constant="10" id="cp9-gp-Eqk"/>
                     <constraint firstItem="bsx-nR-yGv" firstAttribute="leading" secondItem="SHZ-Zs-BWM" secondAttribute="trailing" constant="8" id="ea7-1M-F65"/>
-                    <constraint firstItem="bsx-nR-yGv" firstAttribute="centerY" secondItem="Ope-T6-yog" secondAttribute="centerY" constant="-16" id="zbo-DL-RxH"/>
+                    <constraint firstItem="bsx-nR-yGv" firstAttribute="centerY" secondItem="Ope-T6-yog" secondAttribute="centerY" constant="-10" id="zbo-DL-RxH"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

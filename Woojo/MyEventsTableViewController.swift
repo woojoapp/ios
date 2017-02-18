@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import DZNEmptyDataSet
+import PKHUD
 
 class MyEventsTableViewController: UITableViewController, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
     
@@ -53,7 +54,6 @@ class MyEventsTableViewController: UITableViewController, DZNEmptyDataSetDelegat
             self.events = events
             self.tableView.reloadData()
             self.tableView.refreshControl?.endRefreshing()
-            //self.tableView.isScrollEnabled = self.events?.count ?? 0 > 0
             self.tableView.backgroundView?.isHidden = self.events.count > 0
         }
     }
@@ -63,20 +63,8 @@ class MyEventsTableViewController: UITableViewController, DZNEmptyDataSetDelegat
     override func numberOfSections(in tableView: UITableView) -> Int {
         
         if events.count > 0 {
-            self.tableView.separatorStyle = .singleLine
             return 1
         } else {
-            /*let messageLabel = UILabel(frame: CGRect.init(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
-            messageLabel.text = "No events found\nPull to refresh"
-            messageLabel.textColor = UIColor.init(hexString: "AFAFAF")
-            messageLabel.font = UIFont(name: messageLabel.font.fontName, size: 14)
-            messageLabel.numberOfLines = 0
-            messageLabel.textAlignment = .center
-            messageLabel.sizeToFit()
-            
-            self.tableView.backgroundView = messageLabel*/
-            self.tableView.separatorStyle = .none
-            
             return 0
         }
     }
@@ -89,7 +77,7 @@ class MyEventsTableViewController: UITableViewController, DZNEmptyDataSetDelegat
         let cell = tableView.dequeueReusableCell(withIdentifier: "fbEventCell", for: indexPath) as! MyEventsTableViewCell
         cell.event = self.events[indexPath.row]
         if let isUserEvent = Woojo.User.current.value?.events.value.contains(where: { $0.id == cell.event?.id }) {
-            cell.accessoryType = isUserEvent ? .checkmark : .none
+            cell.checkView.isHidden = !isUserEvent
         }
         return cell
     }
@@ -100,13 +88,25 @@ class MyEventsTableViewController: UITableViewController, DZNEmptyDataSetDelegat
         print("Tapped")
         let event = self.events[indexPath.row]
         if let isUserEvent = Woojo.User.current.value?.events.value.contains(where: { $0.id == event.id }) {
-            let completion = { (error: Error?) -> Void in tableView.reloadRows(at: [indexPath], with: .none) }
-            if isUserEvent {
-                Woojo.User.current.value?.remove(event: event, completion: completion)
-                tableView.cellForRow(at: indexPath)?.accessoryType = .none
-            } else {
-                Woojo.User.current.value?.add(event: event, completion: completion)
-                tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+            print(isUserEvent)
+            if let cell = tableView.cellForRow(at: indexPath) as? MyEventsTableViewCell {
+                if isUserEvent {
+                    HUD.show(.labeledProgress(title: "Remove Event", subtitle: "Removing event..."))
+                    Woojo.User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
+                        cell.checkView.isHidden = true
+                        tableView.reloadRows(at: [indexPath], with: .none)
+                        HUD.show(.labeledSuccess(title: "Remove Event", subtitle: "Event removed!"))
+                        HUD.hide(afterDelay: 1.0)
+                    })
+                } else {
+                    HUD.show(.labeledProgress(title: "Add Event", subtitle: "Adding event..."))
+                    Woojo.User.current.value?.add(event: event, completion: { (error: Error?) -> Void in
+                        cell.checkView.isHidden = false
+                        tableView.reloadRows(at: [indexPath], with: .none)
+                        HUD.show(.labeledSuccess(title: "Add Event", subtitle: "Event added!"))
+                        HUD.hide(afterDelay: 1.0)
+                    })
+                }
             }
         }
     }

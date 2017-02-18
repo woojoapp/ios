@@ -225,13 +225,14 @@ class ProfileViewController: UITableViewController, UITextViewDelegate {
             if let cell = self.photosCollectionView.cellForItem(at: selectedIndexPath) as? ProfilePhotoCollectionViewCell {
                 if cell.photo == nil {
                     return
+                } else {
+                    photosCollectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+                    cell.layer.shadowOpacity = 0.5
+                    cell.layer.shadowRadius = 5.0
+                    cell.layer.shadowOffset = CGSize(width: 0, height: 0)
+                    cell.layer.masksToBounds = false
                 }
             }
-            photosCollectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
-            photosCollectionView.cellForItem(at: selectedIndexPath)?.layer.shadowOpacity = 0.5
-            photosCollectionView.cellForItem(at: selectedIndexPath)?.layer.shadowRadius = 5.0
-            photosCollectionView.cellForItem(at: selectedIndexPath)?.layer.shadowOffset = CGSize(width: 0, height: 0)
-            photosCollectionView.cellForItem(at: selectedIndexPath)?.layer.masksToBounds = false
         case UIGestureRecognizerState.changed:
             photosCollectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view))
         case UIGestureRecognizerState.ended:
@@ -269,6 +270,11 @@ class ProfileViewController: UITableViewController, UITextViewDelegate {
                 UIView.commitAnimations()
             }
         }
+    }
+    
+    func editCity(sender: Any?) {
+        let editCityViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditCityViewController") as! EditCityViewController
+        self.present(editCityViewController, animated: true, completion: nil)
     }
 }
 
@@ -358,6 +364,8 @@ extension ProfileViewController: UICollectionViewDataSource {
             cell.photo = nil
             cell.imageView.image = nil
         }
+        cell.imageView.layer.cornerRadius = 10.0
+        cell.imageView.layer.masksToBounds = true
         return cell
     }
     

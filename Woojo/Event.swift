@@ -46,6 +46,15 @@ extension Event {
         return formatter
     }()
     
+    static let humanDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.dateFormat = Constants.Event.humanDateFormat
+        return formatter
+    }()
+    
     static func from(firebase snapshot: FIRDataSnapshot) -> Event? {
         
         if let value = snapshot.value as? [String:Any],

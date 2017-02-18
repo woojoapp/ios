@@ -43,7 +43,7 @@ struct UserEventsGraphRequest: GraphRequestProtocol {
                       Constants.Event.properties.graphAPIKeys.attendingCount,
                       Constants.GraphRequest.UserEvents.fieldPictureUrl]
         return [Constants.GraphRequest.fields:fields.joined(separator: Constants.GraphRequest.fieldsSeparator),
-                "since": Event.dateFormatter.string(from: Calendar.current.date(byAdding: .month, value: 24, to: Date())!)]
+                "since": Event.dateFormatter.string(from: Calendar.current.date(byAdding: .month, value: -1, to: Date())!)]
     }()
     var accessToken: AccessToken? = AccessToken.current
     var httpMethod: GraphRequestHTTPMethod = .GET

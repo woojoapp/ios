@@ -248,15 +248,16 @@ func ALDefaultChatViewSettings ()
     
     /*********************************************  NAVIGATION SETTINGS  ********************************************/
     
-    ALApplozicSettings.setStatusBarBGColor(UIColor(red:66.0/255, green:173.0/255, blue:247.0/255, alpha:1))
-    ALApplozicSettings.setStatusBarStyle(.lightContent)
+    //ALApplozicSettings.setStatusBarBGColor(UIColor(red:247.0/255, green:247.0/255, blue:247.0/255, alpha:1))
+    //ALApplozicSettings.setStatusBarStyle(.lightContent)
     /* BY DEFAULT Black:UIStatusBarStyleDefault IF REQ. White: UIStatusBarStyleLightContent  */
     /* ADD property in info.plist "View controller-based status bar appearance" type: BOOLEAN value: NO */
     
-    ALApplozicSettings.setColorForNavigation(UIColor(red:66.0/255, green:173.0/255, blue:247.0/255, alpha:1))
-    ALApplozicSettings.setColorForNavigationItem(UIColor.white)
-    ALApplozicSettings.hideRefreshButton(false)
-    ALUserDefaultsHandler.setNavigationRightButtonHidden(true)
+    ALApplozicSettings.setColorForNavigation(UIColor(red:247.0/255, green:247.0/255, blue:247.0/255, alpha:1))
+    ALApplozicSettings.setColorForNavigationItem(UIColor.black)
+    ALApplozicSettings.hideRefreshButton(true)
+    ALUserDefaultsHandler.setNavigationRightButtonHidden(false)
+    ALUserDefaultsHandler.setBackButtonHidden(true)
     ALUserDefaultsHandler.setBottomTabBarHidden(false)
     ALApplozicSettings.setTitleForConversationScreen("Chats")
     ALApplozicSettings.setCustomNavRightButtonMsgVC(false)               /*  SET VISIBILITY FOR REFRESH BUTTON (COMES FROM TOP IN MSG VC)   */
@@ -268,17 +269,17 @@ func ALDefaultChatViewSettings ()
     /***************************************  SEND RECEIVE MESSAGES SETTINGS  ***************************************/
     
     ALApplozicSettings.setSendMsgTextColor(UIColor.white)
-    ALApplozicSettings.setReceiveMsgTextColor(UIColor.gray)
-    ALApplozicSettings.setColorForReceiveMessages(UIColor(red:255/255, green:255/255, blue:255/255, alpha:1))
-    ALApplozicSettings.setColorForSendMessages(UIColor (red:66.0/255, green:173.0/255, blue:247.0/255, alpha:1))
+    ALApplozicSettings.setReceiveMsgTextColor(UIColor.black)
+    ALApplozicSettings.setColorForReceiveMessages(UIColor(red:230.0/255, green:230.0/255, blue:230.0/255, alpha:1))
+    ALApplozicSettings.setFontFace(UIFont.systemFont(ofSize: 14.0).fontName)
     
     //****************** DATE COLOUR : AT THE BOTTOM OF MESSAGE BUBBLE ******************/
     
-    ALApplozicSettings.setDateColor(UIColor(red:51.0/255, green:51.0/255, blue:51.0/255, alpha:0.5))
+    ALApplozicSettings.setDateColor(UIColor.lightGray)
     
     //****************** MESSAGE SEPERATE DATE COLOUR : DATE MESSAGE ******************/
     
-    ALApplozicSettings.setMsgDateColor(UIColor.black)
+    ALApplozicSettings.setMsgDateColor(UIColor.lightGray)
     
     /***************  SEND MESSAGE ABUSE CHECK  ******************/
     
@@ -330,12 +331,11 @@ func ALDefaultChatViewSettings ()
     ALApplozicSettings.setVisibilityForNoMoreConversationMsgVC(false)               /*  SET VISIBILITY NO MORE CONVERSATION (COMES FROM TOP IN MSG VC)  */
     ALApplozicSettings.setEmptyConversationText("You have no conversations yet")    /*  SET TEXT FOR EMPTY CONVERSATION    */
     ALApplozicSettings.setVisibilityForOnlineIndicator(true)                        /*  SET VISIBILITY FOR ONLINE INDICATOR */
+
+    ALApplozicSettings.setColorForSendButton(UIColor.white) /*  SET COLOR FOR SEND BUTTON   */
     
-    let sendButtonColor = UIColor(red:66.0/255, green:173.0/255, blue:247.0/255, alpha:1)   /*  SET COLOR FOR SEND BUTTON   */
-    ALApplozicSettings.setColorForSendButton(sendButtonColor)
-    
-    ALApplozicSettings.setColorForTypeMsgBackground(UIColor.clear)             /*  SET COLOR FOR TYPE MESSAGE OUTER VIEW */
-    ALApplozicSettings.setMsgTextViewBGColor(UIColor.lightGray)                /*  SET BG COLOR FOR MESSAGE TEXT VIEW */
+    ALApplozicSettings.setColorForTypeMsgBackground(UIColor.white)             /*  SET COLOR FOR TYPE MESSAGE OUTER VIEW */
+    ALApplozicSettings.setMsgTextViewBGColor(UIColor.white)                /*  SET BG COLOR FOR MESSAGE TEXT VIEW */
     ALApplozicSettings.setPlaceHolderColor(UIColor.gray)                       /*  SET COLOR FOR PLACEHOLDER TEXT */
     ALApplozicSettings.setVisibilityNoConversationLabelChatVC(true)            /*  SET NO CONVERSATION LABEL IN CHAT VC    */
     ALApplozicSettings.setBGColorForTypingLabel(UIColor(red:242/255.0, green:242/255.0, blue:242/255.0, alpha:1))   /*  SET COLOR FOR TYPING LABEL  */
@@ -369,7 +369,7 @@ func ALDefaultChatViewSettings ()
     
     /********************************************* DEMAND/MISC SETTINGS  ********************************************/
     
-    ALApplozicSettings.setUnreadCountLabelBGColor(UIColor.purple)
+    ALApplozicSettings.setUnreadCountLabelBGColor(UIColor.red)
     ALApplozicSettings.setCustomClassName("ALChatManager")                     /*  SET 3rd Party Class Name OR ALChatManager */
     ALUserDefaultsHandler.setFetchConversationPageSize(20)                     /*  SET MESSAGE LIST PAGE SIZE  */ // DEFAULT VALUE 20
     ALUserDefaultsHandler.setUnreadCountType(1)                                /*  SET UNRAED COUNT TYPE   */ // DEFAULT VALUE 0
@@ -377,7 +377,7 @@ func ALDefaultChatViewSettings ()
     ALUserDefaultsHandler.setDebugLogsRequire(true)                            /*   ENABLE / DISABLE LOGS   */
     ALUserDefaultsHandler.setLoginUserConatactVisibility(false)
     ALApplozicSettings.setUserProfileHidden(false)
-    ALApplozicSettings.setFontFace("Helvetica")
+    //ALApplozicSettings.setFontFace("Helvetica")
     ALApplozicSettings.setChatWallpaperImageName("<WALLPAPER NAME>")
     /****************************************************************************************************************/
     

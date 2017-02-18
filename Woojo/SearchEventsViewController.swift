@@ -11,6 +11,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import DZNEmptyDataSet
+import PKHUD
 
 class SearchEventsViewController: UIViewController, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
 
@@ -27,7 +28,6 @@ class SearchEventsViewController: UIViewController, UITableViewDelegate, DZNEmpt
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        resultsTableView.tableHeaderView = searchBar
         resultsTableView.register(UINib(nibName: "SearchEventsResultsTableViewCell", bundle: nil), forCellReuseIdentifier: "searchEventCell")
         resultsTableView.rowHeight = 100
         
@@ -63,7 +63,7 @@ class SearchEventsViewController: UIViewController, UITableViewDelegate, DZNEmpt
             .drive(resultsTableView.rx.items(cellIdentifier: "searchEventCell", cellType: SearchEventsResultsTableViewCell.self)) { (_, event, cell) in
                 cell.event = event
                 if let isUserEvent = Woojo.User.current.value?.events.value.contains(where: { $0.id == cell.event?.id }) {
-                    cell.accessoryType = isUserEvent ? .checkmark : .none
+                    cell.checkView.isHidden = !isUserEvent
                 }
             }
             .addDisposableTo(disposeBag)
@@ -83,13 +83,23 @@ class SearchEventsViewController: UIViewController, UITableViewDelegate, DZNEmpt
             .subscribe(onNext: { indexPath in
                 let cell = self.resultsTableView.cellForRow(at: indexPath) as! SearchEventsResultsTableViewCell
                 if let event = cell.event, let isUserEvent = Woojo.User.current.value?.events.value.contains(where: { $0.id == event.id }) {
-                    let completion = { (error: Error?) -> Void in self.resultsTableView.reloadData() }
+                    //let completion = { (error: Error?) -> Void in self.resultsTableView.reloadData() }
                     if isUserEvent {
-                        Woojo.User.current.value?.remove(event: event, completion: completion)
-                        cell.accessoryType = .none
+                        HUD.show(.labeledProgress(title: "Remove Event", subtitle: "Removing event..."))
+                        Woojo.User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
+                            cell.checkView.isHidden = true
+                            self.resultsTableView.reloadData()
+                            HUD.show(.labeledSuccess(title: "Remove Event", subtitle: "Event removed!"))
+                            HUD.hide(afterDelay: 1.0)
+                        })
                     } else {
-                        Woojo.User.current.value?.add(event: event, completion: completion)
-                        cell.accessoryType = .checkmark
+                        HUD.show(.labeledProgress(title: "Add Event", subtitle: "Adding event..."))
+                        Woojo.User.current.value?.add(event: event, completion: { (error: Error?) -> Void in
+                            cell.checkView.isHidden = false
+                            self.resultsTableView.reloadData()
+                            HUD.show(.labeledSuccess(title: "Add Event", subtitle: "Event added!"))
+                            HUD.hide(afterDelay: 1.0)
+                        })
                     }
                 }
             }).addDisposableTo(disposeBag)
@@ -104,7 +114,7 @@ class SearchEventsViewController: UIViewController, UITableViewDelegate, DZNEmpt
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        return NSAttributedString(string: "Find all events matching your query", attributes: Constants.App.Appearance.EmptyDatasets.descriptionStringAttributes)
+        return NSAttributedString(string: "Find events by name", attributes: Constants.App.Appearance.EmptyDatasets.descriptionStringAttributes)
     }
     
     func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {

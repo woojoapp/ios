@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,13 +27,20 @@
                             <constraint firstAttribute="width" constant="83" id="iMs-0J-1QK"/>
                         </constraints>
                     </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check" translatesAutoresizingMaskIntoConstraints="NO" id="PgD-DB-n3w">
+                        <rect key="frame" x="67" y="67" width="24" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="24" id="MCR-PH-sYp"/>
+                            <constraint firstAttribute="width" secondItem="PgD-DB-n3w" secondAttribute="height" multiplier="1:1" id="kQE-YS-cgd"/>
+                        </constraints>
+                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vvj-ZD-IlV">
-                        <rect key="frame" x="99" y="8" width="268" height="21"/>
+                        <rect key="frame" x="99" y="5" width="268" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PKx-S1-jfU">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PKx-S1-jfU">
                         <rect key="frame" x="99" y="30.5" width="268" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -44,32 +53,36 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0dc-Vu-V4O">
-                        <rect key="frame" x="99" y="76" width="268" height="15"/>
+                        <rect key="frame" x="99" y="74" width="268" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="PgD-DB-n3w" firstAttribute="trailing" secondItem="kXs-VJ-519" secondAttribute="trailing" id="0RJ-8I-2Y0"/>
                     <constraint firstAttribute="trailingMargin" secondItem="vvj-ZD-IlV" secondAttribute="trailing" id="4cs-Dv-OYE"/>
                     <constraint firstItem="kXs-VJ-519" firstAttribute="top" secondItem="mrC-Qt-cNO" secondAttribute="topMargin" id="6Ib-om-cl4"/>
                     <constraint firstItem="7Lj-vh-XgL" firstAttribute="leading" secondItem="kXs-VJ-519" secondAttribute="trailing" constant="8" id="BbL-SQ-aAr"/>
+                    <constraint firstItem="PgD-DB-n3w" firstAttribute="bottom" secondItem="kXs-VJ-519" secondAttribute="bottom" id="CmV-2r-tLX"/>
+                    <constraint firstItem="0dc-Vu-V4O" firstAttribute="top" secondItem="7Lj-vh-XgL" secondAttribute="bottom" constant="6" id="D3s-dl-uqQ"/>
                     <constraint firstAttribute="bottomMargin" secondItem="kXs-VJ-519" secondAttribute="bottom" id="Lld-7T-CtT"/>
-                    <constraint firstItem="0dc-Vu-V4O" firstAttribute="top" secondItem="7Lj-vh-XgL" secondAttribute="bottom" constant="8" id="Qe8-DC-eNz"/>
                     <constraint firstItem="vvj-ZD-IlV" firstAttribute="leading" secondItem="kXs-VJ-519" secondAttribute="trailing" constant="8" id="T1L-NK-OF2"/>
                     <constraint firstItem="kXs-VJ-519" firstAttribute="leading" secondItem="mrC-Qt-cNO" secondAttribute="leadingMargin" id="VtR-FH-R4L"/>
-                    <constraint firstAttribute="topMargin" secondItem="vvj-ZD-IlV" secondAttribute="top" id="WAJ-gL-yIj"/>
+                    <constraint firstItem="PgD-DB-n3w" firstAttribute="width" secondItem="PgD-DB-n3w" secondAttribute="height" multiplier="1:1" id="Wzo-71-vXS"/>
+                    <constraint firstItem="PKx-S1-jfU" firstAttribute="bottom" secondItem="mrC-Qt-cNO" secondAttribute="centerY" constant="-3" id="aRC-1e-Z21"/>
                     <constraint firstAttribute="trailingMargin" secondItem="PKx-S1-jfU" secondAttribute="trailing" id="bjy-DD-bZJ"/>
                     <constraint firstAttribute="trailingMargin" secondItem="7Lj-vh-XgL" secondAttribute="trailing" id="dUY-6z-LEA"/>
+                    <constraint firstItem="PKx-S1-jfU" firstAttribute="top" secondItem="vvj-ZD-IlV" secondAttribute="bottom" constant="6" id="eJL-zG-tOc"/>
                     <constraint firstItem="0dc-Vu-V4O" firstAttribute="leading" secondItem="kXs-VJ-519" secondAttribute="trailing" constant="8" id="hut-b3-k1l"/>
                     <constraint firstItem="PKx-S1-jfU" firstAttribute="leading" secondItem="kXs-VJ-519" secondAttribute="trailing" constant="8" id="ism-bX-ubV"/>
-                    <constraint firstItem="0dc-Vu-V4O" firstAttribute="bottom" secondItem="kXs-VJ-519" secondAttribute="bottom" id="ixu-xE-Os0"/>
-                    <constraint firstItem="7Lj-vh-XgL" firstAttribute="top" secondItem="PKx-S1-jfU" secondAttribute="bottom" constant="8" id="ohm-06-Yeu"/>
+                    <constraint firstItem="7Lj-vh-XgL" firstAttribute="top" secondItem="mrC-Qt-cNO" secondAttribute="centerY" constant="3" id="nrj-lu-XY9"/>
                     <constraint firstAttribute="trailingMargin" secondItem="0dc-Vu-V4O" secondAttribute="trailing" id="qIa-27-riT"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="attendingLabel" destination="0dc-Vu-V4O" id="gDo-L6-Rhd"/>
+                <outlet property="checkView" destination="PgD-DB-n3w" id="5oa-FO-eQ2"/>
                 <outlet property="dateLabel" destination="7Lj-vh-XgL" id="Nej-da-dne"/>
                 <outlet property="nameLabel" destination="vvj-ZD-IlV" id="7ot-st-OL0"/>
                 <outlet property="placeLabel" destination="PKx-S1-jfU" id="m7x-As-dlW"/>
@@ -78,4 +91,7 @@
             <point key="canvasLocation" x="43.5" y="23"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="check" width="24" height="24"/>
+    </resources>
 </document>

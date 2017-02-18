@@ -15,6 +15,7 @@ class MyEventsTableViewCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var thumbnailView: UIImageView!
     @IBOutlet weak var attendingLabel: UILabel!
+    @IBOutlet weak var checkView: UIImageView!
     
     var event: Event? {
         didSet {
@@ -45,7 +46,8 @@ class MyEventsTableViewCell: UITableViewCell {
                 placeString = city
             }
         }
-        //cell.accessoryType
+        thumbnailView.layer.cornerRadius = 20.0
+        thumbnailView.layer.masksToBounds = true
         placeLabel.text = placeString
         if let pictureURL = event?.pictureURL {
             thumbnailView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_40x40"))
@@ -53,7 +55,7 @@ class MyEventsTableViewCell: UITableViewCell {
             thumbnailView.image = #imageLiteral(resourceName: "placeholder_40x40")
         }
         if let start = event?.start {
-            dateLabel?.text = Event.dateFormatter.string(from: start)
+            dateLabel?.text = Event.humanDateFormatter.string(from: start)
         }
         if let attendingCount = event?.attendingCount {
             let people: String

@@ -52,7 +52,6 @@ class AlbumsTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         if albums.count > 0 {
-            self.tableView.separatorStyle = .singleLine
             return 1
         } else {
             let messageLabel = UILabel(frame: CGRect.init(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
@@ -64,7 +63,6 @@ class AlbumsTableViewController: UITableViewController {
             messageLabel.sizeToFit()
             
             self.tableView.backgroundView = messageLabel
-            self.tableView.separatorStyle = .none
             
             return 0
         }
