@@ -112,7 +112,7 @@ class ChatViewController: ALChatViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if let theMessage = self.alMessageWrapper.getUpdatedMessageArray()[indexPath.row] as? ALMessage {
             if (theMessage.fileMeta == nil || (theMessage.fileMeta.thumbnailUrl == nil && theMessage.fileMeta.contentType == nil)) && theMessage.type != "100" {
-                return super.tableView(tableView, heightForRowAt: indexPath) - 20.0
+                return super.tableView(tableView, heightForRowAt: indexPath) - 25.0
             } else {
                 return super.tableView(tableView, heightForRowAt: indexPath)
             }
