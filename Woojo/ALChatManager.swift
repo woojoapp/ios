@@ -253,7 +253,8 @@ func ALDefaultChatViewSettings ()
     /* BY DEFAULT Black:UIStatusBarStyleDefault IF REQ. White: UIStatusBarStyleLightContent  */
     /* ADD property in info.plist "View controller-based status bar appearance" type: BOOLEAN value: NO */
     
-    ALApplozicSettings.setColorForNavigation(UIColor(red:247.0/255, green:247.0/255, blue:247.0/255, alpha:1))
+    //ALApplozicSettings.setColorForNavigation(UIColor(red:247.0/255, green:247.0/255, blue:247.0/255, alpha:1))
+    //ALApplozicSettings.setColorForNavigation(UIColor.clear)
     ALApplozicSettings.setColorForNavigationItem(UIColor.black)
     ALApplozicSettings.hideRefreshButton(true)
     ALUserDefaultsHandler.setNavigationRightButtonHidden(false)
@@ -261,6 +262,7 @@ func ALDefaultChatViewSettings ()
     ALUserDefaultsHandler.setBottomTabBarHidden(false)
     ALApplozicSettings.setTitleForConversationScreen("Chats")
     ALApplozicSettings.setCustomNavRightButtonMsgVC(false)               /*  SET VISIBILITY FOR REFRESH BUTTON (COMES FROM TOP IN MSG VC)   */
+    ALUserDefaultsHandler.setNavigationRightButtonHidden(false)
     ALApplozicSettings.setTitleForBackButtonMsgVC("Back")                /*  SET BACK BUTTON FOR MSG VC  */
     ALApplozicSettings.setTitleForBackButtonChatVC("Back")               /*  SET BACK BUTTON FOR CHAT VC */
     /****************************************************************************************************************/

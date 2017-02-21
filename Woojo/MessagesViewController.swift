@@ -50,8 +50,12 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.navigationBar.layer.shadowOpacity = 0.0
-        self.navigationController?.navigationBar.titleTextAttributes = [:]
+        navigationController?.navigationBar.layer.shadowOpacity = 0.0
+        navigationController?.navigationBar.titleTextAttributes = [:]
+        navigationController?.navigationBar.barTintColor = nil
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.view.backgroundColor = UIColor.clear        
+        
     }
     
     func showSettings(sender : Any?) {

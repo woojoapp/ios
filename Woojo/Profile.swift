@@ -347,9 +347,18 @@ extension User.Profile {
         
     }
     
-    func downloadAllPhotos(size: User.Profile.Photo.Size) {
+    func downloadAllPhotos(size: User.Profile.Photo.Size, completion: (() -> Void)? = nil) {
+        let group = DispatchGroup()
         for photo in self.photos.value {
-            photo?.download(size: size)
+            if let photo = photo {
+                group.enter()
+                photo.download(size: size) {
+                    group.leave()
+                }
+            }
+        }
+        group.notify(queue: .main) {
+            completion?()
         }
     }
     

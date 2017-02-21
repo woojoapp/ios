@@ -19,8 +19,6 @@ import RPCircularProgress
 class CandidatesViewController: UIViewController, ShowsSettingsButton, KolodaViewDelegate, KolodaViewDataSource, CandidatesDelegate {
     
     @IBOutlet weak var kolodaView: KolodaView!
-    //@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    //@IBOutlet weak var loadingLabel: UILabel!
     @IBOutlet weak var likeButton: DOFavoriteButton!
     @IBOutlet weak var passButton: DOFavoriteButton!
     @IBOutlet weak var loadingContainerView: UIView!
@@ -81,15 +79,11 @@ class CandidatesViewController: UIViewController, ShowsSettingsButton, KolodaVie
     
     func hideKolodaAndShowLoading() {
         self.kolodaView.isHidden = true
-        //self.activityIndicator.isHidden = false
-        //self.loadingLabel.isHidden = false
         self.loadingContainerView.isHidden = false
     }
     
     func showKolodaAndHideLoading() {
         self.kolodaView.isHidden = false
-        //self.activityIndicator.isHidden = true
-        //self.loadingLabel.isHidden = true
         self.loadingContainerView.isHidden = true
     }
     
@@ -131,6 +125,7 @@ class CandidatesViewController: UIViewController, ShowsSettingsButton, KolodaVie
         let candidateDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CandidateDetailsViewController") as! CandidateDetailsViewController
         if let candidate = User.current.value?.candidates[index] {
             candidateDetailsViewController.candidate = candidate
+            candidateDetailsViewController.candidatesViewController = self
             self.present(candidateDetailsViewController, animated: true, completion: nil)
         }
     }
@@ -144,33 +139,33 @@ class CandidatesViewController: UIViewController, ShowsSettingsButton, KolodaVie
     func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
         
         print("Asked for view for card \(index)")
-        if index >= User.current.value?.candidates.count ?? 0 { return UIImageView(image: #imageLiteral(resourceName: "icon_rounded")) }
+        //if index >= User.current.value?.candidates.count ?? 0 { return UIImageView(image: #imageLiteral(resourceName: "icon_rounded")) }
         let cardView = CandidateCardView(frame: CGRect.zero)
-        let candidate = User.current.value?.candidates[index]
-        cardView.nameLabel.text = candidate?.profile.displayName
-        print("Loading \(candidate?.profile.photos.value[0])")
-        
-        func setImage(image: UIImage?) {
-            DispatchQueue.main.async {
-                cardView.imageView.image = image
-                if index == 0 {
-                    self.showKolodaAndHideLoading()
-                }
-            }
-        }
-        
-        DispatchQueue.global(qos: .userInitiated).async {
-            if let photo = candidate?.profile.photos.value[0] {
-                if let fullImage = photo.images[.full] {
-                    setImage(image: fullImage)
-                } else {
-                    photo.download {
-                        setImage(image: photo.images[.full])
+        if let candidate = User.current.value?.candidates[index], let name = candidate.profile.displayName {
+            cardView.nameLabel.text = "\(name), \(candidate.profile.age)"
+            
+            func setImage(image: UIImage?) {
+                DispatchQueue.main.async {
+                    cardView.imageView.image = image
+                    if index == 0 {
+                        self.showKolodaAndHideLoading()
                     }
                 }
-            } else {
-                print("No photo")
-                self.showKolodaAndHideLoading()
+            }
+            
+            DispatchQueue.global(qos: .userInitiated).async {
+                if let photo = candidate.profile.photos.value[0] {
+                    if let fullImage = photo.images[.full] {
+                        setImage(image: fullImage)
+                    } else {
+                        photo.download {
+                            setImage(image: photo.images[.full])
+                        }
+                    }
+                } else {
+                    print("No photo")
+                    self.showKolodaAndHideLoading()
+                }
             }
         }
         return cardView

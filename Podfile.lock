@@ -76,6 +76,9 @@ PODS:
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.8)
   - HMSegmentedControl (1.5.3)
+  - ImageSlideshow (1.0.0):
+    - ImageSlideshow/Core (= 1.0.0)
+  - ImageSlideshow/Core (1.0.0)
   - Koloda (3.1.2):
     - pop (~> 1.0)
   - NMRangeSlider (1.2.1)
@@ -90,7 +93,6 @@ PODS:
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
-  - TGLParallaxCarousel (1.0.0)
 
 DEPENDENCIES:
   - Applozic
@@ -106,6 +108,7 @@ DEPENDENCIES:
   - Firebase/RemoteConfig
   - Firebase/Storage
   - HMSegmentedControl
+  - ImageSlideshow
   - Koloda (from `https://github.com/woojoapp/Koloda.git`, commit `584d70b02a8fdc202d0c0a38c860da9a917fe7b2`, branch `swift-3`)
   - NMRangeSlider
   - PKHUD (~> 4.0)
@@ -114,7 +117,6 @@ DEPENDENCIES:
   - RxCocoa
   - RxSwift
   - SDWebImage
-  - TGLParallaxCarousel (from `https://github.com/woojoapp/TGLParallaxCarousel`)
 
 EXTERNAL SOURCES:
   DOFavoriteButton:
@@ -123,8 +125,6 @@ EXTERNAL SOURCES:
     :branch: swift-3
     :commit: 584d70b02a8fdc202d0c0a38c860da9a917fe7b2
     :git: https://github.com/woojoapp/Koloda.git
-  TGLParallaxCarousel:
-    :git: https://github.com/woojoapp/TGLParallaxCarousel
 
 CHECKOUT OPTIONS:
   DOFavoriteButton:
@@ -133,9 +133,6 @@ CHECKOUT OPTIONS:
   Koloda:
     :commit: 584d70b02a8fdc202d0c0a38c860da9a917fe7b2
     :git: https://github.com/woojoapp/Koloda.git
-  TGLParallaxCarousel:
-    :commit: a3a8b134b559522f98f5862bb0b20f1a7b512aaf
-    :git: https://github.com/woojoapp/TGLParallaxCarousel
 
 SPEC CHECKSUMS:
   Applozic: 9acedca0e6e5f759c10d4e1f42ed9127ba4705d6
@@ -159,6 +156,7 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 6f8d8b28b7e345549ac471071608170b31cb4977
   HMSegmentedControl: 7c6145afb50f26cec5f3243082f6f12b9f41318f
+  ImageSlideshow: 2787e10e202b79ecf5348a205c539fcc5bb8e62b
   Koloda: 5aee353329cd1605540f1215a4c1975481dc7a37
   NMRangeSlider: 317ded652431eb90501c8421d9cddc3930d891e6
   PKHUD: 48af884cf00c2213b0313b739d914e6cab1c0f5e
@@ -169,8 +167,7 @@ SPEC CHECKSUMS:
   RxCocoa: ccdf43101a70407097a29082f648ba1676075b30
   RxSwift: 46574f70d416b7923c237195939cc488a7fbf3a0
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
-  TGLParallaxCarousel: 94c8b4f271f0c1a1a3d973da1206f31771255e44
 
-PODFILE CHECKSUM: 87b84821af09e5d5c7c2aa5ff4b87c9b8a4f7ddc
+PODFILE CHECKSUM: 8526bcbc95eea44eea86da7e1d7c6f5f05c7d43b
 
 COCOAPODS: 1.2.0

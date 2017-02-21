@@ -32,10 +32,10 @@ target 'Woojo' do
   pod 'NMRangeSlider'
   pod 'RSKImageCropper'
   pod 'PKHUD', '~> 4.0'
-  pod 'TGLParallaxCarousel', :git=>'https://github.com/woojoapp/TGLParallaxCarousel'
   pod 'DZNEmptyDataSet' 
   pod 'HMSegmentedControl'
   pod 'DOFavoriteButton', :git=>'https://github.com/sveinhal/DOFavoriteButton'
   pod 'RPCircularProgress'
+  pod 'ImageSlideshow'
 
 end
