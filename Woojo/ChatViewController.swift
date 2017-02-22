@@ -8,7 +8,7 @@
 
 import Applozic
 import SDWebImage
-import NotificationCenter
+import PKHUD
 
 class ChatViewController: ALChatViewController {
     
@@ -59,7 +59,7 @@ class ChatViewController: ALChatViewController {
         profileButton.layer.masksToBounds = true
         profileItem.customView = profileButton
         
-        profileButton.addTarget(self, action: #selector(tapped), for: .touchUpInside)
+        profileButton.addTarget(self, action: #selector(showProfile), for: .touchUpInside)
         
         navigationItem.setRightBarButton(profileItem, animated: true)
         let button = navigationItem.titleView as! UIButton
@@ -97,8 +97,14 @@ class ChatViewController: ALChatViewController {
         print("CHAT VIEW DID DISAPPEAR.. BUT DO NOTHING")
     }*/
     
-    func tapped() {
-        print("Tapped", self.alContact.userId)
+    func showProfile() {
+        let userDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserDetailsViewController") as! UserDetailsViewController
+        userDetailsViewController.buttonsType = .options
+        let user = User(uid: alContact.userId)
+        user.profile.loadFromFirebase { profile, error in
+            userDetailsViewController.user = user
+            self.present(userDetailsViewController, animated: true, completion: nil)
+        }
     }
     
     func keyboardWillShow(_ notification: NSNotification) {

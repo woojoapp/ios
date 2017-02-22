@@ -1,5 +1,5 @@
 //
-//  CandidateDetailsViewController.swift
+//  UserDetailsViewController.swift
 //  Woojo
 //
 //  Created by Edouard Goossens on 18/12/2016.
@@ -10,7 +10,12 @@ import UIKit
 import DOFavoriteButton
 import ImageSlideshow
 
-class CandidateDetailsViewController: UIViewController, UIScrollViewDelegate {
+class UserDetailsViewController: UIViewController, UIScrollViewDelegate {
+    
+    enum ButtonsType: String {
+        case decide
+        case options
+    }
     
     @IBOutlet weak var carouselView: ImageSlideshow!
     @IBOutlet weak var nameLabel: UILabel!
@@ -18,10 +23,13 @@ class CandidateDetailsViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var likeButton: DOFavoriteButton!
     @IBOutlet weak var passButton: DOFavoriteButton!
+    @IBOutlet weak var optionsButton: DOFavoriteButton!
     @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var photoActivityIndicator: UIActivityIndicatorView!
     
-    var candidate: CurrentUser.Candidate?
+    var user: User?
     var imageSources: [ImageSource] = []
+    var buttonsType: ButtonsType = .decide
     
     var candidatesViewController: CandidatesViewController?
     
@@ -45,6 +53,24 @@ class CandidateDetailsViewController: UIViewController, UIScrollViewDelegate {
         })
     }
     
+    @IBAction func showOptions() {
+        optionsButton.select()
+        let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let unmatchButton = UIAlertAction(title: "Unmatch", style: .destructive, handler: { (action) -> Void in
+            print("Unmatching")
+        })
+        let reportButton = UIAlertAction(title: "Report", style: .default, handler: { (action) -> Void in
+            print("Reporting")
+        })
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        actionSheetController.addAction(unmatchButton)
+        actionSheetController.addAction(reportButton)
+        actionSheetController.addAction(cancelButton)
+        self.present(actionSheetController, animated: true) {
+            self.optionsButton.deselect()
+        }
+    }
+    
     @IBAction func dismiss(sender: Any?) {
         self.dismiss(animated: true)
     }
@@ -58,15 +84,19 @@ class CandidateDetailsViewController: UIViewController, UIScrollViewDelegate {
         carouselView.pageControl.currentPageIndicatorTintColor = view.tintColor
         carouselView.pageControl.pageIndicatorTintColor = UIColor.lightGray
         carouselView.scrollView.bounces = false
-        if let candidate = candidate {
-            // Set first photo immediately to avoid flicker
-            if let firstPhoto = candidate.profile.photos.value[0], let image = firstPhoto.images[.full] {
-                self.imageSources.append(ImageSource(image: image))
-                carouselView.setImageInputs(self.imageSources)
-                carouselView.pageControl.numberOfPages = candidate.profile.photos.value.flatMap{ $0 }.count
+        
+        if let user = user {
+            
+            func setFirstImageAndDownloadOthers(firstPhoto: User.Profile.Photo) {
+                if let firstImage = firstPhoto.images[.full] {
+                    self.imageSources.append(ImageSource(image: firstImage))
+                    self.carouselView.setImageInputs(self.imageSources)
+                    self.photoActivityIndicator.stopAnimating()
+                }
+                carouselView.pageControl.numberOfPages = user.profile.photos.value.flatMap{ $0 }.count
                 // Download the others and append
-                candidate.profile.downloadAllPhotos(size: .full) {
-                    for photo in candidate.profile.photos.value {
+                user.profile.downloadAllPhotos(size: .full) {
+                    for photo in user.profile.photos.value {
                         if let photo = photo, let image = photo.images[.full] {
                             if photo.id == firstPhoto.id { continue }
                             else {
@@ -77,14 +107,27 @@ class CandidateDetailsViewController: UIViewController, UIScrollViewDelegate {
                     self.carouselView.setImageInputs(self.imageSources)
                 }
             }
+            
+            // Set first photo immediately to avoid flicker
+            if let firstPhoto = user.profile.photos.value[0] {
+                if firstPhoto.images[.full] != nil {
+                    setFirstImageAndDownloadOthers(firstPhoto: firstPhoto)
+                } else {
+                    firstPhoto.download(size: .full) {
+                        setFirstImageAndDownloadOthers(firstPhoto: firstPhoto)
+                    }
+                }
+                
+            }
+            
         }
         carouselView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTap)))
         
-        if let candidate = candidate, let name = candidate.profile.displayName {
-            nameLabel.text = "\(name), \(candidate.profile.age)"
+        if let user = user, let name = user.profile.displayName {
+            nameLabel.text = "\(name), \(user.profile.age)"
         }
         
-        descriptionLabel.text = candidate?.profile.description.value
+        descriptionLabel.text = user?.profile.description.value
         
         closeButton.layer.masksToBounds = true
         closeButton.layer.cornerRadius = 5.0
@@ -93,11 +136,21 @@ class CandidateDetailsViewController: UIViewController, UIScrollViewDelegate {
         
         self.scrollView.delegate = self
         
-        likeButton.layer.cornerRadius = likeButton.frame.width / 2
-        likeButton.layer.masksToBounds = true
+        switch buttonsType {
+        case .options:
+            optionsButton.isHidden = false
+            optionsButton.layer.cornerRadius = optionsButton.frame.width / 2
+            optionsButton.layer.masksToBounds = true
+        default:
+            likeButton.isHidden = false
+            likeButton.layer.cornerRadius = likeButton.frame.width / 2
+            likeButton.layer.masksToBounds = true
+            
+            passButton.isHidden = false
+            passButton.layer.cornerRadius = passButton.frame.width / 2
+            passButton.layer.masksToBounds = true
+        }
         
-        passButton.layer.cornerRadius = passButton.frame.width / 2
-        passButton.layer.masksToBounds = true
 
         //buttonsView.layer.cornerRadius = 36.0
         //buttonsView.layer.masksToBounds = true

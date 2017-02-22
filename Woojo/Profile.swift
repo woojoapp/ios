@@ -70,7 +70,6 @@ extension User {
                 displayName = value[Constants.User.Profile.properties.firebaseNodes.firstName] as? String
                 let photosSnap = snapshot.childSnapshot(forPath: Constants.User.Profile.Photo.firebaseNode)
                 for item in photosSnap.children {
-                    print(item)
                     if let photoSnap = item as? FIRDataSnapshot, let index = Int(photoSnap.key), let id = photoSnap.value as? String {
                         let photo = Photo(profile: self, index: index, id: id)
                         // Download and cache profile photo only
@@ -84,7 +83,6 @@ extension User {
                     gender = Gender(rawValue: genderString)
                 }
                 description.value = value[Constants.User.Profile.properties.firebaseNodes.description] as? String ?? ""
-                print(description.value)
                 city = value[Constants.User.Profile.properties.firebaseNodes.city] as? String
                 country = value[Constants.User.Profile.properties.firebaseNodes.country] as? String
                 if let birthdayString = value[Constants.User.Profile.properties.firebaseNodes.birthday] as? String {

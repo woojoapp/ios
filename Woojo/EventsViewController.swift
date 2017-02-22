@@ -13,9 +13,7 @@ import RxSwift
 import DZNEmptyDataSet
 import PKHUD
 
-class EventsViewController: UIViewController, ShowsSettingsButton, UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
-    
-    @IBOutlet weak var tableView: UITableView!
+class EventsViewController: UITableViewController, ShowsSettingsButton, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     
     var events: [Event] = []
     var disposeBag = DisposeBag()
@@ -27,9 +25,6 @@ class EventsViewController: UIViewController, ShowsSettingsButton, UITableViewDa
         tableView.register(UINib(nibName: "EventsTableViewCell", bundle: nil), forCellReuseIdentifier: "eventCell")
         
         setupDataSource()
-        tableView.dataSource = self
-        tableView.delegate = self
-        
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         tableView.tableFooterView = UIView()
@@ -65,21 +60,21 @@ class EventsViewController: UIViewController, ShowsSettingsButton, UITableViewDa
         // Dispose of any resources that can be recreated.
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "eventCell", for: indexPath) as! EventsTableViewCell
         cell.event = self.events[indexPath.row]
         return cell
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return events.count
     }
 
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Remove", handler: { action, indexPath in
             if let cell = self.tableView.cellForRow(at: indexPath) as? EventsTableViewCell, let event = cell.event {
                 HUD.show(.labeledProgress(title: "Remove Event", subtitle: "Removing event..."))

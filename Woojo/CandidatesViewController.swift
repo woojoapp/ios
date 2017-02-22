@@ -122,11 +122,11 @@ class CandidatesViewController: UIViewController, ShowsSettingsButton, KolodaVie
     
     func koloda(_ koloda: KolodaView, didSelectCardAt index: Int) {
         print("Clicked on card at index \(index)")
-        let candidateDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CandidateDetailsViewController") as! CandidateDetailsViewController
+        let userDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserDetailsViewController") as! UserDetailsViewController
         if let candidate = User.current.value?.candidates[index] {
-            candidateDetailsViewController.candidate = candidate
-            candidateDetailsViewController.candidatesViewController = self
-            self.present(candidateDetailsViewController, animated: true, completion: nil)
+            userDetailsViewController.user = candidate
+            userDetailsViewController.candidatesViewController = self
+            self.present(userDetailsViewController, animated: true, completion: nil)
         }
     }
     

@@ -20,7 +20,7 @@ class ProfileViewController: UITableViewController, UITextViewDelegate {
     @IBOutlet weak var bioTableViewCell: BioTableViewCell!
     @IBOutlet weak var photosCollectionView: UICollectionView!
     @IBOutlet weak var tapGestureRecognizer: UITapGestureRecognizer!
-    @IBOutlet weak var longPressGestureRecognizer: UILongPressGestureRecognizer!
+    //@IBOutlet weak var longPressGestureRecognizer: UILongPressGestureRecognizer!
     
     let disposeBag = DisposeBag()
     fileprivate let bioTextViewPlaceholderText = "Say something about yourself..."
@@ -46,7 +46,7 @@ class ProfileViewController: UITableViewController, UITextViewDelegate {
         setupBioTextView()
         photosCollectionView.delegate = self
         photosCollectionView.dataSource = self
-        longPressGestureRecognizer.addTarget(self, action: #selector(longPress))
+        photosCollectionView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPress)))
         imagePickerController.delegate = self
     }
     
@@ -234,7 +234,7 @@ class ProfileViewController: UITableViewController, UITextViewDelegate {
                 }
             }
         case UIGestureRecognizerState.changed:
-            photosCollectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view))
+            photosCollectionView.updateInteractiveMovementTargetPosition(gesture.location(in: self.photosCollectionView))
         case UIGestureRecognizerState.ended:
             guard let selectedIndexPath = self.photosCollectionView.indexPathForItem(at: gesture.location(in: self.photosCollectionView)) else {
                 break
@@ -270,11 +270,6 @@ class ProfileViewController: UITableViewController, UITextViewDelegate {
                 UIView.commitAnimations()
             }
         }
-    }
-    
-    func editCity(sender: Any?) {
-        let editCityViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditCityViewController") as! EditCityViewController
-        self.present(editCityViewController, animated: true, completion: nil)
     }
 }
 
@@ -398,10 +393,6 @@ extension ProfileViewController: UICollectionViewDataSource {
                 }
             }
         }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print(indexPath.row)
     }
     
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {

@@ -11,16 +11,18 @@ import Applozic
 import FirebaseAuth
 import RxSwift
 
-class MessagesViewController: ALMessagesViewController, ShowsSettingsButton {
+class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UITableViewDelegate {
     
     var disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.showSettingsButton()
+        /*self.showSettingsButton()
         let settingsButton = self.navigationItem.rightBarButtonItem?.customView as? UIButton
-        settingsButton?.addTarget(self, action: #selector(showSettings(sender:)), for: .touchUpInside)        
+        settingsButton?.addTarget(self, action: #selector(showSettings(sender:)), for: .touchUpInside)*/
+        
+        mTableView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -31,6 +33,8 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton {
         navigationController?.navigationBar.barTintColor = nil
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.view.backgroundColor = UIColor.clear
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.newMessageReceived), name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -38,6 +42,7 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton {
         if self.detailChatViewController != nil {
             self.detailChatViewController.refreshMainView = true
         }
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -49,4 +54,46 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton {
         self.present(settingsNavigationController, animated: true, completion: nil)
     }
     
+    func newMessageReceived() {
+        print("MESSSAAAGEGE FROM MessagesViewController")
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
+        let unmatch = UITableViewRowAction(style: .destructive, title: "Unmatch") { action, index in
+            print("Unmatching")
+        }
+        
+        let report = UITableViewRowAction(style: .normal, title: "Report") { action, index in
+            print("Reporting")
+        }
+        report.backgroundColor = .orange
+        
+        return [unmatch, report]
+    }
+    
 }
+
+/*extension UITableViewDelegate where Self: ALMessagesViewController {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
+        let more = UITableViewRowAction(style: .normal, title: "More") { action, index in
+            print("more button tapped")
+        }
+        more.backgroundColor = .lightGray
+        
+        let favorite = UITableViewRowAction(style: .normal, title: "Favorite") { action, index in
+            print("favorite button tapped")
+        }
+        favorite.backgroundColor = .orange
+        
+        let share = UITableViewRowAction(style: .normal, title: "Share") { action, index in
+            print("share button tapped")
+        }
+        share.backgroundColor = .blue
+        
+        return [share, favorite, more]
+    }
+}*/

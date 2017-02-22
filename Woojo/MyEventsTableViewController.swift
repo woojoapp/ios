@@ -20,8 +20,6 @@ class MyEventsTableViewController: UITableViewController, DZNEmptyDataSetDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.dataSource = self
-        tableView.delegate = self
         tableView.rowHeight = 100
         tableView.register(UINib(nibName: "MyEventsTableViewCell", bundle: nil), forCellReuseIdentifier: "fbEventCell")
         

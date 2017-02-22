@@ -86,7 +86,7 @@ class ALChatManager: NSObject {
                 print("error while registering to applozic");
             }
             else if(response?.message.isEqual("PASSWORD_INVALID"))! {
-                ALUtilityClass.showAlertMessage("Invalid Password", andTitle: "Oops!!!")
+                print("Invalid Password")
             }
             else {
                 print("registered")
@@ -94,11 +94,11 @@ class ALChatManager: NSObject {
                     alChatLauncher?.registerForNotification()
                 }
                 
-                ALApplozicSettings.setListOfViewControllers(["Woojo.CandidatesViewController"])
+                /*ALApplozicSettings.setListOfViewControllers(["Woojo.CandidatesViewController"])
                 ALMQTTConversationService.sharedInstance().subscribeToConversation()
                 
                 NotificationCenter.default.addObserver(self, selector: #selector(self.newMessageReceived), name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
-                completion(response! , error as NSError?)
+                completion(response! , error as NSError?)*/
             }
         })
     }
@@ -276,15 +276,17 @@ class ALChatManager: NSObject {
         //ALApplozicSettings.setColorForNavigation(UIColor(red:247.0/255, green:247.0/255, blue:247.0/255, alpha:1))
         //ALApplozicSettings.setColorForNavigation(UIColor.clear)
         ALApplozicSettings.setColorForNavigationItem(UIColor.black)
-        ALApplozicSettings.hideRefreshButton(true)
         ALUserDefaultsHandler.setNavigationRightButtonHidden(false)
         ALUserDefaultsHandler.setBackButtonHidden(true)
+        //ALUserDefaultsHandler.setNavigationRightButtonHidden(false)
         ALUserDefaultsHandler.setBottomTabBarHidden(false)
         ALApplozicSettings.setTitleForConversationScreen("Chats")
-        ALApplozicSettings.setCustomNavRightButtonMsgVC(false)               /*  SET VISIBILITY FOR REFRESH BUTTON (COMES FROM TOP IN MSG VC)   */
-        ALUserDefaultsHandler.setNavigationRightButtonHidden(false)
-        ALApplozicSettings.setTitleForBackButtonMsgVC("Back")                /*  SET BACK BUTTON FOR MSG VC  */
-        ALApplozicSettings.setTitleForBackButtonChatVC("Back")               /*  SET BACK BUTTON FOR CHAT VC */
+        
+        ALApplozicSettings.hideRefreshButton(false)
+        ALApplozicSettings.setCustomNavRightButtonMsgVC(true)               /*  SET VISIBILITY FOR REFRESH BUTTON (COMES FROM TOP IN MSG VC)   */
+        
+        //ALApplozicSettings.setTitleForBackButtonMsgVC("Back")                /*  SET BACK BUTTON FOR MSG VC  */
+        //ALApplozicSettings.setTitleForBackButtonChatVC("Back")               /*  SET BACK BUTTON FOR CHAT VC */
         /****************************************************************************************************************/
         
         
@@ -305,30 +307,30 @@ class ALChatManager: NSObject {
         
         /***************  SEND MESSAGE ABUSE CHECK  ******************/
         
-        ALApplozicSettings.setAbuseWarningText("AVOID USE OF ABUSE WORDS")
-        ALApplozicSettings.setMessageAbuseMode(true)
+        //ALApplozicSettings.setAbuseWarningText("AVOID USE OF ABUSE WORDS")
+        //ALApplozicSettings.setMessageAbuseMode(true)
         
         //****************** SHOW/HIDE RECEIVER USER PROFILE ******************/
         
-        ALApplozicSettings.setReceiverUserProfileOption(false)
+        //ALApplozicSettings.setReceiverUserProfileOption(false)
         
         /****************************************************************************************************************/
         
         
         /**********************************************  IMAGE SETTINGS  ************************************************/
         
-        ALApplozicSettings.setMaxCompressionFactor(0.1)
-        ALApplozicSettings.setMaxImageSizeForUploadInMB(3)
-        ALApplozicSettings.setMultipleAttachmentMaxLimit(5)
+        //ALApplozicSettings.setMaxCompressionFactor(0.1)
+        //ALApplozicSettings.setMaxImageSizeForUploadInMB(3)
+        //ALApplozicSettings.setMultipleAttachmentMaxLimit(5)
         /****************************************************************************************************************/
         
         
         /**********************************************  GROUP SETTINGS  ************************************************/
         
-        ALApplozicSettings.setGroupOption(false)
-        ALApplozicSettings.setGroupExitOption(true)
-        ALApplozicSettings.setGroupMemberAddOption(true)
-        ALApplozicSettings.setGroupMemberRemoveOption(true)
+        //ALApplozicSettings.setGroupOption(false)
+        //ALApplozicSettings.setGroupExitOption(true)
+        //ALApplozicSettings.setGroupMemberAddOption(true)
+        //ALApplozicSettings.setGroupMemberRemoveOption(true)
         /****************************************************************************************************************/
         
         
@@ -338,8 +340,8 @@ class ALChatManager: NSObject {
         //For Distribution CERT::
         ALUserDefaultsHandler.setDeviceApnsType(APNS_TYPE_DISTRIBUTION)
         
-        let appName = Bundle.main.infoDictionary!["CFBundleName"]
-        ALApplozicSettings.setNotificationTitle((appName as AnyObject).string)
+        //let appName = Bundle.main.infoDictionary!["CFBundleName"]
+        //ALApplozicSettings.setNotificationTitle((appName as AnyObject).string)
         
         //    ALApplozicSettings.enableNotification() //0
         ALApplozicSettings.disableNotification() //2
@@ -360,14 +362,14 @@ class ALChatManager: NSObject {
         ALApplozicSettings.setMsgTextViewBGColor(UIColor.white)                /*  SET BG COLOR FOR MESSAGE TEXT VIEW */
         ALApplozicSettings.setPlaceHolderColor(UIColor.gray)                       /*  SET COLOR FOR PLACEHOLDER TEXT */
         ALApplozicSettings.setVisibilityNoConversationLabelChatVC(true)            /*  SET NO CONVERSATION LABEL IN CHAT VC    */
-        ALApplozicSettings.setBGColorForTypingLabel(UIColor(red:242/255.0, green:242/255.0, blue:242/255.0, alpha:1))   /*  SET COLOR FOR TYPING LABEL  */
+        ALApplozicSettings.setBGColorForTypingLabel(UIColor(red:247/255.0, green:247/255.0, blue:247/255.0, alpha:0.95))   /*  SET COLOR FOR TYPING LABEL  */
         ALApplozicSettings.setTextColorForTypingLabel(UIColor(red:51.0/255, green:51.0/255, blue:51.0/255, alpha:0.5))  /*  SET COLOR FOR TEXT TYPING LABEL  */
         /****************************************************************************************************************/
         
         
         /********************************************** CHAT TYPE SETTINGS  *********************************************/
         
-        ALApplozicSettings.setContextualChat(true)                                 /*  IF CONTEXTUAL NEEDED    */
+        //ALApplozicSettings.setContextualChat(true)                                 /*  IF CONTEXTUAL NEEDED    */
         /*  Note: Please uncomment below setter to use app_module_name */
         //   ALUserDefaultsHandler.setAppModuleName("<APP_MODULE_NAME>")
         //   ALUserDefaultsHandler.setAppModuleName("SELLER")
@@ -376,8 +378,8 @@ class ALChatManager: NSObject {
         
         /*********************************************** CONTACT SETTINGS  **********************************************/
         
-        ALApplozicSettings.setFilterContactsStatus(true)                           /*  IF NEEDED ALL REGISTERED CONTACTS   */
-        ALApplozicSettings.setOnlineContactLimit(0)                                /*  IF NEEDED ONLINE USERS WITH LIMIT   */
+        //ALApplozicSettings.setFilterContactsStatus(true)                           /*  IF NEEDED ALL REGISTERED CONTACTS   */
+        //ALApplozicSettings.setOnlineContactLimit(0)                                /*  IF NEEDED ONLINE USERS WITH LIMIT   */
         /****************************************************************************************************************/
         
         
@@ -385,7 +387,7 @@ class ALChatManager: NSObject {
         
         ALApplozicSettings.setColorForToastText(UIColor.black)                     /*  SET COLOR FOR TOAST TEXT    */
         ALApplozicSettings.setColorForToastBackground(UIColor.gray)                /*  SET COLOR FOR TOAST BG      */
-        ALApplozicSettings.setCallOption(true)                                     /*  IF CALL OPTION NEEDED   */
+        //ALApplozicSettings.setCallOption(true)                                     /*  IF CALL OPTION NEEDED   */
         /****************************************************************************************************************/
         
         
@@ -398,15 +400,15 @@ class ALChatManager: NSObject {
         ALApplozicSettings.setMaxTextViewLines(4)
         ALUserDefaultsHandler.setDebugLogsRequire(true)                            /*   ENABLE / DISABLE LOGS   */
         ALUserDefaultsHandler.setLoginUserConatactVisibility(false)
-        ALApplozicSettings.setUserProfileHidden(false)
+        ALApplozicSettings.setUserProfileHidden(true)
         //ALApplozicSettings.setFontFace("Helvetica")
-        ALApplozicSettings.setChatWallpaperImageName("<WALLPAPER NAME>")
+        //ALApplozicSettings.setChatWallpaperImageName("<WALLPAPER NAME>")
         /****************************************************************************************************************/
         
         
         /***************************************** APPLICATION URL CONFIGURATION + ENCRYPTION  ***************************************/
         
-        ALUserDefaultsHandler.setEnableEncryption(false)                            /* Note: PLEASE DO YES (IF NEEDED)  */
+        //ALUserDefaultsHandler.setEnableEncryption(false)                            /* Note: PLEASE DO YES (IF NEEDED)  */
         /****************************************************************************************************************/
     }
 }
