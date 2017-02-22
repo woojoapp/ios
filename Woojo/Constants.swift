@@ -18,6 +18,9 @@ struct Constants {
                 static let privacyURL = "privacy_url"
             }
         }
+        struct Chat {
+            static let applozicApplicationId = "woojoa4cb24509376f2a59dd5e56caf935bf7"
+        }
         struct Appearance {
             struct EmptyDatasets {
                 static var titleStringAttributes: [String:Any] {

@@ -18,30 +18,6 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let chatManager = ALChatManager(applicationKey: "woojoa4cb24509376f2a59dd5e56caf935bf7")
-        
-        let alUser : ALUser =  ALUser();
-        alUser.applicationId = ALChatManager.applicationId
-        alUser.userId = FIRAuth.auth()?.currentUser?.uid.addingPercentEncoding(withAllowedCharacters: .alphanumerics)       // NOTE : +,*,? are not allowed chars in userId.
-        alUser.imageLink = FIRAuth.auth()?.currentUser?.photoURL?.absoluteString    // User's profile image link.
-        alUser.displayName = FIRAuth.auth()?.currentUser?.displayName  // User's Display Name
-        
-        ALUserDefaultsHandler.setUserId(alUser.userId)
-        ALUserDefaultsHandler.setDisplayName(alUser.displayName)
-        ALUserDefaultsHandler.setApplicationKey(alUser.applicationId)
-        ALUserDefaultsHandler.setUserAuthenticationTypeId(Int16(APPLOZIC.rawValue))
-        ALUserDefaultsHandler.setProfileImageLink(alUser.imageLink)
-        
-        chatManager.registerUser(alUser) { (response, error) in
-            if let error = error {
-                print("Failed to register Applozic user \(error)")
-            } else {
-                ALUserDefaultsHandler.setUserKeyString(response.userKey)
-                ALUserDefaultsHandler.setDeviceKeyString(response.deviceKey)
-                print("Successful Applozic user registration \(response.message), \(response.userKey), \(response.deviceKey)")
-            }
-        }
-        
         self.showSettingsButton()
         let settingsButton = self.navigationItem.rightBarButtonItem?.customView as? UIButton
         settingsButton?.addTarget(self, action: #selector(showSettings(sender:)), for: .touchUpInside)        
@@ -54,8 +30,18 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton {
         navigationController?.navigationBar.titleTextAttributes = [:]
         navigationController?.navigationBar.barTintColor = nil
         navigationController?.navigationBar.isTranslucent = true
-        navigationController?.view.backgroundColor = UIColor.clear        
-        
+        navigationController?.view.backgroundColor = UIColor.clear
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        print("MESSAGES VIEW WILL DISAPPEAR.. BUT DO NOTHING")
+        if self.detailChatViewController != nil {
+            self.detailChatViewController.refreshMainView = true
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        // Override to prevent unsubscribing MQTT from conversation
     }
     
     func showSettings(sender : Any?) {

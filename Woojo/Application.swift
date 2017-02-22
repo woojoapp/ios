@@ -23,7 +23,6 @@ class Application: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     let loginViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
-    //var chatManager: ALChatManager
     static var remoteConfig: FIRRemoteConfig = FIRRemoteConfig.remoteConfig()
     
     override init() {
@@ -49,6 +48,7 @@ class Application: UIResponder, UIApplicationDelegate {
             } else if Woojo.User.current.value == nil || (Woojo.User.current.value != nil && !Woojo.User.current.value!.isLoading.value && Woojo.User.current.value!.uid != user?.uid) {
                 if let currentUser = CurrentUser() {
                     currentUser.load {
+                        self.setupChatManager(currentUser: currentUser)
                         self.loginViewController.dismiss(animated: true, completion: nil)
                     }
                 } else {
@@ -140,7 +140,7 @@ class Application: UIResponder, UIApplicationDelegate {
         print("APP_ENTER_IN_FOREGROUND")
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "APP_ENTER_IN_FOREGROUND"), object: nil)
-        UIApplication.shared.applicationIconBadgeNumber = 0
+        //UIApplication.shared.applicationIconBadgeNumber = 0
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -184,6 +184,36 @@ class Application: UIResponder, UIApplicationDelegate {
                 print("Failed to fetch remote config: \(error.localizedDescription)")
             }
         })
+    }
+    
+    // MARK: - Chat Manager
+    
+    func setupChatManager(currentUser: CurrentUser) {
+        
+        let alUser : ALUser =  ALUser();
+        alUser.applicationId = Constants.App.Chat.applozicApplicationId
+        alUser.userId = currentUser.uid
+        alUser.displayName = currentUser.profile.displayName
+        currentUser.profile.photos.value[0]?.generatePhotoDownloadURL(size: .thumbnail) { url, error in
+            alUser.imageLink = url?.absoluteString
+        }
+        
+        ALUserDefaultsHandler.setUserId(alUser.userId)
+        ALUserDefaultsHandler.setDisplayName(alUser.displayName)
+        ALUserDefaultsHandler.setApplicationKey(alUser.applicationId)
+        ALUserDefaultsHandler.setUserAuthenticationTypeId(Int16(APPLOZIC.rawValue))
+        ALUserDefaultsHandler.setProfileImageLink(alUser.imageLink)
+        
+        ALChatManager.shared.registerUser(alUser) { (response, error) in
+            if let error = error {
+                print("Failed to register Applozic user \(error)")
+            } else {
+                ALUserDefaultsHandler.setUserKeyString(response.userKey)
+                ALUserDefaultsHandler.setDeviceKeyString(response.deviceKey)
+                print("Successful Applozic user registration \(response.message), \(response.userKey), \(response.deviceKey)")
+            }
+        }
+
     }
 
 }

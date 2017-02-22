@@ -16,6 +16,15 @@ class ChatViewController: ALChatViewController {
     
     let translucentColor = UIColor(red: 247.0/255.0, green: 247.0/255.0, blue: 247.0/255.0, alpha: 0.95)
     
+    override var individualLaunch: Bool {
+        get {
+            return false
+        }
+        set {
+            super.individualLaunch = newValue
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -79,6 +88,14 @@ class ChatViewController: ALChatViewController {
         bottomBorder.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
         loadEarlierAction.addSubview(bottomBorder)
     }
+    
+    /*override func viewWillDisappear(_ animated: Bool) {
+        print("CHAT VIEW WILL DISAPPEAR.. BUT DO NOTHING")
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        print("CHAT VIEW DID DISAPPEAR.. BUT DO NOTHING")
+    }*/
     
     func tapped() {
         print("Tapped", self.alContact.userId)
