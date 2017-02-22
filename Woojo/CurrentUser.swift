@@ -220,7 +220,7 @@ class CurrentUser: User {
             }
         }, withCancel: { error in
             print("Cancelled observing events.childAdded: \(error)")
-            self.isObservingCandidates = false
+            self.isObservingEvents = false
         })
         eventsRef.observe(.childRemoved, with: { snapshot in
             if let index = self.events.value.index(where: { event in
@@ -230,7 +230,7 @@ class CurrentUser: User {
             }
         }, withCancel: { error in
             print("Cancelled observing events.childRemoved: \(error)")
-            self.isObservingCandidates = false
+            self.isObservingEvents = false
         })
     }
     

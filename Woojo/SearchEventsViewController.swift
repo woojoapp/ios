@@ -18,6 +18,7 @@ class SearchEventsViewController: UIViewController, UITableViewDelegate, DZNEmpt
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var resultsTableView: UITableView!
     @IBOutlet var emptyView: UILabel!
+    @IBOutlet var bottomConstraint: NSLayoutConstraint!
     
     var disposeBag = DisposeBag()
     
@@ -35,6 +36,9 @@ class SearchEventsViewController: UIViewController, UITableViewDelegate, DZNEmpt
         
         self.resultsTableView.emptyDataSetDelegate = self
         self.resultsTableView.emptyDataSetSource = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     func setupDataSource() {
@@ -51,10 +55,9 @@ class SearchEventsViewController: UIViewController, UITableViewDelegate, DZNEmpt
                     return Observable.just([])
                         .asDriver(onErrorJustReturn: [])
                 } else {
-                    return Event.search(query: query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")
+                    return Event.search(query: query)
                         .retry(3)
-                        //.retryOnBecomesReachable([], reachabilityService: Dependencies.sharedDependencies.reachabilityService)
-                        .startWith([]) // clears results on new search term
+                        .startWith([])
                         .asDriver(onErrorJustReturn: [])
                 }
             }
@@ -68,22 +71,10 @@ class SearchEventsViewController: UIViewController, UITableViewDelegate, DZNEmpt
             }
             .addDisposableTo(disposeBag)
         
-        /*results
-            .map { $0.count != 0 }
-            .drive(self.emptyView.rx.isHidden)
-            .addDisposableTo(disposeBag)*/
-        
-        /*results
-            .asObservable()
-            .map { $0.count != 0 }
-            .subscribe(onNext: { self.resultsTableView.isScrollEnabled = $0 })
-            .addDisposableTo(disposeBag)*/
-        
         resultsTableView.rx.itemSelected
             .subscribe(onNext: { indexPath in
                 let cell = self.resultsTableView.cellForRow(at: indexPath) as! SearchEventsResultsTableViewCell
                 if let event = cell.event, let isUserEvent = Woojo.User.current.value?.events.value.contains(where: { $0.id == event.id }) {
-                    //let completion = { (error: Error?) -> Void in self.resultsTableView.reloadData() }
                     if isUserEvent {
                         HUD.show(.labeledProgress(title: "Remove Event", subtitle: "Removing event..."))
                         Woojo.User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
@@ -125,8 +116,26 @@ class SearchEventsViewController: UIViewController, UITableViewDelegate, DZNEmpt
         return true
     }
     
-    /*func backgroundColor(forEmptyDataSet scrollView: UIScrollView!) -> UIColor! {
-        return UIColor(colorLiteralRed: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
-    }*/
+    func keyboardWillShow(_ notification: NSNotification) {
+        if let keyboardFrameEnd = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect, let animationDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval, let navigationController = navigationController {
+            bottomConstraint.constant = self.view.frame.size.height - keyboardFrameEnd.origin.y + navigationController.navigationBar.frame.size.height + UIApplication.shared.statusBarFrame.size.height + searchBar.frame.size.height
+            UIView.animate(withDuration: animationDuration, animations: {
+                self.view.layoutIfNeeded()
+            }, completion: { finished in
+                
+            })
+        }
+    }
+    
+    func keyboardWillHide(_ notification: NSNotification) {
+        if let animationDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval {
+            bottomConstraint.constant = 0
+            UIView.animate(withDuration: animationDuration, animations: {
+                self.view.layoutIfNeeded()
+            }, completion: { finished in
+                
+            })
+        }
+    }
 
 }

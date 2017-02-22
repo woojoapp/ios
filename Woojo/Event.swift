@@ -145,6 +145,7 @@ extension Event {
             SearchEventsGraphRequest(query: query).start { response, result in
                 switch result {
                 case .success(let response):
+                    print(response)
                     observer.onNext(response.events)
                     observer.onCompleted()
                 case .failed(let error):

@@ -1270,6 +1270,7 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="bottomConstraint" destination="BAX-Mt-aY7" id="jRy-UD-uB8"/>
                         <outlet property="resultsTableView" destination="mYG-oq-055" id="L7v-TR-D6v"/>
                         <outlet property="searchBar" destination="fGK-Ng-AGW" id="Px0-zJ-JxO"/>
                         <outlet property="tapGestureRecognizer" destination="0lu-Xx-Js0" id="gwB-SH-Nm0"/>
