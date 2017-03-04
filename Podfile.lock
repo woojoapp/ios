@@ -93,6 +93,7 @@ PODS:
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
+  - Whisper (4.0.0)
 
 DEPENDENCIES:
   - Applozic
@@ -117,6 +118,7 @@ DEPENDENCIES:
   - RxCocoa
   - RxSwift
   - SDWebImage
+  - Whisper
 
 EXTERNAL SOURCES:
   DOFavoriteButton:
@@ -167,7 +169,8 @@ SPEC CHECKSUMS:
   RxCocoa: ccdf43101a70407097a29082f648ba1676075b30
   RxSwift: 46574f70d416b7923c237195939cc488a7fbf3a0
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  Whisper: 08be92623311f8e53201e62e17f6d7b9599a4714
 
-PODFILE CHECKSUM: 8526bcbc95eea44eea86da7e1d7c6f5f05c7d43b
+PODFILE CHECKSUM: 652f5523e19e73e58868f2d07a5a0dbeb45cfecf
 
 COCOAPODS: 1.2.0

@@ -15,6 +15,7 @@ import RxSwift
 import RxCocoa
 import DOFavoriteButton
 import RPCircularProgress
+import Whisper
 
 class CandidatesViewController: UIViewController, ShowsSettingsButton, KolodaViewDelegate, KolodaViewDataSource, CandidatesDelegate {
     
@@ -29,7 +30,17 @@ class CandidatesViewController: UIViewController, ShowsSettingsButton, KolodaVie
     var shouldApplyAppearAnimation = true
     
     @IBAction func likePressed(_ sender: DOFavoriteButton) {
-        kolodaView?.swipe(.right)
+        /*let messagesViewController = self.storyboard?.instantiateViewController(withIdentifier: "ALViewController") as! MessagesViewController
+        print(messagesViewController)
+        UIApplication.shared.keyWindow?.rootViewController.dism
+        if let root = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController {
+            root.
+        }
+        UIApplication.shared.keyWindow?.rootViewController?.present(messagesViewController, animated: true) {
+            print("done")
+        }*/
+        //messagesViewController.createDetailChatViewController("5eGJxsjgdhbdr7liI7UnZW8n2II2")
+        //kolodaView?.swipe(.right)
     }
     
     @IBAction func passPressed(_ sender: DOFavoriteButton) {

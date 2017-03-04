@@ -34,8 +34,8 @@ extension CurrentUser {
         
         func loadFrom(firebase snapshot: FIRDataSnapshot) {
             if let value = snapshot.value as? [String:Any] {
-                if let genderString = value[Constants.User.Preferences.properties.firebaseNodes.gender] as? String {
-                    self.gender = Gender(rawValue: genderString)!
+                if let genderString = value[Constants.User.Preferences.properties.firebaseNodes.gender] as? String, let gender = Gender(rawValue: genderString) {
+                    self.gender = gender
                 }
                 if let ageRange = value[Constants.User.Preferences.properties.firebaseNodes.ageRange] as? [String:Any],
                     let min = ageRange[Constants.User.Preferences.properties.firebaseNodes.ageRangeMin] as? Int,

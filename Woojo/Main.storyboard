@@ -301,6 +301,7 @@
                         <outlet property="loadingContainerView" destination="2si-Gv-7N3" id="5Xa-Bw-Crk"/>
                         <outlet property="loadingView" destination="UNA-II-Hur" id="xYj-eZ-U92"/>
                         <outlet property="passButton" destination="VSF-JD-26R" id="gzH-Ie-KeF"/>
+                        <segue destination="5xQ-iR-K0q" kind="presentation" identifier="showUserDetails" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="63C-bn-CoY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I4V-YN-bu2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -310,7 +311,6 @@
         <!--User Details View Controller-->
         <scene sceneID="7pT-I2-MbP">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tbn-J6-18S" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="UserDetailsViewController" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5xQ-iR-K0q" customClass="UserDetailsViewController" customModule="Woojo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YTy-9d-WcN"/>
@@ -537,10 +537,13 @@
                         <outlet property="passButton" destination="jPc-cH-QBr" id="CMS-Yj-flV"/>
                         <outlet property="photoActivityIndicator" destination="YyK-6E-fts" id="dUG-1K-ug2"/>
                         <outlet property="scrollView" destination="qWo-YJ-sV5" id="3bh-7w-pyz"/>
+                        <segue destination="Ew6-e1-qTq" kind="unwind" identifier="unwindToMainTabBar" customClass="UnwindThenShowChatSegue" customModule="Woojo" customModuleProvider="target" unwindAction="prepareForUnwindWithSegue:" id="arg-Vq-5ka"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tbn-J6-18S" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Ew6-e1-qTq" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2453.5999999999999" y="-0.44977511244377816"/>
+            <point key="canvasLocation" x="2468" y="21"/>
         </scene>
         <!--Settings-->
         <scene sceneID="ouq-Si-h5c">
@@ -952,7 +955,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uvk-Dm-95V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1710" y="3556"/>
+            <point key="canvasLocation" x="2500" y="3844"/>
         </scene>
         <!--Photos-->
         <scene sceneID="Z4n-uB-CtD">
@@ -1016,7 +1019,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1An-s1-vmb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1709.5999999999999" y="4255.3223388305851"/>
+            <point key="canvasLocation" x="3300" y="3845"/>
         </scene>
         <!--Preferences-->
         <scene sceneID="8kv-rJ-moI">
@@ -1117,21 +1120,23 @@
         <!--Navigation Controller-->
         <scene sceneID="3da-FI-OXm">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yAT-nh-0SB" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yAT-nh-0SB" customClass="NavigationController" customModule="Woojo" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="events_tab" id="YPH-LB-F4X">
                         <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
                     </tabBarItem>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="aAp-Mm-ifa">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="aAp-Mm-ifa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
                         <segue destination="YY8-Xu-JJi" kind="relationship" relationship="rootViewController" id="z9k-ya-K5h"/>
+                        <segue destination="N9U-lY-kFm" kind="unwind" identifier="unwindToMainTabBar" customClass="UnwindThenShowChatSegue" customModule="Woojo" customModuleProvider="target" unwindAction="prepareForUnwindWithSegue:" id="BuR-i7-DQH"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gmf-g0-rAL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="N9U-lY-kFm" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="772" y="-1015"/>
         </scene>
@@ -1173,7 +1178,7 @@
         <!--Navigation Controller-->
         <scene sceneID="AdT-Qs-iGq">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7xg-6q-Ei0" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7xg-6q-Ei0" customClass="NavigationController" customModule="Woojo" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="people_tab" id="M3j-qo-Hg0">
                         <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
                     </tabBarItem>
@@ -1185,9 +1190,11 @@
                     <nil name="viewControllers"/>
                     <connections>
                         <segue destination="Vc7-JZ-mOB" kind="relationship" relationship="rootViewController" id="jvb-aY-INq"/>
+                        <segue destination="9xh-L3-PVP" kind="unwind" identifier="unwindToMainTabBar" customClass="UnwindThenShowChatSegue" customModule="Woojo" customModuleProvider="target" unwindAction="prepareForUnwindWithSegue:" id="4ol-sm-lUc"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lL2-ZR-Df6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="9xh-L3-PVP" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="772" y="0.0"/>
         </scene>
@@ -1283,28 +1290,30 @@
         <!--Navigation Controller-->
         <scene sceneID="48P-cC-AQe">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="EEB-3d-9Il" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="EEB-3d-9Il" customClass="NavigationController" customModule="Woojo" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="chats_tab" id="gzh-7A-ZYM">
                         <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
                     </tabBarItem>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="UgJ-H7-mdn">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="UgJ-H7-mdn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
                         <segue destination="Q8C-xw-u9i" kind="relationship" relationship="rootViewController" id="aki-F3-Yp7"/>
+                        <segue destination="obN-fj-Pa8" kind="unwind" identifier="unwindToMainTabBar" customClass="UnwindThenShowChatSegue" customModule="Woojo" customModuleProvider="target" unwindAction="prepareForUnwindWithSegue:" id="WrF-s3-QMd"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7s3-CI-XRE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="obN-fj-Pa8" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="772" y="872"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dxh-8Y-Ydx">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="leZ-lO-n1u" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="leZ-lO-n1u" customClass="NavigationController" customModule="Woojo" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Z7x-rG-r9d">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1313,16 +1322,18 @@
                     <nil name="viewControllers"/>
                     <connections>
                         <segue destination="JAe-co-yZd" kind="relationship" relationship="rootViewController" id="IIh-02-9hb"/>
+                        <segue destination="F6h-dv-nBy" kind="unwind" identifier="unwindToMainTabBar" customClass="UnwindThenShowChatSegue" customModule="Woojo" customModuleProvider="target" unwindAction="prepareForUnwindWithSegue:" id="A3Q-pg-f7n"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m9n-rB-vIj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="F6h-dv-nBy" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2752.8000000000002" y="-1015.1424287856073"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="oyw-oP-lWF">
             <objects>
-                <navigationController storyboardIdentifier="SettingsNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hhL-Lh-zHK" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SettingsNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hhL-Lh-zHK" customClass="NavigationController" customModule="Woojo" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="6de-Td-oW7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1331,9 +1342,11 @@
                     <nil name="viewControllers"/>
                     <connections>
                         <segue destination="aML-5t-R7u" kind="relationship" relationship="rootViewController" id="3Fc-ys-d80"/>
+                        <segue destination="HX8-CC-nfL" kind="unwind" identifier="unwindToMainTabBar" customClass="UnwindThenShowChatSegue" customModule="Woojo" customModuleProvider="target" unwindAction="prepareForUnwindWithSegue:" id="qWQ-or-cdv"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z0a-2Y-ncb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="HX8-CC-nfL" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="772" y="1771.6641679160421"/>
         </scene>
@@ -1472,9 +1485,11 @@
                         <outlet property="copyrightLabel" destination="KCi-6b-nys" id="HLU-NE-PO8"/>
                         <outlet property="tableHeaderViewWrapper" destination="3ZT-U6-PsF" id="wPX-B0-QHo"/>
                         <outlet property="versionLabel" destination="CME-Fb-FXM" id="9gX-GS-FCE"/>
+                        <segue destination="UcC-41-4ha" kind="unwind" identifier="unwindToMainTabBar" unwindAction="prepareForUnwindWithSegue:" id="Bfb-Tv-6gl"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RNI-Ki-wq0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="UcC-41-4ha" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3204" y="2866"/>
         </scene>
@@ -1517,7 +1532,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cSy-c2-cKP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3204" y="3586"/>
+            <point key="canvasLocation" x="4143.1999999999998" y="3585.1574212893556"/>
         </scene>
         <!--Chats-->
         <scene sceneID="IJ7-V1-XvZ">
@@ -1734,7 +1749,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="90" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="j3Z-SL-P7K">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="666"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="661"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="separatorColor" red="1" green="0.27631654849999998" blue="0.20548630309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
@@ -1762,7 +1777,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KHH-CV-eba">
-                                <rect key="frame" x="0.0" y="613" width="375" height="56"/>
+                                <rect key="frame" x="0.0" y="611" width="375" height="56"/>
                                 <subviews>
                                     <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fcd-uo-eQL" userLabel="Top Border View">
                                         <rect key="frame" x="-0.5" y="0.0" width="375" height="1"/>
@@ -1832,13 +1847,13 @@
                                 </variation>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have no conversation." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dtA-Gh-exg">
-                                <rect key="frame" x="16" y="324.5" width="343" height="18"/>
+                                <rect key="frame" x="16" y="322" width="343" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="umg-X8-hXY">
-                                <rect key="frame" x="0.0" y="583" width="375" height="30"/>
+                                <rect key="frame" x="0.0" y="581" width="375" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="1Cb-oW-PhZ"/>
                                 </constraints>
@@ -1853,7 +1868,7 @@
                             <constraint firstItem="58h-r4-J9M" firstAttribute="leading" secondItem="j3Z-SL-P7K" secondAttribute="leading" identifier="Load Earlier Action.leading" id="2SW-zw-GDG"/>
                             <constraint firstItem="dtA-Gh-exg" firstAttribute="centerX" secondItem="9Lf-Eh-TYH" secondAttribute="centerX" id="3oA-QJ-rzR"/>
                             <constraint firstItem="mqW-cB-RsZ" firstAttribute="top" secondItem="j3Z-SL-P7K" secondAttribute="bottom" id="4NC-1O-k7k"/>
-                            <constraint firstItem="mqW-cB-RsZ" firstAttribute="top" secondItem="KHH-CV-eba" secondAttribute="bottom" constant="-2" identifier="CheckBottom" id="9zr-fa-twX"/>
+                            <constraint firstItem="mqW-cB-RsZ" firstAttribute="top" secondItem="KHH-CV-eba" secondAttribute="bottom" identifier="CheckBottom" id="9zr-fa-twX"/>
                             <constraint firstItem="j3Z-SL-P7K" firstAttribute="top" secondItem="Azv-SG-Vj2" secondAttribute="top" identifier="MTable View.top" id="AaT-a7-QRT"/>
                             <constraint firstItem="umg-X8-hXY" firstAttribute="trailing" secondItem="KHH-CV-eba" secondAttribute="trailing" id="BFz-bi-7uD"/>
                             <constraint firstItem="L4l-V7-9TC" firstAttribute="trailing" secondItem="58h-r4-J9M" secondAttribute="trailing" id="CYc-bk-1hE"/>
@@ -1865,7 +1880,7 @@
                             <constraint firstItem="dtA-Gh-exg" firstAttribute="leading" secondItem="Azv-SG-Vj2" secondAttribute="leadingMargin" id="ckl-Uh-P3f"/>
                             <constraint firstItem="umg-X8-hXY" firstAttribute="bottom" secondItem="KHH-CV-eba" secondAttribute="top" id="d2E-FY-Iee"/>
                             <constraint firstItem="dtA-Gh-exg" firstAttribute="centerY" secondItem="j3Z-SL-P7K" secondAttribute="centerY" constant="-0.25" id="df1-Kx-bl3"/>
-                            <constraint firstItem="KHH-CV-eba" firstAttribute="top" secondItem="j3Z-SL-P7K" secondAttribute="bottom" constant="-53" identifier="typeMessageTopView" id="eaK-B5-Yo7"/>
+                            <constraint firstItem="KHH-CV-eba" firstAttribute="top" secondItem="j3Z-SL-P7K" secondAttribute="bottom" constant="-50" identifier="typeMessageTopView" id="eaK-B5-Yo7"/>
                             <constraint firstItem="KHH-CV-eba" firstAttribute="trailing" secondItem="58h-r4-J9M" secondAttribute="trailing" identifier="typingMessageViewTrailing" id="jpT-to-tAs"/>
                             <constraint firstItem="9Lf-Eh-TYH" firstAttribute="centerY" secondItem="Azv-SG-Vj2" secondAttribute="centerY" identifier="MActivity Indicator.centerY" id="m6Q-Ew-bok"/>
                             <constraint firstItem="KHH-CV-eba" firstAttribute="leading" secondItem="58h-r4-J9M" secondAttribute="leading" identifier="typingMessageViewLeading" id="rdf-cW-YPo"/>
@@ -1905,6 +1920,26 @@
             </objects>
             <point key="canvasLocation" x="3274" y="871"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="UrV-22-NhC">
+            <objects>
+                <navigationController storyboardIdentifier="FacebookPhotosNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="qNJ-XE-Igx" customClass="NavigationController" customModule="Woojo" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5v9-JF-UBY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Xwc-oA-hbv" kind="relationship" relationship="rootViewController" id="pEp-eF-W0Y"/>
+                        <segue destination="qyD-uU-gXG" kind="unwind" identifier="unwindToMainTabBar" customClass="UnwindThenShowChatSegue" customModule="Woojo" customModuleProvider="target" unwindAction="prepareForUnwindWithSegue:" id="SXE-1k-QJU"/>
+                    </connections>
+                </navigationController>
+                <exit id="qyD-uU-gXG" userLabel="Exit" sceneMemberID="exit"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aRJ-SD-jgp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1709.5999999999999" y="3845.1274362818594"/>
+        </scene>
     </scenes>
     <resources>
         <image name="attachment" width="25" height="25"/>
@@ -1919,6 +1954,6 @@
         <image name="people_tab" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="HL1-ap-YIh"/>
+        <segue reference="hVJ-Qa-Tj1"/>
     </inferredMetricsTieBreakers>
 </document>

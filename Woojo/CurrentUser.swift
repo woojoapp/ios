@@ -55,6 +55,7 @@ class CurrentUser: User {
     var preferences: Preferences!
     var candidates: [Candidate] = []
     var events: Variable<[Event]> = Variable([])
+    var notifications: Variable<[Notification]> = Variable([])
     var isLoading: Variable<Bool> = Variable(false)
     
     init?() {
@@ -71,6 +72,7 @@ class CurrentUser: User {
         self.profile.stopObserving()
         self.profile.stopObservingPhotos()
         self.stopObservingEvents()
+        self.stopObservingNotifications()
         self.stopObservingCandidates()
         LoginManager().logOut()
         do {
@@ -100,6 +102,7 @@ class CurrentUser: User {
                 self.profile.startObserving()
                 self.profile.startObservingPhotos()
                 self.startObservingEvents()
+                self.startObservingNotifications()
                 self.startObservingCandidates()
                 self.isLoading.value = false
                 print("User loaded.")
@@ -200,6 +203,80 @@ class CurrentUser: User {
         candidatesRef.removeAllObservers()
         isObservingCandidates = false
     }
+    
+    // MARK: - Notifications
+    
+    var notificationsRef: FIRDatabaseReference {
+        get {
+            return ref.child(Constants.User.Notification.firebaseNode)
+        }
+    }
+    
+    func startObservingNotifications() {
+        //isObservingEvents = true
+        notificationsRef.observe(.childAdded, with: { snapshot in
+            print("childAdded in notifications", snapshot)
+            if let typeString = snapshot.childSnapshot(forPath: Constants.User.Notification.properties.firebaseNodes.type).value as? String,
+                let type = NotificationType(rawValue: typeString) {
+                switch type {
+                case .match:
+                    print("match")
+                    if let matchNotification = MatchNotification(fromFirebase: snapshot) {
+                        self.notifications.value.append(matchNotification)
+                        if matchNotification.displayed != true {
+                            DispatchQueue.main.async {
+                                Notifier.schedule(notification: matchNotification)
+                            }
+                        }
+                    }
+                case .message:
+                    print("message")
+                    if let messageNotification = MessageNotification(fromFirebase: snapshot) {
+                        print("Parsed", messageNotification.displayed)
+                        self.notifications.value.append(messageNotification)
+                        if messageNotification.displayed != true {
+                            //DispatchQueue.main.async {
+                                print("Scheduling", messageNotification.displayed)
+                                Notifier.schedule(notification: messageNotification)
+                            //}
+                        }
+                    }
+                }
+            }
+        }, withCancel: { error in
+            print("Cancelled observing notifications.childAdded: \(error)")
+            //self.isObservingEvents = false
+        })
+        notificationsRef.observe(.childRemoved, with: { snapshot in
+            if let index = self.notifications.value.index(where: { notification in
+                return notification.id == snapshot.key
+            }) {
+                self.notifications.value.remove(at: index)
+            }
+        }, withCancel: { error in
+            print("Cancelled observing notifications.childRemoved: \(error)")
+            //self.isObservingEvents = false
+        })
+    }
+    
+    func stopObservingNotifications() {
+        notificationsRef.removeAllObservers()
+        //isObservingEvents = false
+    }
+    
+    /*func listenToNotifications() {
+        Woojo.User.current.asObservable()
+            .flatMap { user -> Observable<[CurrentUser.Notification]> in
+                if let currentUser = user {
+                    return currentUser.notifications.asObservable()
+                } else {
+                    return Variable([]).asObservable()
+                }
+            }
+            .subscribe(onNext: { notifications in
+                
+            }).addDisposableTo(disposeBag)
+    }*/
     
     // MARK: - Events
     

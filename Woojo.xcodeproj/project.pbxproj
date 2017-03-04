@@ -19,11 +19,15 @@
 		851CDBE61DDEF18A00B887C0 /* UserEventsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851CDBE51DDEF18A00B887C0 /* UserEventsGraphRequest.swift */; };
 		851CDBE81DDEF29900B887C0 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851CDBE71DDEF29900B887C0 /* Place.swift */; };
 		851CDBEA1DDEF2B100B887C0 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851CDBE91DDEF2B100B887C0 /* Location.swift */; };
+		85396F271E5F10EA007EDB18 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85396F261E5F10EA007EDB18 /* Notification.swift */; };
+		85396F2B1E5F516F007EDB18 /* Notifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85396F2A1E5F516F007EDB18 /* Notifier.swift */; };
 		85407D9C1DF028D50033E696 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85407D9B1DF028D50033E696 /* Main.storyboard */; };
 		85407DA01DF03FD90033E696 /* CandidateOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85407D9F1DF03FD90033E696 /* CandidateOverlayView.xib */; };
 		85407DA21DF040070033E696 /* CandidateCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85407DA11DF040070033E696 /* CandidateCardView.xib */; };
 		85407DA41DF042A00033E696 /* CandidateCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85407DA31DF042A00033E696 /* CandidateCardView.swift */; };
 		85407DA61DF1B0D00033E696 /* ProfilePhotoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85407DA51DF1B0D00033E696 /* ProfilePhotoImageView.swift */; };
+		8545D9731E66BE7300A2D70C /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8545D9721E66BE7300A2D70C /* NavigationController.swift */; };
+		8545D9751E66C3F000A2D70C /* UnwindThenShowChatSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8545D9741E66C3F000A2D70C /* UnwindThenShowChatSegue.swift */; };
 		854DDABD1DE364D400655EFC /* MyEventsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 854DDABC1DE364D400655EFC /* MyEventsTableViewCell.xib */; };
 		854DDABF1DE3654E00655EFC /* MyEventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854DDABE1DE3654E00655EFC /* MyEventsTableViewCell.swift */; };
 		854DDAC11DE43E0E00655EFC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854DDAC01DE43E0E00655EFC /* Constants.swift */; };
@@ -84,11 +88,15 @@
 		851CDBE51DDEF18A00B887C0 /* UserEventsGraphRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEventsGraphRequest.swift; sourceTree = "<group>"; };
 		851CDBE71DDEF29900B887C0 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		851CDBE91DDEF2B100B887C0 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		85396F261E5F10EA007EDB18 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		85396F2A1E5F516F007EDB18 /* Notifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifier.swift; sourceTree = "<group>"; };
 		85407D9B1DF028D50033E696 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		85407D9F1DF03FD90033E696 /* CandidateOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CandidateOverlayView.xib; sourceTree = "<group>"; };
 		85407DA11DF040070033E696 /* CandidateCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CandidateCardView.xib; sourceTree = "<group>"; };
 		85407DA31DF042A00033E696 /* CandidateCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandidateCardView.swift; sourceTree = "<group>"; };
 		85407DA51DF1B0D00033E696 /* ProfilePhotoImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePhotoImageView.swift; sourceTree = "<group>"; };
+		8545D9721E66BE7300A2D70C /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		8545D9741E66C3F000A2D70C /* UnwindThenShowChatSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnwindThenShowChatSegue.swift; sourceTree = "<group>"; };
 		854DDABC1DE364D400655EFC /* MyEventsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyEventsTableViewCell.xib; sourceTree = "<group>"; };
 		854DDABE1DE3654E00655EFC /* MyEventsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyEventsTableViewCell.swift; sourceTree = "<group>"; };
 		854DDAC01DE43E0E00655EFC /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -183,6 +191,8 @@
 				85685F801DEF0BE9009BAEE0 /* LoginViewController.xib */,
 				85ED4E631DCFF7F200F51857 /* MainTabBarController.swift */,
 				85D891631E55BDFF00EC7FFF /* ShowsSettingsButton.swift */,
+				8545D9721E66BE7300A2D70C /* NavigationController.swift */,
+				8545D9741E66C3F000A2D70C /* UnwindThenShowChatSegue.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -199,6 +209,7 @@
 				85E5D4CE1DD9FA41003E2376 /* Gender.swift */,
 				851CDBE71DDEF29900B887C0 /* Place.swift */,
 				851CDBE91DDEF2B100B887C0 /* Location.swift */,
+				85396F261E5F10EA007EDB18 /* Notification.swift */,
 				85EB2EE31DE20BCF00F0A55C /* Profile.swift */,
 				854DDAC41DE47DE500655EFC /* User.swift */,
 				85DC3D721DF70A6A00116159 /* Preferences.swift */,
@@ -246,6 +257,7 @@
 				8506A89C1DCC89DF00C18EC3 /* Views */,
 				8506A89D1DCC89F200C18EC3 /* Controllers */,
 				85512B0C1DCB5B020072C1B8 /* Application.swift */,
+				85396F2A1E5F516F007EDB18 /* Notifier.swift */,
 				854DDAC01DE43E0E00655EFC /* Constants.swift */,
 				85407D9B1DF028D50033E696 /* Main.storyboard */,
 				85512B151DCB5B020072C1B8 /* Assets.xcassets */,
@@ -530,6 +542,7 @@
 				854DDAC11DE43E0E00655EFC /* Constants.swift in Sources */,
 				85685F721DEC758A009BAEE0 /* SearchEventsViewController.swift in Sources */,
 				85512B0D1DCB5B020072C1B8 /* Application.swift in Sources */,
+				85396F2B1E5F516F007EDB18 /* Notifier.swift in Sources */,
 				8506A8A61DCCC85200C18EC3 /* Like.swift in Sources */,
 				85E5D4C51DD52D73003E2376 /* ALChatManager.swift in Sources */,
 				85A4A9141E098651002AD1D0 /* AboutTableViewController.swift in Sources */,
@@ -538,6 +551,7 @@
 				8506A8A01DCC97F600C18EC3 /* CandidatesViewController.swift in Sources */,
 				85D8915E1E54D63D00EC7FFF /* ChatViewController.swift in Sources */,
 				858FEE3C1E02A40C00322E8E /* AlbumsTableViewCell.swift in Sources */,
+				8545D9731E66BE7300A2D70C /* NavigationController.swift in Sources */,
 				85A4A9161E0989FE002AD1D0 /* AboutWebViewController.swift in Sources */,
 				851CDBEA1DDEF2B100B887C0 /* Location.swift in Sources */,
 				85DC3D6B1DF4A39900116159 /* PreferencesViewController.swift in Sources */,
@@ -562,7 +576,9 @@
 				85ED4E661DD1EC7D00F51857 /* AddEventViewController.swift in Sources */,
 				85E5D4CF1DD9FA41003E2376 /* Gender.swift in Sources */,
 				85685F871DEF3310009BAEE0 /* CandidatesDelegate.swift in Sources */,
+				8545D9751E66C3F000A2D70C /* UnwindThenShowChatSegue.swift in Sources */,
 				8506A88D1DCB9A5D00C18EC3 /* SettingsViewController.swift in Sources */,
+				85396F271E5F10EA007EDB18 /* Notification.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

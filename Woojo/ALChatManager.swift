@@ -94,17 +94,47 @@ class ALChatManager: NSObject {
                     alChatLauncher?.registerForNotification()
                 }
                 
-                /*ALApplozicSettings.setListOfViewControllers(["Woojo.CandidatesViewController"])
+                ALApplozicSettings.setListOfViewControllers(["Woojo.EventsViewController",
+                                                             "Woojo.AddEventViewController",
+                                                             "Woojo.MyEventsTableViewController",
+                                                             "Woojo.SearchEventsViewController",
+                                                             "Woojo.ExploreEventsViewController",
+                                                             "Woojo.CandidatesViewController",
+                                                             "Woojo.NavigationController",
+                                                             "Woojo.UserDetailsViewController",
+                                                             "Woojo.SettingsViewController",
+                                                             "Woojo.PreferencesViewController",
+                                                             "Woojo.ProfileViewController",
+                                                             "Woojo.AlbumsTableViewController",
+                                                             "Woojo.PhotoCollectionViewController",
+                                                             "Woojo.AboutTableViewController",
+                                                             "Woojo.AboutWebViewController",
+                                                             "UIAlertViewController",
+                                                             "PUUIAlbumListViewController",
+                                                             "PUUIMomentsGridViewController",
+                                                             "RSKImageCropViewController",
+                                                             "PUUIPhotosAlbumViewController"])
                 ALMQTTConversationService.sharedInstance().subscribeToConversation()
                 
-                NotificationCenter.default.addObserver(self, selector: #selector(self.newMessageReceived), name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
-                completion(response! , error as NSError?)*/
+                NotificationCenter.default.addObserver(self, selector: #selector(self.newMessageReceived(notification:)), name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
+                completion(response! , error as NSError?)
             }
         })
     }
     
-    func newMessageReceived() {
-        print("MEEEESSSSAAAAAAGGGGEE")
+    func newMessageReceived(notification: Notification) {
+        // Push notification to firebase
+        if let messageArray = notification.object as? NSMutableArray {
+            for message in messageArray {
+                if let message = message as? ALMessage, var excerpt = message.message {
+                    if excerpt.characters.count > 100 {
+                        excerpt = excerpt.substring(to: excerpt.index(excerpt.startIndex, offsetBy: 100))
+                    }
+                    let messageNotification = CurrentUser.MessageNotification(id: UUID().uuidString, created: Date(), otherId: message.contactIds, excerpt: excerpt)
+                    messageNotification.save()
+                }
+            }
+        }
     }
     
     // ----------------------  ------------------------------------------------------/
@@ -282,8 +312,8 @@ class ALChatManager: NSObject {
         ALUserDefaultsHandler.setBottomTabBarHidden(false)
         ALApplozicSettings.setTitleForConversationScreen("Chats")
         
-        ALApplozicSettings.hideRefreshButton(false)
-        ALApplozicSettings.setCustomNavRightButtonMsgVC(true)               /*  SET VISIBILITY FOR REFRESH BUTTON (COMES FROM TOP IN MSG VC)   */
+        ALApplozicSettings.hideRefreshButton(true)
+        ALApplozicSettings.setCustomNavRightButtonMsgVC(false)               /*  SET VISIBILITY FOR REFRESH BUTTON (COMES FROM TOP IN MSG VC)   */
         
         //ALApplozicSettings.setTitleForBackButtonMsgVC("Back")                /*  SET BACK BUTTON FOR MSG VC  */
         //ALApplozicSettings.setTitleForBackButtonChatVC("Back")               /*  SET BACK BUTTON FOR CHAT VC */

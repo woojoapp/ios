@@ -17,13 +17,14 @@ import FacebookLogin
 import Applozic
 import RxSwift
 import RxCocoa
+import Whisper
 
 @UIApplicationMain
 class Application: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     let loginViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
-    static var remoteConfig: FIRRemoteConfig = FIRRemoteConfig.remoteConfig()
+    static var remoteConfig: FIRRemoteConfig = FIRRemoteConfig.remoteConfig()    
     
     override init() {
         FIRApp.configure()

@@ -126,6 +126,43 @@ struct Constants {
                 }
             }
         }
+        struct Notification {
+            static let firebaseNode = "notifications"
+            static let dateFormat = "yyyy-MM-dd'T'HH:mm:ssxx"
+            static let maxQueueLength = 10
+            struct properties {
+                struct firebaseNodes {
+                    static let type = "type"
+                    static let created = "created"
+                    static let displayed = "displayed"
+                    static let data = "data"
+                }
+            }
+            struct Interaction {
+                struct properties {
+                    struct firebaseNodes {
+                        static let otherId = "otherId"
+                    }
+                }
+                struct Match {
+                    struct announcement {
+                        static let title = "New match"
+                        static let duration = 2.0
+                    }
+                }
+                struct Message {
+                    struct properties {
+                        struct firebaseNodes {
+                            static let excerpt = "excerpt"
+                        }
+                    }
+                    struct announcement {
+                        static let title = "New message"
+                        static let duration = 2.0
+                    }
+                }
+            }
+        }
         struct Like {
             static let firebaseNode = "likes"
             static let dateFormat = "yyyy-MM-dd'T'HH:mm:ssxx"

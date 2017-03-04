@@ -10,17 +10,20 @@ import UIKit
 import Applozic
 import FirebaseAuth
 import RxSwift
+import PKHUD
 
 class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UITableViewDelegate {
     
     var disposeBag = DisposeBag()
     
+    var showChatAfterDidAppear: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /*self.showSettingsButton()
+        self.showSettingsButton()
         let settingsButton = self.navigationItem.rightBarButtonItem?.customView as? UIButton
-        settingsButton?.addTarget(self, action: #selector(showSettings(sender:)), for: .touchUpInside)*/
+        settingsButton?.addTarget(self, action: #selector(showSettings(sender:)), for: .touchUpInside)
         
         mTableView.delegate = self
     }
@@ -35,6 +38,15 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
         navigationController?.view.backgroundColor = UIColor.clear
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.newMessageReceived), name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if let showChatAfterDidAppear = showChatAfterDidAppear {
+            self.createDetailChatViewController(showChatAfterDidAppear)
+            self.showChatAfterDidAppear = nil
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

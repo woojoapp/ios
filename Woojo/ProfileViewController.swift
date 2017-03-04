@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Applozic
 import PKHUD
 import RSKImageCropper
 
@@ -299,11 +300,12 @@ extension ProfileViewController: UICollectionViewDelegate {
                 let actionSheetController = UIAlertController(title: "Add Photo", message: nil, preferredStyle: .actionSheet)
                 
                 let facebookButton = UIAlertAction(title: "Facebook", style: .default, handler: { (action) -> Void in
-                    let albumTableViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AlbumsTableViewController") as! AlbumsTableViewController
-                    albumTableViewController.photoIndex = indexPath.row
-                    albumTableViewController.profileViewController = self
-                    let navigationController = UINavigationController(rootViewController: albumTableViewController)
-                    self.present(navigationController, animated: true, completion: nil)
+                    if let navigationController = self.storyboard?.instantiateViewController(withIdentifier: "FacebookPhotosNavigationController"),
+                        let albumTableViewController = navigationController.childViewControllers[0] as? AlbumsTableViewController {
+                        albumTableViewController.photoIndex = indexPath.row
+                        albumTableViewController.profileViewController = self
+                        self.present(navigationController, animated: true, completion: nil)
+                    }
                 })
                 actionSheetController.addAction(facebookButton)
                 
@@ -311,7 +313,14 @@ extension ProfileViewController: UICollectionViewDelegate {
                     let libraryButton = UIAlertAction(title: "Photo Library", style: .default, handler: { (action) -> Void in
                         self.imagePickerController.allowsEditing = false
                         self.imagePickerController.sourceType = .photoLibrary
-                        self.present(self.imagePickerController, animated: true, completion: nil)
+                        print("Kind of class", self.imagePickerController.isKind(of: NSClassFromString("UIImagePickerController")!))
+                        self.present(self.imagePickerController, animated: true, completion: {
+                            let alp = ALPushAssist()
+                            print("TOOOP \(alp.topViewController) \(Notifier.getTopViewController())")
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: {
+                                print("TOOOP \(alp.topViewController) \(Notifier.getTopViewController())")
+                            })
+                        })
                     })
                     actionSheetController.addAction(libraryButton)
                 }

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Applozic
 import RSKImageCropper
 import PKHUD
 import SDWebImage
