@@ -225,7 +225,7 @@ class CurrentUser: User {
                         self.notifications.value.append(matchNotification)
                         if matchNotification.displayed != true {
                             DispatchQueue.main.async {
-                                Notifier.schedule(notification: matchNotification)
+                                Notifier.shared.schedule(notification: matchNotification)
                             }
                         }
                     }
@@ -237,7 +237,7 @@ class CurrentUser: User {
                         if messageNotification.displayed != true {
                             //DispatchQueue.main.async {
                                 print("Scheduling", messageNotification.displayed)
-                                Notifier.schedule(notification: messageNotification)
+                                Notifier.shared.schedule(notification: messageNotification)
                             //}
                         }
                     }

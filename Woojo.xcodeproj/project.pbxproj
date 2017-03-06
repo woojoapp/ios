@@ -42,6 +42,7 @@
 		85685F781DEC7B8D009BAEE0 /* SearchEventsResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85685F771DEC7B8D009BAEE0 /* SearchEventsResultsTableViewCell.swift */; };
 		85685F811DEF0BE9009BAEE0 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85685F801DEF0BE9009BAEE0 /* LoginViewController.xib */; };
 		85685F871DEF3310009BAEE0 /* CandidatesDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85685F861DEF3310009BAEE0 /* CandidatesDelegate.swift */; };
+		8588901F1E6D80B200ACA69A /* ReachabilityAware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8588901E1E6D80B200ACA69A /* ReachabilityAware.swift */; };
 		858FEE371E0025A400322E8E /* AlbumsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE361E0025A400322E8E /* AlbumsTableViewController.swift */; };
 		858FEE3C1E02A40C00322E8E /* AlbumsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE3A1E02A40C00322E8E /* AlbumsTableViewCell.swift */; };
 		858FEE3D1E02A40C00322E8E /* AlbumsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 858FEE3B1E02A40C00322E8E /* AlbumsTableViewCell.xib */; };
@@ -113,6 +114,7 @@
 		85685F771DEC7B8D009BAEE0 /* SearchEventsResultsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchEventsResultsTableViewCell.swift; sourceTree = "<group>"; };
 		85685F801DEF0BE9009BAEE0 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		85685F861DEF3310009BAEE0 /* CandidatesDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandidatesDelegate.swift; sourceTree = "<group>"; };
+		8588901E1E6D80B200ACA69A /* ReachabilityAware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityAware.swift; sourceTree = "<group>"; };
 		858FEE361E0025A400322E8E /* AlbumsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumsTableViewController.swift; sourceTree = "<group>"; };
 		858FEE3A1E02A40C00322E8E /* AlbumsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumsTableViewCell.swift; sourceTree = "<group>"; };
 		858FEE3B1E02A40C00322E8E /* AlbumsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlbumsTableViewCell.xib; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				85D891631E55BDFF00EC7FFF /* ShowsSettingsButton.swift */,
 				8545D9721E66BE7300A2D70C /* NavigationController.swift */,
 				8545D9741E66C3F000A2D70C /* UnwindThenShowChatSegue.swift */,
+				8588901E1E6D80B200ACA69A /* ReachabilityAware.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -569,6 +572,7 @@
 				85ED4E6E1DD229D600F51857 /* MyEventsTableViewController.swift in Sources */,
 				8506A8A81DCCCB5E00C18EC3 /* Pass.swift in Sources */,
 				85DC3D791DFF4A6300116159 /* ProfilePhotoCollectionViewCell.swift in Sources */,
+				8588901F1E6D80B200ACA69A /* ReachabilityAware.swift in Sources */,
 				8506A8971DCBB0CC00C18EC3 /* Event.swift in Sources */,
 				858FEE371E0025A400322E8E /* AlbumsTableViewController.swift in Sources */,
 				85E5D4CD1DD9EFBC003E2376 /* CurrentUser.swift in Sources */,

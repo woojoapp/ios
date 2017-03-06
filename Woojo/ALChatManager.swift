@@ -428,7 +428,7 @@ class ALChatManager: NSObject {
         ALUserDefaultsHandler.setFetchConversationPageSize(20)                     /*  SET MESSAGE LIST PAGE SIZE  */ // DEFAULT VALUE 20
         ALUserDefaultsHandler.setUnreadCountType(1)                                /*  SET UNRAED COUNT TYPE   */ // DEFAULT VALUE 0
         ALApplozicSettings.setMaxTextViewLines(4)
-        ALUserDefaultsHandler.setDebugLogsRequire(true)                            /*   ENABLE / DISABLE LOGS   */
+        ALUserDefaultsHandler.setDebugLogsRequire(false)                            /*   ENABLE / DISABLE LOGS   */
         ALUserDefaultsHandler.setLoginUserConatactVisibility(false)
         ALApplozicSettings.setUserProfileHidden(true)
         //ALApplozicSettings.setFontFace("Helvetica")

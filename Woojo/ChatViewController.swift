@@ -9,10 +9,12 @@
 import Applozic
 import SDWebImage
 import PKHUD
+import Whisper
 
 class ChatViewController: ALChatViewController {
     
     @IBOutlet weak var loadEarlierAction: UIButton!
+    @IBOutlet weak var loadEarlierActionTopConstraint: NSLayoutConstraint!
     
     let translucentColor = UIColor(red: 247.0/255.0, green: 247.0/255.0, blue: 247.0/255.0, alpha: 0.95)
     
@@ -36,6 +38,8 @@ class ChatViewController: ALChatViewController {
         super.viewWillAppear(animated)
         
         navigationController?.navigationBar.layer.shadowOpacity = 0.0
+        navigationController?.navigationBar.layer.shadowRadius = 0.0
+        navigationController?.navigationBar.layer.shadowOffset = CGSize.zero
         navigationController?.navigationBar.tintColor = nil
         navigationController?.navigationBar.barTintColor = nil
         navigationController?.navigationBar.isTranslucent = true
@@ -100,6 +104,9 @@ class ChatViewController: ALChatViewController {
         let bottomBorder = UIView(frame: CGRect(x: 0, y: loadEarlierAction.frame.height - 4, width: loadEarlierAction.frame.width, height: 1))
         bottomBorder.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
         loadEarlierAction.addSubview(bottomBorder)
+        if let navigationController = navigationController {
+            loadEarlierActionTopConstraint.constant = UIApplication.shared.statusBarFrame.height + navigationController.navigationBar.frame.height
+        }
         
         CurrentUser.Notification.deleteAll(otherId: self.contactIds)
         
@@ -109,7 +116,12 @@ class ChatViewController: ALChatViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        print("CHAT VIEW WILL DISAPPEAR.. BUT DO NOTHING")
+        //print("CHAT VIEW WILL DISAPPEAR.. BUT DO NOTHING")
+        self.sendMessageTextView.resignFirstResponder()
+        self.label.isHidden = true
+        self.label.alpha = 0.0
+        self.typingLabel.isHidden = true
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
     }
     
@@ -123,7 +135,36 @@ class ChatViewController: ALChatViewController {
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        super.scrollViewDidScroll(scrollView)
+        //super.scrollViewDidScroll(scrollView)
+        
+        guard let navigationController = navigationController else { return }
+        
+        if scrollView == sendMessageTextView {
+            return
+        }
+        
+        var doneConversation = false
+        var doneOtherwise = false
+        
+        if conversationId != nil && ALApplozicSettings.getContextualChatOption() {
+            doneConversation = ALUserDefaultsHandler.isShowLoadEarlierOption(conversationId.stringValue) && ALUserDefaultsHandler.isServerCallDone(forMSGList: conversationId.stringValue)
+        } else {
+            let ids: String = (self.channelKey != nil) ? self.channelKey.stringValue : self.contactIds
+            doneOtherwise = ALUserDefaultsHandler.isShowLoadEarlierOption(ids) && ALUserDefaultsHandler.isServerCallDone(forMSGList: ids)
+        }
+        
+        if scrollView.contentOffset.y == -(UIApplication.shared.statusBarFrame.height + navigationController.navigationBar.frame.height) && (doneConversation || doneOtherwise) {
+            self.loadEarlierAction.isHidden = false
+        } else {
+            self.loadEarlierAction.isHidden = true
+        }
+
+        
+        /*if let navigationController = navigationController {
+            if scrollView.contentOffset.y == -(UIApplication.shared.statusBarFrame.height + navigationController.navigationBar.frame.height) {
+                loadEarlierAction.isHidden = false
+            }
+        }*/
     }
     
     func showProfile() {
@@ -138,7 +179,7 @@ class ChatViewController: ALChatViewController {
     
     func keyboardWillShow(_ notification: NSNotification) {
         if let keyboardFrameEnd = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect, let animationDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval {
-            self.checkBottomConstraint.constant = self.view.frame.size.height - keyboardFrameEnd.origin.y + 5.0
+            self.checkBottomConstraint.constant = self.view.frame.size.height - keyboardFrameEnd.origin.y //+ 5.0
             UIView.animate(withDuration: animationDuration, animations: {
                 self.view.layoutIfNeeded()
                 self.scrollTableViewToBottom(withAnimation: true)
@@ -152,7 +193,7 @@ class ChatViewController: ALChatViewController {
     
     override func scrollTableViewToBottom(withAnimation animated: Bool) {
         if mTableView.contentSize.height > mTableView.frame.size.height {
-            let offset = CGPoint(x: 0, y: mTableView.contentSize.height - mTableView.frame.size.height + typingMessageView.frame.size.height)
+            let offset = CGPoint(x: 0, y: mTableView.contentSize.height - mTableView.frame.size.height + typingMessageView.frame.size.height - 7.0)
             mTableView.setContentOffset(offset, animated: animated)
         }
     }

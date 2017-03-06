@@ -85,6 +85,7 @@ PODS:
   - PKHUD (4.2.0)
   - pop (1.0.9)
   - Protobuf (3.2.0)
+  - ReachabilitySwift (3)
   - RPCircularProgress (0.3.0)
   - RSKImageCropper (1.6.0)
   - RxCocoa (3.2.0):
@@ -113,12 +114,13 @@ DEPENDENCIES:
   - Koloda (from `https://github.com/woojoapp/Koloda.git`, commit `584d70b02a8fdc202d0c0a38c860da9a917fe7b2`, branch `swift-3`)
   - NMRangeSlider
   - PKHUD (~> 4.0)
+  - ReachabilitySwift (~> 3)
   - RPCircularProgress
   - RSKImageCropper
   - RxCocoa
   - RxSwift
   - SDWebImage
-  - Whisper
+  - Whisper (from `https://github.com/woojoapp/Whisper.git`)
 
 EXTERNAL SOURCES:
   DOFavoriteButton:
@@ -127,6 +129,8 @@ EXTERNAL SOURCES:
     :branch: swift-3
     :commit: 584d70b02a8fdc202d0c0a38c860da9a917fe7b2
     :git: https://github.com/woojoapp/Koloda.git
+  Whisper:
+    :git: https://github.com/woojoapp/Whisper.git
 
 CHECKOUT OPTIONS:
   DOFavoriteButton:
@@ -135,6 +139,9 @@ CHECKOUT OPTIONS:
   Koloda:
     :commit: 584d70b02a8fdc202d0c0a38c860da9a917fe7b2
     :git: https://github.com/woojoapp/Koloda.git
+  Whisper:
+    :commit: b9a86c7931a1701c12828d6c0c0c7c1cfc7002c2
+    :git: https://github.com/woojoapp/Whisper.git
 
 SPEC CHECKSUMS:
   Applozic: 9acedca0e6e5f759c10d4e1f42ed9127ba4705d6
@@ -164,6 +171,7 @@ SPEC CHECKSUMS:
   PKHUD: 48af884cf00c2213b0313b739d914e6cab1c0f5e
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
   Protobuf: 745f59e122e5de98d4d7ef291e264a0eef80f58e
+  ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
   RPCircularProgress: 46bee24642e0cb8de53f49e6c85733b9c45dee33
   RSKImageCropper: 6903235c7a8a79acb1e1f3490e2c911b858f8208
   RxCocoa: ccdf43101a70407097a29082f648ba1676075b30
@@ -171,6 +179,6 @@ SPEC CHECKSUMS:
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   Whisper: 08be92623311f8e53201e62e17f6d7b9599a4714
 
-PODFILE CHECKSUM: 652f5523e19e73e58868f2d07a5a0dbeb45cfecf
+PODFILE CHECKSUM: 0fc231c8e2d38bb57478fd135122aa1d5e5bd706
 
 COCOAPODS: 1.2.0

@@ -32,6 +32,8 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
         super.viewWillAppear(animated)
         
         navigationController?.navigationBar.layer.shadowOpacity = 0.0
+        navigationController?.navigationBar.layer.shadowRadius = 0.0
+        navigationController?.navigationBar.layer.shadowOffset = CGSize.zero
         navigationController?.navigationBar.titleTextAttributes = [:]
         navigationController?.navigationBar.barTintColor = nil
         navigationController?.navigationBar.isTranslucent = true
@@ -42,7 +44,15 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        // Forcefully disable Applozic notifications
+        if let window = UIApplication.shared.keyWindow?.subviews {
+            for view in window {
+                if let view = view as? TSMessageView {
+                    view.isHidden = true
+                    view.removeFromSuperview()
+                }
+            }
+        }
         if let showChatAfterDidAppear = showChatAfterDidAppear {
             self.createDetailChatViewController(showChatAfterDidAppear)
             self.showChatAfterDidAppear = nil
@@ -84,28 +94,3 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
     }
     
 }
-
-/*extension UITableViewDelegate where Self: ALMessagesViewController {
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-    
-    func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
-        let more = UITableViewRowAction(style: .normal, title: "More") { action, index in
-            print("more button tapped")
-        }
-        more.backgroundColor = .lightGray
-        
-        let favorite = UITableViewRowAction(style: .normal, title: "Favorite") { action, index in
-            print("favorite button tapped")
-        }
-        favorite.backgroundColor = .orange
-        
-        let share = UITableViewRowAction(style: .normal, title: "Share") { action, index in
-            print("share button tapped")
-        }
-        share.backgroundColor = .blue
-        
-        return [share, favorite, more]
-    }
-}*/

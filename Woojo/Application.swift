@@ -37,6 +37,10 @@ class Application: UIResponder, UIApplicationDelegate {
         
         setupRemoteConfig()
         
+        Whisper.Config.modifyInset = false
+        
+        //Notifier.shared.startMonitoringReachability()
+        
         // Initialize Facebook SDK
         FacebookCore.SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         

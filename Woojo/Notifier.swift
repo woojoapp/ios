@@ -8,12 +8,15 @@
 
 import Foundation
 import Whisper
+import Applozic
 
 class Notifier {
     
-    static var shoutsQueue: [CurrentUser.Notification] = []
+    var shoutsQueue: [CurrentUser.Notification] = []
     
-    class func getTopViewController() -> UIViewController? {
+    static let shared = Notifier()
+    
+    func getTopViewController() -> UIViewController? {
         if var topViewController = UIApplication.shared.keyWindow?.rootViewController {
             while let presentedViewController = topViewController.presentedViewController {
                 topViewController = presentedViewController
@@ -24,36 +27,36 @@ class Notifier {
         }
     }
     
-    class func shout() {
+    func shout() {
         if shoutsQueue.count > 0 {
             if !shouldShout(notification: shoutsQueue[0]) {
                 moveQueueAndShout()
                 return
             }
             if let matchNotification = shoutsQueue[0] as? CurrentUser.MatchNotification {
-                Notifier.announcement(notification: matchNotification) { announcement, error in
+                announcement(notification: matchNotification) { announcement, error in
                     if let announcement = announcement {
-                        doShout(announcement: announcement)
+                        self.doShout(announcement: announcement)
                     }
                 }
             }
             else if let messageNotification = shoutsQueue[0] as? CurrentUser.MessageNotification {
-                Notifier.announcement(notification: messageNotification) { announcement, error in
+                announcement(notification: messageNotification) { announcement, error in
                     if let announcement = announcement {
-                        doShout(announcement: announcement)
+                        self.doShout(announcement: announcement)
                     }
                 }
             }
         }
     }
     
-    fileprivate class func doShout(announcement: Announcement) {
+    fileprivate func doShout(announcement: Announcement) {
         shout(announcement: announcement) {
-            moveQueueAndShout()
+            self.moveQueueAndShout()
         }
     }
     
-    fileprivate class func moveQueueAndShout() {
+    fileprivate func moveQueueAndShout() {
         if shoutsQueue.count > 0 {
             let notification = shoutsQueue.removeFirst()
             notification.setDisplayed()
@@ -61,7 +64,7 @@ class Notifier {
         }
     }
     
-    class func shout(announcement: Announcement, completion: (() -> Void)? = nil) {
+    func shout(announcement: Announcement, completion: (() -> Void)? = nil) {
         if let topViewController = getTopViewController() {
             DispatchQueue.main.async {
                 show(shout: announcement, to: topViewController, completion: {
@@ -71,7 +74,7 @@ class Notifier {
         }
     }
     
-    class func schedule(notification: CurrentUser.Notification) {
+    func schedule(notification: CurrentUser.Notification) {
         if shoutsQueue.count >= Constants.User.Notification.maxQueueLength {
             notification.setDisplayed()
             return
@@ -82,7 +85,7 @@ class Notifier {
         }
     }
     
-    class func shouldShout(notification: CurrentUser.Notification) -> Bool {
+    func shouldShout(notification: CurrentUser.Notification) -> Bool {
         if let topViewController = getTopViewController() {
             if let mainTabBarController = topViewController as? MainTabBarController,
                 let navigationController = mainTabBarController.selectedViewController as? NavigationController {
@@ -95,7 +98,7 @@ class Notifier {
         } else { return false }
     }
     
-    class func announcement(notification: CurrentUser.MatchNotification, completion: ((Announcement?, Error?) -> Void)? = nil) {
+    func announcement(notification: CurrentUser.MatchNotification, completion: ((Announcement?, Error?) -> Void)? = nil) {
         let otherUser = User(uid: notification.otherId)
         otherUser.profile.loadFromFirebase { profile, error in
             if let error = error {
@@ -107,7 +110,7 @@ class Notifier {
                     let photo = profile.photos.value[0] {
                     photo.download(size: .thumbnail) {
                         let announcement = Announcement(title: Constants.User.Notification.Interaction.Match.announcement.title, subtitle: "You matched with \(displayName)!", image: photo.images[.thumbnail], duration: Constants.User.Notification.Interaction.Match.announcement.duration, action: {
-                                tapOnNotification(notification: notification)
+                                self.tapOnNotification(notification: notification)
                         })
                         completion?(announcement, nil)
                     }
@@ -120,7 +123,7 @@ class Notifier {
         
     }
     
-    class func tapOnNotification(notification: CurrentUser.Notification) {
+    func tapOnNotification(notification: CurrentUser.Notification) {
         let topViewController = getTopViewController()
         //print("TOP VIEW CONTROLLER \(topViewController)")
         if let navigationController = topViewController as? NavigationController {
@@ -143,7 +146,7 @@ class Notifier {
         }
     }
     
-    class func announcement(notification: CurrentUser.MessageNotification, completion: ((Announcement?, Error?) -> Void)? = nil) {
+    func announcement(notification: CurrentUser.MessageNotification, completion: ((Announcement?, Error?) -> Void)? = nil) {
         let otherUser = User(uid: notification.otherId)
         otherUser.profile.loadFromFirebase { profile, error in
             if let error = error {
@@ -155,7 +158,7 @@ class Notifier {
                     let photo = profile.photos.value[0] {
                     photo.download(size: .thumbnail) {
                         let announcement = Announcement(title: Constants.User.Notification.Interaction.Message.announcement.title, subtitle: "\(displayName): \(notification.excerpt)", image: photo.images[.thumbnail], duration: Constants.User.Notification.Interaction.Message.announcement.duration, action: {
-                            tapOnNotification(notification: notification)
+                            self.tapOnNotification(notification: notification)
                         })
                         completion?(announcement, nil)
                     }
@@ -167,5 +170,21 @@ class Notifier {
         }
 
     }
+    
+    /*func startMonitoringReachability() {
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(notification:)), name: NSNotification.Name.AL_kReachabilityChanged, object: nil)
+    }
+    
+    @objc func reachabilityChanged(notification: Notification) {
+        if let reachability = notification.object as? ALReachability {
+            if reachability.isReachable() {
+                print("REACHABBBBBLE")
+            } else {
+                print("UNREACHABBBBBLE")
+            }
+        }
+    }*/
+    
+    
     
 }

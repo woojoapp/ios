@@ -10,14 +10,16 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-protocol ShowsSettingsButton {
+protocol ShowsSettingsButton: class {
+    
     func showSettingsButton()
+    func showSettings(sender: Any?)
     
     var disposeBag: DisposeBag { get }
-    var navigationItem: UINavigationItem { get }
+    //var navigationItem: UINavigationItem { get }
 }
 
-extension ShowsSettingsButton {
+extension ShowsSettingsButton where Self: UIViewController {
 
     func showSettingsButton() {
         
@@ -26,9 +28,11 @@ extension ShowsSettingsButton {
         
         settingsButton.layer.cornerRadius = settingsButton.frame.width / 2
         settingsButton.layer.masksToBounds = true
+        
         settingsItem.customView = settingsButton
         
-        navigationItem.setRightBarButton(settingsItem, animated: true)
+        self.navigationItem.setRightBarButton(settingsItem, animated: true)
+
         
         Woojo.User.current.asObservable()
             .flatMap { user -> Observable<[User.Profile.Photo?]> in

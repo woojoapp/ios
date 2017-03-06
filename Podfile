@@ -37,6 +37,6 @@ target 'Woojo' do
   pod 'DOFavoriteButton', :git=>'https://github.com/sveinhal/DOFavoriteButton'
   pod 'RPCircularProgress'
   pod 'ImageSlideshow'
-  pod 'Whisper'
+  pod 'Whisper', :git=> 'https://github.com/woojoapp/Whisper.git'
 
 end

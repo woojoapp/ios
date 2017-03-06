@@ -16,8 +16,9 @@ import RxCocoa
 import DOFavoriteButton
 import RPCircularProgress
 import Whisper
+import Applozic
 
-class CandidatesViewController: UIViewController, ShowsSettingsButton, KolodaViewDelegate, KolodaViewDataSource, CandidatesDelegate {
+class CandidatesViewController: UIViewController {
     
     @IBOutlet weak var kolodaView: KolodaView!
     @IBOutlet weak var likeButton: DOFavoriteButton!
@@ -30,17 +31,7 @@ class CandidatesViewController: UIViewController, ShowsSettingsButton, KolodaVie
     var shouldApplyAppearAnimation = true
     
     @IBAction func likePressed(_ sender: DOFavoriteButton) {
-        /*let messagesViewController = self.storyboard?.instantiateViewController(withIdentifier: "ALViewController") as! MessagesViewController
-        print(messagesViewController)
-        UIApplication.shared.keyWindow?.rootViewController.dism
-        if let root = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController {
-            root.
-        }
-        UIApplication.shared.keyWindow?.rootViewController?.present(messagesViewController, animated: true) {
-            print("done")
-        }*/
-        //messagesViewController.createDetailChatViewController("5eGJxsjgdhbdr7liI7UnZW8n2II2")
-        //kolodaView?.swipe(.right)
+        kolodaView?.swipe(.right)
     }
     
     @IBAction func passPressed(_ sender: DOFavoriteButton) {
@@ -72,20 +63,13 @@ class CandidatesViewController: UIViewController, ShowsSettingsButton, KolodaVie
         loadingView.layer.cornerRadius = loadingView.frame.size.width / 2
         loadingView.layer.borderWidth = 1.0
         loadingView.enableIndeterminate()
+        
+        startMonitoringReachability()
+        checkReachability()
     }
     
-    func showSettings(sender : Any?) {
-        let settingsNavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SettingsNavigationController")
-        self.present(settingsNavigationController, animated: true, completion: nil)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    func didAddCandidate() {
-        kolodaView.reloadData()
+    deinit {
+        stopMonitoringReachability()
     }
     
     func hideKolodaAndShowLoading() {
@@ -98,7 +82,11 @@ class CandidatesViewController: UIViewController, ShowsSettingsButton, KolodaVie
         self.loadingContainerView.isHidden = true
     }
     
-    // MARK: - KolodaViewDelegate
+}
+
+// MARK: - KolodaViewDelegate
+    
+extension CandidatesViewController: KolodaViewDelegate {
     
     func koloda(_ koloda: KolodaView, didSwipeCardAt index: Int, in direction: SwipeResultDirection) {
         switch direction {
@@ -132,16 +120,20 @@ class CandidatesViewController: UIViewController, ShowsSettingsButton, KolodaVie
     }
     
     func koloda(_ koloda: KolodaView, didSelectCardAt index: Int) {
-        print("Clicked on card at index \(index)")
-        let userDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserDetailsViewController") as! UserDetailsViewController
-        if let candidate = User.current.value?.candidates[index] {
-            userDetailsViewController.user = candidate
-            userDetailsViewController.candidatesViewController = self
-            self.present(userDetailsViewController, animated: true, completion: nil)
+        if let userDetailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserDetailsViewController") as? UserDetailsViewController {
+            if let candidate = User.current.value?.candidates[index] {
+                userDetailsViewController.user = candidate
+                userDetailsViewController.candidatesViewController = self
+                self.present(userDetailsViewController, animated: true, completion: nil)
+            }
         }
     }
-    
-    // MARK: - KolodaViewDataSource
+
+}
+
+// MARK: - KolodaViewDataSource
+
+extension CandidatesViewController: KolodaViewDataSource {
     
     func kolodaNumberOfCards(_ koloda:KolodaView) -> Int {
         return User.current.value?.candidates.count ?? 0
@@ -149,8 +141,6 @@ class CandidatesViewController: UIViewController, ShowsSettingsButton, KolodaVie
     
     func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
         
-        print("Asked for view for card \(index)")
-        //if index >= User.current.value?.candidates.count ?? 0 { return UIImageView(image: #imageLiteral(resourceName: "icon_rounded")) }
         let cardView = CandidateCardView(frame: CGRect.zero)
         if let candidate = User.current.value?.candidates[index], let name = candidate.profile.displayName {
             cardView.nameLabel.text = "\(name), \(candidate.profile.age)"
@@ -181,9 +171,57 @@ class CandidatesViewController: UIViewController, ShowsSettingsButton, KolodaVie
         }
         return cardView
     }
-
+    
     func koloda(koloda: KolodaView, viewForCardOverlayAtIndex index: Int) -> OverlayView? {
         return Bundle.main.loadNibNamed("OverlayView", owner: self, options: nil)?[0] as? OverlayView
     }
+    
+}
 
+// MARK: - ShowSettingsButton
+
+extension CandidatesViewController: ShowsSettingsButton {
+    
+    func showSettings(sender : Any?) {
+        if let settingsNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "SettingsNavigationController") {
+            self.present(settingsNavigationController, animated: true, completion: nil)
+        }
+    }
+    
+}
+
+// MARK: - CandidatesDelegate
+
+extension CandidatesViewController: CandidatesDelegate {
+    
+    func didAddCandidate() {
+        kolodaView.reloadData()
+    }
+    
+}
+
+// MARK: - ReachabilityAware
+
+extension CandidatesViewController: ReachabilityAware {
+    
+    func setReachabilityState(reachable: Bool) {
+        if reachable {
+            if !self.shouldApplyAppearAnimation { showKolodaAndHideLoading() }
+        } else {
+            hideKolodaAndShowLoading()
+        }
+        likeButton.isHidden = !reachable
+        passButton.isHidden = !reachable
+    }
+    
+    func checkReachability() {
+        if let reachability = getReachability() {
+            setReachabilityState(reachable: reachability.isReachable())
+        }
+    }
+    
+    func reachabilityChanged(reachability: ALReachability) {
+        setReachabilityState(reachable: reachability.isReachable())
+    }
+    
 }

@@ -313,14 +313,7 @@ extension ProfileViewController: UICollectionViewDelegate {
                     let libraryButton = UIAlertAction(title: "Photo Library", style: .default, handler: { (action) -> Void in
                         self.imagePickerController.allowsEditing = false
                         self.imagePickerController.sourceType = .photoLibrary
-                        print("Kind of class", self.imagePickerController.isKind(of: NSClassFromString("UIImagePickerController")!))
-                        self.present(self.imagePickerController, animated: true, completion: {
-                            let alp = ALPushAssist()
-                            print("TOOOP \(alp.topViewController) \(Notifier.getTopViewController())")
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: {
-                                print("TOOOP \(alp.topViewController) \(Notifier.getTopViewController())")
-                            })
-                        })
+                        self.present(self.imagePickerController, animated: true, completion: nil)
                     })
                     actionSheetController.addAction(libraryButton)
                 }

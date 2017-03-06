@@ -389,7 +389,7 @@
                                                 </constraints>
                                             </view>
                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vL3-jJ-nuO" customClass="DOFavoriteButton" customModule="DOFavoriteButton">
-                                                <rect key="frame" x="219.5" y="579" width="64" height="64"/>
+                                                <rect key="frame" x="220" y="579" width="64" height="64"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.2988548801369863" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="vL3-jJ-nuO" secondAttribute="height" multiplier="1:1" id="eFT-Yf-Nie"/>
@@ -422,7 +422,7 @@
                                                 </connections>
                                             </button>
                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jPc-cH-QBr" customClass="DOFavoriteButton" customModule="DOFavoriteButton">
-                                                <rect key="frame" x="91.5" y="579" width="64" height="64"/>
+                                                <rect key="frame" x="92" y="579" width="64" height="64"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="64" id="6wV-Fd-EaT"/>
@@ -1901,6 +1901,7 @@
                         <outlet property="attachmentOutlet" destination="F5m-Lb-2me" id="NcS-7o-BXM"/>
                         <outlet property="checkBottomConstraint" destination="9zr-fa-twX" id="Md9-XI-Lej"/>
                         <outlet property="loadEarlierAction" destination="58h-r4-J9M" id="1cR-gl-9ux"/>
+                        <outlet property="loadEarlierActionTopConstraint" destination="ZnF-hF-qHJ" id="PYl-QI-uOB"/>
                         <outlet property="mActivityIndicator" destination="9Lf-Eh-TYH" id="ozF-Qy-Umy"/>
                         <outlet property="mTableView" destination="j3Z-SL-P7K" id="R8Y-Il-g6B"/>
                         <outlet property="noConLabel" destination="dtA-Gh-exg" id="3WD-d3-jN8"/>
