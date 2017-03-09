@@ -22,6 +22,7 @@ class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDataSource()
+        //ALApplozicSettings.setUnreadCountLabelBGColor(UIColor.red)
     }
     
     func setupDataSource() {

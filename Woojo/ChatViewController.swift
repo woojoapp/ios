@@ -182,7 +182,7 @@ class ChatViewController: ALChatViewController {
             self.checkBottomConstraint.constant = self.view.frame.size.height - keyboardFrameEnd.origin.y //+ 5.0
             UIView.animate(withDuration: animationDuration, animations: {
                 self.view.layoutIfNeeded()
-                self.scrollTableViewToBottom(withAnimation: true)
+                self.scrollTableViewToBottom(withAnimation: false)
             }, completion: { finished in
                 if finished {
                     self.scrollTableViewToBottom(withAnimation: true)
@@ -196,6 +196,10 @@ class ChatViewController: ALChatViewController {
             let offset = CGPoint(x: 0, y: mTableView.contentSize.height - mTableView.frame.size.height + typingMessageView.frame.size.height - 7.0)
             mTableView.setContentOffset(offset, animated: animated)
         }
+    }
+    
+    @IBAction func doScroll(_ sender: Any) {
+        scrollTableViewToBottom(withAnimation: true)
     }
     
     func keyboardDidHide(_ notification: NSNotification) {

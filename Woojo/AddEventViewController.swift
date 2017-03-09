@@ -24,23 +24,23 @@ class AddEventViewController: UIViewController {
         self.containerViewC.endEditing(true)
         if sender.selectedSegmentIndex == 0 {
             UIView.animate(withDuration: 0.5, animations: {
-                self.containerViewA.alpha = 1
-                self.containerViewB.alpha = 0
+                self.containerViewA.alpha = 0//1
+                self.containerViewB.alpha = 1//0
                 self.containerViewC.alpha = 0
             })
         } else if sender.selectedSegmentIndex == 1 {
             UIView.animate(withDuration: 0.5, animations: {
                 self.containerViewA.alpha = 0
-                self.containerViewB.alpha = 1
-                self.containerViewC.alpha = 0
+                self.containerViewB.alpha = 0//1
+                self.containerViewC.alpha = 1//0
             })
-        } else if sender.selectedSegmentIndex == 2 {
+        }/* else if sender.selectedSegmentIndex == 2 {
             UIView.animate(withDuration: 0.5, animations: {
                 self.containerViewA.alpha = 0
                 self.containerViewB.alpha = 0
                 self.containerViewC.alpha = 1
             })
-        }
+        }*/
     }
     
     @IBAction func dismiss(sender: UIBarButtonItem) {
@@ -48,15 +48,16 @@ class AddEventViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        self.segmentedControl.sectionTitles = ["Explore", "Interested/Going", "Search"]
+        self.segmentedControl.sectionTitles = ["Interested/Going", "Search"]
+        //self.segmentedControl.sectionTitles = ["Explore", "Interested/Going", "Search"]
         self.segmentedControl.selectionIndicatorColor = self.view.tintColor
         self.segmentedControl.selectionStyle = .fullWidthStripe
         self.segmentedControl.selectionIndicatorLocation = .up
         self.segmentedControl.selectionIndicatorHeight = 2.0
         self.segmentedControl.titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 12.0)]
         
-        self.containerViewA.alpha = 1
-        self.containerViewB.alpha = 0
+        self.containerViewA.alpha = 0//1
+        self.containerViewB.alpha = 1//0
         self.containerViewC.alpha = 0
         super.viewDidLoad()
         tapGestureRecognizer.addTarget(self, action: #selector(tap))

@@ -7,24 +7,26 @@
 //
 
 import UIKit
-import Applozic
 import Whisper
 
 class NavigationController: UINavigationController, ReachabilityAware {
     
     var notification: CurrentUser.Notification?
     
-    var reachableMessage = Message(title: "Connected", backgroundColor: UIColor(colorLiteralRed: 0.0, green: 150.0/255.0, blue: 0.0, alpha: 0.8))
-    var unreachableMessage = Message(title: "No internet connection", backgroundColor: UIColor.red.withAlphaComponent(0.8))
+    var reachableMessage = Message(title: "Online", backgroundColor: UIColor(colorLiteralRed: 0.0, green: 150.0/255.0, blue: 0.0, alpha: 0.8))
+    var unreachableMessage = Message(title: "Offline mode")
     
     var showingReachableWhisper = false
     var showingUnreachableWhisper = false
     var handlingReachabilityChange = false
     
+    var reachabilityObserver: AnyObject?
+    
     //var reachabilityComponent = ReachabilityComponent()
     
-   override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
+        unreachableMessage.backgroundColor = view.tintColor.withAlphaComponent(0.8)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -39,28 +41,21 @@ class NavigationController: UINavigationController, ReachabilityAware {
     }
     
     func checkReachability() {
-        if let reachability = getReachability() {
-            if reachability.isReachable() {
-                print("CHECK REACHABILITY REACHABLE")
-                Whisper.hide(whisperFrom: self, after: 0.0, animate: false)
-                self.showingReachableWhisper = false
-                self.showingUnreachableWhisper = false
-            } else {
-                print("CHECK REACHABILITY UNREACHABLE")
-                Whisper.show(whisper: unreachableMessage, to: self, action: .present, animate: false)
-                showingUnreachableWhisper = true
-            }
+        if let reachable = isReachable(), reachable {
+            Whisper.hide(whisperFrom: self, after: 0.0, animate: false)
+            showingReachableWhisper = false
+            showingUnreachableWhisper = false
+        } else {
+            Whisper.show(whisper: unreachableMessage, to: self, action: .present, animate: false)
+            showingUnreachableWhisper = true
         }
     }
     
-    func reachabilityChanged(reachability: ALReachability) {
-        print("REACHABILITY CHANGED HANDLE", handlingReachabilityChange)
+    func reachabilityChanged(reachable: Bool) {
         if handlingReachabilityChange { return }
         handlingReachabilityChange = true
-        if reachability.isReachable() {
-            print("REACHABILITY CHANGED REACHABLE", showingUnreachableWhisper, showingReachableWhisper)
+        if reachable {
             if showingUnreachableWhisper && !showingReachableWhisper {
-                //guard let navigationController = self as? UINavigationController else { return }
                 Whisper.hide(whisperFrom: self, after: 0.0, animate: true, completion: {
                     self.showingUnreachableWhisper = false
                     Whisper.show(whisper: self.reachableMessage, to: self, action: .present)
@@ -76,7 +71,6 @@ class NavigationController: UINavigationController, ReachabilityAware {
                 handlingReachabilityChange = false
             }
         } else {
-            print("REACHABILITY CHANGED UNREACHABLE", showingUnreachableWhisper, showingReachableWhisper)
             Whisper.show(whisper: unreachableMessage, to: self, action: .present, animate: true, completion: {
                 self.handlingReachabilityChange = false
             })
@@ -89,6 +83,6 @@ class NavigationController: UINavigationController, ReachabilityAware {
         showingUnreachableWhisper = false
         handlingReachabilityChange = false
     }
-
-
+    
+    
 }

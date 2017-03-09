@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import DZNEmptyDataSet
 
 class AlbumsTableViewController: UITableViewController {
     
@@ -16,6 +17,7 @@ class AlbumsTableViewController: UITableViewController {
     var profileViewController: ProfileViewController?
     
     let disposeBag = DisposeBag()
+    var reachabilityObserver: AnyObject?
     
     @IBAction func dismiss(sender: Any?) {
         self.navigationController?.dismiss(animated: true, completion: nil)
@@ -31,6 +33,9 @@ class AlbumsTableViewController: UITableViewController {
         tableView.refreshControl = UIRefreshControl()
         tableView.refreshControl?.addTarget(self, action: #selector(loadFacebookAlbums), for: UIControlEvents.valueChanged)
         
+        tableView.emptyDataSetDelegate = self
+        tableView.emptyDataSetSource = self
+        
         Woojo.User.current.asObservable().subscribe(onNext: { _ in
             self.loadFacebookAlbums()
         }).addDisposableTo(disposeBag)
@@ -44,16 +49,23 @@ class AlbumsTableViewController: UITableViewController {
         }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        startMonitoringReachability()
+        checkReachability()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        stopMonitoringReachability()
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        if albums.count > 0 {
+        //if albums.count > 0 {
             return 1
-        } else {
+        /*} else {
             let messageLabel = UILabel(frame: CGRect.init(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
             messageLabel.text = "No albums found\nPull to refresh"
             messageLabel.textColor = UIColor.init(hexString: "AFAFAF")
@@ -65,7 +77,7 @@ class AlbumsTableViewController: UITableViewController {
             self.tableView.backgroundView = messageLabel
             
             return 0
-        }
+        }*/
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -90,4 +102,53 @@ class AlbumsTableViewController: UITableViewController {
         self.navigationController?.pushViewController(photoCollectionViewController, animated: true)
     }
 
+}
+
+// MARK: - DZNEmptyDataSetSource
+
+extension AlbumsTableViewController: DZNEmptyDataSetSource {
+    
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        return NSAttributedString(string: "Facebook Albums", attributes: Constants.App.Appearance.EmptyDatasets.titleStringAttributes)
+    }
+    
+    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        return NSAttributedString(string: "No albums found\n\nPull to refresh", attributes: Constants.App.Appearance.EmptyDatasets.descriptionStringAttributes)
+    }
+    
+    func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
+        return #imageLiteral(resourceName: "albums")
+    }
+    
+}
+// MARK: - DZNEmptyDataSetDelegate
+
+extension AlbumsTableViewController: DZNEmptyDataSetDelegate {
+    
+    func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView!) -> Bool {
+        return true
+    }
+    
+}
+
+extension AlbumsTableViewController: ReachabilityAware {
+    
+    func setReachabilityState(reachable: Bool) {
+        if reachable {
+            loadFacebookAlbums()
+        } else {
+            tableView.refreshControl?.endRefreshing()
+        }
+    }
+    
+    func checkReachability() {
+        if let reachable = isReachable() {
+            setReachabilityState(reachable: reachable)
+        }
+    }
+    
+    func reachabilityChanged(reachable: Bool) {
+        setReachabilityState(reachable: reachable)
+    }
+    
 }

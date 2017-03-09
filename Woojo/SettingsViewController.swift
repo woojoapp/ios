@@ -14,11 +14,13 @@ import RxSwift
 class SettingsViewController: UITableViewController {
     
     @IBOutlet weak var logoutButton: UIButton!
+    @IBOutlet weak var deleteAccountButton: UIButton!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var profilePhotoImageView: ProfilePhotoImageView!
     
     let disposeBag = DisposeBag()
+    var reachabilityObserver: AnyObject?
     
     @IBAction func logout(sender: UIButton) {
         let logoutAlert = UIAlertController(title: "Logout", message: "Confirm you want to logout?", preferredStyle: .alert)
@@ -47,6 +49,17 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDataSource()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        startMonitoringReachability()
+        checkReachability()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        stopMonitoringReachability()
     }
     
     func setupDataSource() {
@@ -92,11 +105,6 @@ class SettingsViewController: UITableViewController {
             .addDisposableTo(disposeBag)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.updateTableViewHeaderViewHeight()
@@ -126,5 +134,31 @@ class SettingsViewController: UITableViewController {
             }
         }
     }
+    
+    /*override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.selectionStyle = .none
+        /*cell?.backgroundColor = .white
+        cell?.contentView.backgroundColor = .white
+        cell?.accessoryView?.backgroundColor = .white*/
+    }*/
 
+}
+
+extension SettingsViewController: ReachabilityAware {
+    
+    func setReachabilityState(reachable: Bool) {
+        deleteAccountButton.isEnabled = reachable
+    }
+    
+    func checkReachability() {
+        if let reachable = isReachable() {
+            setReachabilityState(reachable: reachable)
+        }
+    }
+    
+    func reachabilityChanged(reachable: Bool) {
+        setReachabilityState(reachable: reachable)
+    }
+    
 }

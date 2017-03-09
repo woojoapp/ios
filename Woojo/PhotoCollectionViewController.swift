@@ -10,14 +10,16 @@ import UIKit
 import RSKImageCropper
 import PKHUD
 import SDWebImage
+import DZNEmptyDataSet
 
 class PhotoCollectionViewController: UICollectionViewController {
     
     var photoIndex = 0
     var album: Album?
     var photos: [Album.Photo] = []
-    var rskImageCropper: RSKImageCropViewController?
+    var rskImageCropper: RSKImageCropViewController = RSKImageCropViewController()
     var profileViewController: ProfileViewController?
+    var reachabilityObserver: AnyObject?
     
     // Photo collection view properties
     fileprivate let reuseIdentifier = "photoCell"
@@ -34,15 +36,24 @@ class PhotoCollectionViewController: UICollectionViewController {
         collectionView?.refreshControl = UIRefreshControl()
         collectionView?.refreshControl?.addTarget(self, action: #selector(loadAlbumPhotos), for: UIControlEvents.valueChanged)
         
-        self.collectionView?.dataSource = self
-        self.collectionView?.delegate = self
+        collectionView?.dataSource = self
+        collectionView?.delegate = self
+        
+        collectionView?.emptyDataSetSource = self
+        collectionView?.emptyDataSetDelegate = self
         
         loadAlbumPhotos()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        startMonitoringReachability()
+        checkReachability()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        stopMonitoringReachability()
     }
     
     func loadAlbumPhotos() {
@@ -92,18 +103,17 @@ class PhotoCollectionViewController: UICollectionViewController {
     // MARK: UICollectionViewDelegate
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //if let image = photos[indexPath.row].getBestImage(size: .full), let url = image.url {
         if let image = photos[indexPath.row].getBiggestImage(), let url = image.url {
             do {
                 let data = try Data(contentsOf: url)
                 let uiImage = UIImage(data: data)
                 if let uiImage = uiImage {
-                    rskImageCropper = RSKImageCropViewController(image: uiImage)
-                    rskImageCropper?.maskLayerStrokeColor = UIColor.white
-                    rskImageCropper?.delegate = self
-                    rskImageCropper?.avoidEmptySpaceAroundImage = true
-                    rskImageCropper?.cropMode = .square
-                    self.navigationController?.pushViewController(rskImageCropper!, animated: true)
+                    rskImageCropper.originalImage = uiImage
+                    rskImageCropper.maskLayerStrokeColor = UIColor.white
+                    rskImageCropper.delegate = self
+                    rskImageCropper.avoidEmptySpaceAroundImage = true
+                    rskImageCropper.cropMode = .square
+                    self.navigationController?.pushViewController(rskImageCropper, animated: true)
                 }
             } catch {
                 print("Failed to download full size image from Facebook: \(error.localizedDescription)")
@@ -137,24 +147,78 @@ extension PhotoCollectionViewController: UICollectionViewDelegateFlowLayout {
 extension PhotoCollectionViewController: RSKImageCropViewControllerDelegate {
     
     func imageCropViewControllerDidCancelCrop(_ controller: RSKImageCropViewController) {
-        _ = rskImageCropper?.navigationController?.popToViewController((rskImageCropper?.parent)!, animated: true)
+        _ = rskImageCropper.navigationController?.popViewController(animated: true)
     }
     
     func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect) {
-        HUD.show(.progress)
-        if let selectedIndex = collectionView?.indexPathsForSelectedItems?[0].row, let id = photos[selectedIndex].id {
-            Woojo.User.current.value?.profile.setPhoto(photo: croppedImage, id: id, index: self.photoIndex) { photo, error in
-                if error != nil {
-                    HUD.show(.labeledError(title: "Error", subtitle: "Failed to add photo"))
-                    HUD.hide(afterDelay: 1.0)
-                } else {
-                    self.navigationController?.dismiss(animated: true, completion: nil)
-                    HUD.show(.labeledSuccess(title: "Success", subtitle: "Photo added!"))
-                    HUD.hide(afterDelay: 1.0)
+        if let reachable = isReachable(), reachable {
+            HUD.show(.progress)
+            if let selectedIndex = collectionView?.indexPathsForSelectedItems?[0].row, let id = photos[selectedIndex].id {
+                Woojo.User.current.value?.profile.setPhoto(photo: croppedImage, id: id, index: self.photoIndex) { photo, error in
+                    if error != nil {
+                        HUD.show(.labeledError(title: "Error", subtitle: "Failed to add photo"))
+                        HUD.hide(afterDelay: 1.0)
+                    } else {
+                        self.navigationController?.dismiss(animated: true, completion: nil)
+                        HUD.show(.labeledSuccess(title: "Success", subtitle: "Photo added!"))
+                        HUD.hide(afterDelay: 1.0)
+                    }
+                    self.profileViewController?.photosCollectionView.reloadItems(at: [IndexPath(row: self.photoIndex, section: 0)])
                 }
-                self.profileViewController?.photosCollectionView.reloadItems(at: [IndexPath(row: self.photoIndex, section: 0)])
             }
+        } else {
+            HUD.show(.labeledError(title: "No internet", subtitle: nil))
+            HUD.hide(afterDelay: 2.0)
         }
+    }
+    
+}
+
+// MARK: - DZNEmptyDataSetSource
+
+extension PhotoCollectionViewController: DZNEmptyDataSetSource {
+    
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        return NSAttributedString(string: "Facebook Photos", attributes: Constants.App.Appearance.EmptyDatasets.titleStringAttributes)
+    }
+    
+    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        return NSAttributedString(string: "No photos found in this album\n\nPull to refresh", attributes: Constants.App.Appearance.EmptyDatasets.descriptionStringAttributes)
+    }
+    
+    func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
+        return #imageLiteral(resourceName: "photos")
+    }
+    
+}
+// MARK: - DZNEmptyDataSetDelegate
+
+extension PhotoCollectionViewController: DZNEmptyDataSetDelegate {
+    
+    func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView!) -> Bool {
+        return true
+    }
+    
+}
+
+extension PhotoCollectionViewController: ReachabilityAware {
+    
+    func setReachabilityState(reachable: Bool) {
+        if reachable {
+            loadAlbumPhotos()
+        } else {
+            collectionView?.refreshControl?.endRefreshing()
+        }
+    }
+    
+    func checkReachability() {
+        if let reachable = isReachable() {
+            setReachabilityState(reachable: reachable)
+        }
+    }
+    
+    func reachabilityChanged(reachable: Bool) {
+        setReachabilityState(reachable: reachable)
     }
     
 }

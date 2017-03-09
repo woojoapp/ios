@@ -10,7 +10,7 @@ import UIKit
 import DOFavoriteButton
 import ImageSlideshow
 
-class UserDetailsViewController: UIViewController, UIScrollViewDelegate {
+class UserDetailsViewController: UIViewController {
     
     enum ButtonsType: String {
         case decide
@@ -32,22 +32,21 @@ class UserDetailsViewController: UIViewController, UIScrollViewDelegate {
     var buttonsType: ButtonsType = .decide
     
     var candidatesViewController: CandidatesViewController?
+    var reachabilityObserver: AnyObject?
     
     @IBAction func like() {
-        passButton.isHidden = true
-        likeButton.backgroundColor = UIColor.white
+        set(button: passButton, enabled: false)
         likeButton.select()
-        self.candidatesViewController?.kolodaView.swipe(.right)
+        candidatesViewController?.kolodaView.swipe(.right)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
             self.dismiss(sender: self)
         })
     }
     
     @IBAction func pass() {
-        likeButton.isHidden = true
-        passButton.backgroundColor = UIColor.white
+        set(button: likeButton, enabled: false)
         passButton.select()
-        self.candidatesViewController?.kolodaView.swipe(.left)
+        candidatesViewController?.kolodaView.swipe(.left)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
             self.dismiss(sender: self)
         })
@@ -69,6 +68,11 @@ class UserDetailsViewController: UIViewController, UIScrollViewDelegate {
         self.present(actionSheetController, animated: true) {
             self.optionsButton.deselect()
         }
+    }
+    
+    func set(button: UIButton, enabled: Bool) {
+        button.isEnabled = enabled
+        button.alpha = (enabled) ? 1.0 : 0.3
     }
     
     @IBAction func dismiss(sender: Any?) {
@@ -134,8 +138,6 @@ class UserDetailsViewController: UIViewController, UIScrollViewDelegate {
         closeButton.layer.backgroundColor = UIColor(colorLiteralRed: 0.0, green: 0.0, blue: 0.0, alpha: 0.5).cgColor
         carouselView.bringSubview(toFront: closeButton)
         
-        self.scrollView.delegate = self
-        
         switch buttonsType {
         case .options:
             optionsButton.isHidden = false
@@ -151,16 +153,19 @@ class UserDetailsViewController: UIViewController, UIScrollViewDelegate {
             passButton.layer.masksToBounds = true
         }
         
-
-        //buttonsView.layer.cornerRadius = 36.0
-        //buttonsView.layer.masksToBounds = true
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        startMonitoringReachability()
+        checkReachability()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        stopMonitoringReachability()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         get {
@@ -171,9 +176,34 @@ class UserDetailsViewController: UIViewController, UIScrollViewDelegate {
     func didTap(sender: ImageSlideshow) {
         self.dismiss(sender: self)
     }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-    }
  
+}
+
+// MARK: - ReachabilityAware
+
+extension UserDetailsViewController: ReachabilityAware {
+    
+    func setReachabilityState(reachable: Bool) {
+        if reachable {
+            set(button: likeButton, enabled: true)
+            set(button: passButton, enabled: true)
+            set(button: optionsButton, enabled: true)
+            
+        } else {
+            set(button: likeButton, enabled: false)
+            set(button: passButton, enabled: false)
+            set(button: optionsButton, enabled: false)
+        }
+    }
+    
+    func checkReachability() {
+        if let reachable = isReachable() {
+            setReachabilityState(reachable: reachable)
+        }
+    }
+    
+    func reachabilityChanged(reachable: Bool) {
+        setReachabilityState(reachable: reachable)
+    }
+    
 }

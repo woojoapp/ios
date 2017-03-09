@@ -52,7 +52,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check" translatesAutoresizingMaskIntoConstraints="NO" id="ANC-jj-NR3">
-                        <rect key="frame" x="67" y="67" width="24" height="24"/>
+                        <rect key="frame" x="68" y="68" width="24" height="24"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="24" id="G6T-Ei-ie9"/>
                             <constraint firstAttribute="width" secondItem="ANC-jj-NR3" secondAttribute="height" multiplier="1:1" id="oLM-8U-eVb"/>
@@ -65,11 +65,11 @@
                     <constraint firstItem="LLM-oe-HAo" firstAttribute="leading" secondItem="Ynh-N5-fbq" secondAttribute="leadingMargin" id="AJH-af-S8m"/>
                     <constraint firstItem="b8L-Hb-ntc" firstAttribute="leading" secondItem="LLM-oe-HAo" secondAttribute="trailing" constant="8" id="Bv5-9K-GDR"/>
                     <constraint firstAttribute="trailingMargin" secondItem="WIU-OR-aQd" secondAttribute="trailing" id="GsO-d0-bE7"/>
-                    <constraint firstItem="ANC-jj-NR3" firstAttribute="bottom" secondItem="LLM-oe-HAo" secondAttribute="bottom" id="JIc-96-MpX"/>
+                    <constraint firstItem="ANC-jj-NR3" firstAttribute="bottom" secondItem="LLM-oe-HAo" secondAttribute="bottom" constant="1" id="JIc-96-MpX"/>
                     <constraint firstItem="WIU-OR-aQd" firstAttribute="bottom" secondItem="Ynh-N5-fbq" secondAttribute="centerY" constant="-3" id="MTJ-me-OvJ"/>
                     <constraint firstItem="D50-ih-hFz" firstAttribute="leading" secondItem="LLM-oe-HAo" secondAttribute="trailing" constant="8" id="TNn-Nt-Q6N"/>
                     <constraint firstItem="d84-gD-aAd" firstAttribute="top" secondItem="Ynh-N5-fbq" secondAttribute="centerY" constant="3" id="bqW-nn-v18"/>
-                    <constraint firstItem="ANC-jj-NR3" firstAttribute="trailing" secondItem="LLM-oe-HAo" secondAttribute="trailing" id="j5l-ge-NHX"/>
+                    <constraint firstItem="ANC-jj-NR3" firstAttribute="trailing" secondItem="LLM-oe-HAo" secondAttribute="trailing" constant="1" id="j5l-ge-NHX"/>
                     <constraint firstAttribute="trailingMargin" secondItem="D50-ih-hFz" secondAttribute="trailing" id="qAx-gQ-nqk"/>
                     <constraint firstAttribute="trailingMargin" secondItem="d84-gD-aAd" secondAttribute="trailing" id="rm6-GI-8Mw"/>
                     <constraint firstItem="d84-gD-aAd" firstAttribute="leading" secondItem="LLM-oe-HAo" secondAttribute="trailing" constant="8" id="sBj-HG-mAl"/>

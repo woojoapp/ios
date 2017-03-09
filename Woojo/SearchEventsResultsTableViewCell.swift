@@ -48,7 +48,7 @@ class SearchEventsResultsTableViewCell: UITableViewCell {
         }
         //cell.accessoryType
         placeLabel.text = placeString
-        thumbnailView.layer.cornerRadius = 20.0
+        thumbnailView.layer.cornerRadius = 12.0
         thumbnailView.layer.masksToBounds = true
         if let pictureURL = event?.pictureURL {
             thumbnailView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_40x40"))

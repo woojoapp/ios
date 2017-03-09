@@ -46,7 +46,7 @@ class MyEventsTableViewCell: UITableViewCell {
                 placeString = city
             }
         }
-        thumbnailView.layer.cornerRadius = 20.0
+        thumbnailView.layer.cornerRadius = 12.0
         thumbnailView.layer.masksToBounds = true
         placeLabel.text = placeString
         if let pictureURL = event?.pictureURL {

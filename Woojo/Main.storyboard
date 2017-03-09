@@ -148,81 +148,81 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ai-RS-ngp" userLabel="Buttons View">
                                 <rect key="frame" x="-0.5" y="509" width="375" height="109"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VSF-JD-26R" userLabel="Pass Button" customClass="DOFavoriteButton" customModule="DOFavoriteButton">
-                                        <rect key="frame" x="58" y="25" width="72" height="72"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6v9-QQ-JGG" customClass="DOFavoriteButton" customModule="DOFavoriteButton">
+                                        <rect key="frame" x="220" y="22.5" width="64" height="64"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.2988548801" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="72" id="Lrb-wA-pzX"/>
-                                            <constraint firstAttribute="height" constant="72" id="oIr-1A-cId"/>
+                                            <constraint firstAttribute="width" secondItem="6v9-QQ-JGG" secondAttribute="height" multiplier="1:1" id="rql-4j-gHx"/>
+                                            <constraint firstAttribute="width" constant="64" id="yDv-HC-6i3"/>
                                         </constraints>
                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <state key="normal">
+                                        <state key="normal" title="Button">
                                             <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="image" value="pass"/>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="imageColorOn">
-                                                <color key="value" red="1" green="0.32607960735403629" blue="0.0015390543941948831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="imageColorOff">
-                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
-                                                <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
-                                                <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="duration">
-                                                <real key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="passPressed:" destination="Vc7-JZ-mOB" eventType="touchUpInside" id="Pzc-3U-DPT"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jxu-fz-kAz" userLabel="Like Button" customClass="DOFavoriteButton" customModule="DOFavoriteButton">
-                                        <rect key="frame" x="245.5" y="13" width="72" height="72"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="72" id="jQU-CS-Hcg"/>
-                                            <constraint firstAttribute="height" constant="72" id="mxI-pz-Qi2"/>
-                                        </constraints>
-                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <state key="normal">
-                                            <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="image" keyPath="image" value="like"/>
                                             <userDefinedRuntimeAttribute type="color" keyPath="imageColorOn">
-                                                <color key="value" red="0.0" green="0.66356678299492389" blue="0.082189414681323208" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="imageColorOff">
-                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
-                                                <color key="value" red="0.0" green="0.66356678300000005" blue="0.082189414680000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
-                                                <color key="value" red="0.0" green="0.66356678300000005" blue="0.082189414680000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="duration">
                                                 <real key="value" value="1"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="likePressed:" destination="Vc7-JZ-mOB" eventType="touchUpInside" id="s31-q9-1mf"/>
+                                            <action selector="like" destination="5xQ-iR-K0q" eventType="touchUpInside" id="kyU-E8-W9N"/>
+                                            <action selector="likePressed:" destination="Vc7-JZ-mOB" eventType="touchUpInside" id="I5b-f4-o3W"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XfD-5u-7vD" customClass="DOFavoriteButton" customModule="DOFavoriteButton">
+                                        <rect key="frame" x="92" y="22.5" width="64" height="64"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="XfD-5u-7vD" secondAttribute="height" multiplier="1:1" id="o6f-3k-x6A"/>
+                                            <constraint firstAttribute="width" constant="64" id="yZ1-Ej-PZV"/>
+                                        </constraints>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="Button">
+                                            <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="image" keyPath="image" value="pass"/>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="imageColorOn">
+                                                <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="imageColorOff">
+                                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
+                                                <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="pass" destination="5xQ-iR-K0q" eventType="touchUpInside" id="1VU-ju-52b"/>
+                                            <action selector="passPressed:" destination="Vc7-JZ-mOB" eventType="touchUpInside" id="fzC-0a-SiW"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="jxu-fz-kAz" firstAttribute="centerY" secondItem="6Ai-RS-ngp" secondAttribute="centerY" constant="-6" id="39C-Iy-r8g"/>
-                                    <constraint firstItem="VSF-JD-26R" firstAttribute="centerX" secondItem="6Ai-RS-ngp" secondAttribute="centerX" multiplier="0.5" id="Pda-94-5Ju"/>
-                                    <constraint firstItem="jxu-fz-kAz" firstAttribute="centerX" secondItem="6Ai-RS-ngp" secondAttribute="centerX" multiplier="1.5" id="Tdq-ZJ-wQ2"/>
-                                    <constraint firstItem="VSF-JD-26R" firstAttribute="centerY" secondItem="6Ai-RS-ngp" secondAttribute="centerY" constant="6" id="UKm-gw-ptM"/>
+                                    <constraint firstItem="6v9-QQ-JGG" firstAttribute="centerY" secondItem="6Ai-RS-ngp" secondAttribute="centerY" id="8o3-wg-DCY"/>
+                                    <constraint firstItem="XfD-5u-7vD" firstAttribute="centerX" secondItem="6Ai-RS-ngp" secondAttribute="centerX" constant="-64" id="Evl-UP-pwz"/>
+                                    <constraint firstItem="XfD-5u-7vD" firstAttribute="centerY" secondItem="6Ai-RS-ngp" secondAttribute="centerY" id="OAS-fg-Hrn"/>
+                                    <constraint firstItem="6v9-QQ-JGG" firstAttribute="centerX" secondItem="6Ai-RS-ngp" secondAttribute="centerX" constant="64" id="uNN-en-wDJ"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2si-Gv-7N3" userLabel="Loading Container View">
@@ -254,13 +254,13 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Finding more people..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aOH-cX-fnt">
-                                        <rect key="frame" x="81.5" y="204" width="180" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <imageView userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="people" translatesAutoresizingMaskIntoConstraints="NO" id="3yK-z6-CNt">
+                                        <rect key="frame" x="91" y="132" width="160" height="160"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="160" id="gtN-oX-fxR"/>
+                                            <constraint firstAttribute="width" secondItem="3yK-z6-CNt" secondAttribute="height" multiplier="1:1" id="wdH-Pn-hEV"/>
+                                        </constraints>
+                                    </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZAB-QG-a8a">
                                         <rect key="frame" x="132" y="351" width="78" height="30"/>
                                         <state key="normal" title="Add Events"/>
@@ -271,6 +271,8 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="3yK-z6-CNt" firstAttribute="centerX" secondItem="2si-Gv-7N3" secondAttribute="centerX" id="8PW-Ii-2Cl"/>
+                                    <constraint firstItem="3yK-z6-CNt" firstAttribute="centerY" secondItem="2si-Gv-7N3" secondAttribute="centerY" id="AWG-Er-Znc"/>
                                     <constraint firstItem="ZAB-QG-a8a" firstAttribute="centerX" secondItem="2si-Gv-7N3" secondAttribute="centerX" id="Bg4-54-qVa"/>
                                     <constraint firstItem="UNA-II-Hur" firstAttribute="width" secondItem="2si-Gv-7N3" secondAttribute="width" multiplier="0.6" id="I3a-Xi-Km4"/>
                                     <constraint firstItem="UNA-II-Hur" firstAttribute="centerX" secondItem="2si-Gv-7N3" secondAttribute="centerX" id="JCU-FR-TIt"/>
@@ -297,10 +299,10 @@
                     <navigationItem key="navigationItem" title="People" id="CDk-lZ-eUH"/>
                     <connections>
                         <outlet property="kolodaView" destination="v0f-RA-VAp" id="STh-Uh-gR9"/>
-                        <outlet property="likeButton" destination="jxu-fz-kAz" id="OkF-qQ-cLB"/>
+                        <outlet property="likeButton" destination="6v9-QQ-JGG" id="eO6-qd-Ky8"/>
                         <outlet property="loadingContainerView" destination="2si-Gv-7N3" id="5Xa-Bw-Crk"/>
                         <outlet property="loadingView" destination="UNA-II-Hur" id="xYj-eZ-U92"/>
-                        <outlet property="passButton" destination="VSF-JD-26R" id="gzH-Ie-KeF"/>
+                        <outlet property="passButton" destination="XfD-5u-7vD" id="jAq-wA-dbK"/>
                         <segue destination="5xQ-iR-K0q" kind="presentation" identifier="showUserDetails" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="63C-bn-CoY"/>
                     </connections>
                 </viewController>
@@ -402,16 +404,16 @@
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="image" keyPath="image" value="like"/>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="imageColorOn">
-                                                        <color key="value" red="0.0" green="0.66356678300000005" blue="0.082189414680000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="imageColorOff">
                                                         <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
-                                                        <color key="value" red="0.0" green="0.66356678300000005" blue="0.082189414680000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
-                                                        <color key="value" red="0.0" green="0.66356678300000005" blue="0.082189414680000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="duration">
                                                         <real key="value" value="1"/>
@@ -435,7 +437,7 @@
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="image" keyPath="image" value="pass"/>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="imageColorOn">
-                                                        <color key="value" red="1" green="0.0" blue="0.18667996313140733" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="imageColorOff">
                                                         <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -561,7 +563,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="107"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QOU-6t-AjP" customClass="ProfilePhotoImageView" customModule="Woojo" customModuleProvider="target">
-                                            <rect key="frame" x="113" y="24" width="150" height="150"/>
+                                            <rect key="frame" x="113" y="32" width="150" height="150"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="QOU-6t-AjP" secondAttribute="height" multiplier="1:1" id="6uZ-ny-4OF"/>
                                             </constraints>
@@ -589,11 +591,11 @@
                                     <constraints>
                                         <constraint firstItem="ynd-2m-iTk" firstAttribute="centerX" secondItem="G4r-4Q-GEa" secondAttribute="centerX" id="8kc-hP-dAJ"/>
                                         <constraint firstItem="JXy-u4-CRF" firstAttribute="centerX" secondItem="G4r-4Q-GEa" secondAttribute="centerX" id="J8M-Ba-Noh"/>
-                                        <constraint firstAttribute="bottom" secondItem="JXy-u4-CRF" secondAttribute="bottom" constant="24" id="bRS-Ge-zl6"/>
+                                        <constraint firstAttribute="bottom" secondItem="JXy-u4-CRF" secondAttribute="bottom" constant="32" id="bRS-Ge-zl6"/>
                                         <constraint firstItem="JXy-u4-CRF" firstAttribute="width" secondItem="G4r-4Q-GEa" secondAttribute="width" multiplier="0.75" id="ed5-nV-xf0"/>
                                         <constraint firstItem="ynd-2m-iTk" firstAttribute="top" relation="greaterThanOrEqual" secondItem="QOU-6t-AjP" secondAttribute="bottom" constant="24" id="gnP-x4-IAU"/>
                                         <constraint firstItem="QOU-6t-AjP" firstAttribute="centerX" secondItem="G4r-4Q-GEa" secondAttribute="centerX" id="kSt-6J-ufd"/>
-                                        <constraint firstItem="QOU-6t-AjP" firstAttribute="top" secondItem="G4r-4Q-GEa" secondAttribute="top" constant="24" id="kjJ-nO-IJP"/>
+                                        <constraint firstItem="QOU-6t-AjP" firstAttribute="top" secondItem="G4r-4Q-GEa" secondAttribute="top" constant="32" id="kjJ-nO-IJP"/>
                                         <constraint firstItem="ynd-2m-iTk" firstAttribute="width" secondItem="G4r-4Q-GEa" secondAttribute="width" multiplier="0.75" id="s9d-MJ-A0R"/>
                                         <constraint firstItem="JXy-u4-CRF" firstAttribute="top" secondItem="ynd-2m-iTk" secondAttribute="bottom" constant="12" id="yFn-Dv-4Oq"/>
                                     </constraints>
@@ -610,15 +612,15 @@
                         <sections>
                             <tableViewSection id="yoL-vc-QWH">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="OyC-91-bHX" style="IBUITableViewCellStyleDefault" id="eRc-qx-wqe">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="OyC-91-bHX" style="IBUITableViewCellStyleDefault" id="eRc-qx-wqe">
                                         <rect key="frame" x="0.0" y="200" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eRc-qx-wqe" id="WAq-Jr-HZK">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OyC-91-bHX">
-                                                    <rect key="frame" x="15" y="0.0" width="325" height="43.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="325" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -630,15 +632,15 @@
                                             <segue destination="9Z9-DO-fmv" kind="show" id="6w9-Dw-iSZ"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="VYb-UP-1h4" style="IBUITableViewCellStyleDefault" id="rhV-f3-nnA">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="VYb-UP-1h4" style="IBUITableViewCellStyleDefault" id="rhV-f3-nnA">
                                         <rect key="frame" x="0.0" y="244" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rhV-f3-nnA" id="LbZ-T4-NWR">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Preferences" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VYb-UP-1h4">
-                                                    <rect key="frame" x="15" y="0.0" width="325" height="43.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="325" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -650,15 +652,15 @@
                                             <segue destination="Ku7-SS-nN9" kind="show" id="obn-50-HG6"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="ZVL-Tm-PqV" style="IBUITableViewCellStyleDefault" id="ok9-Le-ds7">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="ZVL-Tm-PqV" style="IBUITableViewCellStyleDefault" id="ok9-Le-ds7">
                                         <rect key="frame" x="0.0" y="288" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ok9-Le-ds7" id="XKk-Iy-ggS">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="About Woojo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZVL-Tm-PqV">
-                                                    <rect key="frame" x="15" y="0.0" width="325" height="43.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="325" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -670,11 +672,11 @@
                                             <segue destination="erM-nO-fMX" kind="show" id="vYr-Md-0dR"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Rym-Ms-to4">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="Rym-Ms-to4">
                                         <rect key="frame" x="0.0" y="332" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Rym-Ms-to4" id="lHF-x4-70C">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IaJ-wM-dCg">
@@ -693,11 +695,11 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="iSV-hB-h69">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="iSV-hB-h69">
                                         <rect key="frame" x="0.0" y="376" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iSV-hB-h69" id="8La-CD-lo3">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Uy-b0-woi">
@@ -734,6 +736,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="deleteAccountButton" destination="8Uy-b0-woi" id="MWx-KX-G4V"/>
                         <outlet property="descriptionLabel" destination="JXy-u4-CRF" id="Z8o-YS-eT8"/>
                         <outlet property="logoutButton" destination="IaJ-wM-dCg" id="lnY-HU-bjY"/>
                         <outlet property="nameLabel" destination="ynd-2m-iTk" id="3iH-Bw-HWQ"/>
@@ -1366,7 +1369,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="107"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_rounded" translatesAutoresizingMaskIntoConstraints="NO" id="azh-gi-pZh" userLabel="Logo Image View">
-                                            <rect key="frame" x="113" y="24" width="150" height="150"/>
+                                            <rect key="frame" x="113" y="32" width="150" height="150"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="azh-gi-pZh" secondAttribute="height" multiplier="1:1" id="3ba-Wh-gPY"/>
                                             </constraints>
@@ -1399,7 +1402,7 @@
                                         <constraint firstItem="CME-Fb-FXM" firstAttribute="centerX" secondItem="3ZT-U6-PsF" secondAttribute="centerX" id="fpx-zh-Z5K"/>
                                         <constraint firstItem="azh-gi-pZh" firstAttribute="centerX" secondItem="3ZT-U6-PsF" secondAttribute="centerX" id="mgC-6z-NfS"/>
                                         <constraint firstItem="KCi-6b-nys" firstAttribute="width" secondItem="3ZT-U6-PsF" secondAttribute="width" multiplier="0.75" id="pwK-C8-nwi"/>
-                                        <constraint firstItem="azh-gi-pZh" firstAttribute="top" secondItem="3ZT-U6-PsF" secondAttribute="top" constant="24" id="t3T-aN-cpb"/>
+                                        <constraint firstItem="azh-gi-pZh" firstAttribute="top" secondItem="3ZT-U6-PsF" secondAttribute="top" constant="32" id="t3T-aN-cpb"/>
                                         <constraint firstItem="KCi-6b-nys" firstAttribute="centerX" secondItem="3ZT-U6-PsF" secondAttribute="centerX" id="tv6-OL-Bv3"/>
                                     </constraints>
                                 </view>
@@ -1415,15 +1418,15 @@
                         <sections>
                             <tableViewSection id="9RM-6B-b9B">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="M8a-b0-eBM" style="IBUITableViewCellStyleDefault" id="Akf-cp-iEj">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="M8a-b0-eBM" style="IBUITableViewCellStyleDefault" id="Akf-cp-iEj">
                                         <rect key="frame" x="0.0" y="200" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Akf-cp-iEj" id="Ccd-gb-Zzb">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Terms &amp; Conditions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="M8a-b0-eBM">
-                                                    <rect key="frame" x="15" y="0.0" width="325" height="43.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="325" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1432,15 +1435,15 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="nqP-Hh-0VP" style="IBUITableViewCellStyleDefault" id="Nbc-Eg-Xog">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="nqP-Hh-0VP" style="IBUITableViewCellStyleDefault" id="Nbc-Eg-Xog">
                                         <rect key="frame" x="0.0" y="244" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nbc-Eg-Xog" id="X9X-fe-drV">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Privacy Policy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nqP-Hh-0VP">
-                                                    <rect key="frame" x="15" y="0.0" width="325" height="43.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="325" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1449,15 +1452,32 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="zOe-7E-c9S" style="IBUITableViewCellStyleDefault" id="kkF-uO-Gzv">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="zOe-7E-c9S" style="IBUITableViewCellStyleDefault" id="kkF-uO-Gzv">
                                         <rect key="frame" x="0.0" y="288" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kkF-uO-Gzv" id="LCn-GM-Ddv">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Safety" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zOe-7E-c9S">
-                                                    <rect key="frame" x="15" y="0.0" width="325" height="43.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="325" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="fFM-lk-K9A" style="IBUITableViewCellStyleDefault" id="5FR-eA-xDE">
+                                        <rect key="frame" x="0.0" y="332" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5FR-eA-xDE" id="7vj-XC-xE1">
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Credits" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fFM-lk-K9A">
+                                                    <rect key="frame" x="15" y="0.0" width="325" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1794,6 +1814,7 @@
                                         </constraints>
                                         <state key="normal" title="Send"/>
                                         <connections>
+                                            <action selector="doScroll:" destination="get-Ko-mLC" eventType="touchUpInside" id="gRt-t3-dNN"/>
                                             <action selector="sendAction:" destination="get-Ko-mLC" eventType="touchDown" id="2cy-Go-Opm"/>
                                         </connections>
                                     </button>
@@ -1952,6 +1973,7 @@
         <image name="online_show" width="200" height="200"/>
         <image name="options" width="72" height="72"/>
         <image name="pass" width="72" height="72"/>
+        <image name="people" width="160" height="160"/>
         <image name="people_tab" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>

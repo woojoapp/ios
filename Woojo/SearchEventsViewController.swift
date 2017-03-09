@@ -13,7 +13,7 @@ import RxCocoa
 import DZNEmptyDataSet
 import PKHUD
 
-class SearchEventsViewController: UIViewController, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+class SearchEventsViewController: UIViewController {
 
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var resultsTableView: UITableView!
@@ -21,10 +21,7 @@ class SearchEventsViewController: UIViewController, UITableViewDelegate, DZNEmpt
     @IBOutlet var bottomConstraint: NSLayoutConstraint!
     
     var disposeBag = DisposeBag()
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
+    var reachabilityObserver: AnyObject?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,13 +31,29 @@ class SearchEventsViewController: UIViewController, UITableViewDelegate, DZNEmpt
         
         setupDataSource()
         
-        self.resultsTableView.emptyDataSetDelegate = self
-        self.resultsTableView.emptyDataSetSource = self
+        resultsTableView.emptyDataSetDelegate = self
+        resultsTableView.emptyDataSetSource = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        startMonitoringReachability()
+        checkReachability()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        stopMonitoringReachability()
+    }
+
     func setupDataSource() {
         Woojo.User.current.value?.events.asObservable().subscribe(onNext: { _ in
             self.resultsTableView.reloadData()
@@ -73,47 +86,46 @@ class SearchEventsViewController: UIViewController, UITableViewDelegate, DZNEmpt
         
         resultsTableView.rx.itemSelected
             .subscribe(onNext: { indexPath in
-                let cell = self.resultsTableView.cellForRow(at: indexPath) as! SearchEventsResultsTableViewCell
-                if let event = cell.event, let isUserEvent = Woojo.User.current.value?.events.value.contains(where: { $0.id == event.id }) {
+                if let reachable = self.isReachable(),
+                    reachable,
+                    let cell = self.resultsTableView.cellForRow(at: indexPath) as? SearchEventsResultsTableViewCell,
+                    let event = cell.event,
+                    let isUserEvent = Woojo.User.current.value?.events.value.contains(where: { $0.id == event.id }) {
                     if isUserEvent {
-                        HUD.show(.labeledProgress(title: "Remove Event", subtitle: "Removing event..."))
-                        Woojo.User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
-                            cell.checkView.isHidden = true
-                            self.resultsTableView.reloadData()
-                            HUD.show(.labeledSuccess(title: "Remove Event", subtitle: "Event removed!"))
-                            HUD.hide(afterDelay: 1.0)
-                        })
+                        self.remove(event: event) { error in
+                            if error == nil {
+                                cell.checkView.isHidden = true
+                            }
+                        }
                     } else {
-                        HUD.show(.labeledProgress(title: "Add Event", subtitle: "Adding event..."))
-                        Woojo.User.current.value?.add(event: event, completion: { (error: Error?) -> Void in
-                            cell.checkView.isHidden = false
-                            self.resultsTableView.reloadData()
-                            HUD.show(.labeledSuccess(title: "Add Event", subtitle: "Event added!"))
-                            HUD.hide(afterDelay: 1.0)
-                        })
+                        self.add(event: event) { error in
+                            if error == nil {
+                                cell.checkView.isHidden = false
+                            }
+                        }
                     }
                 }
             }).addDisposableTo(disposeBag)
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return tableView.dequeueReusableHeaderFooterView(withIdentifier: "reuseSearchheader")
+    func remove(event: Event, completion: ((Error?) -> Void)? = nil) {
+        HUD.show(.labeledProgress(title: "Remove Event", subtitle: "Removing event..."))
+        Woojo.User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
+            completion?(error)
+            self.resultsTableView.reloadData()
+            HUD.show(.labeledSuccess(title: "Remove Event", subtitle: "Event removed!"))
+            HUD.hide(afterDelay: 1.0)
+        })
     }
     
-    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        return NSAttributedString(string: "Search Events", attributes: Constants.App.Appearance.EmptyDatasets.titleStringAttributes)
-    }
-    
-    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        return NSAttributedString(string: "Find events by name", attributes: Constants.App.Appearance.EmptyDatasets.descriptionStringAttributes)
-    }
-    
-    func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
-        return #imageLiteral(resourceName: "search_events")
-    }
-    
-    func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView!) -> Bool {
-        return true
+    func add(event: Event, completion: ((Error?) -> Void)? = nil) {
+        HUD.show(.labeledProgress(title: "Add Event", subtitle: "Adding event..."))
+        Woojo.User.current.value?.add(event: event, completion: { (error: Error?) -> Void in
+            completion?(error)
+            self.resultsTableView.reloadData()
+            HUD.show(.labeledSuccess(title: "Add Event", subtitle: "Event added!"))
+            HUD.hide(afterDelay: 1.0)
+        })
     }
     
     func keyboardWillShow(_ notification: NSNotification) {
@@ -138,4 +150,62 @@ class SearchEventsViewController: UIViewController, UITableViewDelegate, DZNEmpt
         }
     }
 
+}
+
+// MARK: - UITableViewDelegate
+
+extension SearchEventsViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return tableView.dequeueReusableHeaderFooterView(withIdentifier: "reuseSearchheader")
+    }
+    
+}
+
+// MARK: - DZNEmptyDataSetSource
+
+extension SearchEventsViewController: DZNEmptyDataSetSource {
+    
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        return NSAttributedString(string: "Search Events", attributes: Constants.App.Appearance.EmptyDatasets.titleStringAttributes)
+    }
+    
+    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        return NSAttributedString(string: "Find events by name", attributes: Constants.App.Appearance.EmptyDatasets.descriptionStringAttributes)
+    }
+    
+    func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
+        return #imageLiteral(resourceName: "search_events")
+    }
+    
+}
+
+// MARK: - DZNEmptyDataSetDelegate
+
+extension SearchEventsViewController: DZNEmptyDataSetDelegate {
+    
+    func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView!) -> Bool {
+        return true
+    }
+    
+}
+
+// MARK: - ReachabilityAware
+
+extension SearchEventsViewController: ReachabilityAware {
+    
+    func setReachabilityState(reachable: Bool) {
+        searchBar.isUserInteractionEnabled = reachable
+    }
+    
+    func checkReachability() {
+        if let reachable = isReachable() {
+            setReachabilityState(reachable: reachable)
+        }
+    }
+    
+    func reachabilityChanged(reachable: Bool) {
+        setReachabilityState(reachable: reachable)
+    }
+    
 }

@@ -13,7 +13,7 @@ import Applozic
 import PKHUD
 import RSKImageCropper
 
-class ProfileViewController: UITableViewController, UITextViewDelegate {
+class ProfileViewController: UITableViewController {
     
     @IBOutlet weak var profilePhotoImageView: ProfilePhotoImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -33,9 +33,10 @@ class ProfileViewController: UITableViewController, UITextViewDelegate {
     fileprivate let sectionInsets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
     
     fileprivate var previousBio: String?
+    var reachabilityObserver: AnyObject?
     
     let imagePickerController = UIImagePickerController()
-    var rskImageCropper: RSKImageCropViewController?
+    var rskImageCropper: RSKImageCropViewController = RSKImageCropViewController()
     
     @IBAction func dismiss(sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
@@ -49,6 +50,17 @@ class ProfileViewController: UITableViewController, UITextViewDelegate {
         photosCollectionView.dataSource = self
         photosCollectionView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPress)))
         imagePickerController.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        startMonitoringReachability()
+        checkReachability()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        stopMonitoringReachability()
     }
     
     func setupDataSources() {
@@ -166,49 +178,9 @@ class ProfileViewController: UITableViewController, UITextViewDelegate {
     override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         if section == 0 {
             view.isHidden = true
+        } else if let reachable = isReachable(), !reachable, section == 1 {
+            view.isHidden = true
         }
-    }
-    
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        previousBio = textView.text
-        if bioTableViewCell.bioTextView.text == bioTextViewPlaceholderText {
-            bioTableViewCell.bioTextView.text = ""
-            bioTableViewCell.bioTextView.textColor = UIColor.black
-        }
-        tableView.footerView(forSection: 0)?.isHidden = false
-        setBioFooter(count: bioTableViewCell.bioTextView.text.characters.count)
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        let newBio = bioTableViewCell.bioTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-        Woojo.User.current.value?.profile.setDescription(description: newBio, completion: { error in
-            if error != nil {
-                self.bioTableViewCell.bioTextView.text = self.previousBio
-            }
-        })
-        self.tableView.footerView(forSection: 0)?.isHidden = true
-        if bioTableViewCell.bioTextView.text == "" {
-            bioTableViewCell.bioTextView.text = bioTextViewPlaceholderText
-            bioTableViewCell.bioTextView.textColor = UIColor.lightGray
-        } else {
-            bioTableViewCell.bioTextView.text = newBio
-            textViewDidChange(bioTableViewCell.bioTextView)
-        }
-    }
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
-        let numberOfChars = newText.characters.count
-        return numberOfChars <= 250 || numberOfChars < textView.text.characters.count
-    }
-    
-    func textViewDidChange(_ textView: UITextView) {
-        let currentOffset = tableView.contentOffset
-        UIView.setAnimationsEnabled(false)
-        tableView.beginUpdates()
-        tableView.endUpdates()
-        UIView.setAnimationsEnabled(true)
-        tableView.setContentOffset(currentOffset, animated: false)
     }
     
     func tap(gesture: UITapGestureRecognizer) {
@@ -216,8 +188,12 @@ class ProfileViewController: UITableViewController, UITextViewDelegate {
     }
     
     func longPress(gesture: UILongPressGestureRecognizer) {
+        if let reachable = isReachable(), !reachable {
+            photosCollectionView.cancelInteractiveMovement()
+            return
+        }
+        
         switch(gesture.state) {
-            
         case UIGestureRecognizerState.began:
             guard let selectedIndexPath = self.photosCollectionView.indexPathForItem(at: gesture.location(in: self.photosCollectionView)) else {
                 break
@@ -275,9 +251,11 @@ class ProfileViewController: UITableViewController, UITextViewDelegate {
 }
 
 // MARK: - UICollectionViewDelegate
+
 extension ProfileViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let reachable = isReachable(), !reachable { return }
         if indexPath.row == 0 { return }
         if let cell = collectionView.cellForItem(at: indexPath) as? ProfilePhotoCollectionViewCell {
             if cell.photo != nil {
@@ -339,6 +317,7 @@ extension ProfileViewController: UICollectionViewDelegate {
 }
 
 // MARK: - UICollectionViewDataSource
+
 extension ProfileViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -353,15 +332,17 @@ extension ProfileViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ProfilePhotoCollectionViewCell
         if let photos = Woojo.User.current.value?.profile.photos.value, let photo = photos[indexPath.row] {
             cell.photo = photo
+            cell.imageView.contentMode = .scaleAspectFill
             cell.imageView.image = photo.images[User.Profile.Photo.Size.thumbnail]
             cell.photo?.download(size: .thumbnail) {
                 cell.imageView.image = photo.images[User.Profile.Photo.Size.thumbnail]
             }
         } else {
             cell.photo = nil
-            cell.imageView.image = nil
+            cell.imageView.contentMode = .bottomRight
+            cell.imageView.image = #imageLiteral(resourceName: "plus")
         }
-        cell.imageView.layer.cornerRadius = 10.0
+        cell.imageView.layer.cornerRadius = 12.0
         cell.imageView.layer.masksToBounds = true
         return cell
     }
@@ -373,6 +354,7 @@ extension ProfileViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        if let reachable = isReachable(), !reachable { return false }
         var canMove = false
         if let cell = collectionView.cellForItem(at: indexPath) as? ProfilePhotoCollectionViewCell {
             if cell.photo != nil {
@@ -404,6 +386,7 @@ extension ProfileViewController: UICollectionViewDataSource {
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
+
 extension ProfileViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -424,44 +407,127 @@ extension ProfileViewController: UICollectionViewDelegateFlowLayout {
     
 }
 
+// MARK: - UIImagePickerControllerDelegate
+
 extension ProfileViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            rskImageCropper = RSKImageCropViewController(image: pickedImage)
-            rskImageCropper?.maskLayerStrokeColor = UIColor.white
-            rskImageCropper?.delegate = self
-            rskImageCropper?.avoidEmptySpaceAroundImage = true
-            rskImageCropper?.cropMode = .square
-            self.imagePickerController.pushViewController(rskImageCropper!, animated: true)
+            rskImageCropper.originalImage = pickedImage
+            rskImageCropper.maskLayerStrokeColor = UIColor.white
+            rskImageCropper.delegate = self
+            rskImageCropper.avoidEmptySpaceAroundImage = true
+            rskImageCropper.cropMode = .square
+            self.imagePickerController.pushViewController(rskImageCropper, animated: true)
         }
     }
 }
 
+// MARK: - UINavigationControllerDelegate
+
 extension ProfileViewController: UINavigationControllerDelegate {
-    
+    // Required for UIImagePickerController
 }
+
+// MARK: - RSKIMageCropViewControllerDelegate
 
 extension ProfileViewController: RSKImageCropViewControllerDelegate {
     
     func imageCropViewControllerDidCancelCrop(_ controller: RSKImageCropViewController) {
-        _ = rskImageCropper?.navigationController?.popViewController(animated: true)
+        _ = rskImageCropper.navigationController?.popViewController(animated: true)
     }
     
     func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect) {
-        HUD.show(.progress)
-        if let selectedIndex = photosCollectionView.indexPathsForSelectedItems?[0].row {
-            Woojo.User.current.value?.profile.setPhoto(photo: croppedImage, id: UUID().uuidString, index: selectedIndex) { photo, error in
-                if error != nil {
-                    HUD.show(.labeledError(title: "Error", subtitle: "Failed to add photo"))
-                    HUD.hide(afterDelay: 1.0)
-                } else {
-                    self.navigationController?.dismiss(animated: true, completion: nil)
-                    HUD.show(.labeledSuccess(title: "Success", subtitle: "Photo added!"))
-                    HUD.hide(afterDelay: 1.0)
+        if let reachable = isReachable(), reachable {
+            HUD.show(.progress)
+            if let selectedIndex = photosCollectionView.indexPathsForSelectedItems?[0].row {
+                Woojo.User.current.value?.profile.setPhoto(photo: croppedImage, id: UUID().uuidString, index: selectedIndex) { photo, error in
+                    if error != nil {
+                        HUD.show(.labeledError(title: "Error", subtitle: "Failed to add photo"))
+                        HUD.hide(afterDelay: 1.0)
+                    } else {
+                        self.navigationController?.dismiss(animated: true, completion: nil)
+                        HUD.show(.labeledSuccess(title: "Success", subtitle: "Photo added!"))
+                        HUD.hide(afterDelay: 1.0)
+                    }
+                    self.photosCollectionView.reloadItems(at: [IndexPath(row: selectedIndex, section: 0)])
                 }
-                self.photosCollectionView.reloadItems(at: [IndexPath(row: selectedIndex, section: 0)])
             }
+        } else {
+            HUD.show(.labeledError(title: "No internet", subtitle: nil))
+            HUD.hide(afterDelay: 2.0)
         }
     }
     
 }
+
+// MARK: - UITextViewDelegate
+
+extension ProfileViewController: UITextViewDelegate {
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        previousBio = textView.text
+        if bioTableViewCell.bioTextView.text == bioTextViewPlaceholderText {
+            bioTableViewCell.bioTextView.text = ""
+            bioTableViewCell.bioTextView.textColor = UIColor.black
+        }
+        tableView.footerView(forSection: 0)?.isHidden = false
+        setBioFooter(count: bioTableViewCell.bioTextView.text.characters.count)
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        let newBio = bioTableViewCell.bioTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        Woojo.User.current.value?.profile.setDescription(description: newBio, completion: { error in
+            if error != nil {
+                self.bioTableViewCell.bioTextView.text = self.previousBio
+            }
+        })
+        self.tableView.footerView(forSection: 0)?.isHidden = true
+        if bioTableViewCell.bioTextView.text == "" {
+            bioTableViewCell.bioTextView.text = bioTextViewPlaceholderText
+            bioTableViewCell.bioTextView.textColor = UIColor.lightGray
+        } else {
+            bioTableViewCell.bioTextView.text = newBio
+            textViewDidChange(bioTableViewCell.bioTextView)
+        }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.characters.count
+        return numberOfChars <= 250 || numberOfChars < textView.text.characters.count
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        let currentOffset = tableView.contentOffset
+        UIView.setAnimationsEnabled(false)
+        tableView.beginUpdates()
+        tableView.endUpdates()
+        UIView.setAnimationsEnabled(true)
+        tableView.setContentOffset(currentOffset, animated: false)
+    }
+    
+}
+
+// MARK: - ReachabilityAware
+
+extension ProfileViewController: ReachabilityAware {
+    
+    func setReachabilityState(reachable: Bool) {
+        self.tableView.footerView(forSection: 1)?.isHidden = !reachable
+        for cell in self.photosCollectionView.visibleCells as! [ProfilePhotoCollectionViewCell] where cell.photo == nil {
+            cell.imageView.image = (reachable) ? #imageLiteral(resourceName: "plus") : nil
+        }
+    }
+    
+    func checkReachability() {
+        if let reachable = isReachable() {
+            setReachabilityState(reachable: reachable)
+        }
+    }
+    
+    func reachabilityChanged(reachable: Bool) {
+        setReachabilityState(reachable: reachable)
+    }
+    
+}
+

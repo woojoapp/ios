@@ -66,6 +66,33 @@ class ALChatManager: NSObject {
      
      }*/
     
+    func setup() {
+        if let currentUser = User.current.value {
+            let alUser : ALUser =  ALUser();
+            alUser.applicationId = Constants.App.Chat.applozicApplicationId
+            alUser.userId = currentUser.uid
+            alUser.displayName = currentUser.profile.displayName
+            currentUser.profile.photos.value[0]?.generatePhotoDownloadURL(size: .thumbnail) { url, error in
+                alUser.imageLink = url?.absoluteString
+                ALUserDefaultsHandler.setUserId(alUser.userId)
+                ALUserDefaultsHandler.setDisplayName(alUser.displayName)
+                ALUserDefaultsHandler.setApplicationKey(alUser.applicationId)
+                ALUserDefaultsHandler.setUserAuthenticationTypeId(Int16(APPLOZIC.rawValue))
+                ALUserDefaultsHandler.setProfileImageLink(alUser.imageLink)
+                
+                self.registerUser(alUser) { (response, error) in
+                    if let error = error {
+                        print("Failed to register Applozic user \(error)")
+                    } else {
+                        ALUserDefaultsHandler.setUserKeyString(response.userKey)
+                        ALUserDefaultsHandler.setDeviceKeyString(response.deviceKey)
+                        print("Successful Applozic user registration \(response.message), \(response.userKey), \(response.deviceKey)")
+                    }
+                }
+            }
+        }
+    }
+    
     class func isNilOrEmpty(_ string: NSString?) -> Bool {
         switch string {
         case .some(let nonNilString): return nonNilString.length == 0
@@ -423,7 +450,7 @@ class ALChatManager: NSObject {
         
         /********************************************* DEMAND/MISC SETTINGS  ********************************************/
         
-        ALApplozicSettings.setUnreadCountLabelBGColor(UIColor.red)
+        ALApplozicSettings.setUnreadCountLabelBGColor(UIColor(hexString: "#f6372b"))
         ALApplozicSettings.setCustomClassName("ALChatManager")                     /*  SET 3rd Party Class Name OR ALChatManager */
         ALUserDefaultsHandler.setFetchConversationPageSize(20)                     /*  SET MESSAGE LIST PAGE SIZE  */ // DEFAULT VALUE 20
         ALUserDefaultsHandler.setUnreadCountType(1)                                /*  SET UNRAED COUNT TYPE   */ // DEFAULT VALUE 0

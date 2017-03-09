@@ -12,10 +12,11 @@ import RxCocoa
 import DZNEmptyDataSet
 import PKHUD
 
-class MyEventsTableViewController: UITableViewController, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
+class MyEventsTableViewController: UITableViewController {
     
     var events: [Event] = []
     let disposeBag = DisposeBag()
+    var reachabilityObserver: AnyObject?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +46,13 @@ class MyEventsTableViewController: UITableViewController, DZNEmptyDataSetDelegat
         if events.count == 0 {
             loadFacebookEvents()
         }
+        startMonitoringReachability()
+        checkReachability()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        stopMonitoringReachability()
     }
 
     func loadFacebookEvents() {
@@ -83,31 +91,39 @@ class MyEventsTableViewController: UITableViewController, DZNEmptyDataSetDelegat
     // MARK: - Table view delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Tapped")
-        let event = self.events[indexPath.row]
-        if let isUserEvent = Woojo.User.current.value?.events.value.contains(where: { $0.id == event.id }) {
-            print(isUserEvent)
-            if let cell = tableView.cellForRow(at: indexPath) as? MyEventsTableViewCell {
-                if isUserEvent {
-                    HUD.show(.labeledProgress(title: "Remove Event", subtitle: "Removing event..."))
-                    Woojo.User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
-                        cell.checkView.isHidden = true
-                        tableView.reloadRows(at: [indexPath], with: .none)
-                        HUD.show(.labeledSuccess(title: "Remove Event", subtitle: "Event removed!"))
-                        HUD.hide(afterDelay: 1.0)
-                    })
-                } else {
-                    HUD.show(.labeledProgress(title: "Add Event", subtitle: "Adding event..."))
-                    Woojo.User.current.value?.add(event: event, completion: { (error: Error?) -> Void in
-                        cell.checkView.isHidden = false
-                        tableView.reloadRows(at: [indexPath], with: .none)
-                        HUD.show(.labeledSuccess(title: "Add Event", subtitle: "Event added!"))
-                        HUD.hide(afterDelay: 1.0)
-                    })
+        if let reachable = isReachable(), reachable {
+            print("Tapped")
+            let event = self.events[indexPath.row]
+            if let isUserEvent = Woojo.User.current.value?.events.value.contains(where: { $0.id == event.id }) {
+                print(isUserEvent)
+                if let cell = tableView.cellForRow(at: indexPath) as? MyEventsTableViewCell {
+                    if isUserEvent {
+                        HUD.show(.labeledProgress(title: "Remove Event", subtitle: "Removing event..."))
+                        Woojo.User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
+                            cell.checkView.isHidden = true
+                            tableView.reloadRows(at: [indexPath], with: .none)
+                            HUD.show(.labeledSuccess(title: "Remove Event", subtitle: "Event removed!"))
+                            HUD.hide(afterDelay: 1.0)
+                        })
+                    } else {
+                        HUD.show(.labeledProgress(title: "Add Event", subtitle: "Adding event..."))
+                        Woojo.User.current.value?.add(event: event, completion: { (error: Error?) -> Void in
+                            cell.checkView.isHidden = false
+                            tableView.reloadRows(at: [indexPath], with: .none)
+                            HUD.show(.labeledSuccess(title: "Add Event", subtitle: "Event added!"))
+                            HUD.hide(afterDelay: 1.0)
+                        })
+                    }
                 }
             }
         }
     }
+    
+}
+
+// MARK: - DZNEmptyDataSetSource
+
+extension MyEventsTableViewController: DZNEmptyDataSetSource {
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         return NSAttributedString(string: "My Events", attributes: Constants.App.Appearance.EmptyDatasets.titleStringAttributes)
@@ -121,8 +137,37 @@ class MyEventsTableViewController: UITableViewController, DZNEmptyDataSetDelegat
         return #imageLiteral(resourceName: "my_events")
     }
     
+}
+// MARK: - DZNEmptyDataSetDelegate
+
+extension MyEventsTableViewController: DZNEmptyDataSetDelegate {
+    
     func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView!) -> Bool {
         return true
     }
     
 }
+
+// MARK: - ReachabilityAware
+
+extension MyEventsTableViewController: ReachabilityAware {
+    
+    func setReachabilityState(reachable: Bool) {
+        //tableView.refreshControl?.endRefreshing()
+        if reachable {
+            loadFacebookEvents()
+        }
+    }
+    
+    func checkReachability() {
+        if let reachable = isReachable() {
+            setReachabilityState(reachable: reachable)
+        }
+    }
+    
+    func reachabilityChanged(reachable: Bool) {
+        setReachabilityState(reachable: reachable)
+    }
+    
+}
+

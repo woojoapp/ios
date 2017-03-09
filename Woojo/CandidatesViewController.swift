@@ -16,7 +16,6 @@ import RxCocoa
 import DOFavoriteButton
 import RPCircularProgress
 import Whisper
-import Applozic
 
 class CandidatesViewController: UIViewController {
     
@@ -26,16 +25,29 @@ class CandidatesViewController: UIViewController {
     @IBOutlet weak var loadingContainerView: UIView!
     @IBOutlet weak var loadingView: RPCircularProgress!
     
+    var reachabilityObserver: AnyObject?
+    
     var disposeBag = DisposeBag()
     
     var shouldApplyAppearAnimation = true
+    var ranOutOfCards = true
+    
+    let buttonsBackgroundColor = UIColor.black.withAlphaComponent(0.3)
     
     @IBAction func likePressed(_ sender: DOFavoriteButton) {
-        kolodaView?.swipe(.right)
+        likeButton.select()
+        set(button: passButton, enabled: false)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            self.kolodaView?.swipe(.right)
+        })
     }
     
     @IBAction func passPressed(_ sender: DOFavoriteButton) {
-        kolodaView?.swipe(.left)
+        passButton.select()
+        set(button: likeButton, enabled: false)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            self.kolodaView?.swipe(.left)
+        })
     }
     
     override func viewDidLoad() {
@@ -62,24 +74,50 @@ class CandidatesViewController: UIViewController {
         loadingView.layer.borderColor = UIColor.lightGray.cgColor
         loadingView.layer.cornerRadius = loadingView.frame.size.width / 2
         loadingView.layer.borderWidth = 1.0
+        
+        //loadingView.progressTintColor = view.tintColor
         loadingView.enableIndeterminate()
         
+        likeButton.layer.cornerRadius = likeButton.frame.width / 2
+        likeButton.layer.masksToBounds = true
+        set(button: likeButton, enabled: false)
+        
+        passButton.layer.cornerRadius = passButton.frame.width / 2
+        passButton.layer.masksToBounds = true
+        set(button: passButton, enabled: false)
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         startMonitoringReachability()
         checkReachability()
     }
     
-    deinit {
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         stopMonitoringReachability()
     }
     
     func hideKolodaAndShowLoading() {
-        self.kolodaView.isHidden = true
-        self.loadingContainerView.isHidden = false
+        kolodaView.isHidden = true
+        loadingContainerView.isHidden = false
+        set(button: likeButton, enabled: false)
+        set(button: passButton, enabled: false)
     }
     
     func showKolodaAndHideLoading() {
-        self.kolodaView.isHidden = false
-        self.loadingContainerView.isHidden = true
+        kolodaView.isHidden = false
+        loadingContainerView.isHidden = true
+        set(button: likeButton, enabled: true)
+        set(button: passButton, enabled: true)
+        likeButton.deselect()
+        passButton.deselect()
+    }
+    
+    func set(button: UIButton, enabled: Bool) {
+        button.isEnabled = enabled
+        button.alpha = (enabled) ? 1.0 : 0.3
     }
     
 }
@@ -92,15 +130,25 @@ extension CandidatesViewController: KolodaViewDelegate {
         switch direction {
         case .left:
             User.current.value?.candidates[index].pass()
-            passButton.select()
+            if !passButton.isSelected {
+                passButton.select()
+                set(button: likeButton, enabled: false)
+            }
         case .right:
             User.current.value?.candidates[index].like()
-            likeButton.select()
+            if !likeButton.isSelected {
+                likeButton.select()
+                set(button: passButton, enabled: false)
+            }
         default: break
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
             self.likeButton.deselect()
             self.passButton.deselect()
+            if !self.ranOutOfCards {
+                self.set(button: self.likeButton, enabled: true)
+                self.set(button: self.passButton, enabled: true)
+            }
         })
         User.current.value?.candidates.remove(at: index)
         kolodaView.removeCardInIndexRange(index..<index, animated: false)
@@ -108,15 +156,19 @@ extension CandidatesViewController: KolodaViewDelegate {
     }
     
     func kolodaShouldApplyAppearAnimation(_ koloda: KolodaView) -> Bool {
-        return self.shouldApplyAppearAnimation
+        return shouldApplyAppearAnimation
     }
     
     func kolodaDidRunOutOfCards(_ koloda: KolodaView) {
-        hideKolodaAndShowLoading()
+        ranOutOfCards = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            self.hideKolodaAndShowLoading()
+        })
     }
     
     func koloda(_ koloda: KolodaView, didShowCardAt index: Int) {
-        self.shouldApplyAppearAnimation = false
+        ranOutOfCards = false
+        shouldApplyAppearAnimation = false
     }
     
     func koloda(_ koloda: KolodaView, didSelectCardAt index: Int) {
@@ -206,22 +258,22 @@ extension CandidatesViewController: ReachabilityAware {
     
     func setReachabilityState(reachable: Bool) {
         if reachable {
-            if !self.shouldApplyAppearAnimation { showKolodaAndHideLoading() }
+            loadingView.progressTintColor = view.tintColor
+            if !self.shouldApplyAppearAnimation && !ranOutOfCards { showKolodaAndHideLoading() }
         } else {
             hideKolodaAndShowLoading()
+            loadingView.progressTintColor = .white
         }
-        likeButton.isHidden = !reachable
-        passButton.isHidden = !reachable
     }
     
     func checkReachability() {
-        if let reachability = getReachability() {
-            setReachabilityState(reachable: reachability.isReachable())
+        if let reachable = isReachable() {
+            setReachabilityState(reachable: reachable)
         }
     }
     
-    func reachabilityChanged(reachability: ALReachability) {
-        setReachabilityState(reachable: reachability.isReachable())
+    func reachabilityChanged(reachable: Bool) {
+        setReachabilityState(reachable: reachable)
     }
     
 }

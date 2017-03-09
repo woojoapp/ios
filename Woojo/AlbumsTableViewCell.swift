@@ -23,7 +23,7 @@ class AlbumsTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        self.thumbnailView.layer.cornerRadius = 10.0
+        self.thumbnailView.layer.cornerRadius = 12.0
         self.thumbnailView.layer.masksToBounds = true
     }
 
