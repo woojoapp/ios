@@ -51,7 +51,7 @@ class SearchEventsResultsTableViewCell: UITableViewCell {
         thumbnailView.layer.cornerRadius = 12.0
         thumbnailView.layer.masksToBounds = true
         if let pictureURL = event?.pictureURL {
-            thumbnailView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_40x40"))
+            thumbnailView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_40x40"), options: [.cacheMemoryOnly])
         } else {
             thumbnailView.image = #imageLiteral(resourceName: "placeholder_40x40")
         }

@@ -16,6 +16,7 @@ import RxCocoa
 import DOFavoriteButton
 import RPCircularProgress
 import Whisper
+import SDWebImage
 
 class CandidatesViewController: UIViewController {
     
@@ -42,7 +43,7 @@ class CandidatesViewController: UIViewController {
         })
     }
     
-    @IBAction func passPressed(_ sender: DOFavoriteButton) {
+    @IBAction func passPressed(_ sender: DOFavoriteButton) {        
         passButton.select()
         set(button: likeButton, enabled: false)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
@@ -75,7 +76,6 @@ class CandidatesViewController: UIViewController {
         loadingView.layer.cornerRadius = loadingView.frame.size.width / 2
         loadingView.layer.borderWidth = 1.0
         
-        //loadingView.progressTintColor = view.tintColor
         loadingView.enableIndeterminate()
         
         likeButton.layer.cornerRadius = likeButton.frame.width / 2
@@ -200,7 +200,7 @@ extension CandidatesViewController: KolodaViewDataSource {
             func setImage(image: UIImage?) {
                 DispatchQueue.main.async {
                     cardView.imageView.image = image
-                    if index == 0 {
+                    if let reachable = self.isReachable(), reachable, index == 0 {
                         self.showKolodaAndHideLoading()
                     }
                 }
@@ -236,6 +236,7 @@ extension CandidatesViewController: ShowsSettingsButton {
     
     func showSettings(sender : Any?) {
         if let settingsNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "SettingsNavigationController") {
+            print("CACHE SIZE & COUNT", SDImageCache.shared().getSize(), SDImageCache.shared().getDiskCount())
             self.present(settingsNavigationController, animated: true, completion: nil)
         }
     }
@@ -257,6 +258,7 @@ extension CandidatesViewController: CandidatesDelegate {
 extension CandidatesViewController: ReachabilityAware {
     
     func setReachabilityState(reachable: Bool) {
+        print("CANDDIATES REACHABLE", reachable)
         if reachable {
             loadingView.progressTintColor = view.tintColor
             if !self.shouldApplyAppearAnimation && !ranOutOfCards { showKolodaAndHideLoading() }

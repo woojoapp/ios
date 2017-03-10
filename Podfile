@@ -21,6 +21,7 @@ target 'Woojo' do
   pod 'FacebookShare'
 
   pod 'SDWebImage'
+  pod 'FirebaseUI/Storage'
 
   pod 'Koloda', :git=> 'https://github.com/woojoapp/Koloda.git', :branch => 'swift-3', :commit => '584d70b02a8fdc202d0c0a38c860da9a917fe7b2'
 

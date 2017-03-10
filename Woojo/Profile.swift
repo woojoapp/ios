@@ -14,6 +14,7 @@ import RxSwift
 import RxCocoa
 import Applozic
 import SDWebImage
+import FirebaseStorageUI
 
 extension User {
  
@@ -301,6 +302,13 @@ extension User.Profile {
         var index: Int
         var id: String
         
+        var refs: [Size:FIRStorageReference?] {
+            get {
+                return [.thumbnail:profile.storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(self.id).child(Constants.User.Profile.Photo.properties.thumbnail),
+                        .full:profile.storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(id).child(Constants.User.Profile.Photo.properties.full)]
+            }
+        }
+        
         enum Size: Int {
             case thumbnail = 100
             case full = 414
@@ -318,11 +326,14 @@ extension User.Profile {
         }
         
         func download(size: Size, completion: (() -> Void)? = nil) {
-            generatePhotoDownloadURL(size: size) { url, error in
-                SDWebImageManager.shared().downloadImage(with: url, options: [], progress: nil, completed: { image, _, _, _, _ in
-                    if let image = image {
+            if let s = refs[size],
+                let storageRef = s {
+                UIImageView().sd_setImage(with: storageRef, placeholderImage: #imageLiteral(resourceName: "placeholder_40x40"), completion: { image, error, cacheType, ref in
+                    if error == nil {
                         self.images[size] = image
                         completion?()
+                    } else {
+                        print("Error downloading image \(storageRef): \(error)")
                     }
                 })
             }
@@ -343,6 +354,17 @@ extension User.Profile {
             }
         }
         
+        func removeImageFromCache(size: Size) {
+            if let s = refs[size], let storageRef = s {
+                SDImageCache.shared().removeImage(forKey: storageRef.fullPath)
+            }
+        }
+        
+        func removeFromCache() {
+            removeImageFromCache(size: .thumbnail)
+            removeImageFromCache(size: .full)
+        }
+        
     }
     
     func downloadAllPhotos(size: User.Profile.Photo.Size, completion: (() -> Void)? = nil) {
@@ -357,6 +379,12 @@ extension User.Profile {
         }
         group.notify(queue: .main) {
             completion?()
+        }
+    }
+    
+    func removeAllPhotosFromCache() {
+        for photo in photos.value {
+            photo?.removeFromCache()
         }
     }
     

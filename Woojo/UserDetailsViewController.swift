@@ -57,6 +57,7 @@ class UserDetailsViewController: UIViewController {
         let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let unmatchButton = UIAlertAction(title: "Unmatch", style: .destructive, handler: { (action) -> Void in
             print("Unmatching")
+            // Don't forget to remove images from cache
         })
         let reportButton = UIAlertAction(title: "Report", style: .default, handler: { (action) -> Void in
             print("Reporting")

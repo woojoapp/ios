@@ -42,10 +42,12 @@ class NavigationController: UINavigationController, ReachabilityAware {
     
     func checkReachability() {
         if let reachable = isReachable(), reachable {
+            print("CHECK REACHABILITY", reachable)
             Whisper.hide(whisperFrom: self, after: 0.0, animate: false)
             showingReachableWhisper = false
             showingUnreachableWhisper = false
         } else {
+            print("CHECK REACHABILITY", false)
             Whisper.show(whisper: unreachableMessage, to: self, action: .present, animate: false)
             showingUnreachableWhisper = true
         }
@@ -55,6 +57,7 @@ class NavigationController: UINavigationController, ReachabilityAware {
         if handlingReachabilityChange { return }
         handlingReachabilityChange = true
         if reachable {
+            print("CHANGE REACHABILITY", reachable, showingUnreachableWhisper, showingReachableWhisper)
             if showingUnreachableWhisper && !showingReachableWhisper {
                 Whisper.hide(whisperFrom: self, after: 0.0, animate: true, completion: {
                     self.showingUnreachableWhisper = false
@@ -71,10 +74,15 @@ class NavigationController: UINavigationController, ReachabilityAware {
                 handlingReachabilityChange = false
             }
         } else {
-            Whisper.show(whisper: unreachableMessage, to: self, action: .present, animate: true, completion: {
-                self.handlingReachabilityChange = false
-            })
-            showingUnreachableWhisper = true
+            print("CHANGE REACHABILITY", reachable, showingUnreachableWhisper, showingReachableWhisper)
+            if !showingUnreachableWhisper {
+                Whisper.show(whisper: unreachableMessage, to: self, action: .present, animate: true, completion: {
+                    self.handlingReachabilityChange = false
+                })
+                showingUnreachableWhisper = true
+            } else {
+                handlingReachabilityChange = false
+            }
         }
     }
     

@@ -39,6 +39,7 @@ extension CurrentUser {
         func pass(completion: ((Error?) -> Void)? = nil) {
             // Pass on the candidate
             Woojo.User.current.value?.pass(candidate: self.uid) { error in
+                self.profile.removeAllPhotosFromCache()
                 // Remove it from the list
                 self.remove(completion: completion)
             }
