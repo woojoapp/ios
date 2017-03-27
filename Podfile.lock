@@ -28,21 +28,21 @@ PODS:
     - FBSDKCoreKit
   - FBSDKShareKit (4.19.0):
     - FBSDKCoreKit
-  - Firebase/Auth (3.13.0):
+  - Firebase/Auth (3.15.0):
     - Firebase/Core
     - FirebaseAuth (= 3.1.1)
-  - Firebase/Core (3.13.0):
+  - Firebase/Core (3.15.0):
     - FirebaseAnalytics (= 3.7.0)
-    - FirebaseCore (= 3.5.0)
-  - Firebase/Database (3.13.0):
+    - FirebaseCore (= 3.5.2)
+  - Firebase/Database (3.15.0):
     - Firebase/Core
     - FirebaseDatabase (= 3.1.2)
-  - Firebase/RemoteConfig (3.13.0):
+  - Firebase/RemoteConfig (3.15.0):
     - Firebase/Core
-    - FirebaseRemoteConfig (= 1.3.3)
-  - Firebase/Storage (3.13.0):
+    - FirebaseRemoteConfig (= 1.3.4)
+  - Firebase/Storage (3.15.0):
     - Firebase/Core
-    - FirebaseStorage (= 1.0.6)
+    - FirebaseStorage (= 1.1.0)
   - FirebaseAnalytics (3.7.0):
     - FirebaseCore (~> 3.5)
     - FirebaseInstanceID (~> 1.0)
@@ -51,17 +51,17 @@ PODS:
     - FirebaseAnalytics (~> 3.7)
     - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (3.5.0):
+  - FirebaseCore (3.5.2):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
   - FirebaseDatabase (3.1.2):
     - FirebaseAnalytics (~> 3.7)
   - FirebaseInstanceID (1.0.9)
-  - FirebaseRemoteConfig (1.3.3):
+  - FirebaseRemoteConfig (1.3.4):
     - FirebaseAnalytics (~> 3.7)
     - FirebaseInstanceID (~> 1.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - Protobuf (~> 3.1)
-  - FirebaseStorage (1.0.6):
+  - FirebaseStorage (1.1.0):
     - FirebaseAnalytics (~> 3.7)
     - GTMSessionFetcher/Core (~> 1.1)
   - FirebaseUI/Storage (2.0.0):
@@ -77,7 +77,7 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.1)
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
-  - GTMSessionFetcher/Core (1.1.8)
+  - GTMSessionFetcher/Core (1.1.9)
   - HMSegmentedControl (1.5.3)
   - ImageSlideshow (1.0.0):
     - ImageSlideshow/Core (= 1.0.0)
@@ -99,33 +99,35 @@ PODS:
   - Whisper (4.0.0)
 
 DEPENDENCIES:
-  - Applozic
-  - Bolts
-  - DOFavoriteButton (from `https://github.com/sveinhal/DOFavoriteButton`)
-  - DZNEmptyDataSet
-  - FacebookCore
-  - FacebookLogin
-  - FacebookShare
+  - Applozic (= 3.8.3)
+  - Bolts (= 1.8.4)
+  - DOFavoriteButton (from `https://github.com/sveinhal/DOFavoriteButton`, commit `ec6dce39c54e8f6174ffabcd0002343f9caa424f`, branch `master`)
+  - DZNEmptyDataSet (= 1.8.1)
+  - FacebookCore (= 0.2.0)
+  - FacebookLogin (= 0.2.0)
+  - FacebookShare (= 0.2.0)
   - Firebase/Auth
-  - Firebase/Core
+  - Firebase/Core (= 3.15.0)
   - Firebase/Database
   - Firebase/RemoteConfig
   - Firebase/Storage
-  - FirebaseUI/Storage
-  - HMSegmentedControl
-  - ImageSlideshow
+  - FirebaseUI/Storage (= 2.0.0)
+  - HMSegmentedControl (= 1.5.3)
+  - ImageSlideshow (= 1.0.0)
   - Koloda (from `https://github.com/woojoapp/Koloda.git`, commit `584d70b02a8fdc202d0c0a38c860da9a917fe7b2`, branch `swift-3`)
-  - NMRangeSlider
-  - PKHUD (~> 4.0)
-  - RPCircularProgress
-  - RSKImageCropper
-  - RxCocoa
-  - RxSwift
-  - SDWebImage
+  - NMRangeSlider (= 1.2.1)
+  - PKHUD (= 4.2.0)
+  - RPCircularProgress (= 0.3.0)
+  - RSKImageCropper (= 1.6.0)
+  - RxCocoa (= 3.2.0)
+  - RxSwift (= 3.2.0)
+  - SDWebImage (= 3.8.2)
   - Whisper (from `https://github.com/woojoapp/Whisper.git`)
 
 EXTERNAL SOURCES:
   DOFavoriteButton:
+    :branch: master
+    :commit: ec6dce39c54e8f6174ffabcd0002343f9caa424f
     :git: https://github.com/sveinhal/DOFavoriteButton
   Koloda:
     :branch: swift-3
@@ -156,17 +158,17 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: 894b2b6eda6a4c8c4204e92e59cc355709ef045c
   FBSDKLoginKit: 83ca4d8f12a2022570af9fd6aacf27f6b425b99f
   FBSDKShareKit: 5953758366278430dc322d5cdc906db361ed7f81
-  Firebase: 5bc34d7b5ff5792e3386c8b28dc6265deeab0da4
+  Firebase: 2b1cdfba1cda8589f32904a697cc753322bff9d8
   FirebaseAnalytics: 0d1b7d81d5021155be37702a94ba1ec16d45365d
   FirebaseAuth: cc8a1824170adbd351edb7f994490a3fb5c18be6
-  FirebaseCore: 1c0a13bf59bb95cdd19577252499f0ec6a03e999
+  FirebaseCore: a024587e43778508700af8c6b1209f7c4516ba02
   FirebaseDatabase: 05c96d7b43a7368dc91c07791adb49683e1738d1
   FirebaseInstanceID: 2d0518b1378fe9d685ef40cbdd63d2fdc1125339
-  FirebaseRemoteConfig: f8625d0693b8a6737cdd867a9c6e9ea0e3c70a6a
-  FirebaseStorage: 63628572a5fde258f8e933b5fb42697468da0158
+  FirebaseRemoteConfig: af3003f4e8daa2bd1d5cf90d3cccc1fe224f8ed9
+  FirebaseStorage: a5c55b23741a49a72af8f30f95b3bb5ddbeda12d
   FirebaseUI: beda8ada3b190e960e25713266eda0b4776e7a97
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
-  GTMSessionFetcher: 6f8d8b28b7e345549ac471071608170b31cb4977
+  GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
   HMSegmentedControl: 7c6145afb50f26cec5f3243082f6f12b9f41318f
   ImageSlideshow: 2787e10e202b79ecf5348a205c539fcc5bb8e62b
   Koloda: 5aee353329cd1605540f1215a4c1975481dc7a37
@@ -181,6 +183,6 @@ SPEC CHECKSUMS:
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   Whisper: 08be92623311f8e53201e62e17f6d7b9599a4714
 
-PODFILE CHECKSUM: e36c85a496700aeeabfd6b3842c5f7a17c9426a4
+PODFILE CHECKSUM: 35fe85f11ebcda6fd4ee48ab9aaef5efcc276585
 
 COCOAPODS: 1.2.0
