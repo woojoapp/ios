@@ -12,8 +12,9 @@ import FacebookCore
 import FacebookLogin
 import RxCocoa
 import RxSwift
+import TTTAttributedLabel
 
-/*extension UIImage {
+extension UIImage {
     func drawInRectAspectFill(rect: CGRect) {
         let targetSize = rect.size
         if targetSize == CGSize.zero {
@@ -32,11 +33,17 @@ import RxSwift
         UIGraphicsEndImageContext()
         scaledImage?.draw(in: rect)
     }
-}*/
+}
 
-class LoginViewController: UIViewController, LoginButtonDelegate {
+class LoginViewController: UIViewController {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var facebookLabel: UILabel!
+    @IBOutlet weak var acceptLabel: TTTAttributedLabel!
+    @IBOutlet weak var smallPrintView: UIView!
+    
+    let termsText = "Terms & Conditions"
+    let privacyText = "Privacy Policy"
     
     override var modalTransitionStyle: UIModalTransitionStyle {
         get {
@@ -57,12 +64,12 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /*UIGraphicsBeginImageContext(self.view.frame.size)
-        #imageLiteral(resourceName: "background_square").drawInRectAspectFill(rect: self.view.bounds)
+        UIGraphicsBeginImageContext(UIScreen.main.bounds.size)
+        #imageLiteral(resourceName: "login_bg").drawInRectAspectFill(rect: UIScreen.main.bounds)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
+        self.view.backgroundColor = UIColor.init(patternImage: image!)
         
-        self.view.backgroundColor = UIColor.init(patternImage: image!)*/
         let readPermissions: [FacebookCore.ReadPermission] = [.publicProfile,
                                                               .userFriends,
                                                               .custom("user_events"),
@@ -71,10 +78,34 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
                                                               .custom("user_birthday")]
         let loginButton = LoginButton(readPermissions: readPermissions)
         loginButton.delegate = self
-        loginButton.center = self.view.center
+        loginButton.center = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
         self.view.addSubview(loginButton)
         
         activityIndicator.isHidden = true
+        
+        smallPrintView.layer.cornerRadius = 10.0
+        
+        acceptLabel.delegate = self
+        acceptLabel.activeLinkAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        acceptLabel.linkAttributes = [NSForegroundColorAttributeName: UIColor.white, NSUnderlineStyleAttributeName: 1]
+        
+        if let acceptString = acceptLabel.text {
+            
+            let acceptNSString = NSString(string: acceptString)
+            
+            let termsRange = acceptNSString.range(of: termsText)
+            if let termsURLString = Application.remoteConfig.configValue(forKey: Constants.App.RemoteConfig.Keys.termsURL).stringValue,
+                let termsURL = URL(string: termsURLString) {
+                acceptLabel.addLink(to: termsURL, with: termsRange)
+            }
+            
+            let privacyRange = acceptNSString.range(of: privacyText)
+            if let privacyURLString = Application.remoteConfig.configValue(forKey: Constants.App.RemoteConfig.Keys.privacyURL).stringValue,
+                let privacyURL = URL(string: privacyURLString) {
+                acceptLabel.addLink(to: privacyURL, with: privacyRange)
+            }
+            
+        }
         
         let activityDriver = Woojo.User.current.asObservable()
             .flatMap { user -> Observable<Bool> in
@@ -89,26 +120,13 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
         activityDriver
             .drive(self.activityIndicator.rx.isAnimating)
             .addDisposableTo(disposeBag)
-        
-        /*activityDriver
-            .map{ !$0 }
-            .drive(self.activityIndicator.rx.isHidden)
-            .addDisposableTo(disposeBag)*/
-        
-        // Do any additional setup after loading the view.
     }
 
-    /*
-    // MARK: - Navigation
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    // MARK: - LoginButtonDelegate
+// MARK: - LoginButtonDelegate
+
+extension LoginViewController: LoginButtonDelegate {
     
     func loginButtonDidCompleteLogin(_ loginButton: LoginButton, result: LoginResult) {
         activityIndicator.startAnimating()
@@ -119,7 +137,6 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
             FIRAuth.auth()?.signIn(with: credential) { (user, error) in
                 if let user = user {
                     print("Firebase login success \(user.uid)")
-                    //self.dismiss(animated: true, completion: nil)
                 }
                 if let error = error {
                     print("Firebase login failure \(error.localizedDescription)")
@@ -138,24 +155,33 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
         Woojo.User.current.value?.logOut()
         activityIndicator.stopAnimating()
     }
-    
-    
-    /*func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
-        if let error = error {
-            print(error.localizedDescription)
-            return
-        }
-        print("Button cmpleted")
-        let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
-        FIRAuth.auth()?.signIn(with: credential) { (user, error) in
-            if let user = user {
-                print("Login success \(user.uid)")
-                self.dismiss(animated: true, completion: nil)
-            }
-            if let error = error {
-                print("Login failure \(error.localizedDescription)")
-            }
-        }
-    }*/
 
+}
+
+// MARK: - TTTAttributedLabelDelegate
+
+extension LoginViewController: TTTAttributedLabelDelegate {
+    
+    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+        if let termsURLString = Application.remoteConfig.configValue(forKey: Constants.App.RemoteConfig.Keys.termsURL).stringValue,
+            url.absoluteString == termsURLString {
+            openPage(title: termsText, url: url)
+        } else {
+            if let privacyURLString = Application.remoteConfig.configValue(forKey: Constants.App.RemoteConfig.Keys.privacyURL).stringValue,
+                url.absoluteString == privacyURLString {
+                openPage(title: privacyText, url: url)
+            }
+        }
+    }
+    
+    func openPage(title: String, url: URL?) {
+        let navigationController = UINavigationController()
+        if let aboutWebViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AboutWebViewController") as? AboutWebViewController {
+            aboutWebViewController.url = url
+            aboutWebViewController.navigationItem.title = title
+            navigationController.pushViewController(aboutWebViewController, animated: false)
+            self.present(navigationController, animated: true, completion: nil)
+        }
+    }
+    
 }

@@ -39,6 +39,7 @@ target 'Woojo' do
   pod 'RPCircularProgress', '0.3.0'
   pod 'ImageSlideshow', '1.0.0'
   pod 'Whisper', :git=> 'https://github.com/woojoapp/Whisper.git', :tag => 'woojo2.0'
+  pod 'TTTAttributedLabel', '2.0.0'
 
   # Misc
   pod 'SDWebImage', '3.8.2'

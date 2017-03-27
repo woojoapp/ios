@@ -56,10 +56,11 @@ class AboutTableViewController: UITableViewController {
     }
     
     func openPage(title: String, url: URL?) {
-        let aboutWebViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AboutWebViewController") as! AboutWebViewController
-        aboutWebViewController.url = url
-        aboutWebViewController.navigationItem.title = title
-        self.navigationController?.pushViewController(aboutWebViewController, animated: true)
+        if let aboutWebViewController = self.storyboard?.instantiateViewController(withIdentifier: "AboutWebViewController") as? AboutWebViewController {
+            aboutWebViewController.url = url
+            aboutWebViewController.navigationItem.title = title
+            self.navigationController?.pushViewController(aboutWebViewController, animated: true)
+        }
     }
     
     @IBOutlet weak var tableHeaderViewWrapper: UIView!
