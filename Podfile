@@ -29,16 +29,16 @@ target 'Woojo' do
   pod 'RxCocoa', '3.2.0'
 
   # UI
-  pod 'Koloda', :git=> 'https://github.com/woojoapp/Koloda.git', :branch => 'swift-3', :commit => '584d70b02a8fdc202d0c0a38c860da9a917fe7b2'
+  pod 'Koloda', :git=> 'https://github.com/woojoapp/Koloda.git', :branch => 'swift-3', :tag => 'woojo2.0'
   pod 'NMRangeSlider', '1.2.1'
   pod 'RSKImageCropper', '1.6.0'
   pod 'PKHUD', '4.2.0'
   pod 'DZNEmptyDataSet', '1.8.1' 
   pod 'HMSegmentedControl', '1.5.3'
-  pod 'DOFavoriteButton', :git=>'https://github.com/sveinhal/DOFavoriteButton', :branch => 'master', :commit => 'ec6dce39c54e8f6174ffabcd0002343f9caa424f'
+  pod 'DOFavoriteButton', :git=>'https://github.com/woojoapp/DOFavoriteButton', :tag => 'woojo2.0'
   pod 'RPCircularProgress', '0.3.0'
   pod 'ImageSlideshow', '1.0.0'
-  pod 'Whisper', :git=> 'https://github.com/woojoapp/Whisper.git'
+  pod 'Whisper', :git=> 'https://github.com/woojoapp/Whisper.git', :tag => 'woojo2.0'
 
   # Misc
   pod 'SDWebImage', '3.8.2'

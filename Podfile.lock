@@ -101,7 +101,7 @@ PODS:
 DEPENDENCIES:
   - Applozic (= 3.8.3)
   - Bolts (= 1.8.4)
-  - DOFavoriteButton (from `https://github.com/sveinhal/DOFavoriteButton`, commit `ec6dce39c54e8f6174ffabcd0002343f9caa424f`, branch `master`)
+  - DOFavoriteButton (from `https://github.com/woojoapp/DOFavoriteButton`, tag `woojo2.0`)
   - DZNEmptyDataSet (= 1.8.1)
   - FacebookCore (= 0.2.0)
   - FacebookLogin (= 0.2.0)
@@ -114,7 +114,7 @@ DEPENDENCIES:
   - FirebaseUI/Storage (= 2.0.0)
   - HMSegmentedControl (= 1.5.3)
   - ImageSlideshow (= 1.0.0)
-  - Koloda (from `https://github.com/woojoapp/Koloda.git`, commit `584d70b02a8fdc202d0c0a38c860da9a917fe7b2`, branch `swift-3`)
+  - Koloda (from `https://github.com/woojoapp/Koloda.git`, branch `swift-3`, tag `woojo2.0`)
   - NMRangeSlider (= 1.2.1)
   - PKHUD (= 4.2.0)
   - RPCircularProgress (= 0.3.0)
@@ -122,30 +122,31 @@ DEPENDENCIES:
   - RxCocoa (= 3.2.0)
   - RxSwift (= 3.2.0)
   - SDWebImage (= 3.8.2)
-  - Whisper (from `https://github.com/woojoapp/Whisper.git`)
+  - Whisper (from `https://github.com/woojoapp/Whisper.git`, tag `woojo2.0`)
 
 EXTERNAL SOURCES:
   DOFavoriteButton:
-    :branch: master
-    :commit: ec6dce39c54e8f6174ffabcd0002343f9caa424f
-    :git: https://github.com/sveinhal/DOFavoriteButton
+    :git: https://github.com/woojoapp/DOFavoriteButton
+    :tag: woojo2.0
   Koloda:
     :branch: swift-3
-    :commit: 584d70b02a8fdc202d0c0a38c860da9a917fe7b2
     :git: https://github.com/woojoapp/Koloda.git
+    :tag: woojo2.0
   Whisper:
     :git: https://github.com/woojoapp/Whisper.git
+    :tag: woojo2.0
 
 CHECKOUT OPTIONS:
   DOFavoriteButton:
-    :commit: ec6dce39c54e8f6174ffabcd0002343f9caa424f
-    :git: https://github.com/sveinhal/DOFavoriteButton
+    :git: https://github.com/woojoapp/DOFavoriteButton
+    :tag: woojo2.0
   Koloda:
     :commit: 584d70b02a8fdc202d0c0a38c860da9a917fe7b2
     :git: https://github.com/woojoapp/Koloda.git
+    :tag: woojo2.0
   Whisper:
-    :commit: b9a86c7931a1701c12828d6c0c0c7c1cfc7002c2
     :git: https://github.com/woojoapp/Whisper.git
+    :tag: woojo2.0
 
 SPEC CHECKSUMS:
   Applozic: 9acedca0e6e5f759c10d4e1f42ed9127ba4705d6
@@ -183,6 +184,6 @@ SPEC CHECKSUMS:
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   Whisper: 08be92623311f8e53201e62e17f6d7b9599a4714
 
-PODFILE CHECKSUM: 35fe85f11ebcda6fd4ee48ab9aaef5efcc276585
+PODFILE CHECKSUM: c32def8225240f2f48fcc1d4397cfaa22467fcec
 
 COCOAPODS: 1.2.0
