@@ -42,9 +42,16 @@ extension User {
         }
         
         var isObserved = false
-        var birthdayFormatter: DateFormatter = {
+        
+        var birthdayFacebookFormatter: DateFormatter = {
             let birthdayFormatter = DateFormatter()
             birthdayFormatter.dateFormat = "MM/dd/yyyy"
+            return birthdayFormatter
+        }()
+        
+        var birthdayFirebaseFormatter: DateFormatter = {
+            let birthdayFormatter = DateFormatter()
+            birthdayFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZ"
             return birthdayFormatter
         }()
         
@@ -87,7 +94,7 @@ extension User {
                 city = value[Constants.User.Profile.properties.firebaseNodes.city] as? String
                 country = value[Constants.User.Profile.properties.firebaseNodes.country] as? String
                 if let birthdayString = value[Constants.User.Profile.properties.firebaseNodes.birthday] as? String {
-                    birthday = birthdayFormatter.date(from: birthdayString)
+                    birthday = birthdayFirebaseFormatter.date(from: birthdayString)
                 }
             } else {
                 print("Failed to create Profile from Firebase snapshot.", snapshot)
@@ -101,7 +108,7 @@ extension User {
                     gender = Gender(rawValue: genderString)
                 }
                 if let birthdayString = dict[Constants.User.Profile.properties.graphAPIKeys.birthday] as? String {
-                    birthday = birthdayFormatter.date(from: birthdayString)
+                    birthday = birthdayFacebookFormatter.date(from: birthdayString)
                 }
             } else {
                 print("Failed to create Profile from Graph API dictionary.", dict as Any)
@@ -158,7 +165,7 @@ extension User {
             dict[Constants.User.Profile.properties.firebaseNodes.photoID] = self.photoID
             dict[Constants.User.Profile.properties.firebaseNodes.gender] = self.gender?.rawValue
             if let birthday = birthday {
-                dict[Constants.User.Profile.properties.firebaseNodes.birthday] = birthdayFormatter.string(from: birthday)
+                dict[Constants.User.Profile.properties.firebaseNodes.birthday] = birthdayFirebaseFormatter.string(from: birthday)
             }
             if self.description.value != "" {
                 dict[Constants.User.Profile.properties.firebaseNodes.description] = self.description.value
