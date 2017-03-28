@@ -139,12 +139,17 @@ class CurrentUser: User {
                 print("Updated profile photo from Facebook")
                 self.profile.loadFromFirebase(completion: { _, _ in
                     print("Loaded profile")
-                    self.preferences.setDefaults()
-                    self.preferences.save { error in
-                        if let error = error {
-                            print("Failed to save default preferences to Firebase: \(error.localizedDescription)")
+                    self.addFacebookEvents() {
+                        print("Events added")
+                        // Make sure all event ids are written before adding preferences
+                        self.preferences.setDefaults()
+                        // This will trigger the candidates proposer through it's preferences change listener
+                        self.preferences.save { error in
+                            if let error = error {
+                                print("Failed to save default preferences to Firebase: \(error.localizedDescription)")
+                            }
+                            group.leave()
                         }
-                        group.leave()
                     }
                 })
             })
@@ -153,7 +158,12 @@ class CurrentUser: User {
         activity.setSignUp { _ in group.leave() }
         group.enter()
         activity.setLastSeen { _ in group.leave() }
-        group.enter()
+        group.notify(queue: .main, execute: {
+            completion?(nil)
+        })
+    }
+    
+    func addFacebookEvents(completion: (() -> Void)? = nil) {
         getEventsFromFacebook { events in
             let saveEventsGroup = DispatchGroup()
             for event in events {
@@ -166,12 +176,9 @@ class CurrentUser: User {
                 }
             }
             saveEventsGroup.notify(queue: .main, execute: {
-                group.leave()
+                completion?()
             })
         }
-        group.notify(queue: .main, execute: {
-            completion?(nil)
-        })
     }
     
     // MARK: - Candidates
