@@ -31,7 +31,7 @@ target 'Woojo' do
   # UI
   pod 'Koloda', :git=> 'https://github.com/woojoapp/Koloda.git', :branch => 'swift-3', :tag => 'woojo2.0'
   pod 'NMRangeSlider', '1.2.1'
-  pod 'RSKImageCropper', '1.6.0'
+  pod 'RSKImageCropper', '1.6.1'
   pod 'PKHUD', '4.2.0'
   pod 'DZNEmptyDataSet', '1.8.1' 
   pod 'HMSegmentedControl', '1.5.3'

@@ -184,8 +184,11 @@ extension CurrentUser {
         }
         
         convenience init?(fromFirebase snapshot: FIRDataSnapshot) {
-            self.init(fromFirebase: snapshot)
-            self.type = .match
+            if let notification = InteractionNotification(fromFirebase: snapshot) {
+                self.init(notification: notification)
+            } else {
+                return nil
+            }
         }
         
     }

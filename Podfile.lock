@@ -89,7 +89,7 @@ PODS:
   - pop (1.0.9)
   - Protobuf (3.2.0)
   - RPCircularProgress (0.3.0)
-  - RSKImageCropper (1.6.0)
+  - RSKImageCropper (1.6.1)
   - RxCocoa (3.2.0):
     - RxSwift (~> 3.1)
   - RxSwift (3.2.0)
@@ -119,7 +119,7 @@ DEPENDENCIES:
   - NMRangeSlider (= 1.2.1)
   - PKHUD (= 4.2.0)
   - RPCircularProgress (= 0.3.0)
-  - RSKImageCropper (= 1.6.0)
+  - RSKImageCropper (= 1.6.1)
   - RxCocoa (= 3.2.0)
   - RxSwift (= 3.2.0)
   - SDWebImage (= 3.8.2)
@@ -180,13 +180,13 @@ SPEC CHECKSUMS:
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
   Protobuf: 745f59e122e5de98d4d7ef291e264a0eef80f58e
   RPCircularProgress: 46bee24642e0cb8de53f49e6c85733b9c45dee33
-  RSKImageCropper: 6903235c7a8a79acb1e1f3490e2c911b858f8208
+  RSKImageCropper: 0df8c99e77a8ea7ca7a8b83ef468556f31584254
   RxCocoa: ccdf43101a70407097a29082f648ba1676075b30
   RxSwift: 46574f70d416b7923c237195939cc488a7fbf3a0
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   Whisper: 08be92623311f8e53201e62e17f6d7b9599a4714
 
-PODFILE CHECKSUM: 36cd08361688bb1bd99f6a84c8337dccb791bcc0
+PODFILE CHECKSUM: 53add29dcdbb6ccecade4fc8502e197181ec126b
 
 COCOAPODS: 1.2.0
