@@ -112,11 +112,14 @@ class ChatViewController: ALChatViewController {
         
         HUD.hide()
         
-        //self.navigationController?.delegate = self
+        if let uid = User.current.value?.uid,
+            let analyticsEventParameters = [Constants.Analytics.Events.ChatDisplayed.Parameters.uid: uid,
+                                            Constants.Analytics.Events.ChatDisplayed.Parameters.otherId: self.contactIds] as? [String: String] {
+            Analytics.Log(event: Constants.Analytics.Events.ChatDisplayed.name, with: analyticsEventParameters)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        //print("CHAT VIEW WILL DISAPPEAR.. BUT DO NOTHING")
         self.sendMessageTextView.resignFirstResponder()
         self.label.isHidden = true
         self.label.alpha = 0.0
@@ -125,18 +128,12 @@ class ChatViewController: ALChatViewController {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
     }
     
-    /*override func viewDidDisappear(_ animated: Bool) {
-        print("CHAT VIEW DID DISAPPEAR.. BUT DO NOTHING")
-    }*/
-    
     func newMessage() {
         setNavigationItemTitle()
         scrollTableViewToBottom(withAnimation: true)
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        //super.scrollViewDidScroll(scrollView)
-        
         guard let navigationController = navigationController else { return }
         
         if scrollView == sendMessageTextView {
@@ -158,22 +155,16 @@ class ChatViewController: ALChatViewController {
         } else {
             self.loadEarlierAction.isHidden = true
         }
-
-        
-        /*if let navigationController = navigationController {
-            if scrollView.contentOffset.y == -(UIApplication.shared.statusBarFrame.height + navigationController.navigationBar.frame.height) {
-                loadEarlierAction.isHidden = false
-            }
-        }*/
     }
     
     func showProfile() {
-        let userDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserDetailsViewController") as! UserDetailsViewController
-        userDetailsViewController.buttonsType = .options
-        let user = User(uid: alContact.userId)
-        user.profile.loadFromFirebase { profile, error in
-            userDetailsViewController.user = user
-            self.present(userDetailsViewController, animated: true, completion: nil)
+        if let userDetailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserDetailsViewController") as? UserDetailsViewController {
+            userDetailsViewController.buttonsType = .options
+            let user = User(uid: alContact.userId)
+            user.profile.loadFromFirebase { profile, error in
+                userDetailsViewController.user = user
+                self.present(userDetailsViewController, animated: true, completion: nil)
+            }
         }
     }
     
@@ -217,9 +208,5 @@ class ChatViewController: ALChatViewController {
             return 0
         }
     }
-    
-    /*override func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        // Prevent setting the navigation item to keep initial appearance
-    }*/
     
 }

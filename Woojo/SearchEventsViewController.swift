@@ -115,6 +115,10 @@ class SearchEventsViewController: UIViewController {
             self.resultsTableView.reloadData()
             HUD.show(.labeledSuccess(title: "Remove Event", subtitle: "Event removed!"))
             HUD.hide(afterDelay: 1.0)
+            let analyticsEventParameters = [Constants.Analytics.Events.EventRemoved.Parameters.name: event.name,
+                                            Constants.Analytics.Events.EventRemoved.Parameters.id: event.id,
+                                            Constants.Analytics.Events.EventRemoved.Parameters.screen: String(describing: type(of: self))]
+            Analytics.Log(event: Constants.Analytics.Events.EventRemoved.name, with: analyticsEventParameters)
         })
     }
     
@@ -125,6 +129,10 @@ class SearchEventsViewController: UIViewController {
             self.resultsTableView.reloadData()
             HUD.show(.labeledSuccess(title: "Add Event", subtitle: "Event added!"))
             HUD.hide(afterDelay: 1.0)
+            let analyticsEventParameters = [Constants.Analytics.Events.EventAdded.Parameters.name: event.name,
+                                            Constants.Analytics.Events.EventAdded.Parameters.id: event.id,
+                                            Constants.Analytics.Events.EventAdded.Parameters.screen: String(describing: type(of: self))]
+            Analytics.Log(event: Constants.Analytics.Events.EventAdded.name, with: analyticsEventParameters)
         })
     }
     

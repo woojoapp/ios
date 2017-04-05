@@ -92,7 +92,6 @@ class MyEventsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let reachable = isReachable(), reachable {
-            print("Tapped")
             let event = self.events[indexPath.row]
             if let isUserEvent = Woojo.User.current.value?.events.value.contains(where: { $0.id == event.id }) {
                 print(isUserEvent)
@@ -104,6 +103,10 @@ class MyEventsTableViewController: UITableViewController {
                             tableView.reloadRows(at: [indexPath], with: .none)
                             HUD.show(.labeledSuccess(title: "Remove Event", subtitle: "Event removed!"))
                             HUD.hide(afterDelay: 1.0)
+                            let analyticsEventParameters = [Constants.Analytics.Events.EventRemoved.Parameters.name: event.name,
+                                                            Constants.Analytics.Events.EventRemoved.Parameters.id: event.id,
+                                                            Constants.Analytics.Events.EventRemoved.Parameters.screen: String(describing: type(of: self))]
+                            Analytics.Log(event: Constants.Analytics.Events.EventRemoved.name, with: analyticsEventParameters)
                         })
                     } else {
                         HUD.show(.labeledProgress(title: "Add Event", subtitle: "Adding event..."))
@@ -112,6 +115,10 @@ class MyEventsTableViewController: UITableViewController {
                             tableView.reloadRows(at: [indexPath], with: .none)
                             HUD.show(.labeledSuccess(title: "Add Event", subtitle: "Event added!"))
                             HUD.hide(afterDelay: 1.0)
+                            let analyticsEventParameters = [Constants.Analytics.Events.EventAdded.Parameters.name: event.name,
+                                                            Constants.Analytics.Events.EventAdded.Parameters.id: event.id,
+                                                            Constants.Analytics.Events.EventAdded.Parameters.screen: String(describing: type(of: self))]
+                            Analytics.Log(event: Constants.Analytics.Events.EventAdded.name, with: analyticsEventParameters)
                         })
                     }
                 }

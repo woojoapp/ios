@@ -267,6 +267,7 @@ extension ProfileViewController: UICollectionViewDelegate {
                             self.photosCollectionView.reloadItems(at: [indexPath])
                             HUD.show(.success)
                             HUD.hide(afterDelay: 1.0)
+                            Analytics.Log(event: Constants.Analytics.Events.PhotoRemoved.name)
                         }
                     }
                 })
@@ -377,6 +378,7 @@ extension ProfileViewController: UICollectionViewDataSource {
                 }
             }
         }
+        Analytics.Log(event: Constants.Analytics.Events.PhotosReordered.name)
     }
     
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
@@ -450,6 +452,7 @@ extension ProfileViewController: RSKImageCropViewControllerDelegate {
                         HUD.hide(afterDelay: 1.0)
                     }
                     self.photosCollectionView.reloadItems(at: [IndexPath(row: selectedIndex, section: 0)])
+                    Analytics.Log(event: Constants.Analytics.Events.PhotoAdded.name, with: [Constants.Analytics.Events.PhotoAdded.Parameters.source: "library"])
                 }
             }
         } else {
@@ -479,6 +482,8 @@ extension ProfileViewController: UITextViewDelegate {
         Woojo.User.current.value?.profile.setDescription(description: newBio, completion: { error in
             if error != nil {
                 self.bioTableViewCell.bioTextView.text = self.previousBio
+            } else {
+                Analytics.Log(event: Constants.Analytics.Events.AboutUpdated.name)
             }
         })
         self.tableView.footerView(forSection: 0)?.isHidden = true

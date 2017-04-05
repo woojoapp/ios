@@ -87,11 +87,13 @@ class PreferencesViewController: UITableViewController, UIPickerViewDelegate, UI
     func saveAgeRange(_ rangeSlider: RangeSlider) {
         Woojo.User.current.value?.preferences.ageRange = ageRange
         savePreferences()
+        Analytics.Log(event: Constants.Analytics.Events.PreferencesAgeRangeUpdated.name)
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         Woojo.User.current.value?.preferences.gender = genderPickerData[row]
         savePreferences()
+        Analytics.Log(event: Constants.Analytics.Events.PreferencesGenderUpdated.name)
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {

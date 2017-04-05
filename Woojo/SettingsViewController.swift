@@ -26,6 +26,7 @@ class SettingsViewController: UITableViewController {
         let logoutAlert = UIAlertController(title: "Logout", message: "Confirm you want to logout?", preferredStyle: .alert)
         logoutAlert.addAction(UIAlertAction(title: "Logout", style: .default) { _ in
             self.dismiss(animated: true, completion: nil)
+            Analytics.Log(event: Constants.Analytics.Events.LoggedOut.name)
             Woojo.User.current.value?.logOut()
         })
         logoutAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -36,6 +37,7 @@ class SettingsViewController: UITableViewController {
         let deleteAccountAlert = UIAlertController(title: "Delete Account", message: "Confirm you want to delete your account?", preferredStyle: .alert)
         deleteAccountAlert.addAction(UIAlertAction(title: "Delete", style: .destructive) { _ in
             self.dismiss(animated: true, completion: nil)
+            Analytics.Log(event: Constants.Analytics.Events.AccountDeleted.name)
             Woojo.User.current.value?.deleteAccount()
         })
         deleteAccountAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))

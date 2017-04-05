@@ -64,6 +64,11 @@
 		85DC3D791DFF4A6300116159 /* ProfilePhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D781DFF4A6300116159 /* ProfilePhotoCollectionViewCell.swift */; };
 		85DC3D7B1E00088F00116159 /* UserAlbumsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D7A1E00088F00116159 /* UserAlbumsGraphRequest.swift */; };
 		85DC3D7D1E0008B900116159 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D7C1E0008B900116159 /* Album.swift */; };
+		85DD5EE71E9517FF008DF346 /* Constants+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD5EE61E9517FF008DF346 /* Constants+Analytics.swift */; };
+		85DD5EE91E951CA3008DF346 /* Constants+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD5EE81E951CA3008DF346 /* Constants+App.swift */; };
+		85DD5EEB1E951D19008DF346 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD5EEA1E951D19008DF346 /* Analytics.swift */; };
+		85DD5EED1E954C4A008DF346 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85DD5EEC1E954C4A008DF346 /* AdSupport.framework */; };
+		85DD5EEF1E954D6B008DF346 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85DD5EEE1E954D6B008DF346 /* iAd.framework */; };
 		85E5D4C51DD52D73003E2376 /* ALChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4C41DD52D73003E2376 /* ALChatManager.swift */; };
 		85E5D4CD1DD9EFBC003E2376 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4CC1DD9EFBC003E2376 /* CurrentUser.swift */; };
 		85E5D4CF1DD9FA41003E2376 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4CE1DD9FA41003E2376 /* Gender.swift */; };
@@ -136,6 +141,11 @@
 		85DC3D781DFF4A6300116159 /* ProfilePhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		85DC3D7A1E00088F00116159 /* UserAlbumsGraphRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAlbumsGraphRequest.swift; sourceTree = "<group>"; };
 		85DC3D7C1E0008B900116159 /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
+		85DD5EE61E9517FF008DF346 /* Constants+Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Constants+Analytics.swift"; sourceTree = "<group>"; };
+		85DD5EE81E951CA3008DF346 /* Constants+App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Constants+App.swift"; sourceTree = "<group>"; };
+		85DD5EEA1E951D19008DF346 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
+		85DD5EEC1E954C4A008DF346 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		85DD5EEE1E954D6B008DF346 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		85E5D4C41DD52D73003E2376 /* ALChatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ALChatManager.swift; sourceTree = "<group>"; };
 		85E5D4CC1DD9EFBC003E2376 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		85E5D4CE1DD9FA41003E2376 /* Gender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
@@ -156,6 +166,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85DD5EEF1E954D6B008DF346 /* iAd.framework in Frameworks */,
+				85DD5EED1E954C4A008DF346 /* AdSupport.framework in Frameworks */,
 				D4A39FA7A6A90074E8ADF2B7 /* Pods_Woojo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,6 +274,9 @@
 				85512B0C1DCB5B020072C1B8 /* Application.swift */,
 				85396F2A1E5F516F007EDB18 /* Notifier.swift */,
 				854DDAC01DE43E0E00655EFC /* Constants.swift */,
+				85DD5EEA1E951D19008DF346 /* Analytics.swift */,
+				85DD5EE81E951CA3008DF346 /* Constants+App.swift */,
+				85DD5EE61E9517FF008DF346 /* Constants+Analytics.swift */,
 				85407D9B1DF028D50033E696 /* Main.storyboard */,
 				85512B151DCB5B020072C1B8 /* Assets.xcassets */,
 				85512B171DCB5B020072C1B8 /* LaunchScreen.storyboard */,
@@ -380,6 +395,8 @@
 		DD7E3B4C401DB42693CCCB61 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				85DD5EEE1E954D6B008DF346 /* iAd.framework */,
+				85DD5EEC1E954C4A008DF346 /* AdSupport.framework */,
 				D5F606FAEF706B6471319465 /* Pods_Woojo.framework */,
 			);
 			name = Frameworks;
@@ -534,12 +551,14 @@
 				85DC3D6F1DF6CF8F00116159 /* ExploreEventsViewController.swift in Sources */,
 				85685F781DEC7B8D009BAEE0 /* SearchEventsResultsTableViewCell.swift in Sources */,
 				851CDBE81DDEF29900B887C0 /* Place.swift in Sources */,
+				85DD5EE91E951CA3008DF346 /* Constants+App.swift in Sources */,
 				85EB2EE61DE20DAE00F0A55C /* Activity.swift in Sources */,
 				85407DA41DF042A00033E696 /* CandidateCardView.swift in Sources */,
 				8506A8991DCBB9C000C18EC3 /* EventsTableViewCell.swift in Sources */,
 				854DDAC51DE47DE500655EFC /* User.swift in Sources */,
 				85407DA61DF1B0D00033E696 /* ProfilePhotoImageView.swift in Sources */,
 				858FEE421E02B5E600322E8E /* AlbumPhotosGraphRequest.swift in Sources */,
+				85DD5EE71E9517FF008DF346 /* Constants+Analytics.swift in Sources */,
 				85DC3D731DF70A6A00116159 /* Preferences.swift in Sources */,
 				854DDABF1DE3654E00655EFC /* MyEventsTableViewCell.swift in Sources */,
 				854DDAC11DE43E0E00655EFC /* Constants.swift in Sources */,
@@ -564,6 +583,7 @@
 				851CDBE61DDEF18A00B887C0 /* UserEventsGraphRequest.swift in Sources */,
 				85DC3D7B1E00088F00116159 /* UserAlbumsGraphRequest.swift in Sources */,
 				8506A8A21DCCA61600C18EC3 /* Candidate.swift in Sources */,
+				85DD5EEB1E951D19008DF346 /* Analytics.swift in Sources */,
 				85DC3D771DF81D6B00116159 /* BioTableViewCell.swift in Sources */,
 				858FEE441E04250C00322E8E /* AlbumPhotoCollectionViewCell.swift in Sources */,
 				85DC3D751DF7FDB700116159 /* ProfileViewController.swift in Sources */,

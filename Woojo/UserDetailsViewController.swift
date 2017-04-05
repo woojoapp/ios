@@ -36,7 +36,14 @@ class UserDetailsViewController: UIViewController {
     
     @IBAction func like() {
         set(button: passButton, enabled: false)
+        candidatesViewController?.likeButton.select() // Required for analytics event type disambiguation
         likeButton.select()
+        if let uid = user?.uid {
+            let analyticsEventParameters = [Constants.Analytics.Events.CandidateLiked.Parameters.uid: uid,
+                                            Constants.Analytics.Events.CandidateLiked.Parameters.type: "press",
+                                            Constants.Analytics.Events.CandidateLiked.Parameters.screen: String(describing: type(of: self))]
+            Analytics.Log(event: Constants.Analytics.Events.CandidateLiked.name, with: analyticsEventParameters)
+        }
         candidatesViewController?.kolodaView.swipe(.right)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
             self.dismiss(sender: self)
@@ -45,7 +52,14 @@ class UserDetailsViewController: UIViewController {
     
     @IBAction func pass() {
         set(button: likeButton, enabled: false)
+        candidatesViewController?.passButton.select() // Required for analytics event type disambiguation
         passButton.select()
+        if let uid = user?.uid {
+            let analyticsEventParameters = [Constants.Analytics.Events.CandidatePassed.Parameters.uid: uid,
+                                            Constants.Analytics.Events.CandidatePassed.Parameters.type: "press",
+                                            Constants.Analytics.Events.CandidatePassed.Parameters.screen: String(describing: type(of: self))]
+            Analytics.Log(event: Constants.Analytics.Events.CandidatePassed.name, with: analyticsEventParameters)
+        }
         candidatesViewController?.kolodaView.swipe(.left)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
             self.dismiss(sender: self)
@@ -123,6 +137,10 @@ class UserDetailsViewController: UIViewController {
                     }
                 }
                 
+            }
+            
+            carouselView.currentPageChanged = { (index) -> () in
+                Analytics.Log(event: Constants.Analytics.Events.CandidateDetailsPhotoChanged.name, with: [Constants.Analytics.Events.CandidateDetailsPhotoChanged.Parameters.uid: user.uid])
             }
             
         }

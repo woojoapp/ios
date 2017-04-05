@@ -39,14 +39,26 @@ class CandidatesViewController: UIViewController {
         likeButton.select()
         set(button: passButton, enabled: false)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            if let uid = User.current.value?.candidates[self.kolodaView.currentCardIndex].uid {
+                let analyticsEventParameters = [Constants.Analytics.Events.CandidateLiked.Parameters.uid: uid,
+                                                Constants.Analytics.Events.CandidateLiked.Parameters.type: "press",
+                                                Constants.Analytics.Events.CandidateLiked.Parameters.screen: String(describing: type(of: self))]
+                Analytics.Log(event: Constants.Analytics.Events.CandidateLiked.name, with: analyticsEventParameters)
+            }
             self.kolodaView?.swipe(.right)
         })
     }
     
-    @IBAction func passPressed(_ sender: DOFavoriteButton) {        
+    @IBAction func passPressed(_ sender: DOFavoriteButton) {
         passButton.select()
         set(button: likeButton, enabled: false)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            if let uid = User.current.value?.candidates[self.kolodaView.currentCardIndex].uid {
+                let analyticsEventParameters = [Constants.Analytics.Events.CandidatePassed.Parameters.uid: uid,
+                                                Constants.Analytics.Events.CandidatePassed.Parameters.type: "press",
+                                                Constants.Analytics.Events.CandidatePassed.Parameters.screen: String(describing: type(of: self))]
+                Analytics.Log(event: Constants.Analytics.Events.CandidatePassed.name, with: analyticsEventParameters)
+            }
             self.kolodaView?.swipe(.left)
         })
     }
@@ -133,12 +145,24 @@ extension CandidatesViewController: KolodaViewDelegate {
             if !passButton.isSelected {
                 passButton.select()
                 set(button: likeButton, enabled: false)
+                if let uid = User.current.value?.candidates[index].uid {
+                    let analyticsEventParameters = [Constants.Analytics.Events.CandidatePassed.Parameters.uid: uid,
+                                                    Constants.Analytics.Events.CandidatePassed.Parameters.type: "swipe",
+                                                    Constants.Analytics.Events.CandidatePassed.Parameters.screen: String(describing: type(of: self))]
+                    Analytics.Log(event: Constants.Analytics.Events.CandidatePassed.name, with: analyticsEventParameters)
+                }
             }
         case .right:
             User.current.value?.candidates[index].like()
             if !likeButton.isSelected {
                 likeButton.select()
                 set(button: passButton, enabled: false)
+                if let uid = User.current.value?.candidates[index].uid {
+                    let analyticsEventParameters = [Constants.Analytics.Events.CandidateLiked.Parameters.uid: uid,
+                                                    Constants.Analytics.Events.CandidateLiked.Parameters.type: "swipe",
+                                                    Constants.Analytics.Events.CandidateLiked.Parameters.screen: String(describing: type(of: self))]
+                    Analytics.Log(event: Constants.Analytics.Events.CandidateLiked.name, with: analyticsEventParameters)
+                }
             }
         default: break
         }
@@ -161,6 +185,7 @@ extension CandidatesViewController: KolodaViewDelegate {
     
     func kolodaDidRunOutOfCards(_ koloda: KolodaView) {
         ranOutOfCards = true
+        Analytics.Log(event: Constants.Analytics.Events.CandidatesDepleted.name)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
             self.hideKolodaAndShowLoading()
         })
@@ -177,6 +202,10 @@ extension CandidatesViewController: KolodaViewDelegate {
                 userDetailsViewController.user = candidate
                 userDetailsViewController.candidatesViewController = self
                 self.present(userDetailsViewController, animated: true, completion: nil)
+                if let uid = User.current.value?.candidates[index].uid {
+                    let analyticsEventParameters = [Constants.Analytics.Events.CandidateDetailsDisplayed.Parameters.uid: uid]
+                    Analytics.Log(event: Constants.Analytics.Events.CandidateDetailsDisplayed.name, with: analyticsEventParameters)
+                }
             }
         }
     }
@@ -236,7 +265,6 @@ extension CandidatesViewController: ShowsSettingsButton {
     
     func showSettings(sender : Any?) {
         if let settingsNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "SettingsNavigationController") {
-            print("CACHE SIZE & COUNT", SDImageCache.shared().getSize(), SDImageCache.shared().getDiskCount())
             self.present(settingsNavigationController, animated: true, completion: nil)
         }
     }
@@ -258,7 +286,6 @@ extension CandidatesViewController: CandidatesDelegate {
 extension CandidatesViewController: ReachabilityAware {
     
     func setReachabilityState(reachable: Bool) {
-        print("CANDDIATES REACHABLE", reachable)
         if reachable {
             loadingView.progressTintColor = view.tintColor
             if !self.shouldApplyAppearAnimation && !ranOutOfCards { showKolodaAndHideLoading() }

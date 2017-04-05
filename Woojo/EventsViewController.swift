@@ -12,6 +12,7 @@ import FirebaseDatabase
 import RxSwift
 import DZNEmptyDataSet
 import PKHUD
+import FacebookCore
 
 class EventsViewController: UITableViewController {
     
@@ -86,6 +87,10 @@ class EventsViewController: UITableViewController {
             if let cell = self.tableView.cellForRow(at: indexPath) as? EventsTableViewCell, let event = cell.event {
                 HUD.show(.labeledProgress(title: "Remove Event", subtitle: "Removing event..."))
                 Woojo.User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
+                    let analyticsEventParameters = [Constants.Analytics.Events.EventRemoved.Parameters.name: event.name,
+                                                    Constants.Analytics.Events.EventRemoved.Parameters.id: event.id,
+                                                    Constants.Analytics.Events.EventRemoved.Parameters.screen: String(describing: type(of: self))]
+                    Analytics.Log(event: Constants.Analytics.Events.EventAdded.name, with: analyticsEventParameters)
                     HUD.show(.labeledSuccess(title: "Remove Event", subtitle: "Event removed!"))
                     HUD.hide(afterDelay: 1.0)
                 })
