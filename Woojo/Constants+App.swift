@@ -19,7 +19,7 @@ extension Constants {
             }
         }
         struct Chat {
-            static let applozicApplicationId = "woojoa4cb24509376f2a59dd5e56caf935bf7"
+            static let applozicApplicationId = "11730f77a2a9608dba95cd86d60c498d0"
         }
         struct Appearance {
             struct EmptyDatasets {

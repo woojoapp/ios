@@ -100,7 +100,7 @@ class SearchEventsViewController: UIViewController {
                     } else {
                         self.add(event: event) { error in
                             if error == nil {
-                                cell.checkView.isHidden = false
+                                cell.checkView.isHidden = false                                
                             }
                         }
                     }

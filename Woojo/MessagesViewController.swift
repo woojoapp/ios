@@ -90,7 +90,14 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
         }
         report.backgroundColor = .orange
         
-        return [unmatch, report]
+        if let cell = tableView.cellForRow(at: editActionsForRowAt) as? ALContactCell,
+            let userName = cell.mUserNameLabel.text {
+            if userName.range(of: "from Woojo") == nil {
+                return [unmatch, report]
+            }
+        }
+        
+        return []
     }
     
 }

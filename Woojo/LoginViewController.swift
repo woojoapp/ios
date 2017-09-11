@@ -143,11 +143,11 @@ extension LoginViewController: LoginButtonDelegate {
                 }
             }
         case .failed(let error):
-            activityIndicator.stopAnimating()
             print("Facebook login error: \(error.localizedDescription)")
-        case .cancelled:
             activityIndicator.stopAnimating()
+        case .cancelled:
             print("Facebook login cancelled.")
+            activityIndicator.stopAnimating()
         }
     }
     

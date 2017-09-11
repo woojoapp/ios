@@ -56,7 +56,7 @@ extension Event {
     }()
     
     static func from(firebase snapshot: FIRDataSnapshot) -> Event? {
-        
+        print("BEFORE CHECKS", snapshot)
         if let value = snapshot.value as? [String:Any],
             let id = value[Constants.Event.properties.firebaseNodes.id] as? String,
             let name = value[Constants.Event.properties.firebaseNodes.name] as? String,
@@ -130,6 +130,7 @@ extension Event {
     static func get(for id: String, completion: ((Event?) -> Void)? = nil) {
         let ref = FIRDatabase.database().reference().child(Constants.Event.firebaseNode).child(id)
         ref.observeSingleEvent(of: .value, with: { snapshot in
+            print ("GETTING EVENT", id, ref.url, snapshot)
             completion?(from(firebase: snapshot))
         })
     }
@@ -145,7 +146,7 @@ extension Event {
             SearchEventsGraphRequest(query: query).start { response, result in
                 switch result {
                 case .success(let response):
-                    print(response)
+                    //print(response)
                     observer.onNext(response.events)
                     observer.onCompleted()
                 case .failed(let error):

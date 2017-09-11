@@ -414,6 +414,7 @@ extension ProfileViewController: UICollectionViewDelegateFlowLayout {
 extension ProfileViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            rskImageCropper = RSKImageCropViewController()
             rskImageCropper.originalImage = pickedImage
             rskImageCropper.maskLayerStrokeColor = UIColor.white
             rskImageCropper.delegate = self

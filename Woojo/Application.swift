@@ -29,6 +29,7 @@ class Application: UIResponder, UIApplicationDelegate {
     override init() {
         FIRApp.configure()
         FIRDatabase.database().persistenceEnabled = true
+        FIRAnalyticsConfiguration.sharedInstance().setAnalyticsCollectionEnabled(false)
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {

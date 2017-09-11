@@ -84,9 +84,9 @@ class CurrentUser: User {
     }
     
     func deleteAccount() {
-        print(ref)
         ref.removeValue()
         self.logOut()
+        FIRAuth.auth()!.currentUser?.delete(completion: nil)
     }
     
     func load(completion: (() -> Void)? = nil) {
@@ -131,8 +131,6 @@ class CurrentUser: User {
     }
     
     func performSignUpActions(completion: ((Error?) -> Void)? = nil) {
-        let group = DispatchGroup()
-        group.enter()
         profile.updateFromFacebook(completion: { _ in
             print("Updated profile data from Facebook")
             self.profile.updatePhotoFromFacebook(completion: { _ in
@@ -148,18 +146,18 @@ class CurrentUser: User {
                             if let error = error {
                                 print("Failed to save default preferences to Firebase: \(error.localizedDescription)")
                             }
-                            group.leave()
+                            let group = DispatchGroup()
+                            group.enter()
+                            self.activity.setSignUp { _ in group.leave() }
+                            group.enter()
+                            self.activity.setLastSeen { _ in group.leave() }
+                            group.notify(queue: .main, execute: {
+                                completion?(nil)
+                            })
                         }
                     }
                 })
             })
-        })
-        group.enter()
-        activity.setSignUp { _ in group.leave() }
-        group.enter()
-        activity.setLastSeen { _ in group.leave() }
-        group.notify(queue: .main, execute: {
-            completion?(nil)
         })
     }
     
@@ -365,11 +363,13 @@ class CurrentUser: User {
                     let nameRef = event.ref.child(Constants.Event.properties.firebaseNodes.name)
                     var listenerHandle: UInt = 0
                     listenerHandle = nameRef.observe(.value, with: { snapshot in
-                        print("ADDED CHILD UNDER EVENT", snapshot)
-                        if snapshot.value != nil {
+                        print("ADDED CHILD UNDER EVENT", snapshot.key, snapshot.exists())
+                        if snapshot.exists() {
                             nameRef.removeObserver(withHandle: listenerHandle)
                             print("Removed observer")
-                            //self.append(event: event)
+                            if !self.events.value.contains(where: { $0.id == event.id }) {
+                                self.append(event: event)
+                            }
                             completion?(nil)
                         }
                     })

@@ -26,9 +26,10 @@ class EventsViewController: UITableViewController {
         tableView.rowHeight = 100
         tableView.register(UINib(nibName: "EventsTableViewCell", bundle: nil), forCellReuseIdentifier: "eventCell")
         
-        setupDataSource()
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
+        
+        setupDataSource()
         tableView.tableFooterView = UIView()
         
         self.showSettingsButton()
@@ -51,13 +52,15 @@ class EventsViewController: UITableViewController {
         Woojo.User.current.asObservable()
             .flatMap { user -> Observable<[Event]> in
                 if let currentUser = user {
+                    print("RETURNING EVENTS")
                     return currentUser.events.asObservable()
                 } else {
+                    print("RETURNING MANUAL EMPTY")
                     return Variable([]).asObservable()
                 }
             }
             .subscribe(onNext: { events in
-                print(events)
+                print("THE EVENTS", events)
                 self.events = events
                 self.tableView.reloadData()
             }).addDisposableTo(disposeBag)

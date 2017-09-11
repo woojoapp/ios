@@ -42,7 +42,7 @@ class PhotoCollectionViewController: UICollectionViewController {
         collectionView?.emptyDataSetSource = self
         collectionView?.emptyDataSetDelegate = self
         
-        loadAlbumPhotos()
+        //loadAlbumPhotos()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -77,6 +77,7 @@ class PhotoCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! AlbumPhotoCollectionViewCell
+        //cell.imageView.image = nil
         if let image = photos[indexPath.row].getBestImage(size: .thumbnail),
             let url = image.url {
             SDWebImageManager
@@ -86,7 +87,8 @@ class PhotoCollectionViewController: UICollectionViewController {
                                progress: { (receivedSize: Int, expectedSize: Int) -> Void in
                                 DispatchQueue.main.async {
                                     cell.progressIndicator.isHidden = false
-                                    cell.progressIndicator.setProgress(Float(receivedSize)/Float(expectedSize), animated: false)
+                                    print(Float(receivedSize)/Float(expectedSize))
+                                    cell.progressIndicator.setProgress(Float(receivedSize)/Float(expectedSize), animated: true)
                                 }
                 },
                                completed: { image, _, _, _, _ in
@@ -108,6 +110,7 @@ class PhotoCollectionViewController: UICollectionViewController {
                 let data = try Data(contentsOf: url)
                 let uiImage = UIImage(data: data)
                 if let uiImage = uiImage {
+                    rskImageCropper = RSKImageCropViewController()
                     rskImageCropper.originalImage = uiImage
                     rskImageCropper.maskLayerStrokeColor = UIColor.white
                     rskImageCropper.delegate = self

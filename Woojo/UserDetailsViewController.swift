@@ -172,6 +172,12 @@ class UserDetailsViewController: UIViewController {
             passButton.layer.masksToBounds = true
         }
         
+        if let user = user {
+            if user.uid.range(of: "woojo-") != nil {
+                optionsButton.isHidden = true
+            }
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
