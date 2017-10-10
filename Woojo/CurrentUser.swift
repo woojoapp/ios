@@ -88,7 +88,6 @@ class CurrentUser: User {
         self.logOut()
         FIRAuth.auth()!.currentUser?.delete(completion: nil)
     }
-    
     func load(completion: (() -> Void)? = nil) {
         
         func finish() {
@@ -193,7 +192,7 @@ class CurrentUser: User {
     func startObservingCandidates() {
         isObservingCandidates = true
         candidatesRef.observe(.childAdded, with: { snapshot in
-            let candidate = Candidate(uid: snapshot.key, for: self)
+            let candidate = Candidate(snapshot: snapshot, for: self)
             candidate.profile.loadFromFirebase(completion: { _, _ in
                 self.candidates.append(candidate)
                 self.candidatesDelegate?.didAddCandidate()
@@ -353,7 +352,7 @@ class CurrentUser: User {
     
     func add(event: Event, completion: ((Error?) -> Void)?) {
         ref.child(Constants.User.Properties.fbAccessToken).setValue(AccessToken.current?.authenticationToken) { error, ref in
-            self.eventsRef.child(event.id).setValue(true, withCompletionBlock: { error, ref in
+            self.eventsRef.child(event.id).setValue(event.rsvpStatus, withCompletionBlock: { error, ref in
                 if let error = error {
                     print("Failed to add user event: \(error.localizedDescription)")
                     completion?(error)

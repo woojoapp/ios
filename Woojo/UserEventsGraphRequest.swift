@@ -41,6 +41,7 @@ struct UserEventsGraphRequest: GraphRequestProtocol {
                       Constants.Event.properties.graphAPIKeys.end,
                       Constants.Event.properties.graphAPIKeys.place,
                       Constants.Event.properties.graphAPIKeys.attendingCount,
+                      Constants.Event.properties.graphAPIKeys.rsvpStatus,
                       Constants.GraphRequest.UserEvents.fieldPictureUrl]
         return [Constants.GraphRequest.fields:fields.joined(separator: Constants.GraphRequest.fieldsSeparator),
                 "since": Event.dateFormatter.string(from: Calendar.current.date(byAdding: .month, value: -1, to: Date())!)]

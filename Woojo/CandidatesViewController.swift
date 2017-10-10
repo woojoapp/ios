@@ -220,11 +220,25 @@ extension CandidatesViewController: KolodaViewDataSource {
         return User.current.value?.candidates.count ?? 0
     }
     
+    func kolodaSpeedThatCardShouldDrag(_ koloda: KolodaView) -> Koloda.DragSpeed {
+        return .fast
+    }
+    
     func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
         
         let cardView = CandidateCardView(frame: CGRect.zero)
+        print("INDEX", index, User.current.value?.candidates.count)
+        if let count = User.current.value?.candidates.count, index >= count {
+            cardView.nameLabel.text = "Index out of range"
+            return cardView
+        }
         if let candidate = User.current.value?.candidates[index], let name = candidate.profile.displayName {
             cardView.nameLabel.text = "\(name), \(candidate.profile.age)"
+            cardView.firstCommonEventLabel.text = candidate.commonEventInfos.first?.displayString
+            if candidate.commonEventInfos.count > 1 {
+                let eventString = (candidate.commonEventInfos.count > 2) ? "events" : "event"
+                cardView.additionalCommonEventsLabel.text = "+\(candidate.commonEventInfos.count - 1) more common \(eventString)"
+            }
             
             func setImage(image: UIImage?) {
                 DispatchQueue.main.async {

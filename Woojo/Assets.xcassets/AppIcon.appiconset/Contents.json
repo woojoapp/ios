@@ -89,6 +89,12 @@
       "idiom" : "ipad",
       "filename" : "icon_ipad_pro_2x.png",
       "scale" : "2x"
+    },
+    {
+      "size" : "1024x1024",
+      "idiom" : "ios-marketing",
+      "filename" : "woojo_inverted_1024x1024.png",
+      "scale" : "1x"
     }
   ],
   "info" : {

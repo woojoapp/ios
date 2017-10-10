@@ -62,6 +62,13 @@ struct Constants {
             struct properties {
                 struct firebaseNodes {
                     static let uid = "uid"
+                    static let events = "events"
+                }
+            }
+            struct CommonEventInfo {
+                struct firebaseNodes {
+                    static let name = "name"
+                    static let rsvpStatus = "rsvp_status"
                 }
             }
         }
@@ -86,7 +93,7 @@ struct Constants {
         }
         struct Notification {
             static let firebaseNode = "notifications"
-            static let dateFormat = "yyyy-MM-dd'T'HH:mm:ssxx"
+            static let dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
             static let maxQueueLength = 10
             struct properties {
                 struct firebaseNodes {
@@ -126,9 +133,22 @@ struct Constants {
             static let dateFormat = "yyyy-MM-dd'T'HH:mm:ssxx"
             struct properties {
                 struct firebaseNodes {
+                    static let by = "by"
+                    static let on = "on"
                     static let created = "created"
                     static let visible = "visible"
                     static let message = "message"
+                }
+            }
+        }
+        struct Match {
+            static let firebaseNode = "matches"
+            static let dateFormat = "yyyy-MM-dd'T'HH:mm:ssxx"
+            struct properties {
+                struct firebaseNodes {
+                    static let by = "by"
+                    static let on = "on"
+                    static let created = "created"
                 }
             }
         }
@@ -138,6 +158,18 @@ struct Constants {
             struct properties {
                 struct firebaseNodes {
                     static let created = "created"
+                }
+            }
+        }
+        struct Report {
+            static let firebaseNode = "reports"
+            static let dateFormat = "yyyy-MM-dd'T'HH:mm:ssxx"
+            struct properties {
+                struct firebaseNodes {
+                    static let by = "by"
+                    static let on = "on"
+                    static let created = "created"
+                    static let message = "message"
                 }
             }
         }
@@ -182,6 +214,7 @@ struct Constants {
                 static let pictureDataURL = "url"
                 static let description = "description"
                 static let attendingCount = "attending_count"
+                static let rsvpStatus = "rsvp_status"
             }
         }
         struct Place {

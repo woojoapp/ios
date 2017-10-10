@@ -15,7 +15,8 @@ extension CurrentUser {
     class Candidate: User {
         
         var user: User
-        var events: [Event]?
+        //var events: [Event]?
+        var commonEventInfos: [CommonEventInfo] = []
         
         var candidateRef: FIRDatabaseReference {
             get {
@@ -23,9 +24,25 @@ extension CurrentUser {
             }
         }
         
-        init(uid: String, for user: User) {
+        var commonEventsInfoString: String {
+            get {
+                var result = ""
+                for commonEventInfo in self.commonEventInfos {
+                    result += "\(commonEventInfo.displayString)\n"
+                }
+                return result
+            }
+        }
+        
+        init(snapshot: FIRDataSnapshot, for user: User) {
             self.user = user
-            super.init(uid: uid)
+            for item in snapshot.childSnapshot(forPath: Constants.User.Candidate.properties.firebaseNodes.events).children {
+                if let commonEventInfoSnap = item as? FIRDataSnapshot {
+                    print("COMMON EVENT", commonEventInfoSnap)
+                    self.commonEventInfos.append(CommonEventInfo(snapshot: commonEventInfoSnap))
+                }
+            }
+            super.init(uid: snapshot.key)
         }
         
         func like(visible: Bool? = nil, message: String? = nil, completion: ((Error?) -> Void)? = nil) {
@@ -51,6 +68,34 @@ extension CurrentUser {
                     print("Failed to remove candidate: \(error)")
                 }
                 completion?(error)
+            }
+        }
+        
+        class CommonEventInfo {
+            
+            var rsvpStatus = Event.RSVP.unsure
+            var name = "a common event"
+            
+            var displayString: String {
+                get {
+                    var rsvpString: String
+                    switch rsvpStatus {
+                    case .attending:
+                        rsvpString = "Going to"
+                    case .unsure:
+                        rsvpString = "Interested in"
+                    }
+                    return "\(rsvpString) \(name)"
+                }
+            }
+            
+            init(snapshot: FIRDataSnapshot) {
+                if let name = snapshot.childSnapshot(forPath: Constants.User.Candidate.CommonEventInfo.firebaseNodes.name).value as? String {
+                    self.name = name
+                }
+                if let rsvpStatus = snapshot.childSnapshot(forPath: Constants.User.Candidate.CommonEventInfo.firebaseNodes.rsvpStatus).value as? String {
+                    self.rsvpStatus = Event.RSVP(rawValue: rsvpStatus) ?? Event.RSVP.unsure
+                }
             }
         }
         

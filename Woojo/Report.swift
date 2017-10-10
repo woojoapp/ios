@@ -1,16 +1,15 @@
 //
-//  Like.swift
+//  Report.swift
 //  Woojo
 //
-//  Created by Edouard Goossens on 04/11/2016.
-//  Copyright © 2016 Tasty Electrons. All rights reserved.
+//  Created by Edouard Goossens on 07/10/2017.
+//  Copyright © 2017 Tasty Electrons. All rights reserved.
 //
-
 import Foundation
 import FirebaseDatabase
 
 extension User {
-    class Like {
+    class Report {
         
         static let dateFormatter: DateFormatter = {
             let formatter = DateFormatter()
@@ -24,19 +23,17 @@ extension User {
         var by: String
         var on: String
         var created: Date = Date()
-        var visible: Bool?
         var message: String?
         var ref: FIRDatabaseReference {
             get {
-                return FIRDatabase.database().reference().child(Constants.User.Like.firebaseNode).child(by).child(on)
+                return FIRDatabase.database().reference().child(Constants.User.Report.firebaseNode).child(by).child(on)
             }
         }
         
-        init(by: String, on: String, visible: Bool? = nil, message: String? = nil) {
+        init(by: String, on: String, message: String? = nil) {
             self.by = by
             self.on = on
             self.created = Date()
-            self.visible = visible
             self.message = message
         }
         
@@ -48,14 +45,11 @@ extension User {
         
         func toDictionary() -> [String:Any] {
             var dict: [String:Any] = [:]
-            dict[Constants.User.Like.properties.firebaseNodes.by] = by
-            dict[Constants.User.Like.properties.firebaseNodes.on] = on
-            dict[Constants.User.Like.properties.firebaseNodes.created] = Like.dateFormatter.string(from: created)
-            if let visible = visible {
-                dict[Constants.User.Like.properties.firebaseNodes.visible] = String(describing: visible)
-            }
+            dict[Constants.User.Report.properties.firebaseNodes.by] = by
+            dict[Constants.User.Report.properties.firebaseNodes.on] = on
+            dict[Constants.User.Report.properties.firebaseNodes.created] = Like.dateFormatter.string(from: created)
             if let message = message {
-                dict[Constants.User.Like.properties.firebaseNodes.message] = message
+                dict[Constants.User.Report.properties.firebaseNodes.message] = message
             }
             return dict
         }

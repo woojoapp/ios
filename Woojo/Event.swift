@@ -21,6 +21,7 @@ class Event {
     var pictureURL: URL?
     var description: String?
     var attendingCount: Int?
+    var rsvpStatus: String = "unsure"
     
     var ref: FIRDatabaseReference {
         get {
@@ -104,6 +105,9 @@ extension Event {
             if let attendingCount = dict[Constants.Event.properties.graphAPIKeys.attendingCount] as? Int {
                 event.attendingCount = attendingCount
             }
+            if let rsvpStatus = dict[Constants.Event.properties.graphAPIKeys.rsvpStatus] as? String {
+                event.rsvpStatus = rsvpStatus
+            }
             return event
             
         } else {
@@ -158,4 +162,11 @@ extension Event {
         }
     }
 
+}
+
+extension Event {
+    enum RSVP: String {
+        case attending
+        case unsure
+    }
 }

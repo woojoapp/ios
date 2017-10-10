@@ -17,9 +17,12 @@ target 'Woojo' do
 
   # Facebook
   pod 'Bolts', '1.8.4'
-  pod 'FacebookCore', '0.2.0'
-  pod 'FacebookLogin', '0.2.0'
-  pod 'FacebookShare', '0.2.0'
+  pod 'FacebookCore'
+  pod 'FacebookLogin'
+  pod 'FacebookShare'
+  pod 'FBSDKCoreKit', '4.15.0'
+  pod 'FBSDKLoginKit', '4.15.0'
+  pod 'FBSDKShareKit', '4.15.0'
 
   # Appozic
   pod 'Applozic', '3.8.3'
@@ -29,10 +32,11 @@ target 'Woojo' do
   pod 'RxCocoa', '3.2.0'
 
   # UI
-  pod 'Koloda', :git=> 'https://github.com/woojoapp/Koloda.git', :branch => 'swift-3', :tag => 'woojo2.0'
+  pod 'Koloda', :git=> 'https://github.com/woojoapp/Koloda.git'
+  #pod 'Koloda', '4.3.1'
   pod 'NMRangeSlider', '1.2.1'
   pod 'RSKImageCropper', '1.6.1'
-  pod 'PKHUD', '4.2.0'
+  pod 'PKHUD', '5.0.0'
   pod 'DZNEmptyDataSet', '1.8.1' 
   pod 'HMSegmentedControl', '1.5.3'
   pod 'DOFavoriteButton', :git=>'https://github.com/woojoapp/DOFavoriteButton', :tag => 'woojo2.0'

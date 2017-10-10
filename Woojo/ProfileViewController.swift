@@ -369,6 +369,9 @@ extension ProfileViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        if let photos = Woojo.User.current.value?.profile.photos.value, let photo = photos[sourceIndexPath.row] {
+            Woojo.User.current.value?.profile.set(photo: photo, at: destinationIndexPath.row)
+        }
         for i in 0..<Int(photoCount) {
             if let cell = collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? ProfilePhotoCollectionViewCell {
                 if let photo = cell.photo {

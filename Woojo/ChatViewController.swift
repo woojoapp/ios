@@ -10,6 +10,9 @@ import Applozic
 import SDWebImage
 import PKHUD
 import Whisper
+import RxSwift
+import RxCocoa
+import FirebaseDatabase
 
 class ChatViewController: ALChatViewController {
     
@@ -17,6 +20,8 @@ class ChatViewController: ALChatViewController {
     @IBOutlet weak var loadEarlierActionTopConstraint: NSLayoutConstraint!
     
     let translucentColor = UIColor(red: 247.0/255.0, green: 247.0/255.0, blue: 247.0/255.0, alpha: 0.95)
+    var unmatchObserverHandle: UInt?
+    var disposeBag = DisposeBag()
     
     override var individualLaunch: Bool {
         get {
@@ -32,6 +37,8 @@ class ChatViewController: ALChatViewController {
         
         self.placeHolderTxt = "Write a message..."
         ALApplozicSettings.setColorForSendMessages(self.view.tintColor)
+        
+        self.wireUnmatchObserver()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,8 +57,12 @@ class ChatViewController: ALChatViewController {
         
         let profileItem = UIBarButtonItem()
         
-        let profileButton = UIButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
+        let profileButton = UIButton(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
         profileButton.backgroundColor = UIColor.clear
+        let widthConstraint = profileButton.widthAnchor.constraint(equalToConstant: 36)
+        let heightConstraint = profileButton.heightAnchor.constraint(equalToConstant: 36)
+        heightConstraint.isActive = true
+        widthConstraint.isActive = true
         if let contactImageUrl = alContact.contactImageUrl {
             SDWebImageManager.shared().downloadImage(with: URL(string: contactImageUrl), options: [], progress: nil, completed: { image, _, _, _, _ in
                 if let image = image {
@@ -76,7 +87,6 @@ class ChatViewController: ALChatViewController {
         //NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(newMessage), name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
-        
     }
     
     func setNavigationItemTitle() {
@@ -126,11 +136,55 @@ class ChatViewController: ALChatViewController {
         self.typingLabel.isHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
+        self.unwireUnmatchObserver()
     }
     
     func newMessage() {
+        print("MESSAGE RECEIVEDDDDDDD")
         setNavigationItemTitle()
         scrollTableViewToBottom(withAnimation: true)
+    }
+    
+    func wireUnmatchObserver() {
+        Woojo.User.current.asObservable()
+        .subscribe(onNext: { user in
+            if let handle = self.unmatchObserverHandle {
+                user?.matchesRef.removeObserver(withHandle: handle)
+            }
+            user?.matchesRef.observe(.childRemoved, with: { (snap) in
+                if snap.key == self.contactIds {
+                    self.conversationDeleted()
+                }
+            })
+        }).addDisposableTo(disposeBag)
+    }
+    
+    func unwireUnmatchObserver() {
+        if let handle = self.unmatchObserverHandle {
+            Woojo.User.current.value?.matchesRef.removeObserver(withHandle: handle)
+        }
+    }
+    
+    func conversationDeleted() {
+        if HUD.isVisible {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.showUnmatchHUDAndPop()
+            }
+        } else {
+            self.showUnmatchHUDAndPop()
+        }
+    }
+    
+    func showUnmatchHUDAndPop() {
+        HUD.flash(.labeledError(title: "Closing chat", subtitle: "You're no longer connected to this user"), onView: nil, delay: 2.0) { _ in
+            if let presentedViewController = self.presentedViewController as? UserDetailsViewController {
+                presentedViewController.dismiss(animated: true) {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            } else {
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -197,9 +251,25 @@ class ChatViewController: ALChatViewController {
         scrollTableViewToBottom(withAnimation: true)
     }
     
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        if let theMessage = self.alMessageWrapper.getUpdatedMessageArray()[indexPath.row] as? ALMessage {
+            if let metadata = theMessage.metadata as? NSMutableDictionary,
+                let category = metadata.object(forKey: "category") as? String,
+                category == "HIDDEN" {
+                cell.isHidden = true
+            }
+        }
+        return cell
+    }
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if let theMessage = self.alMessageWrapper.getUpdatedMessageArray()[indexPath.row] as? ALMessage {
-            if (theMessage.fileMeta == nil || (theMessage.fileMeta.thumbnailUrl == nil && theMessage.fileMeta.contentType == nil)) && theMessage.type != "100" {
+            if let metadata = theMessage.metadata as? NSMutableDictionary,
+                let category = metadata.object(forKey: "category") as? String,
+                category == "HIDDEN" {
+                return 0.0
+            } else if (theMessage.fileMeta == nil || (theMessage.fileMeta.thumbnailUrl == nil && theMessage.fileMeta.contentType == nil)) && theMessage.type != "100" {
                 return super.tableView(tableView, heightForRowAt: indexPath) - 25.0
             } else {
                 return super.tableView(tableView, heightForRowAt: indexPath)

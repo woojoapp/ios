@@ -136,6 +136,7 @@ class ALChatManager: NSObject {
                                                              "Woojo.PhotoCollectionViewController",
                                                              "Woojo.AboutTableViewController",
                                                              "Woojo.AboutWebViewController",
+                                                             "Woojo.ChatViewController",
                                                              "UIAlertViewController",
                                                              "PUUIAlbumListViewController",
                                                              "PUUIMomentsGridViewController",
@@ -156,6 +157,11 @@ class ALChatManager: NSObject {
                 if let message = message as? ALMessage, var excerpt = message.message {
                     if excerpt.characters.count > 100 {
                         excerpt = excerpt.substring(to: excerpt.index(excerpt.startIndex, offsetBy: 100))
+                    }
+                    if let metadata = message.metadata as? NSMutableDictionary,
+                        let category = metadata.object(forKey: "category") as? String,
+                        category == "HIDDEN" {
+                        continue
                     }
                     let messageNotification = CurrentUser.MessageNotification(id: UUID().uuidString, created: Date(), otherId: message.contactIds, excerpt: excerpt)
                     messageNotification.save()

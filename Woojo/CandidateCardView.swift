@@ -13,6 +13,8 @@ class CandidateCardView: UIView {
     var view: UIView!
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var firstCommonEventLabel: UILabel!
+    @IBOutlet var additionalCommonEventsLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

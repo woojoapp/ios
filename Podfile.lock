@@ -22,11 +22,11 @@ PODS:
     - FacebookCore (~> 0.2)
     - FBSDKCoreKit (~> 4.15)
     - FBSDKShareKit (~> 4.15)
-  - FBSDKCoreKit (4.19.0):
+  - FBSDKCoreKit (4.15.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.19.0):
+  - FBSDKLoginKit (4.15.0):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.19.0):
+  - FBSDKShareKit (4.15.0):
     - FBSDKCoreKit
   - Firebase/Auth (3.15.0):
     - Firebase/Core
@@ -67,27 +67,27 @@ PODS:
   - FirebaseUI/Storage (2.0.0):
     - Firebase/Storage
     - SDWebImage
-  - GoogleToolboxForMac/DebugUtils (2.1.1):
-    - GoogleToolboxForMac/Defines (= 2.1.1)
-  - GoogleToolboxForMac/Defines (2.1.1)
-  - GoogleToolboxForMac/NSData+zlib (2.1.1):
-    - GoogleToolboxForMac/Defines (= 2.1.1)
-  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.1):
-    - GoogleToolboxForMac/DebugUtils (= 2.1.1)
-    - GoogleToolboxForMac/Defines (= 2.1.1)
-    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
-  - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
-  - GTMSessionFetcher/Core (1.1.9)
+  - GoogleToolboxForMac/DebugUtils (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/Defines (2.1.3)
+  - GoogleToolboxForMac/NSData+zlib (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.3):
+    - GoogleToolboxForMac/DebugUtils (= 2.1.3)
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)
+  - GoogleToolboxForMac/NSString+URLArguments (2.1.3)
+  - GTMSessionFetcher/Core (1.1.12)
   - HMSegmentedControl (1.5.3)
   - ImageSlideshow (1.0.0):
     - ImageSlideshow/Core (= 1.0.0)
   - ImageSlideshow/Core (1.0.0)
-  - Koloda (3.1.2):
+  - Koloda (4.3.1):
     - pop (~> 1.0)
   - NMRangeSlider (1.2.1)
-  - PKHUD (4.2.0)
-  - pop (1.0.9)
-  - Protobuf (3.2.0)
+  - PKHUD (5.0.0)
+  - pop (1.0.10)
+  - Protobuf (3.4.0)
   - RPCircularProgress (0.3.0)
   - RSKImageCropper (1.6.1)
   - RxCocoa (3.2.0):
@@ -104,9 +104,12 @@ DEPENDENCIES:
   - Bolts (= 1.8.4)
   - DOFavoriteButton (from `https://github.com/woojoapp/DOFavoriteButton`, tag `woojo2.0`)
   - DZNEmptyDataSet (= 1.8.1)
-  - FacebookCore (= 0.2.0)
-  - FacebookLogin (= 0.2.0)
-  - FacebookShare (= 0.2.0)
+  - FacebookCore
+  - FacebookLogin
+  - FacebookShare
+  - FBSDKCoreKit (= 4.15.0)
+  - FBSDKLoginKit (= 4.15.0)
+  - FBSDKShareKit (= 4.15.0)
   - Firebase/Auth
   - Firebase/Core (= 3.15.0)
   - Firebase/Database
@@ -115,9 +118,9 @@ DEPENDENCIES:
   - FirebaseUI/Storage (= 2.0.0)
   - HMSegmentedControl (= 1.5.3)
   - ImageSlideshow (= 1.0.0)
-  - Koloda (from `https://github.com/woojoapp/Koloda.git`, branch `swift-3`, tag `woojo2.0`)
+  - Koloda (from `https://github.com/woojoapp/Koloda.git`)
   - NMRangeSlider (= 1.2.1)
-  - PKHUD (= 4.2.0)
+  - PKHUD (= 5.0.0)
   - RPCircularProgress (= 0.3.0)
   - RSKImageCropper (= 1.6.1)
   - RxCocoa (= 3.2.0)
@@ -131,9 +134,7 @@ EXTERNAL SOURCES:
     :git: https://github.com/woojoapp/DOFavoriteButton
     :tag: woojo2.0
   Koloda:
-    :branch: swift-3
     :git: https://github.com/woojoapp/Koloda.git
-    :tag: woojo2.0
   Whisper:
     :git: https://github.com/woojoapp/Whisper.git
     :tag: woojo2.0
@@ -143,9 +144,8 @@ CHECKOUT OPTIONS:
     :git: https://github.com/woojoapp/DOFavoriteButton
     :tag: woojo2.0
   Koloda:
-    :commit: 584d70b02a8fdc202d0c0a38c860da9a917fe7b2
+    :commit: 8286020077badb0649ad5172c7d839d5ebeb00db
     :git: https://github.com/woojoapp/Koloda.git
-    :tag: woojo2.0
   Whisper:
     :git: https://github.com/woojoapp/Whisper.git
     :tag: woojo2.0
@@ -158,9 +158,9 @@ SPEC CHECKSUMS:
   FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
   FacebookLogin: c9d606504735780a9e3002465a615512e0a691a5
   FacebookShare: 8e9ee8ea06505e6a1d3d719b0cc63e840fb8aaeb
-  FBSDKCoreKit: 894b2b6eda6a4c8c4204e92e59cc355709ef045c
-  FBSDKLoginKit: 83ca4d8f12a2022570af9fd6aacf27f6b425b99f
-  FBSDKShareKit: 5953758366278430dc322d5cdc906db361ed7f81
+  FBSDKCoreKit: 6680cbd33a4243d80700f182d0af36b3fa7f3118
+  FBSDKLoginKit: 96d9b70b5784490f02ab86119e542a1f182017a8
+  FBSDKShareKit: 06ef20cb2f16828ca4b20055333313dd445de362
   Firebase: 2b1cdfba1cda8589f32904a697cc753322bff9d8
   FirebaseAnalytics: 0d1b7d81d5021155be37702a94ba1ec16d45365d
   FirebaseAuth: cc8a1824170adbd351edb7f994490a3fb5c18be6
@@ -170,15 +170,15 @@ SPEC CHECKSUMS:
   FirebaseRemoteConfig: af3003f4e8daa2bd1d5cf90d3cccc1fe224f8ed9
   FirebaseStorage: a5c55b23741a49a72af8f30f95b3bb5ddbeda12d
   FirebaseUI: beda8ada3b190e960e25713266eda0b4776e7a97
-  GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
-  GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
+  GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
+  GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
   HMSegmentedControl: 7c6145afb50f26cec5f3243082f6f12b9f41318f
   ImageSlideshow: 2787e10e202b79ecf5348a205c539fcc5bb8e62b
-  Koloda: 5aee353329cd1605540f1215a4c1975481dc7a37
+  Koloda: 5eb4a2348004b35999fafd8dc2c0c8f0e0f6be20
   NMRangeSlider: 317ded652431eb90501c8421d9cddc3930d891e6
-  PKHUD: 48af884cf00c2213b0313b739d914e6cab1c0f5e
-  pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
-  Protobuf: 745f59e122e5de98d4d7ef291e264a0eef80f58e
+  PKHUD: 3c001512c6e002091184197a8de7a20420786e3b
+  pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
+  Protobuf: 03eef2ee0b674770735cf79d9c4d3659cf6908e8
   RPCircularProgress: 46bee24642e0cb8de53f49e6c85733b9c45dee33
   RSKImageCropper: 0df8c99e77a8ea7ca7a8b83ef468556f31584254
   RxCocoa: ccdf43101a70407097a29082f648ba1676075b30
@@ -187,6 +187,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   Whisper: 08be92623311f8e53201e62e17f6d7b9599a4714
 
-PODFILE CHECKSUM: 53add29dcdbb6ccecade4fc8502e197181ec126b
+PODFILE CHECKSUM: 0791adb4ca0081daa82d35019724b46d089d90f7
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.3.1

@@ -9,6 +9,7 @@
 import UIKit
 import DOFavoriteButton
 import ImageSlideshow
+import PKHUD
 
 class UserDetailsViewController: UIViewController {
     
@@ -32,6 +33,7 @@ class UserDetailsViewController: UIViewController {
     var buttonsType: ButtonsType = .decide
     
     var candidatesViewController: CandidatesViewController?
+    var chatViewController: ChatViewController?
     var reachabilityObserver: AnyObject?
     
     @IBAction func like() {
@@ -70,11 +72,29 @@ class UserDetailsViewController: UIViewController {
         optionsButton.select()
         let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let unmatchButton = UIAlertAction(title: "Unmatch", style: .destructive, handler: { (action) -> Void in
-            print("Unmatching")
+            HUD.show(.labeledProgress(title: "Unmatch", subtitle: "Unmatching..."), onView: self.parent?.view)
+            self.user?.unmatch { error in
+                if let error = error {
+                    HUD.show(.labeledError(title: "Unmatch", subtitle: "Failed to unmatch"), onView: self.parent?.view)
+                    print("Failed to unmatch", error)
+                    HUD.hide(afterDelay: 1.0)
+                } else {
+                    HUD.show(.labeledSuccess(title: "Unmatch", subtitle: "Unmatched!"), onView: self.parent?.view)
+                }
+            }
             // Don't forget to remove images from cache
         })
-        let reportButton = UIAlertAction(title: "Report", style: .default, handler: { (action) -> Void in
-            print("Reporting")
+        let reportButton = UIAlertAction(title: "Unmatch & report", style: .destructive, handler: { (action) -> Void in
+            HUD.show(.labeledProgress(title: "Unmatch & report", subtitle: "Unmatching and reporting..."), onView: self.parent?.view)
+            self.user?.report(message: nil) { error in
+                if let error = error {
+                    HUD.show(.labeledError(title: "Unmatch & report", subtitle: "Failed to unmatch and report"), onView: self.parent?.view)
+                    print("Failed to unmatch and report", error)
+                    HUD.hide(afterDelay: 1.0)
+                } else {
+                    HUD.show(.labeledSuccess(title: "Unmatch & report", subtitle: "Done!"), onView: self.parent?.view)
+                }
+            }
         })
         let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         actionSheetController.addAction(unmatchButton)
@@ -150,7 +170,11 @@ class UserDetailsViewController: UIViewController {
             nameLabel.text = "\(name), \(user.profile.age)"
         }
         
-        descriptionLabel.text = user?.profile.description.value
+        var descriptionString = user?.profile.description.value ?? ""
+        if let candidate = user as? CurrentUser.Candidate {
+            descriptionString = "\(candidate.commonEventsInfoString)\n\(descriptionString)"
+        }
+        descriptionLabel.text = descriptionString
         
         closeButton.layer.masksToBounds = true
         closeButton.layer.cornerRadius = 5.0

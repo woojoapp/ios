@@ -23,6 +23,7 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
         
         self.showSettingsButton()
         let settingsButton = self.navigationItem.rightBarButtonItem?.customView as? UIButton
+        
         settingsButton?.addTarget(self, action: #selector(showSettings(sender:)), for: .touchUpInside)
         
         mTableView.delegate = self
@@ -82,7 +83,9 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
     
     func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
         let unmatch = UITableViewRowAction(style: .destructive, title: "Unmatch") { action, index in
-            print("Unmatching")
+            if let cell = tableView.cellForRow(at: editActionsForRowAt) as? ALContactCell{
+                print("Unmatching", super.detailChatViewController.alContact)
+            }
         }
         
         let report = UITableViewRowAction(style: .normal, title: "Report") { action, index in
@@ -93,7 +96,8 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
         if let cell = tableView.cellForRow(at: editActionsForRowAt) as? ALContactCell,
             let userName = cell.mUserNameLabel.text {
             if userName.range(of: "from Woojo") == nil {
-                return [unmatch, report]
+                //return [unmatch, report]
+                return []
             }
         }
         
