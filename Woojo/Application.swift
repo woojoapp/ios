@@ -10,6 +10,7 @@ import UIKit
 import FirebaseCore
 import FirebaseDatabase
 import FirebaseAuth
+import FirebaseMessaging
 import FirebaseRemoteConfig
 import FacebookCore
 import FacebookLogin
@@ -18,18 +19,18 @@ import Applozic
 import RxSwift
 import RxCocoa
 import Whisper
+import UserNotifications
 
 @UIApplicationMain
-class Application: UIResponder, UIApplicationDelegate {
-
+class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
     var window: UIWindow?
     let loginViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
-    static var remoteConfig: FIRRemoteConfig = FIRRemoteConfig.remoteConfig()    
+    static var remoteConfig: RemoteConfig = RemoteConfig.remoteConfig()
     
     override init() {
-        FIRApp.configure()
-        FIRDatabase.database().persistenceEnabled = true
-        FIRAnalyticsConfiguration.sharedInstance().setAnalyticsCollectionEnabled(false)
+        FirebaseApp.configure()
+        Database.database().isPersistenceEnabled = true
+        AnalyticsConfiguration.shared().setAnalyticsCollectionEnabled(false)
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -41,7 +42,7 @@ class Application: UIResponder, UIApplicationDelegate {
         // Initialize Facebook SDK
         FacebookCore.SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        FIRAuth.auth()?.addStateDidChangeListener { auth, user in
+        Auth.auth().addStateDidChangeListener { auth, user in
             if AccessToken.current == nil {
                 if self.window?.rootViewController?.presentedViewController != self.loginViewController {
                     self.window?.makeKeyAndVisible()
@@ -67,6 +68,17 @@ class Application: UIResponder, UIApplicationDelegate {
                 }
             }
         }
+        
+        if #available(iOS 10.0, *) {
+            // For iOS 10 display notification (sent via APNS)
+            UNUserNotificationCenter.current().delegate = self
+            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+            UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: {_, _ in })
+        } else {
+            let settings: UIUserNotificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(settings)
+        }
+        application.registerForRemoteNotifications()
         
         let alAppLocalNotificationHandler : ALAppLocalNotifications =  ALAppLocalNotifications.appLocalNotificationHandler();
         alAppLocalNotificationHandler.dataConnectionNotificationHandler();
@@ -95,15 +107,25 @@ class Application: UIResponder, UIApplicationDelegate {
             deviceTokenString += String(format: "%02.2hhx", deviceToken[i] as CVarArg)
         }
         if (ALUserDefaultsHandler.getApnDeviceToken() != deviceTokenString) {
-            let alRegisterUserClientService: ALRegisterUserClientService = ALRegisterUserClientService()
+            let alRegisterUserClientService = ALRegisterUserClientService()
             alRegisterUserClientService.updateApnDeviceToken(withCompletion: deviceTokenString, withCompletion: { (response, error) in
                 
             })
         }
+        print("Saving push token", deviceTokenString)
+        let device = [
+            Constants.User.Device.properties.firebaseNodes.token: deviceTokenString,
+            Constants.User.Device.properties.firebaseNodes.platform: "iOS"
+        ]
+        Woojo.User.current.value?.ref.child(Constants.User.Device.firebaseNode).child(deviceTokenString).setValue(device) { error, ref in
+            if (error != nil) {
+                print("Failed to save device push token: \(error)")
+            }
+        }
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
-        print("Received notification :: \(userInfo.description)")
+        print("Received notification :: \(userInfo)")
         let alPushNotificationService: ALPushNotificationService = ALPushNotificationService()
         
         let appState: NSNumber = NSNumber(value: 0 as Int32)                 // APP_STATE_INACTIVE
@@ -118,6 +140,14 @@ class Application: UIResponder, UIApplicationDelegate {
         let appState: NSNumber = NSNumber(value: -1 as Int32)                // APP_STATE_BACKGROUND
         alPushNotificationService.processPushNotification(userInfo, updateUI: appState)
         completionHandler(UIBackgroundFetchResult.newData)
+    }
+    
+    func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
+        print("Firebase registration token: \(fcmToken)")
+    }
+    
+    func application(received remoteMessage: MessagingRemoteMessage) {
+        
     }
    
     func applicationWillResignActive(_ application: UIApplication) {
@@ -164,7 +194,7 @@ class Application: UIResponder, UIApplicationDelegate {
     func setupRemoteConfig() {
         
         func activateDebugMode() {
-            let debugSettings = FIRRemoteConfigSettings(developerModeEnabled: true)
+            let debugSettings = RemoteConfigSettings(developerModeEnabled: true)
             Application.remoteConfig.configSettings = debugSettings!
         }
         
@@ -179,7 +209,7 @@ class Application: UIResponder, UIApplicationDelegate {
         Application.remoteConfig.setDefaults(defaults as [String : NSObject]?)
         Application.remoteConfig.fetch(withExpirationDuration: expirationDuration, completionHandler: { status, error in
             print("Remote config", status.rawValue)
-            if status == FIRRemoteConfigFetchStatus.success {
+            if status == RemoteConfigFetchStatus.success {
                 Application.remoteConfig.activateFetched()
             }
             if let error = error {

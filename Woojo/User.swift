@@ -28,27 +28,27 @@ class User: Equatable {
         activity = Activity(for: self)
     }
     
-    var ref: FIRDatabaseReference {
+    var ref: DatabaseReference {
         get {
-            return FIRDatabase.database().reference().child(Constants.User.firebaseNode).child(uid)
+            return Database.database().reference().child(Constants.User.firebaseNode).child(uid)
         }
     }
     
-    var storageRef: FIRStorageReference {
+    var storageRef: StorageReference {
         get {
-            return FIRStorage.storage().reference().child(Constants.User.firebaseNode).child(uid)
+            return Storage.storage().reference().child(Constants.User.firebaseNode).child(uid)
         }
     }
     
-    var matchesRef: FIRDatabaseReference {
+    var matchesRef: DatabaseReference {
         get {
-            return FIRDatabase.database().reference().child(Constants.User.Match.firebaseNode).child(uid)
+            return Database.database().reference().child(Constants.User.Match.firebaseNode).child(uid)
         }
     }
     
     func unmatch(completion: ((Error?) -> Void)?) {
         if let currentUid = User.current.value?.uid {
-            FIRDatabase.database().reference().child(Constants.User.Like.firebaseNode).child(currentUid).child(uid).removeValue { error, _ in
+            Database.database().reference().child(Constants.User.Like.firebaseNode).child(currentUid).child(uid).removeValue { error, _ in
                 completion?(error)
             }
         }

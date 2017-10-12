@@ -8,11 +8,12 @@ target 'Woojo' do
   # Pods for Woojo
 
   # Firebase
-  pod 'Firebase/Core', '3.15.0'
+  pod 'Firebase/Core', '4.3.0'
   pod 'Firebase/Auth'         # Version determined by /Core
   pod 'Firebase/Database'     # "
   pod 'Firebase/Storage'      # "
   pod 'Firebase/RemoteConfig' # "
+  pod 'Firebase/Messaging'      # "
   pod 'FirebaseUI/Storage', '2.0.0'
 
   # Facebook

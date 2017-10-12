@@ -27,6 +27,15 @@ struct Constants {
                 }
             }
         }
+        struct Device {
+            static let firebaseNode = "devices"
+            struct properties {
+                struct firebaseNodes {
+                    static let token = "token"
+                    static let platform = "platform"
+                }
+            }
+        }
         struct Profile {
             static let firebaseNode = "profile"
             struct Photo {

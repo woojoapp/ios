@@ -55,13 +55,13 @@ extension User {
             return birthdayFormatter
         }()
         
-        var ref: FIRDatabaseReference? {
+        var ref: DatabaseReference? {
             get {
                 return user.ref.child(Constants.User.Profile.firebaseNode)
             }
         }
         
-        var storageRef: FIRStorageReference? {
+        var storageRef: StorageReference? {
             get {
                 return user.storageRef.child(Constants.User.Profile.firebaseNode)
             }
@@ -73,12 +73,12 @@ extension User {
         
         // MARK: - Methods
         
-        func loadFrom(firebase snapshot: FIRDataSnapshot) {
+        func loadFrom(firebase snapshot: DataSnapshot) {
             if let value = snapshot.value as? [String:Any] {
                 displayName = value[Constants.User.Profile.properties.firebaseNodes.firstName] as? String
                 let photosSnap = snapshot.childSnapshot(forPath: Constants.User.Profile.Photo.firebaseNode)
                 for item in photosSnap.children {
-                    if let photoSnap = item as? FIRDataSnapshot, let index = Int(photoSnap.key), let id = photoSnap.value as? String {
+                    if let photoSnap = item as? DataSnapshot, let index = Int(photoSnap.key), let id = photoSnap.value as? String {
                         let photo = Photo(profile: self, index: index, id: id)
                         // Download and cache profile photo only
                         if index == 0 {
@@ -309,7 +309,7 @@ extension User.Profile {
         var index: Int
         var id: String
         
-        var refs: [Size:FIRStorageReference?] {
+        var refs: [Size:StorageReference?] {
             get {
                 return [.thumbnail:profile.storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(self.id).child(Constants.User.Profile.Photo.properties.thumbnail),
                         .full:profile.storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(id).child(Constants.User.Profile.Photo.properties.full)]
@@ -430,7 +430,7 @@ extension User.Profile {
             print("Failed to resize photo to full size")
             return
         }
-        storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(id).child(Constants.User.Profile.Photo.properties.full).put(fullImageJPEGData, metadata: nil, completion: { _, error in
+        storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(id).child(Constants.User.Profile.Photo.properties.full).putData(fullImageJPEGData, metadata: nil, completion: { _, error in
             if let error = error {
                 print("Failed to store full size photo: \(error.localizedDescription)")
                 completion?(nil, error)
@@ -443,7 +443,7 @@ extension User.Profile {
             print("Failed to resize photo to thumbnail size")
             return
         }
-        storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(id).child(Constants.User.Profile.Photo.properties.thumbnail).put(thumbnailImageJPEGData, metadata: nil, completion: { _, error in
+        storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(id).child(Constants.User.Profile.Photo.properties.thumbnail).putData(thumbnailImageJPEGData, metadata: nil, completion: { _, error in
             if let error = error {
                 print("Failed to store photo thumbnail: \(error.localizedDescription)")
                 completion?(nil, error)

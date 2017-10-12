@@ -31,6 +31,10 @@ class EventsViewController: UITableViewController {
         
         setupDataSource()
         tableView.tableFooterView = UIView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
         self.showSettingsButton()
         let settingsButton = self.navigationItem.rightBarButtonItem?.customView as? UIButton

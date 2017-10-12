@@ -17,7 +17,7 @@ struct Place {
 }
 
 extension Place {
-    static func from(firebase snapshot: FIRDataSnapshot) -> Place? {
+    static func from(firebase snapshot: DataSnapshot) -> Place? {
         if let value = snapshot.value as? [String:Any] {
             var place = Place()
             place.name = value[Constants.Event.Place.properties.firebaseNodes.name] as? String

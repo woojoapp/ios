@@ -176,6 +176,11 @@ class UserDetailsViewController: UIViewController {
         }
         descriptionLabel.text = descriptionString
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
         closeButton.layer.masksToBounds = true
         closeButton.layer.cornerRadius = 5.0
         closeButton.layer.backgroundColor = UIColor(colorLiteralRed: 0.0, green: 0.0, blue: 0.0, alpha: 0.5).cgColor
@@ -201,7 +206,6 @@ class UserDetailsViewController: UIViewController {
                 optionsButton.isHidden = true
             }
         }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {

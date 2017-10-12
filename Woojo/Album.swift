@@ -46,7 +46,7 @@ class Album {
     
     func getPhotos(completion: @escaping ([Photo]) -> Void) {
         if AccessToken.current != nil {
-            if FIRAuth.auth()?.currentUser != nil {
+            if Auth.auth().currentUser != nil {
                 let albumPhotosGraphRequest = AlbumPhotosGraphRequest(album: self)
                 albumPhotosGraphRequest.start { response, result in
                     switch result {

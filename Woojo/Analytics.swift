@@ -14,7 +14,7 @@ class Analytics {
     
     static func Log(event name: String, with parameters: [String: String] = [:]) {
         //AppEventsLogger.log(name, parameters: convertToFacebookFormat(parameters: parameters), valueToSum: nil, accessToken: nil)
-        //FIRAnalytics.logEvent(withName: name, parameters: parameters as [String : NSObject])
+        //FirebaseAnalytics.Analytics.logEvent(withName: name, parameters: parameters as [String : NSObject])
     }
     
     fileprivate static func convertToFacebookFormat(parameters: [String:String]) -> AppEvent.ParametersDictionary {

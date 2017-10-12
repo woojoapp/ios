@@ -32,9 +32,9 @@ extension CurrentUser {
             return formatter
         }()
         
-        static let ref: FIRDatabaseReference = User.current.value!.ref.child(Constants.User.Notification.firebaseNode)
+        static let ref: DatabaseReference = User.current.value!.ref.child(Constants.User.Notification.firebaseNode)
         
-        var ref: FIRDatabaseReference {
+        var ref: DatabaseReference {
             get {
                 return CurrentUser.Notification.ref.child(id)
             }
@@ -48,10 +48,10 @@ extension CurrentUser {
             self.data = data
         }
         
-        /*static func allFrom(firebase snapshot: FIRDataSnapshot) -> [Notification] {
+        /*static func allFrom(firebase snapshot: DataSnapshot) -> [Notification] {
             var notifications: [Notification] = []
             for item in snapshot.children {
-                let typeLevelSnapshot = item as! FIRDataSnapshot
+                let typeLevelSnapshot = item as! DataSnapshot
                 if let type = NotificationType(rawValue: typeLevelSnapshot.key) {
                     switch type {
                     case .match:
@@ -67,7 +67,7 @@ extension CurrentUser {
             return notifications
         }*/
         
-        convenience init?(fromFirebase snapshot: FIRDataSnapshot) {
+        convenience init?(fromFirebase snapshot: DataSnapshot) {
             if let value = snapshot.value as? [String:Any],
                 let typeString = value[Constants.User.Notification.properties.firebaseNodes.type] as? String,
                 let type = NotificationType(rawValue: typeString),
@@ -83,7 +83,7 @@ extension CurrentUser {
             }
         }
         
-        /*class func from(firebase snapshot: FIRDataSnapshot) -> Notification? {
+        /*class func from(firebase snapshot: DataSnapshot) -> Notification? {
             if let value = snapshot.value as? [String:Any],
                 let typeString = value[Constants.User.Notification.properties.firebaseNodes.type] as? String,
                 let type = NotificationType(rawValue: typeString),
@@ -102,7 +102,7 @@ extension CurrentUser {
             let queryRef = ref.queryOrdered(byChild: Constants.User.Notification.Interaction.properties.firebaseNodes.otherId).queryEqual(toValue: otherId)
             queryRef.observeSingleEvent(of: .value, with: { snapshot in
                 for child in snapshot.children {
-                    if let child = child as? FIRDataSnapshot {
+                    if let child = child as? DataSnapshot {
                         child.ref.removeValue()
                     }
                 }
@@ -155,7 +155,7 @@ extension CurrentUser {
             super.init(id: notification.id, type: notification.type, created: notification.created, displayed: notification.displayed, data: notification.data)
         }
         
-        convenience init?(fromFirebase snapshot: FIRDataSnapshot) {
+        convenience init?(fromFirebase snapshot: DataSnapshot) {
             if let value = snapshot.value as? [String:Any],
                 let notification = Notification(fromFirebase: snapshot),
                 let otherId = value[Constants.User.Notification.Interaction.properties.firebaseNodes.otherId] as? String {
@@ -183,7 +183,7 @@ extension CurrentUser {
             super.init(id: notification.id, created: notification.created, type: .match, otherId: notification.otherId, displayed: notification.displayed, data: notification.data)
         }
         
-        convenience init?(fromFirebase snapshot: FIRDataSnapshot) {
+        convenience init?(fromFirebase snapshot: DataSnapshot) {
             if let notification = InteractionNotification(fromFirebase: snapshot) {
                 self.init(notification: notification)
             } else {
@@ -213,7 +213,7 @@ extension CurrentUser {
             super.init(id: notification.id, created: notification.created, type: .message, otherId: notification.otherId, displayed: notification.displayed, data: notification.data)
         }
         
-        convenience init?(fromFirebase snapshot: FIRDataSnapshot) {
+        convenience init?(fromFirebase snapshot: DataSnapshot) {
             if let value = snapshot.value as? [String:Any],
                 let notification = InteractionNotification(fromFirebase: snapshot),
                 //let otherId = value[Constants.User.Notification.Match.properties.firebaseNodes.otherId] as? String,

@@ -23,9 +23,9 @@ class Event {
     var attendingCount: Int?
     var rsvpStatus: String = "unsure"
     
-    var ref: FIRDatabaseReference {
+    var ref: DatabaseReference {
         get {
-            return FIRDatabase.database().reference().child(Constants.Event.firebaseNode).child(id)
+            return Database.database().reference().child(Constants.Event.firebaseNode).child(id)
         }
     }
     
@@ -56,7 +56,7 @@ extension Event {
         return formatter
     }()
     
-    static func from(firebase snapshot: FIRDataSnapshot) -> Event? {
+    static func from(firebase snapshot: DataSnapshot) -> Event? {
         print("BEFORE CHECKS", snapshot)
         if let value = snapshot.value as? [String:Any],
             let id = value[Constants.Event.properties.firebaseNodes.id] as? String,
@@ -132,7 +132,7 @@ extension Event {
     }
     
     static func get(for id: String, completion: ((Event?) -> Void)? = nil) {
-        let ref = FIRDatabase.database().reference().child(Constants.Event.firebaseNode).child(id)
+        let ref = Database.database().reference().child(Constants.Event.firebaseNode).child(id)
         ref.observeSingleEvent(of: .value, with: { snapshot in
             print ("GETTING EVENT", id, ref.url, snapshot)
             completion?(from(firebase: snapshot))

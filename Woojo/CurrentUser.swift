@@ -16,12 +16,13 @@ import FacebookCore
 import FacebookLogin
 import RxSwift
 import RxCocoa
+import Applozic
 
 class CurrentUser: User {
     
     override var uid: String {
         get {
-            return FIRAuth.auth()!.currentUser!.uid
+            return Auth.auth().currentUser!.uid
         }
         set {
             super.uid = newValue
@@ -46,9 +47,9 @@ class CurrentUser: User {
         }
     }
     
-    var firebaseAuthUser: FIRUser? {
+    var firebaseAuthUser: FirebaseAuth.User? {
         get {
-            return FIRAuth.auth()?.currentUser
+            return Auth.auth().currentUser
         }
     }
     
@@ -59,7 +60,7 @@ class CurrentUser: User {
     var isLoading: Variable<Bool> = Variable(false)
     
     init?() {
-        if let uid = FIRAuth.auth()?.currentUser?.uid {
+        if let uid = Auth.auth().currentUser?.uid {
             super.init(uid: uid)
             self.preferences = Preferences(gender: .all, ageRange: (min: 18, max: 60))
         } else {
@@ -76,7 +77,13 @@ class CurrentUser: User {
         self.stopObservingCandidates()
         LoginManager().logOut()
         do {
-            try FIRAuth.auth()?.signOut()
+            try Auth.auth().signOut()
+            if (ALUserDefaultsHandler.isLoggedIn()) {
+                let alRegisterUserClientService = ALRegisterUserClientService()
+                alRegisterUserClientService.logout(completionHandler: {
+                    print("Logged out Applozic user")
+                });
+            }
         } catch {
             print("Failed to signOut from Firebase")
         }
@@ -86,7 +93,7 @@ class CurrentUser: User {
     func deleteAccount() {
         ref.removeValue()
         self.logOut()
-        FIRAuth.auth()!.currentUser?.delete(completion: nil)
+        Auth.auth().currentUser?.delete(completion: nil)
     }
     func load(completion: (() -> Void)? = nil) {
         
@@ -180,7 +187,7 @@ class CurrentUser: User {
     
     // MARK: - Candidates
     
-    var candidatesRef: FIRDatabaseReference {
+    var candidatesRef: DatabaseReference {
         get {
             return ref.child(Constants.User.Candidate.firebaseNode)
         }
@@ -210,7 +217,7 @@ class CurrentUser: User {
     
     // MARK: - Notifications
     
-    var notificationsRef: FIRDatabaseReference {
+    var notificationsRef: DatabaseReference {
         get {
             return ref.child(Constants.User.Notification.firebaseNode)
         }
@@ -284,7 +291,7 @@ class CurrentUser: User {
     
     // MARK: - Events
     
-    var eventsRef: FIRDatabaseReference {
+    var eventsRef: DatabaseReference {
         get {
             return ref.child(Constants.User.Event.firebaseNode)
         }
@@ -379,8 +386,12 @@ class CurrentUser: User {
     
     func append(event: Event?) {
         if let event = event {
-            self.events.value.append(event)
-            self.events.value.sort(by: { $0.start > $1.start })
+            if self.events.value.index(where: { e in
+                return e.id == event.id
+            }) == nil {
+                self.events.value.append(event)
+                self.events.value.sort(by: { $0.start > $1.start })
+            }
         }
     }
     

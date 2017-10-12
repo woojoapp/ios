@@ -18,7 +18,7 @@ extension User {
         var signUp: Date?
         var user: User
         
-        var ref: FIRDatabaseReference {
+        var ref: DatabaseReference {
             get {
                 return user.ref.child(Constants.User.Activity.firebaseNode)
             }
@@ -37,7 +37,7 @@ extension User {
             self.user = user
         }
         
-        func loadFrom(firebase snapshot: FIRDataSnapshot) {
+        func loadFrom(firebase snapshot: DataSnapshot) {
             if let value = snapshot.value as? [String:Any] {
                 if let lastSeenString = value[Constants.User.Activity.properties.firebaseNodes.lastSeen] as? String {
                     self.lastSeen = Activity.dateFormatter.date(from: lastSeenString)

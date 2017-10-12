@@ -18,7 +18,7 @@ extension CurrentUser {
         //var events: [Event]?
         var commonEventInfos: [CommonEventInfo] = []
         
-        var candidateRef: FIRDatabaseReference {
+        var candidateRef: DatabaseReference {
             get {
                 return user.ref.child(Constants.User.Candidate.firebaseNode).child(uid)
             }
@@ -34,10 +34,10 @@ extension CurrentUser {
             }
         }
         
-        init(snapshot: FIRDataSnapshot, for user: User) {
+        init(snapshot: DataSnapshot, for user: User) {
             self.user = user
             for item in snapshot.childSnapshot(forPath: Constants.User.Candidate.properties.firebaseNodes.events).children {
-                if let commonEventInfoSnap = item as? FIRDataSnapshot {
+                if let commonEventInfoSnap = item as? DataSnapshot {
                     print("COMMON EVENT", commonEventInfoSnap)
                     self.commonEventInfos.append(CommonEventInfo(snapshot: commonEventInfoSnap))
                 }
@@ -89,7 +89,7 @@ extension CurrentUser {
                 }
             }
             
-            init(snapshot: FIRDataSnapshot) {
+            init(snapshot: DataSnapshot) {
                 if let name = snapshot.childSnapshot(forPath: Constants.User.Candidate.CommonEventInfo.firebaseNodes.name).value as? String {
                     self.name = name
                 }

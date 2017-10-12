@@ -22,7 +22,7 @@ struct Location {
 }
 
 extension Location {
-    static func from(firebase snapshot: FIRDataSnapshot) -> Location? {
+    static func from(firebase snapshot: DataSnapshot) -> Location? {
         if let value = snapshot.value as? [String:Any] {
             var location = Location()
             location.country = value[Constants.Event.Place.Location.properties.firebaseNodes.country] as? String

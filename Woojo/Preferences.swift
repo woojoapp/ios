@@ -21,7 +21,7 @@ extension CurrentUser {
         var gender: Gender
         var ageRange: (min: Int, max: Int)
         
-        var ref: FIRDatabaseReference {
+        var ref: DatabaseReference {
             get {
                 return User.current.value!.ref.child(Constants.User.Preferences.firebaseNode)
             }
@@ -32,7 +32,7 @@ extension CurrentUser {
             self.ageRange = ageRange
         }
         
-        func loadFrom(firebase snapshot: FIRDataSnapshot) {
+        func loadFrom(firebase snapshot: DataSnapshot) {
             if let value = snapshot.value as? [String:Any] {
                 if let genderString = value[Constants.User.Preferences.properties.firebaseNodes.gender] as? String, let gender = Gender(rawValue: genderString) {
                     self.gender = gender

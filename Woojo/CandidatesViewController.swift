@@ -75,6 +75,10 @@ class CandidatesViewController: UIViewController {
         kolodaView.delegate = self
         
         self.view.bringSubview(toFront: kolodaView)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
         self.showSettingsButton()
         let settingsButton = self.navigationItem.rightBarButtonItem?.customView as? UIButton
@@ -86,7 +90,10 @@ class CandidatesViewController: UIViewController {
         
         loadingView.layer.borderColor = UIColor.lightGray.cgColor
         loadingView.layer.cornerRadius = loadingView.frame.size.width / 2
+        loadingView.layer.masksToBounds = true
         loadingView.layer.borderWidth = 1.0
+        
+        print("WIDDDTTHH", loadingContainerView.layer.bounds.width, loadingView.frame.size.width)
         
         loadingView.enableIndeterminate()
         
@@ -97,7 +104,6 @@ class CandidatesViewController: UIViewController {
         passButton.layer.cornerRadius = passButton.frame.width / 2
         passButton.layer.masksToBounds = true
         set(button: passButton, enabled: false)
-
     }
     
     override func viewWillAppear(_ animated: Bool) {

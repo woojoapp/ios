@@ -24,9 +24,9 @@ extension User {
         var on: String
         var created: Date = Date()
         var message: String?
-        var ref: FIRDatabaseReference {
+        var ref: DatabaseReference {
             get {
-                return FIRDatabase.database().reference().child(Constants.User.Report.firebaseNode).child(by).child(on)
+                return Database.database().reference().child(Constants.User.Report.firebaseNode).child(by).child(on)
             }
         }
         

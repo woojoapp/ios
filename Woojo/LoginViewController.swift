@@ -133,8 +133,8 @@ extension LoginViewController: LoginButtonDelegate {
         switch result {
         case .success(_, _, let accessToken):
             print("Facebook login success")
-            let credential = FIRFacebookAuthProvider.credential(withAccessToken: accessToken.authenticationToken)
-            FIRAuth.auth()?.signIn(with: credential) { (user, error) in
+            let credential = FacebookAuthProvider.credential(withAccessToken: accessToken.authenticationToken)
+            Auth.auth().signIn(with: credential) { (user, error) in
                 if let user = user {
                     print("Firebase login success \(user.uid)")
                 }

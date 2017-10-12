@@ -20,13 +20,16 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        mTableView.delegate = self
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
         self.showSettingsButton()
         let settingsButton = self.navigationItem.rightBarButtonItem?.customView as? UIButton
-        
         settingsButton?.addTarget(self, action: #selector(showSettings(sender:)), for: .touchUpInside)
-        
-        mTableView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
