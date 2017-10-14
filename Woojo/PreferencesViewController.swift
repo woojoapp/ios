@@ -43,7 +43,7 @@ class PreferencesViewController: UITableViewController, UIPickerViewDelegate, UI
         self.genderPicker.dataSource = self
         self.genderPicker.delegate = self
         
-        Woojo.User.current.asObservable()
+        User.current.asObservable()
             .map{ $0?.preferences.ageRange }
             .subscribe(onNext: { ageRange in
                 self.ageRange = ageRange ?? (min: 20, max: 30)
@@ -53,7 +53,7 @@ class PreferencesViewController: UITableViewController, UIPickerViewDelegate, UI
             })
             .addDisposableTo(disposeBag)
         
-        Woojo.User.current.asObservable()
+        User.current.asObservable()
             .map{ $0?.preferences.gender }
             .subscribe(onNext: { gender in
                 if let gender = gender, let index = self.genderPickerData.index(of: gender) {
@@ -77,7 +77,7 @@ class PreferencesViewController: UITableViewController, UIPickerViewDelegate, UI
     }
     
     func savePreferences() {
-        Woojo.User.current.value?.preferences.save { error in
+        User.current.value?.preferences.save { error in
             if let error = error {
                 print("Failed to save preferences \(error.localizedDescription)")
             }
@@ -85,13 +85,13 @@ class PreferencesViewController: UITableViewController, UIPickerViewDelegate, UI
     }
     
     func saveAgeRange(_ rangeSlider: RangeSlider) {
-        Woojo.User.current.value?.preferences.ageRange = ageRange
+        User.current.value?.preferences.ageRange = ageRange
         savePreferences()
         Analytics.Log(event: Constants.Analytics.Events.PreferencesAgeRangeUpdated.name)
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        Woojo.User.current.value?.preferences.gender = genderPickerData[row]
+        User.current.value?.preferences.gender = genderPickerData[row]
         savePreferences()
         Analytics.Log(event: Constants.Analytics.Events.PreferencesGenderUpdated.name)
     }

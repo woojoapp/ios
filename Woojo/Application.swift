@@ -32,9 +32,20 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         Database.database().isPersistenceEnabled = true
         AnalyticsConfiguration.shared().setAnalyticsCollectionEnabled(false)
     }
+    
+    func requestNotifications() {
+        if #available(iOS 10.0, *) {
+            // For iOS 10 display notification (sent via APNS)
+            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+            UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: {_, _ in })
+        } else {
+            let settings: UIUserNotificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            UIApplication.shared.registerUserNotificationSettings(settings)
+        }
+        UIApplication.shared.registerForRemoteNotifications()
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
         setupRemoteConfig()
         
         Whisper.Config.modifyInset = false
@@ -43,42 +54,17 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         FacebookCore.SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         Auth.auth().addStateDidChangeListener { auth, user in
-            if AccessToken.current == nil {
-                if self.window?.rootViewController?.presentedViewController != self.loginViewController {
-                    self.window?.makeKeyAndVisible()
-                    self.window?.rootViewController?.present(self.loginViewController, animated: true, completion: nil)
-                }
-            } else if Woojo.User.current.value == nil || (Woojo.User.current.value != nil && !Woojo.User.current.value!.isLoading.value && Woojo.User.current.value!.uid != user?.uid) {
-                if let currentUser = CurrentUser() {
-                    currentUser.load {
-                        ALChatManager.shared.setup()
-                        self.loginViewController.dismiss(animated: true, completion: nil)
-                    }
-                } else {
-                    print("No user signed in")
-                    let registerUserClientService: ALRegisterUserClientService = ALRegisterUserClientService()
-                    registerUserClientService.logout {
-                        
-                    }
-                    // Show the login controller
-                    if self.window?.rootViewController?.presentedViewController != self.loginViewController {
-                        self.window?.makeKeyAndVisible()
-                        self.window?.rootViewController?.present(self.loginViewController, animated: true, completion: nil)
-                    }
-                }
-            }
+            print("AUTH STATE DID CHANGE - LISTENER")
+            self.ensureAuthentication(auth: auth, user: user)
         }
         
-        if #available(iOS 10.0, *) {
-            // For iOS 10 display notification (sent via APNS)
-            UNUserNotificationCenter.current().delegate = self
-            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-            UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: {_, _ in })
-        } else {
-            let settings: UIUserNotificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-            application.registerUserNotificationSettings(settings)
+        NotificationCenter.default.addObserver(forName: .AuthStateDidChange, object: Auth.auth(), queue: nil) { notification in
+            print("AUTH STATE CHANGED - NOTIFICATION")
+            if let auth = notification.object as? Auth,
+                let user = auth.currentUser {
+                self.ensureAuthentication(auth: auth, user: user)
+            }
         }
-        application.registerForRemoteNotifications()
         
         let alAppLocalNotificationHandler : ALAppLocalNotifications =  ALAppLocalNotifications.appLocalNotificationHandler();
         alAppLocalNotificationHandler.dataConnectionNotificationHandler();
@@ -101,6 +87,35 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return true
     }
     
+    func ensureAuthentication(auth: Auth, user: FirebaseAuth.User?) {
+        if AccessToken.current == nil {
+            print("AUTH STATE DID CHANGE - AccessToken.current == nil", AccessToken.current, user?.uid)
+            if self.window?.rootViewController?.presentedViewController != self.loginViewController {
+                self.window?.makeKeyAndVisible()
+                self.window?.rootViewController?.present(self.loginViewController, animated: true, completion: nil)
+            }
+        } else if Woojo.User.current.value == nil || (Woojo.User.current.value != nil && !Woojo.User.current.value!.isLoading.value && Woojo.User.current.value!.uid != user?.uid) {
+            print("AUTH STATE DID CHANGE - APP DELEGATE 2", Woojo.User.current.value?.uid, user?.uid)
+            if let currentUser = CurrentUser() {
+                currentUser.load {
+                    ALChatManager.shared.setup()
+                    self.loginViewController.dismiss(animated: true, completion: nil)
+                }
+            } else {
+                print("No user signed in", user?.uid)
+                let registerUserClientService: ALRegisterUserClientService = ALRegisterUserClientService()
+                registerUserClientService.logout {
+                    
+                }
+                // Show the login controller
+                if self.window?.rootViewController?.presentedViewController != self.loginViewController {
+                    self.window?.makeKeyAndVisible()
+                    self.window?.rootViewController?.present(self.loginViewController, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         var deviceTokenString: String = ""
         for i in 0..<deviceToken.count {
@@ -117,11 +132,15 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             Constants.User.Device.properties.firebaseNodes.token: deviceTokenString,
             Constants.User.Device.properties.firebaseNodes.platform: "iOS"
         ]
-        Woojo.User.current.value?.ref.child(Constants.User.Device.firebaseNode).child(deviceTokenString).setValue(device) { error, ref in
+        User.current.value?.ref.child(Constants.User.Device.firebaseNode).child(deviceTokenString).setValue(device) { error, ref in
             if (error != nil) {
                 print("Failed to save device push token: \(error)")
             }
         }
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Oh no! Failed to register for remote notifications with error \(error)")
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
@@ -147,7 +166,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func application(received remoteMessage: MessagingRemoteMessage) {
-        
+        print("Received remote message: \(remoteMessage)")
     }
    
     func applicationWillResignActive(_ application: UIApplication) {

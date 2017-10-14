@@ -75,6 +75,7 @@ class Notifier {
     }
     
     func schedule(notification: CurrentUser.Notification) {
+        print("DEBUG NOTIFICATIONS", shoutsQueue.count >= Constants.User.Notification.maxQueueLength)
         if shoutsQueue.count >= Constants.User.Notification.maxQueueLength {
             notification.setDisplayed()
             return

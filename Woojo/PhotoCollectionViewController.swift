@@ -157,7 +157,7 @@ extension PhotoCollectionViewController: RSKImageCropViewControllerDelegate {
         if let reachable = isReachable(), reachable {
             HUD.show(.progress)
             if let selectedIndex = collectionView?.indexPathsForSelectedItems?[0].row, let id = photos[selectedIndex].id {
-                Woojo.User.current.value?.profile.setPhoto(photo: croppedImage, id: id, index: self.photoIndex) { photo, error in
+                User.current.value?.profile.setPhoto(photo: croppedImage, id: id, index: self.photoIndex) { photo, error in
                     if error != nil {
                         HUD.show(.labeledError(title: "Error", subtitle: "Failed to add photo"))
                         HUD.hide(afterDelay: 1.0)

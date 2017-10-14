@@ -37,9 +37,8 @@ extension ShowsSettingsButton where Self: UIViewController {
         settingsItem.customView = settingsButton
         
         self.navigationItem.setRightBarButton(settingsItem, animated: true)
-
         
-        Woojo.User.current.asObservable()
+        User.current.asObservable()
             .flatMap { user -> Observable<[User.Profile.Photo?]> in
                 if let currentUser = user {
                     return currentUser.profile.photos.asObservable()
@@ -55,7 +54,9 @@ extension ShowsSettingsButton where Self: UIViewController {
                 }
             }
             .subscribe(onNext: { image in
-                settingsButton.setImage(image, for: .normal)
+                if (image !== nil) {
+                    settingsButton.setImage(image, for: .normal)
+                }
             })
             .addDisposableTo(disposeBag)
         

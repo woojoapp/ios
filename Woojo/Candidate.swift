@@ -47,7 +47,7 @@ extension CurrentUser {
         
         func like(visible: Bool? = nil, message: String? = nil, completion: ((Error?) -> Void)? = nil) {
             // Like the candidate
-            Woojo.User.current.value?.like(candidate: self.uid, visible: visible, message: message) { error in
+            User.current.value?.like(candidate: self.uid, visible: visible, message: message) { error in
                 // Remove it from the list
                 self.remove(completion: completion)
             }
@@ -55,7 +55,7 @@ extension CurrentUser {
         
         func pass(completion: ((Error?) -> Void)? = nil) {
             // Pass on the candidate
-            Woojo.User.current.value?.pass(candidate: self.uid) { error in
+            User.current.value?.pass(candidate: self.uid) { error in
                 self.profile.removeAllPhotosFromCache()
                 // Remove it from the list
                 self.remove(completion: completion)

@@ -17,7 +17,7 @@ class SearchEventsViewController: UIViewController {
 
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var resultsTableView: UITableView!
-    @IBOutlet var emptyView: UILabel!
+    //@IBOutlet var emptyView: UILabel!
     @IBOutlet var bottomConstraint: NSLayoutConstraint!
     
     var disposeBag = DisposeBag()
@@ -31,11 +31,20 @@ class SearchEventsViewController: UIViewController {
         
         setupDataSource()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        print("WWIIDIDIDID0000", resultsTableView.frame.width, searchBar.frame.width)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
         resultsTableView.emptyDataSetDelegate = self
         resultsTableView.emptyDataSetSource = self
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        resultsTableView.layoutSubviews()
+        
+        print("WWIIDIDIDID", resultsTableView.frame.width, searchBar.frame.width)
     }
     
     deinit {
@@ -55,7 +64,7 @@ class SearchEventsViewController: UIViewController {
     }
 
     func setupDataSource() {
-        Woojo.User.current.value?.events.asObservable().subscribe(onNext: { _ in
+        User.current.value?.events.asObservable().subscribe(onNext: { _ in
             self.resultsTableView.reloadData()
         }).addDisposableTo(disposeBag)
         
@@ -78,7 +87,7 @@ class SearchEventsViewController: UIViewController {
         results
             .drive(resultsTableView.rx.items(cellIdentifier: "searchEventCell", cellType: SearchEventsResultsTableViewCell.self)) { (_, event, cell) in
                 cell.event = event
-                if let isUserEvent = Woojo.User.current.value?.events.value.contains(where: { $0.id == cell.event?.id }) {
+                if let isUserEvent = User.current.value?.events.value.contains(where: { $0.id == cell.event?.id }) {
                     cell.checkView.isHidden = !isUserEvent
                 }
             }
@@ -90,7 +99,7 @@ class SearchEventsViewController: UIViewController {
                     reachable,
                     let cell = self.resultsTableView.cellForRow(at: indexPath) as? SearchEventsResultsTableViewCell,
                     let event = cell.event,
-                    let isUserEvent = Woojo.User.current.value?.events.value.contains(where: { $0.id == event.id }) {
+                    let isUserEvent = User.current.value?.events.value.contains(where: { $0.id == event.id }) {
                     if isUserEvent {
                         self.remove(event: event) { error in
                             if error == nil {
@@ -110,7 +119,7 @@ class SearchEventsViewController: UIViewController {
     
     func remove(event: Event, completion: ((Error?) -> Void)? = nil) {
         HUD.show(.labeledProgress(title: "Remove Event", subtitle: "Removing event..."))
-        Woojo.User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
+        User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
             completion?(error)
             self.resultsTableView.reloadData()
             HUD.show(.labeledSuccess(title: "Remove Event", subtitle: "Event removed!"))
@@ -124,7 +133,7 @@ class SearchEventsViewController: UIViewController {
     
     func add(event: Event, completion: ((Error?) -> Void)? = nil) {
         HUD.show(.labeledProgress(title: "Add Event", subtitle: "Adding event..."))
-        Woojo.User.current.value?.add(event: event, completion: { (error: Error?) -> Void in
+        User.current.value?.add(event: event, completion: { (error: Error?) -> Void in
             completion?(error)
             self.resultsTableView.reloadData()
             HUD.show(.labeledSuccess(title: "Add Event", subtitle: "Event added!"))
@@ -162,13 +171,13 @@ class SearchEventsViewController: UIViewController {
 
 // MARK: - UITableViewDelegate
 
-extension SearchEventsViewController: UITableViewDelegate {
+/*extension SearchEventsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return tableView.dequeueReusableHeaderFooterView(withIdentifier: "reuseSearchheader")
     }
     
-}
+}*/
 
 // MARK: - DZNEmptyDataSetSource
 

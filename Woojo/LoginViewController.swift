@@ -45,6 +45,8 @@ class LoginViewController: UIViewController {
     let termsText = "Terms & Conditions"
     let privacyText = "Privacy Policy"
     
+    var authListenerHandle: AuthStateDidChangeListenerHandle?
+    
     override var modalTransitionStyle: UIModalTransitionStyle {
         get {
             return .flipHorizontal
@@ -107,7 +109,7 @@ class LoginViewController: UIViewController {
             
         }
         
-        let activityDriver = Woojo.User.current.asObservable()
+        let activityDriver = User.current.asObservable()
             .flatMap { user -> Observable<Bool> in
                 if let currentUser = user {
                     return currentUser.isLoading.asObservable()
@@ -121,7 +123,6 @@ class LoginViewController: UIViewController {
             .drive(self.activityIndicator.rx.isAnimating)
             .addDisposableTo(disposeBag)
     }
-
 }
 
 // MARK: - LoginButtonDelegate
@@ -137,6 +138,7 @@ extension LoginViewController: LoginButtonDelegate {
             Auth.auth().signIn(with: credential) { (user, error) in
                 if let user = user {
                     print("Firebase login success \(user.uid)")
+                    //self.dismiss(animated: true, completion: nil)
                 }
                 if let error = error {
                     print("Firebase login failure \(error.localizedDescription)")
@@ -152,7 +154,7 @@ extension LoginViewController: LoginButtonDelegate {
     }
     
     func loginButtonDidLogOut(_ loginButton: LoginButton) {
-        Woojo.User.current.value?.logOut()
+        User.current.value?.logOut()
         activityIndicator.stopAnimating()
     }
 

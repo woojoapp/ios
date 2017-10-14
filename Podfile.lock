@@ -62,7 +62,8 @@ PODS:
     - FirebaseAnalytics (~> 4.0)
     - FirebaseCore (~> 4.0)
     - leveldb-library (~> 1.18)
-  - FirebaseInstanceID (2.0.4)
+  - FirebaseInstanceID (2.0.0):
+    - FirebaseCore (~> 4.0)
   - FirebaseMessaging (2.0.4):
     - FirebaseAnalytics (~> 4.0)
     - FirebaseCore (~> 4.0)
@@ -133,11 +134,12 @@ DEPENDENCIES:
   - FBSDKLoginKit (= 4.15.0)
   - FBSDKShareKit (= 4.15.0)
   - Firebase/Auth
-  - Firebase/Core
+  - Firebase/Core (= 4.3.0)
   - Firebase/Database
   - Firebase/Messaging
   - Firebase/RemoteConfig
   - Firebase/Storage
+  - FirebaseInstanceID (= 2.0.0)
   - FirebaseUI/Storage (= 2.0.0)
   - HMSegmentedControl (= 1.5.3)
   - ImageSlideshow (= 1.0.0)
@@ -189,7 +191,7 @@ SPEC CHECKSUMS:
   FirebaseAuth: d7f047fbeab98062b98ea933b8d934e0fb1190e2
   FirebaseCore: 69b1a5ac5f857ba6d5fd9d5fe794f4786dd5e579
   FirebaseDatabase: 607284a103e961d7f5863ee603cab5e85f443bd6
-  FirebaseInstanceID: 70c2b877e9338971b2429ea5a4293df6961aa44e
+  FirebaseInstanceID: 9fbf536668f4d3f0880e7438456dabd1376e294b
   FirebaseMessaging: 3dd86bfda2acb680b05c97f3f8ac566e9bb87b2a
   FirebaseRemoteConfig: 1c982f73af48ec048c8fa8621d5178cfdffac9aa
   FirebaseStorage: 0cca42d9b889a0227c3a50121f45a4469fc9eb27
@@ -213,6 +215,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   Whisper: 08be92623311f8e53201e62e17f6d7b9599a4714
 
-PODFILE CHECKSUM: 1424bafbc7bcda0473997e54f1167a94288d1982
+PODFILE CHECKSUM: 443a53042e4029345a326f881f62c714a3e5e6f9
 
 COCOAPODS: 1.3.1

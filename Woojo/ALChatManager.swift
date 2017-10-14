@@ -118,7 +118,7 @@ class ALChatManager: NSObject {
             else {
                 print("registered")
                 if(ALChatManager.isNilOrEmpty(ALUserDefaultsHandler.getApnDeviceToken() as NSString?)) {
-                    alChatLauncher?.registerForNotification()
+                    //alChatLauncher?.registerForNotification()
                 }
                 
                 ALApplozicSettings.setListOfViewControllers(["Woojo.EventsViewController",
@@ -144,7 +144,7 @@ class ALChatManager: NSObject {
                                                              "PUUIPhotosAlbumViewController"])
                 ALMQTTConversationService.sharedInstance().subscribeToConversation()
                 
-                NotificationCenter.default.addObserver(self, selector: #selector(self.newMessageReceived(notification:)), name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
+                //NotificationCenter.default.addObserver(self, selector: #selector(self.newMessageReceived(notification:)), name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
                 completion(response! , error as NSError?)
             }
         })
@@ -401,7 +401,7 @@ class ALChatManager: NSObject {
         
         //ALUserDefaultsHandler.setDeviceApnsType(APNS_TYPE_DEVELOPMENT)
         //For Distribution CERT::
-        ALUserDefaultsHandler.setDeviceApnsType(APNS_TYPE_DISTRIBUTION)
+        //ALUserDefaultsHandler.setDeviceApnsType(APNS_TYPE_DISTRIBUTION)
         
         //let appName = Bundle.main.infoDictionary!["CFBundleName"]
         //ALApplozicSettings.setNotificationTitle((appName as AnyObject).string)

@@ -87,7 +87,7 @@ class CurrentUser: User {
         } catch {
             print("Failed to signOut from Firebase")
         }
-        Woojo.User.current.value = nil
+        User.current.value = nil
     }
     
     func deleteAccount() {
@@ -116,7 +116,7 @@ class CurrentUser: User {
             })
         }
         
-        Woojo.User.current.value = self
+        User.current.value = self
         isLoading.value = true
         
         activity.loadFromFirebase(completion: { _, _ in
@@ -253,6 +253,9 @@ class CurrentUser: User {
                         }
                     }
                 }
+                if let notificationCount = Woojo.User.current.value?.notifications.value.count {
+                    UIApplication.shared.applicationIconBadgeNumber = notificationCount
+                }
             }
         }, withCancel: { error in
             print("Cancelled observing notifications.childAdded: \(error)")
@@ -263,6 +266,9 @@ class CurrentUser: User {
                 return notification.id == snapshot.key
             }) {
                 self.notifications.value.remove(at: index)
+                if let notificationCount = Woojo.User.current.value?.notifications.value.count {
+                    UIApplication.shared.applicationIconBadgeNumber = notificationCount
+                }
             }
         }, withCancel: { error in
             print("Cancelled observing notifications.childRemoved: \(error)")
@@ -276,7 +282,7 @@ class CurrentUser: User {
     }
     
     /*func listenToNotifications() {
-        Woojo.User.current.asObservable()
+        User.current.asObservable()
             .flatMap { user -> Observable<[CurrentUser.Notification]> in
                 if let currentUser = user {
                     return currentUser.notifications.asObservable()

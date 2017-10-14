@@ -46,9 +46,6 @@ class ProfileViewController: UITableViewController {
         super.viewDidLoad()
         setupDataSources()
         setupBioTextView()
-        photosCollectionView.delegate = self
-        photosCollectionView.dataSource = self
-        photosCollectionView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPress)))
         imagePickerController.delegate = self
     }
     
@@ -64,7 +61,7 @@ class ProfileViewController: UITableViewController {
     }
     
     func setupDataSources() {
-        let userPhotos = Woojo.User.current.asObservable()
+        let userPhotos = User.current.asObservable()
             .flatMap { user -> Observable<[User.Profile.Photo?]> in
                 if let currentUser = user {
                     return currentUser.profile.photos.asObservable()
@@ -88,12 +85,12 @@ class ProfileViewController: UITableViewController {
         })
         .addDisposableTo(disposeBag)
         
-        Woojo.User.current.asObservable()
+        User.current.asObservable()
             .map{ $0?.profile.displayName }
             .bindTo(nameLabel.rx.text)
             .addDisposableTo(disposeBag)
         
-        Woojo.User.current.asObservable()
+        User.current.asObservable()
             .flatMap { user -> Observable<String> in
                 if let currentUser = user {
                     return currentUser.profile.description.asObservable()
@@ -113,7 +110,7 @@ class ProfileViewController: UITableViewController {
             .bindTo(bioTableViewCell.bioTextView.rx.text)
             .addDisposableTo(disposeBag)
         
-        Woojo.User.current.asObservable()
+        User.current.asObservable()
             .map{
                 var description = ""
                 if let age = $0?.profile.age {
@@ -262,8 +259,8 @@ extension ProfileViewController: UICollectionViewDelegate {
                 let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 let removeButton = UIAlertAction(title: "Remove", style: .destructive, handler: { (action) -> Void in
                     HUD.show(.progress)
-                    Woojo.User.current.value?.profile.deleteFiles(forPhotoAt: indexPath.row) { _ in
-                        Woojo.User.current.value?.profile.remove(photoAt: indexPath.row) { _ in
+                    User.current.value?.profile.deleteFiles(forPhotoAt: indexPath.row) { _ in
+                        User.current.value?.profile.remove(photoAt: indexPath.row) { _ in
                             self.photosCollectionView.reloadItems(at: [indexPath])
                             HUD.show(.success)
                             HUD.hide(afterDelay: 1.0)
@@ -331,7 +328,7 @@ extension ProfileViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ProfilePhotoCollectionViewCell
-        if let photos = Woojo.User.current.value?.profile.photos.value, let photo = photos[indexPath.row] {
+        if let photos = User.current.value?.profile.photos.value, let photo = photos[indexPath.row] {
             cell.photo = photo
             cell.imageView.contentMode = .scaleAspectFill
             cell.imageView.image = photo.images[User.Profile.Photo.Size.thumbnail]
@@ -369,15 +366,15 @@ extension ProfileViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        if let photos = Woojo.User.current.value?.profile.photos.value, let photo = photos[sourceIndexPath.row] {
-            Woojo.User.current.value?.profile.set(photo: photo, at: destinationIndexPath.row)
+        if let photos = User.current.value?.profile.photos.value, let photo = photos[sourceIndexPath.row] {
+            User.current.value?.profile.set(photo: photo, at: destinationIndexPath.row)
         }
         for i in 0..<Int(photoCount) {
             if let cell = collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? ProfilePhotoCollectionViewCell {
                 if let photo = cell.photo {
-                    Woojo.User.current.value?.profile.set(photo: photo, at: i)
+                    User.current.value?.profile.set(photo: photo, at: i)
                 } else {
-                    Woojo.User.current.value?.profile.remove(photoAt: i)
+                    User.current.value?.profile.remove(photoAt: i)
                 }
             }
         }
@@ -397,7 +394,7 @@ extension ProfileViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
         let availableWidth = tableView.frame.width - paddingSpace
-        let widthPerItem = availableWidth / itemsPerRow
+        let widthPerItem = UIKit.floor(availableWidth / itemsPerRow)
         
         return CGSize(width: widthPerItem, height: widthPerItem)
     }
@@ -446,7 +443,7 @@ extension ProfileViewController: RSKImageCropViewControllerDelegate {
         if let reachable = isReachable(), reachable {
             HUD.show(.progress)
             if let selectedIndex = photosCollectionView.indexPathsForSelectedItems?[0].row {
-                Woojo.User.current.value?.profile.setPhoto(photo: croppedImage, id: UUID().uuidString, index: selectedIndex) { photo, error in
+                User.current.value?.profile.setPhoto(photo: croppedImage, id: UUID().uuidString, index: selectedIndex) { photo, error in
                     if error != nil {
                         HUD.show(.labeledError(title: "Error", subtitle: "Failed to add photo"))
                         HUD.hide(afterDelay: 1.0)
@@ -483,7 +480,7 @@ extension ProfileViewController: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         let newBio = bioTableViewCell.bioTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-        Woojo.User.current.value?.profile.setDescription(description: newBio, completion: { error in
+        User.current.value?.profile.setDescription(description: newBio, completion: { error in
             if error != nil {
                 self.bioTableViewCell.bioTextView.text = self.previousBio
             } else {

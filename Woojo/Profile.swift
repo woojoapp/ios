@@ -254,7 +254,7 @@ extension User {
         }
         
         func set(photo: Photo, at index: Int, completion: ((Error?) -> Void)? = nil) {
-            Woojo.User.current.value?.profile.photos.value[index] = photo
+            User.current.value?.profile.photos.value[index] = photo
             ref?.child(Constants.User.Profile.Photo.firebaseNode).child(String(index)).setValue(photo.id, withCompletionBlock: { error, ref in
                 completion?(error)
             })
@@ -267,7 +267,7 @@ extension User {
         }
         
         func deleteFiles(forPhotoAt index: Int, completion: ((Error?) -> Void)? = nil) {
-            Woojo.User.current.value?.profile.photos.value[index] = nil
+            User.current.value?.profile.photos.value[index] = nil
             ref?.child(Constants.User.Profile.Photo.firebaseNode).child(String(index)).observeSingleEvent(of: .value, with: { snapshot in
                 if let id = snapshot.value as? String {
                     self.storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(id).child(Constants.User.Profile.Photo.properties.full).delete { error in

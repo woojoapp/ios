@@ -32,7 +32,7 @@ class MyEventsTableViewController: UITableViewController {
         
         loadFacebookEvents()
         
-        Woojo.User.current.value?.events.asObservable().subscribe(onNext: { _ in
+        User.current.value?.events.asObservable().subscribe(onNext: { _ in
             self.tableView.reloadData()
         }).addDisposableTo(disposeBag)
     }
@@ -56,7 +56,7 @@ class MyEventsTableViewController: UITableViewController {
     }
 
     func loadFacebookEvents() {
-        Woojo.User.current.value?.getEventsFromFacebook { events in
+        User.current.value?.getEventsFromFacebook { events in
             self.events = events
             self.tableView.reloadData()
             self.tableView.refreshControl?.endRefreshing()
@@ -82,7 +82,7 @@ class MyEventsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "fbEventCell", for: indexPath) as! MyEventsTableViewCell
         cell.event = self.events[indexPath.row]
-        if let isUserEvent = Woojo.User.current.value?.events.value.contains(where: { $0.id == cell.event?.id }) {
+        if let isUserEvent = User.current.value?.events.value.contains(where: { $0.id == cell.event?.id }) {
             cell.checkView.isHidden = !isUserEvent
         }
         return cell
@@ -93,12 +93,12 @@ class MyEventsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let reachable = isReachable(), reachable {
             let event = self.events[indexPath.row]
-            if let isUserEvent = Woojo.User.current.value?.events.value.contains(where: { $0.id == event.id }) {
+            if let isUserEvent = User.current.value?.events.value.contains(where: { $0.id == event.id }) {
                 print(isUserEvent)
                 if let cell = tableView.cellForRow(at: indexPath) as? MyEventsTableViewCell {
                     if isUserEvent {
                         HUD.show(.labeledProgress(title: "Remove Event", subtitle: "Removing event..."))
-                        Woojo.User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
+                        User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
                             cell.checkView.isHidden = true
                             tableView.reloadRows(at: [indexPath], with: .none)
                             HUD.show(.labeledSuccess(title: "Remove Event", subtitle: "Event removed!"))
@@ -110,7 +110,7 @@ class MyEventsTableViewController: UITableViewController {
                         })
                     } else {
                         HUD.show(.labeledProgress(title: "Add Event", subtitle: "Adding event..."))
-                        Woojo.User.current.value?.add(event: event, completion: { (error: Error?) -> Void in
+                        User.current.value?.add(event: event, completion: { (error: Error?) -> Void in
                             cell.checkView.isHidden = false
                             tableView.reloadRows(at: [indexPath], with: .none)
                             HUD.show(.labeledSuccess(title: "Add Event", subtitle: "Event added!"))

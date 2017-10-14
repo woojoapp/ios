@@ -53,7 +53,7 @@ class EventsViewController: UITableViewController {
     }
     
     func setupDataSource() {
-        Woojo.User.current.asObservable()
+        User.current.asObservable()
             .flatMap { user -> Observable<[Event]> in
                 if let currentUser = user {
                     print("RETURNING EVENTS")
@@ -93,7 +93,7 @@ class EventsViewController: UITableViewController {
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Remove", handler: { action, indexPath in
             if let cell = self.tableView.cellForRow(at: indexPath) as? EventsTableViewCell, let event = cell.event {
                 HUD.show(.labeledProgress(title: "Remove Event", subtitle: "Removing event..."))
-                Woojo.User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
+                User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
                     let analyticsEventParameters = [Constants.Analytics.Events.EventRemoved.Parameters.name: event.name,
                                                     Constants.Analytics.Events.EventRemoved.Parameters.id: event.id,
                                                     Constants.Analytics.Events.EventRemoved.Parameters.screen: String(describing: type(of: self))]

@@ -26,7 +26,7 @@ class MainTabBarController: UITabBarController {
     }
     
     func setupDataSource() {
-        Woojo.User.current.asObservable()
+        User.current.asObservable()
             .flatMap { user -> Observable<[CurrentUser.Notification]> in
                 if let currentUser = user {
                     return currentUser.notifications.asObservable()

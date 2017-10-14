@@ -57,7 +57,6 @@ extension Event {
     }()
     
     static func from(firebase snapshot: DataSnapshot) -> Event? {
-        print("BEFORE CHECKS", snapshot)
         if let value = snapshot.value as? [String:Any],
             let id = value[Constants.Event.properties.firebaseNodes.id] as? String,
             let name = value[Constants.Event.properties.firebaseNodes.name] as? String,
@@ -134,7 +133,6 @@ extension Event {
     static func get(for id: String, completion: ((Event?) -> Void)? = nil) {
         let ref = Database.database().reference().child(Constants.Event.firebaseNode).child(id)
         ref.observeSingleEvent(of: .value, with: { snapshot in
-            print ("GETTING EVENT", id, ref.url, snapshot)
             completion?(from(firebase: snapshot))
         })
     }

@@ -24,6 +24,7 @@ struct Constants {
                 struct firebaseNodes {
                     static let lastSeen = "last_seen"
                     static let signUp = "sign_up"
+                    static let repliedToPushNotificationsInvite = "replied_to_push_notifications_invite"
                 }
             }
         }

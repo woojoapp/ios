@@ -10,6 +10,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
+import FirebaseMessaging
 import Koloda
 import RxSwift
 import RxCocoa
@@ -17,6 +18,7 @@ import DOFavoriteButton
 import RPCircularProgress
 import Whisper
 import SDWebImage
+import UserNotifications
 
 class CandidatesViewController: UIViewController {
     
@@ -66,9 +68,11 @@ class CandidatesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Woojo.User.current.asObservable()
+        User.current.asObservable()
             .subscribe(onNext: { user in
-                user?.candidatesDelegate = self
+                user?.candidatesDelegate = self                
+                let token = Messaging.messaging().fcmToken
+                print("FCM token: \(token ?? "")")
             }).addDisposableTo(disposeBag)
         
         kolodaView.dataSource = self
@@ -92,8 +96,6 @@ class CandidatesViewController: UIViewController {
         loadingView.layer.cornerRadius = loadingView.frame.size.width / 2
         loadingView.layer.masksToBounds = true
         loadingView.layer.borderWidth = 1.0
-        
-        print("WIDDDTTHH", loadingContainerView.layer.bounds.width, loadingView.frame.size.width)
         
         loadingView.enableIndeterminate()
         
@@ -138,6 +140,20 @@ class CandidatesViewController: UIViewController {
         button.alpha = (enabled) ? 1.0 : 0.3
     }
     
+    func showPushNotificationsInvite() {
+        let pushNotificationsInvite = UIAlertController(title: "Push notifications", message: "Would you like to get push notifications when you match or receive messages?\n\nYou can also manage this behavior later on from the Settings screen.", preferredStyle: .alert)
+        pushNotificationsInvite.addAction(UIAlertAction(title: "Yes, notify me", style: .default) { _ in
+            Woojo.User.current.value?.activity.setRepliedToPushNotificationsInvite()
+            if let application = UIApplication.shared.delegate as? Application {
+                application.requestNotifications()
+            }
+        })
+        pushNotificationsInvite.addAction(UIAlertAction(title: "Not now", style: .cancel) { _ in
+            Woojo.User.current.value?.activity.setRepliedToPushNotificationsInvite()
+        })
+        present(pushNotificationsInvite, animated: true)
+    }
+    
 }
 
 // MARK: - KolodaViewDelegate
@@ -160,6 +176,12 @@ extension CandidatesViewController: KolodaViewDelegate {
             }
         case .right:
             User.current.value?.candidates[index].like()
+            if User.current.value?.activity.repliedToPushNotificationsInvite == nil {
+                self.showPushNotificationsInvite()
+                print("INVITING")
+            } else {
+                print("NOT INVITING")
+            }
             if !likeButton.isSelected {
                 likeButton.select()
                 set(button: passButton, enabled: false)
@@ -233,7 +255,6 @@ extension CandidatesViewController: KolodaViewDataSource {
     func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
         
         let cardView = CandidateCardView(frame: CGRect.zero)
-        print("INDEX", index, User.current.value?.candidates.count)
         if let count = User.current.value?.candidates.count, index >= count {
             cardView.nameLabel.text = "Index out of range"
             return cardView

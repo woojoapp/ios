@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Woojo Development.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>34</integer>
+		</dict>
+		<key>Woojo Staging.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>33</integer>
+		</dict>
 		<key>Woojo.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -13,6 +23,11 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>85512B081DCB5B020072C1B8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>85662BEE1F90BCEF00D5701E</key>
 		<dict>
 			<key>primary</key>
 			<true/>

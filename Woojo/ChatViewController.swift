@@ -35,15 +35,14 @@ class ChatViewController: ALChatViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.wireUnmatchObserver()
+        
         self.placeHolderTxt = "Write a message..."
         ALApplozicSettings.setColorForSendMessages(self.view.tintColor)
-        
-        self.wireUnmatchObserver()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         navigationController?.navigationBar.layer.shadowOpacity = 0.0
         navigationController?.navigationBar.layer.shadowRadius = 0.0
         navigationController?.navigationBar.layer.shadowOffset = CGSize.zero
@@ -136,13 +135,14 @@ class ChatViewController: ALChatViewController {
         self.typingLabel.isHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
-        self.unwireUnmatchObserver()
+        //self.unwireUnmatchObserver()
     }
     
     func newMessage() {
         print("MESSAGE RECEIVEDDDDDDD")
         setNavigationItemTitle()
         scrollTableViewToBottom(withAnimation: true)
+        CurrentUser.Notification.deleteAll(otherId: self.contactIds)
     }
     
     func wireUnmatchObserver() {
@@ -151,7 +151,8 @@ class ChatViewController: ALChatViewController {
             if let handle = self.unmatchObserverHandle {
                 user?.matchesRef.removeObserver(withHandle: handle)
             }
-            user?.matchesRef.observe(.childRemoved, with: { (snap) in
+            self.unmatchObserverHandle = user?.matchesRef.observe(.childRemoved, with: { (snap) in
+                print("UNMATCH DETECTED", snap.key, self.contactIds)
                 if snap.key == self.contactIds {
                     self.conversationDeleted()
                 }
@@ -159,11 +160,11 @@ class ChatViewController: ALChatViewController {
         }).addDisposableTo(disposeBag)
     }
     
-    func unwireUnmatchObserver() {
+    /*func unwireUnmatchObserver() {
         if let handle = self.unmatchObserverHandle {
             Woojo.User.current.value?.matchesRef.removeObserver(withHandle: handle)
         }
-    }
+    }*/
     
     func conversationDeleted() {
         if HUD.isVisible {

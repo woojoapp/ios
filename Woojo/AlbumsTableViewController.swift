@@ -36,13 +36,13 @@ class AlbumsTableViewController: UITableViewController {
         tableView.emptyDataSetDelegate = self
         tableView.emptyDataSetSource = self
         
-        Woojo.User.current.asObservable().subscribe(onNext: { _ in
+        User.current.asObservable().subscribe(onNext: { _ in
             self.loadFacebookAlbums()
         }).addDisposableTo(disposeBag)
     }
     
     func loadFacebookAlbums() {
-        Woojo.User.current.value?.getAlbumsFromFacebook { albums in
+        User.current.value?.getAlbumsFromFacebook { albums in
             self.albums = albums
             self.tableView.reloadData()
             self.tableView.refreshControl?.endRefreshing()

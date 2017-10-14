@@ -15,6 +15,7 @@ class SettingsViewController: UITableViewController {
     
     @IBOutlet weak var logoutButton: UIButton!
     @IBOutlet weak var deleteAccountButton: UIButton!
+    @IBOutlet weak var pushNotificationsSwitch: UISwitch!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var profilePhotoImageView: ProfilePhotoImageView!
@@ -27,7 +28,7 @@ class SettingsViewController: UITableViewController {
         logoutAlert.addAction(UIAlertAction(title: "Logout", style: .default) { _ in
             self.dismiss(animated: true, completion: nil)
             Analytics.Log(event: Constants.Analytics.Events.LoggedOut.name)
-            Woojo.User.current.value?.logOut()
+            User.current.value?.logOut()
         })
         logoutAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(logoutAlert, animated: true)
@@ -38,7 +39,7 @@ class SettingsViewController: UITableViewController {
         deleteAccountAlert.addAction(UIAlertAction(title: "Delete", style: .destructive) { _ in
             self.dismiss(animated: true, completion: nil)
             Analytics.Log(event: Constants.Analytics.Events.AccountDeleted.name)
-            Woojo.User.current.value?.deleteAccount()
+            User.current.value?.deleteAccount()
         })
         deleteAccountAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(deleteAccountAlert, animated: true)
@@ -46,6 +47,17 @@ class SettingsViewController: UITableViewController {
     
     @IBAction func dismiss(sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction
+    func switchNotifications(sender: UISwitch) {
+        if sender.isOn {
+            if let application = UIApplication.shared.delegate as? Woojo.Application {
+                application.requestNotifications()
+            }
+        } else {
+            UIApplication.shared.unregisterForRemoteNotifications()
+        }
     }
 
     override func viewDidLoad() {
@@ -57,6 +69,7 @@ class SettingsViewController: UITableViewController {
         super.viewWillAppear(animated)
         startMonitoringReachability()
         checkReachability()
+        self.pushNotificationsSwitch.isOn = UIApplication.shared.isRegisteredForRemoteNotifications
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -65,7 +78,7 @@ class SettingsViewController: UITableViewController {
     }
     
     func setupDataSource() {
-        Woojo.User.current.asObservable()
+        User.current.asObservable()
             .flatMap { user -> Observable<[User.Profile.Photo?]> in
                 if let currentUser = user {
                     return currentUser.profile.photos.asObservable()
@@ -83,12 +96,12 @@ class SettingsViewController: UITableViewController {
             .bindTo(profilePhotoImageView.rx.image)
             .addDisposableTo(disposeBag)
         
-        Woojo.User.current.asObservable()
+        User.current.asObservable()
             .map{ $0?.profile.displayName }
             .bindTo(nameLabel.rx.text)
             .addDisposableTo(disposeBag)
         
-        Woojo.User.current.asObservable()
+        User.current.asObservable()
             .map{
                 var description = ""
                 if let age = $0?.profile.age {
