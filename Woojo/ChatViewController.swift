@@ -35,25 +35,15 @@ class ChatViewController: ALChatViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.wireUnmatchObserver()
-        
         self.placeHolderTxt = "Write a message..."
         ALApplozicSettings.setColorForSendMessages(self.view.tintColor)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.navigationBar.layer.shadowOpacity = 0.0
-        navigationController?.navigationBar.layer.shadowRadius = 0.0
-        navigationController?.navigationBar.layer.shadowOffset = CGSize.zero
-        navigationController?.navigationBar.tintColor = nil
-        navigationController?.navigationBar.barTintColor = nil
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.view.backgroundColor = UIColor.white.withAlphaComponent(0.2)
-        typingMessageView.backgroundColor = translucentColor
-        sendMessageTextView.backgroundColor = UIColor.clear
-        sendButton.backgroundColor = UIColor.clear
-        
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+    }
+    
+    func setContactProfilePhoto() {
         let profileItem = UIBarButtonItem()
         
         let profileButton = UIButton(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
@@ -75,8 +65,32 @@ class ChatViewController: ALChatViewController {
         
         profileButton.addTarget(self, action: #selector(showProfile), for: .touchUpInside)
         
-        navigationItem.setRightBarButton(profileItem, animated: true)
+        if (self.navRightBarButtonItems.count == 0) {
+            self.navRightBarButtonItems.add(profileItem)
+        } else {
+            if let barButtonItem = self.navRightBarButtonItems.object(at: 0) as? UIBarButtonItem {
+                barButtonItem.customView = profileButton
+            }
+        }
         setNavigationItemTitle()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.layer.shadowOpacity = 0.0
+        navigationController?.navigationBar.layer.shadowRadius = 0.0
+        navigationController?.navigationBar.layer.shadowOffset = CGSize.zero
+        navigationController?.navigationBar.tintColor = nil
+        navigationController?.navigationBar.barTintColor = nil
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.view.backgroundColor = UIColor.white.withAlphaComponent(0.2)
+        typingMessageView.backgroundColor = translucentColor
+        sendMessageTextView.backgroundColor = UIColor.clear
+        sendButton.backgroundColor = UIColor.clear
+        
+        self.setContactProfilePhoto()
+        
+        self.wireUnmatchObserver()
         
         label.textColor = label.textColor.withAlphaComponent(0.6)
         
@@ -100,12 +114,7 @@ class ChatViewController: ALChatViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        let button = navigationItem.titleView as! UIButton
-        if let title = button.title(for: .normal) {
-            let titleString = NSAttributedString(string: title, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 17.0)])
-            button.setAttributedTitle(titleString, for: .normal)
-            button.setAttributedTitle(titleString, for: .focused)
-        }
+        self.setNavigationItemTitle()
         
         loadEarlierAction.backgroundColor = translucentColor
         let titleString = NSAttributedString(string: "Load earlier messages", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12.0), NSForegroundColorAttributeName: self.view.tintColor])
@@ -135,7 +144,7 @@ class ChatViewController: ALChatViewController {
         self.typingLabel.isHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
-        //self.unwireUnmatchObserver()
+        self.unwireUnmatchObserver()
     }
     
     func newMessage() {
@@ -160,11 +169,11 @@ class ChatViewController: ALChatViewController {
         }).addDisposableTo(disposeBag)
     }
     
-    /*func unwireUnmatchObserver() {
+    func unwireUnmatchObserver() {
         if let handle = self.unmatchObserverHandle {
             Woojo.User.current.value?.matchesRef.removeObserver(withHandle: handle)
         }
-    }*/
+    }
     
     func conversationDeleted() {
         if HUD.isVisible {
@@ -177,12 +186,15 @@ class ChatViewController: ALChatViewController {
     }
     
     func showUnmatchHUDAndPop() {
-        HUD.flash(.labeledError(title: "Closing chat", subtitle: "You're no longer connected to this user"), onView: nil, delay: 2.0) { _ in
+        HUD.flash(.labeledError(title: "Closing chat", subtitle: "You're no longer connected to this user"), onView: self.view, delay: 2.0) { _ in
+            print("FINISHED FLASHING")
             if let presentedViewController = self.presentedViewController as? UserDetailsViewController {
+                print("presentedViewController", presentedViewController)
                 presentedViewController.dismiss(animated: true) {
                     self.navigationController?.popViewController(animated: true)
                 }
             } else {
+                print("POP")
                 self.navigationController?.popViewController(animated: true)
             }
         }
@@ -215,6 +227,7 @@ class ChatViewController: ALChatViewController {
     func showProfile() {
         if let userDetailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserDetailsViewController") as? UserDetailsViewController {
             userDetailsViewController.buttonsType = .options
+            userDetailsViewController.chatViewController = self
             let user = User(uid: alContact.userId)
             user.profile.loadFromFirebase { profile, error in
                 userDetailsViewController.user = user
@@ -257,7 +270,7 @@ class ChatViewController: ALChatViewController {
         if let theMessage = self.alMessageWrapper.getUpdatedMessageArray()[indexPath.row] as? ALMessage {
             if let metadata = theMessage.metadata as? NSMutableDictionary,
                 let category = metadata.object(forKey: "category") as? String,
-                category == "HIDDEN" {
+                category == "MATCH" || category == "HIDDEN" {
                 cell.isHidden = true
             }
         }
@@ -268,7 +281,7 @@ class ChatViewController: ALChatViewController {
         if let theMessage = self.alMessageWrapper.getUpdatedMessageArray()[indexPath.row] as? ALMessage {
             if let metadata = theMessage.metadata as? NSMutableDictionary,
                 let category = metadata.object(forKey: "category") as? String,
-                category == "HIDDEN" {
+                category == "MATCH" || category == "HIDDEN" {
                 return 0.0
             } else if (theMessage.fileMeta == nil || (theMessage.fileMeta.thumbnailUrl == nil && theMessage.fileMeta.contentType == nil)) && theMessage.type != "100" {
                 return super.tableView(tableView, heightForRowAt: indexPath) - 25.0

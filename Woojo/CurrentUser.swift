@@ -80,7 +80,7 @@ class CurrentUser: User {
             try Auth.auth().signOut()
             if (ALUserDefaultsHandler.isLoggedIn()) {
                 let alRegisterUserClientService = ALRegisterUserClientService()
-                alRegisterUserClientService.logout(completionHandler: {
+                alRegisterUserClientService.logout(completionHandler: { _, _ in
                     print("Logged out Applozic user")
                 });
             }
@@ -208,6 +208,16 @@ class CurrentUser: User {
             print("Cancelled observing candidates.childAdded: \(error)")
             self.isObservingCandidates = false
         })
+        /*candidatesRef.observe(.childRemoved, with: { snapshot in
+            print("CANDIDATE REMOVED", snapshot.key)
+            if let index = self.candidates.index(where: { $0.uid == snapshot.key }) {
+                self.candidates.remove(at: index)
+                self.candidatesDelegate?.didRemoveCandidate()
+            }
+        }, withCancel: { error in
+            print("Cancelled observing candidates.childRemoved: \(error)")
+            self.isObservingCandidates = false
+        })*/
     }
     
     func stopObservingCandidates() {

@@ -61,6 +61,7 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
             self.createDetailChatViewController(showChatAfterDidAppear)
             self.showChatAfterDidAppear = nil
         }
+        HUD.hide()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

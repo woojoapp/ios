@@ -80,6 +80,9 @@ class UserDetailsViewController: UIViewController {
                     HUD.hide(afterDelay: 1.0)
                 } else {
                     HUD.show(.labeledSuccess(title: "Unmatch", subtitle: "Unmatched!"), onView: self.parent?.view)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                        self.dismiss(sender: self)
+                    })
                 }
             }
             // Don't forget to remove images from cache
@@ -93,6 +96,8 @@ class UserDetailsViewController: UIViewController {
                     HUD.hide(afterDelay: 1.0)
                 } else {
                     HUD.show(.labeledSuccess(title: "Unmatch & report", subtitle: "Done!"), onView: self.parent?.view)
+                    self.dismiss(sender: self)
+                    self.chatViewController?.conversationDeleted()
                 }
             }
         })
@@ -212,13 +217,18 @@ class UserDetailsViewController: UIViewController {
         super.viewWillAppear(animated)
         startMonitoringReachability()
         checkReachability()
+        self.chatViewController?.wireUnmatchObserver()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.chatViewController?.unwireUnmatchObserver()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         stopMonitoringReachability()
     }
-
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         get {

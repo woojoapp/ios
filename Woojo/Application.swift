@@ -14,7 +14,7 @@ import FirebaseMessaging
 import FirebaseRemoteConfig
 import FacebookCore
 import FacebookLogin
-//import LayerKit
+import PKHUD
 import Applozic
 import RxSwift
 import RxCocoa
@@ -26,6 +26,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var window: UIWindow?
     let loginViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
     static var remoteConfig: RemoteConfig = RemoteConfig.remoteConfig()
+    let disposeBag = DisposeBag()
     
     override init() {
         FirebaseApp.configure()
@@ -58,6 +59,15 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             self.ensureAuthentication(auth: auth, user: user)
         }
         
+        UNUserNotificationCenter.current().delegate = self
+        
+        if let userInfo = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? NSDictionary {
+            if let notificationId = userInfo["notificationId"] as? String {
+                HUD.show(.progress, onView: self.window?.rootViewController?.view)
+                self.handlePushNotificationTap(notificationId: notificationId, completionHandler: nil)
+            }
+        }
+        
         NotificationCenter.default.addObserver(forName: .AuthStateDidChange, object: Auth.auth(), queue: nil) { notification in
             print("AUTH STATE CHANGED - NOTIFICATION")
             if let auth = notification.object as? Auth,
@@ -69,7 +79,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let alAppLocalNotificationHandler : ALAppLocalNotifications =  ALAppLocalNotifications.appLocalNotificationHandler();
         alAppLocalNotificationHandler.dataConnectionNotificationHandler();
         
-        if (launchOptions != nil) {
+        /*if (launchOptions != nil) {
             let dictionary = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? NSDictionary
             
             if (dictionary != nil) {
@@ -82,7 +92,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     
                 }
             }
-        }
+        }*/
         
         return true
     }
@@ -104,7 +114,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             } else {
                 print("No user signed in", user?.uid)
                 let registerUserClientService: ALRegisterUserClientService = ALRegisterUserClientService()
-                registerUserClientService.logout {
+                registerUserClientService.logout { _,_ in
                     
                 }
                 // Show the login controller
@@ -159,6 +169,25 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let appState: NSNumber = NSNumber(value: -1 as Int32)                // APP_STATE_BACKGROUND
         alPushNotificationService.processPushNotification(userInfo, updateUI: appState)
         completionHandler(UIBackgroundFetchResult.newData)
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        if let notificationId = response.notification.request.content.userInfo["notificationId"] as? String {
+            handlePushNotificationTap(notificationId: notificationId, completionHandler: completionHandler)
+        }
+    }
+    
+    func handlePushNotificationTap(notificationId: String, completionHandler: (() -> Void)?) {
+        Woojo.User.current.asObservable().takeWhile({ $0 == nil }).subscribe(onCompleted: {
+            Woojo.User.current.value?.notifications.asObservable().takeWhile({ (notifications) -> Bool in
+                return !notifications.contains(where: { $0.id == notificationId })
+            }).subscribe(onCompleted: {
+                if let notification = Woojo.User.current.value?.notifications.value.first(where: { $0.id == notificationId }) {
+                    Notifier.shared.tapOnNotification(notification: notification)
+                    completionHandler?()
+                }
+            }).addDisposableTo(self.disposeBag)
+        }).addDisposableTo(self.disposeBag)
     }
     
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {

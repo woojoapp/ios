@@ -78,6 +78,14 @@ class CandidatesViewController: UIViewController {
         kolodaView.dataSource = self
         kolodaView.delegate = self
         
+        likeButton.layer.cornerRadius = likeButton.frame.width / 2
+        likeButton.layer.masksToBounds = true
+        set(button: likeButton, enabled: false)
+        
+        passButton.layer.cornerRadius = passButton.frame.width / 2
+        passButton.layer.masksToBounds = true
+        set(button: passButton, enabled: false)
+        
         self.view.bringSubview(toFront: kolodaView)
     }
     
@@ -98,14 +106,6 @@ class CandidatesViewController: UIViewController {
         loadingView.layer.borderWidth = 1.0
         
         loadingView.enableIndeterminate()
-        
-        likeButton.layer.cornerRadius = likeButton.frame.width / 2
-        likeButton.layer.masksToBounds = true
-        set(button: likeButton, enabled: false)
-        
-        passButton.layer.cornerRadius = passButton.frame.width / 2
-        passButton.layer.masksToBounds = true
-        set(button: passButton, enabled: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -141,7 +141,7 @@ class CandidatesViewController: UIViewController {
     }
     
     func showPushNotificationsInvite() {
-        let pushNotificationsInvite = UIAlertController(title: "Push notifications", message: "Would you like to get push notifications when you match or receive messages?\n\nYou can also manage this behavior later on from the Settings screen.", preferredStyle: .alert)
+        let pushNotificationsInvite = UIAlertController(title: "Push notifications", message: "Would you like to get push notifications when you match or receive messages?\n\nYou can also manage this behavior later from the Settings screen.", preferredStyle: .alert)
         pushNotificationsInvite.addAction(UIAlertAction(title: "Yes, notify me", style: .default) { _ in
             Woojo.User.current.value?.activity.setRepliedToPushNotificationsInvite()
             if let application = UIApplication.shared.delegate as? Application {
@@ -178,9 +178,6 @@ extension CandidatesViewController: KolodaViewDelegate {
             User.current.value?.candidates[index].like()
             if User.current.value?.activity.repliedToPushNotificationsInvite == nil {
                 self.showPushNotificationsInvite()
-                print("INVITING")
-            } else {
-                print("NOT INVITING")
             }
             if !likeButton.isSelected {
                 likeButton.select()
@@ -319,6 +316,13 @@ extension CandidatesViewController: CandidatesDelegate {
     func didAddCandidate() {
         kolodaView.reloadData()
     }
+    
+    /*func didRemoveCandidate() {
+        //kolodaView.reloadData()
+        if let candidatesCount = Woojo.User.current.value?.candidates.count, candidatesCount == 0 {
+            self.hideKolodaAndShowLoading()
+        }
+    }*/
     
 }
 

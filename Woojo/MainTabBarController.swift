@@ -42,17 +42,18 @@ class MainTabBarController: UITabBarController {
     }
     
     func showChatFor(otherId: String) {
-        HUD.show(.progress)
         self.selectedIndex = 2
         if let chatsNavigationController = self.selectedViewController as? UINavigationController {
             if let chatViewController = chatsNavigationController.topViewController as? ChatViewController {
                 if chatViewController.contactIds != otherId {
+                    HUD.show(.progress)
                     _ = chatViewController.navigationController?.popViewController(animated: true)
                     if let messagesViewController = chatViewController.chatViewDelegate as? MessagesViewController {
                         messagesViewController.showChatAfterDidAppear = otherId
                     }
                 }
             } else if let messagesViewController = chatsNavigationController.topViewController as? MessagesViewController {
+                HUD.show(.progress)
                 messagesViewController.showChatAfterDidAppear = otherId
             }
         }

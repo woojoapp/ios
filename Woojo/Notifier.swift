@@ -75,7 +75,6 @@ class Notifier {
     }
     
     func schedule(notification: CurrentUser.Notification) {
-        print("DEBUG NOTIFICATIONS", shoutsQueue.count >= Constants.User.Notification.maxQueueLength)
         if shoutsQueue.count >= Constants.User.Notification.maxQueueLength {
             notification.setDisplayed()
             return
@@ -92,7 +91,6 @@ class Notifier {
                 let navigationController = mainTabBarController.selectedViewController as? NavigationController {
                 if let _ = navigationController.topViewController as? MessagesViewController { return false }
                 else if let chatViewController = navigationController.topViewController as? ChatViewController, let notification = notification as? CurrentUser.MessageNotification {
-                    print("SHOULD SJHOUT", chatViewController.contactIds, notification.otherId)
                     return chatViewController.contactIds != notification.otherId
                 } else { return true }
             } else { return true }
