@@ -79,20 +79,18 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let alAppLocalNotificationHandler : ALAppLocalNotifications =  ALAppLocalNotifications.appLocalNotificationHandler();
         alAppLocalNotificationHandler.dataConnectionNotificationHandler();
         
-        /*if (launchOptions != nil) {
+        if (launchOptions != nil) {
             let dictionary = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? NSDictionary
             
             if (dictionary != nil) {
-                print("launched from push notification")
                 let alPushNotificationService: ALPushNotificationService = ALPushNotificationService()
-                
                 let appState: NSNumber = NSNumber(integerLiteral: 0)
                 let applozicProcessed = alPushNotificationService.processPushNotification(launchOptions,updateUI:appState)
                 if (!applozicProcessed) {
                     
                 }
             }
-        }*/
+        }
         
         return true
     }

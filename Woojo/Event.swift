@@ -166,5 +166,6 @@ extension Event {
     enum RSVP: String {
         case attending
         case unsure
+        case notReplied = "not_replied"
     }
 }

@@ -97,9 +97,9 @@ class ChatViewController: ALChatViewController {
         mTableView.backgroundColor = UIColor.white
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        //NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(newMessage), name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(doRefresh), name: NSNotification.Name(rawValue: "APP_ENTER_IN_FOREGROUND"), object: nil)
     }
     
     func setNavigationItemTitle() {
@@ -109,11 +109,18 @@ class ChatViewController: ALChatViewController {
             button.setAttributedTitle(titleString, for: .normal)
             button.setAttributedTitle(titleString, for: .focused)
         }
+        button.addTarget(self, action: #selector(doRefresh), for: .touchUpInside)        
+    }
+    
+    func doRefresh() {
+        print("REFRESHING CHAT")
+        super.fetchAndRefresh()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        self.doRefresh()
         self.setNavigationItemTitle()
         
         loadEarlierAction.backgroundColor = translucentColor
@@ -144,6 +151,7 @@ class ChatViewController: ALChatViewController {
         self.typingLabel.isHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "APP_ENETER_IN_FOREGROUND"), object: nil)
         self.unwireUnmatchObserver()
     }
     

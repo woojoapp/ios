@@ -7,34 +7,34 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>414901321750-krlk41khhov9mcurgq9facl9npuupkeg.apps.googleusercontent.com</string>
+	<string>30256183543-e0bf11a7bjsbr2kkgnkntc7l94on05kf.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.414901321750-krlk41khhov9mcurgq9facl9npuupkeg</string>
+	<string>com.googleusercontent.apps.30256183543-e0bf11a7bjsbr2kkgnkntc7l94on05kf</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBBXjR0zpWTDBaJ3RRUPyhm125PmFD8_QA</string>
+	<string>AIzaSyBLol6HoZCumA2Zb0nQ4y5GmxJr32PgnjA</string>
 	<key>GCM_SENDER_ID</key>
-	<string>414901321750</string>
+	<string>30256183543</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.tastyelectrons.woojo</string>
 	<key>PROJECT_ID</key>
-	<string>woojo-test</string>
+	<string>woojo-production</string>
 	<key>STORAGE_BUCKET</key>
-	<string>woojo-test.appspot.com</string>
+	<string>woojo-production.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
+	<false></false>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:414901321750:ios:2a8248f446bee65a</string>
+	<string>1:30256183543:ios:2a8248f446bee65a</string>
 	<key>DATABASE_URL</key>
-	<string>https://woojo-test.firebaseio.com</string>
+	<string>https://woojo-production.firebaseio.com</string>
 </dict>
 </plist>

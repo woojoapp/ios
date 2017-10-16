@@ -84,6 +84,8 @@ extension CurrentUser {
                         rsvpString = "Going to"
                     case .unsure:
                         rsvpString = "Interested in"
+                    case .notReplied:
+                        rsvpString = "Invited to"
                     }
                     return "\(rsvpString) \(name)"
                 }

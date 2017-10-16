@@ -46,15 +46,19 @@ class MainTabBarController: UITabBarController {
         if let chatsNavigationController = self.selectedViewController as? UINavigationController {
             if let chatViewController = chatsNavigationController.topViewController as? ChatViewController {
                 if chatViewController.contactIds != otherId {
-                    HUD.show(.progress)
+                    HUD.flash(.progress, delay: 5.0)
                     _ = chatViewController.navigationController?.popViewController(animated: true)
                     if let messagesViewController = chatViewController.chatViewDelegate as? MessagesViewController {
                         messagesViewController.showChatAfterDidAppear = otherId
                     }
                 }
             } else if let messagesViewController = chatsNavigationController.topViewController as? MessagesViewController {
-                HUD.show(.progress)
-                messagesViewController.showChatAfterDidAppear = otherId
+                HUD.flash(.progress, delay: 5.0)
+                if messagesViewController.isViewLoaded {
+                    messagesViewController.createDetailChatViewController(otherId)
+                } else {
+                    messagesViewController.showChatAfterDidAppear = otherId
+                }
             }
         }
     }

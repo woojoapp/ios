@@ -21,7 +21,7 @@ class ProfileViewController: UITableViewController {
     @IBOutlet weak var bioTableViewCell: BioTableViewCell!
     @IBOutlet weak var photosCollectionView: UICollectionView!
     @IBOutlet weak var tapGestureRecognizer: UITapGestureRecognizer!
-    //@IBOutlet weak var longPressGestureRecognizer: UILongPressGestureRecognizer!
+    @IBOutlet weak var longPressGestureRecognizer: UILongPressGestureRecognizer!
     
     let disposeBag = DisposeBag()
     fileprivate let bioTextViewPlaceholderText = "Say something about yourself..."
@@ -60,7 +60,7 @@ class ProfileViewController: UITableViewController {
         stopMonitoringReachability()
     }
     
-    func setupDataSources() {
+    func setupDataSources() {        
         let userPhotos = User.current.asObservable()
             .flatMap { user -> Observable<[User.Profile.Photo?]> in
                 if let currentUser = user {
@@ -127,6 +127,8 @@ class ProfileViewController: UITableViewController {
             }
             .bindTo(descriptionLabel.rx.text)
             .addDisposableTo(disposeBag)
+        
+        self.longPressGestureRecognizer.addTarget(self, action: #selector(longPress))
     }
     
     func setupBioTextView() {

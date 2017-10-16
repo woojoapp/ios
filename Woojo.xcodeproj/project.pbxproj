@@ -17,11 +17,15 @@
 		851CDBE61DDEF18A00B887C0 /* UserEventsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851CDBE51DDEF18A00B887C0 /* UserEventsGraphRequest.swift */; };
 		851CDBE81DDEF29900B887C0 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851CDBE71DDEF29900B887C0 /* Place.swift */; };
 		851CDBEA1DDEF2B100B887C0 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851CDBE91DDEF2B100B887C0 /* Location.swift */; };
+		85382E881F94B880003909D7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85382E871F94B87E003909D7 /* GoogleService-Info.plist */; };
 		85396F271E5F10EA007EDB18 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85396F261E5F10EA007EDB18 /* Notification.swift */; };
 		854DDABD1DE364D400655EFC /* MyEventsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 854DDABC1DE364D400655EFC /* MyEventsTableViewCell.xib */; };
 		854DDABF1DE3654E00655EFC /* MyEventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854DDABE1DE3654E00655EFC /* MyEventsTableViewCell.swift */; };
 		854DDAC51DE47DE500655EFC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854DDAC41DE47DE500655EFC /* User.swift */; };
 		85512B191DCB5B020072C1B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85512B171DCB5B020072C1B8 /* LaunchScreen.storyboard */; };
+		8556C6331F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556C6321F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift */; };
+		8556C6341F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556C6321F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift */; };
+		8556C6351F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556C6321F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift */; };
 		85662C051F90BD6500D5701E /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EB2EE51DE20DAE00F0A55C /* Activity.swift */; };
 		85662C061F90BD6500D5701E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8961DCBB0CC00C18EC3 /* Event.swift */; };
 		85662C071F90BD6500D5701E /* Candidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8A11DCCA61600C18EC3 /* Candidate.swift */; };
@@ -217,7 +221,6 @@
 		85DC3D7D1E0008B900116159 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D7C1E0008B900116159 /* Album.swift */; };
 		85E5D4CD1DD9EFBC003E2376 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4CC1DD9EFBC003E2376 /* CurrentUser.swift */; };
 		85E5D4CF1DD9FA41003E2376 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4CE1DD9FA41003E2376 /* Gender.swift */; };
-		85E5D4D61DDA247D003E2376 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85E5D4D51DDA247D003E2376 /* GoogleService-Info.plist */; };
 		85EB2EE41DE20BCF00F0A55C /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EB2EE31DE20BCF00F0A55C /* Profile.swift */; };
 		85EB2EE61DE20DAE00F0A55C /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EB2EE51DE20DAE00F0A55C /* Activity.swift */; };
 		85EC21331F89822000C9FC7C /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EC21321F89822000C9FC7C /* Report.swift */; };
@@ -243,6 +246,7 @@
 		851CDBE51DDEF18A00B887C0 /* UserEventsGraphRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEventsGraphRequest.swift; sourceTree = "<group>"; };
 		851CDBE71DDEF29900B887C0 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		851CDBE91DDEF2B100B887C0 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		85382E871F94B87E003909D7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		85396F261E5F10EA007EDB18 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		85396F2A1E5F516F007EDB18 /* Notifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifier.swift; sourceTree = "<group>"; };
 		85407D9B1DF028D50033E696 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -262,6 +266,7 @@
 		85512B181DCB5B020072C1B8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		85512B1A1DCB5B020072C1B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85512B221DCB74DA0072C1B8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		8556C6321F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotRepliedEventsGraphRequest.swift; sourceTree = "<group>"; };
 		85662BEF1F90BCEF00D5701E /* Woojo Staging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Woojo Staging.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		85662C231F90BD9500D5701E /* Woojo Development.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Woojo Development.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		85662CFC1F90BE7500D5701E /* Woojo Development.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Woojo Development.entitlements"; path = "Woojo Development/Woojo Development.entitlements"; sourceTree = "<group>"; };
@@ -305,7 +310,6 @@
 		85E5D4CC1DD9EFBC003E2376 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		85E5D4CE1DD9FA41003E2376 /* Gender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
 		85E5D4D01DDA0E8F003E2376 /* Woojo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Woojo.entitlements; sourceTree = "<group>"; };
-		85E5D4D51DDA247D003E2376 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		85EB2EE31DE20BCF00F0A55C /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		85EB2EE51DE20DAE00F0A55C /* Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		85EC21321F89822000C9FC7C /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
@@ -417,6 +421,7 @@
 				85685F731DEC7833009BAEE0 /* SearchEventsGraphRequest.swift */,
 				85DC3D7A1E00088F00116159 /* UserAlbumsGraphRequest.swift */,
 				858FEE411E02B5E500322E8E /* AlbumPhotosGraphRequest.swift */,
+				8556C6321F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift */,
 			);
 			name = GraphRequests;
 			sourceTree = "<group>";
@@ -471,7 +476,7 @@
 		85662CFF1F90BEF800D5701E /* GoogleService-Info-Production */ = {
 			isa = PBXGroup;
 			children = (
-				85E5D4D51DDA247D003E2376 /* GoogleService-Info.plist */,
+				85382E871F94B87E003909D7 /* GoogleService-Info.plist */,
 			);
 			path = "GoogleService-Info-Production";
 			sourceTree = "<group>";
@@ -756,7 +761,7 @@
 				854DDABD1DE364D400655EFC /* MyEventsTableViewCell.xib in Resources */,
 				85662CCB1F90BE2200D5701E /* Info.plist in Resources */,
 				85662CA91F90BE2200D5701E /* CandidateOverlayView.xib in Resources */,
-				85E5D4D61DDA247D003E2376 /* GoogleService-Info.plist in Resources */,
+				85382E881F94B880003909D7 /* GoogleService-Info.plist in Resources */,
 				85662CBD1F90BE2200D5701E /* LoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1150,6 +1155,7 @@
 				85662CAD1F90BE2200D5701E /* ChatViewController.swift in Sources */,
 				85662CC01F90BE2200D5701E /* NavigationController.swift in Sources */,
 				854DDABF1DE3654E00655EFC /* MyEventsTableViewCell.swift in Sources */,
+				8556C6331F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */,
 				85662CA31F90BE2200D5701E /* EventsViewController.swift in Sources */,
 				8506A8A61DCCC85200C18EC3 /* Like.swift in Sources */,
 				85685F741DEC7833009BAEE0 /* SearchEventsGraphRequest.swift in Sources */,
@@ -1216,6 +1222,7 @@
 				85662CE21F90BE2300D5701E /* PhotoCollectionViewController.swift in Sources */,
 				85662C0E1F90BD6500D5701E /* Location.swift in Sources */,
 				85662C091F90BD6500D5701E /* Report.swift in Sources */,
+				8556C6341F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */,
 				85662CE51F90BE2300D5701E /* AboutWebViewController.swift in Sources */,
 				85662CDE1F90BE2300D5701E /* ProfileViewController.swift in Sources */,
 				85662C051F90BD6500D5701E /* Activity.swift in Sources */,
@@ -1282,6 +1289,7 @@
 				85662C901F90BE1300D5701E /* PhotoCollectionViewController.swift in Sources */,
 				85662C411F90BDD000D5701E /* Location.swift in Sources */,
 				85662C3C1F90BDD000D5701E /* Report.swift in Sources */,
+				8556C6351F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */,
 				85662C931F90BE1300D5701E /* AboutWebViewController.swift in Sources */,
 				85662C8C1F90BE1300D5701E /* ProfileViewController.swift in Sources */,
 				85662C381F90BDD000D5701E /* Activity.swift in Sources */,

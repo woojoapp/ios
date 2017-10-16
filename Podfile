@@ -15,9 +15,9 @@ def shared_pods
 
   # Facebook
   pod 'Bolts', '1.8.4'
-  pod 'FacebookCore'
-  pod 'FacebookLogin'
-  pod 'FacebookShare'
+  pod 'FacebookCore', '0.2.0'
+  pod 'FacebookLogin', '0.2.0'
+  pod 'FacebookShare', '0.2.0'
   pod 'FBSDKCoreKit', '4.15.0'
   pod 'FBSDKLoginKit', '4.15.0'
   pod 'FBSDKShareKit', '4.15.0'
@@ -31,7 +31,6 @@ def shared_pods
 
   # UI
   pod 'Koloda', :git=> 'https://github.com/woojoapp/Koloda.git'
-  #pod 'Koloda', '4.3.1'
   pod 'NMRangeSlider', '1.2.1'
   pod 'RSKImageCropper', '1.6.1'
   pod 'PKHUD', '5.0.0'

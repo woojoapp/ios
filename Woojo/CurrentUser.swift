@@ -343,19 +343,41 @@ class CurrentUser: User {
         isObservingEvents = false
     }
     
-    func getEventsFromFacebook(completion: (([Event]) -> Void)? = nil) {
-        print("GETTING EVENTS")
+    func getEventsFromFacebook(completion: @escaping (([Event]) -> Void)) {
+        print("GETTING EVENTS FROM FACEBOOK")
+        var eventsAttendingOrUnsure: [Event] = []
+        var eventsNotReplied: [Event] = []
         if AccessToken.current != nil {
             if firebaseAuthUser != nil {
-                let userEventsGraphRequest = UserEventsGraphRequest()
-                userEventsGraphRequest.start { response, result in
+                let connection = GraphRequestConnection()
+                let requestsGroup = DispatchGroup()
+                requestsGroup.enter()
+                let userAttendingAndUnsureEventsGraphRequest = UserEventsGraphRequest()
+                connection.add(userAttendingAndUnsureEventsGraphRequest, batchEntryName: nil, completion: { (response, result) in
                     switch result {
                     case .success(let response):
-                        completion?(response.events)
+                        eventsAttendingOrUnsure = response.events
                     case .failed(let error):
                         print("UserEventsGraphRequest failed: \(error.localizedDescription)")
                     }
-                }
+                    requestsGroup.leave()
+                })
+                requestsGroup.enter()
+                let userNotRepliedEventsGraphRequest = UserNotRepliedEventsGraphRequest()
+                connection.add(userNotRepliedEventsGraphRequest, batchEntryName: nil, completion: { (response, result) in
+                    switch result {
+                    case .success(let response):
+                        eventsNotReplied = response.events
+                    case .failed(let error):
+                        print("UserNotRepliedEventsGraphRequest failed: \(error.localizedDescription)")
+                    }
+                    requestsGroup.leave()
+                })
+                connection.start()
+                requestsGroup.notify(queue: .main, execute: {
+                    let events = eventsAttendingOrUnsure + eventsNotReplied
+                    completion(events.sorted(by: { $0.start > $1.start }))
+                })
             } else {
                 print("Failed to load user events data from Facebook: No authenticated Firebase user.")
             }

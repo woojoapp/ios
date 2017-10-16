@@ -1,5 +1,5 @@
 //
-//  UserEventsGraphRequest.swift
+//  UserNotRepliedEventsGraphRequest.swift
 //  Woojo
 //
 //  Created by Edouard Goossens on 18/11/2016.
@@ -9,9 +9,9 @@
 import Foundation
 import FacebookCore
 
-struct UserEventsGraphRequest: GraphRequestProtocol {
+struct UserNotRepliedEventsGraphRequest: GraphRequestProtocol {
     
-   struct Response: GraphResponseProtocol {
+    struct Response: GraphResponseProtocol {
         
         init(rawResponse: Any?) {
             self.rawResponse = rawResponse
@@ -44,6 +44,7 @@ struct UserEventsGraphRequest: GraphRequestProtocol {
                       Constants.Event.properties.graphAPIKeys.rsvpStatus,
                       Constants.GraphRequest.UserEvents.fieldPictureUrl]
         return [Constants.GraphRequest.fields:fields.joined(separator: Constants.GraphRequest.fieldsSeparator),
+                "type": "not_replied",
                 "since": Event.dateFormatter.string(from: Calendar.current.date(byAdding: .month, value: -1, to: Date())!)]
     }()
     var accessToken: AccessToken? = AccessToken.current
@@ -51,4 +52,5 @@ struct UserEventsGraphRequest: GraphRequestProtocol {
     var apiVersion: GraphAPIVersion = .defaultVersion
     
 }
+
 

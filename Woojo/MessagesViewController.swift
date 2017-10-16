@@ -33,6 +33,9 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        if self.detailChatViewController != nil {
+            self.detailChatViewController.refreshMainView = true
+        }
         super.viewWillAppear(animated)
         
         navigationController?.navigationBar.layer.shadowOpacity = 0.0
@@ -43,7 +46,23 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.view.backgroundColor = UIColor.clear
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.newMessageReceived), name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(self.newMessageReceived), name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(enteredForeground), name: NSNotification.Name(rawValue: "APP_ENTER_IN_FOREGROUND"), object: nil)
+        
+        reloadData()
+    }
+    
+    func enteredForeground() {
+        reloadData()
+        NSLog("ENTERED FOREGROUND \(showChatAfterDidAppear)")
+        viewDidAppear(true)
+    }
+    
+    func reloadData() {
+        print("FETCHING", ALUserDefaultsHandler.getDeviceKeyString())
+        ALMessageService.getLatestMessage(forUser: ALUserDefaultsHandler.getDeviceKeyString()) { (_, _) in
+            
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -66,10 +85,11 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
     
     override func viewWillDisappear(_ animated: Bool) {
         print("MESSAGES VIEW WILL DISAPPEAR.. BUT DO NOTHING")
-        if self.detailChatViewController != nil {
+        /*if self.detailChatViewController != nil {
             self.detailChatViewController.refreshMainView = true
-        }
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
+        }*/
+        //NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "APP_ENTER_IN_FOREGROUND"), object: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -81,9 +101,9 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
         self.present(settingsNavigationController, animated: true, completion: nil)
     }
     
-    func newMessageReceived() {
+    /*func newMessageReceived() {
         print("MESSSAAAGEGE FROM MessagesViewController")
-    }
+    }*/
     
     func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
         let unmatch = UITableViewRowAction(style: .destructive, title: "Unmatch") { action, index in
