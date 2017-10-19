@@ -28,12 +28,6 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     static var remoteConfig: RemoteConfig = RemoteConfig.remoteConfig()
     let disposeBag = DisposeBag()
     
-    override init() {
-        FirebaseApp.configure()
-        Database.database().isPersistenceEnabled = true
-        AnalyticsConfiguration.shared().setAnalyticsCollectionEnabled(false)
-    }
-    
     func requestNotifications() {
         if #available(iOS 10.0, *) {
             // For iOS 10 display notification (sent via APNS)
@@ -45,8 +39,48 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         UIApplication.shared.registerForRemoteNotifications()
     }
+    
+    func getTopViewController() -> UIViewController? {
+        if var topViewController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = topViewController.presentedViewController {
+                if presentedViewController is UIAlertController { break }
+                topViewController = presentedViewController
+            }
+            return topViewController
+        } else { return nil }
+    }
+    
+    func navigateToChat(otherUid: String) {
+        let topViewController = getTopViewController()
+        if let navigationController = topViewController as? NavigationController {
+            navigationController.otherUid = otherUid
+            navigationController.performSegue(withIdentifier: "unwindToMainTabBar", sender: navigationController)
+        } else if let topViewController = topViewController as? UserDetailsViewController {
+            if let mainTabBarController = topViewController.presentingViewController as? MainTabBarController {
+                topViewController.dismiss(sender: nil)
+                mainTabBarController.showChatFor(otherUid: otherUid)
+            }
+        } else if let topViewController = topViewController as? UIImagePickerController,
+            let navigationController = topViewController.presentingViewController as? NavigationController {
+            navigationController.otherUid = otherUid
+            navigationController.performSegue(withIdentifier: "unwindToMainTabBar", sender: navigationController)
+        } else if let mainTabBarController = topViewController as? MainTabBarController {
+            mainTabBarController.showChatFor(otherUid: otherUid)
+        }
+    }
+    
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        return true
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        FirebaseApp.configure()
+        Database.database().isPersistenceEnabled = true
+        AnalyticsConfiguration.shared().setAnalyticsCollectionEnabled(false)
+        UNUserNotificationCenter.current().delegate = self
+        Messaging.messaging().delegate = self
+        let token = Messaging.messaging().fcmToken
+        print("FCM token: \(token ?? "")")
         setupRemoteConfig()
         
         Whisper.Config.modifyInset = false
@@ -58,8 +92,6 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             print("AUTH STATE DID CHANGE - LISTENER")
             self.ensureAuthentication(auth: auth, user: user)
         }
-        
-        UNUserNotificationCenter.current().delegate = self
         
         if let userInfo = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? NSDictionary {
             if let notificationId = userInfo["notificationId"] as? String {
@@ -136,6 +168,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             })
         }
         print("Saving push token", deviceTokenString)
+        Messaging.messaging().apnsToken = deviceToken
         let device = [
             Constants.User.Device.properties.firebaseNodes.token: deviceTokenString,
             Constants.User.Device.properties.firebaseNodes.platform: "iOS"
@@ -180,7 +213,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             Woojo.User.current.value?.notifications.asObservable().takeWhile({ (notifications) -> Bool in
                 return !notifications.contains(where: { $0.id == notificationId })
             }).subscribe(onCompleted: {
-                if let notification = Woojo.User.current.value?.notifications.value.first(where: { $0.id == notificationId }) {
+                if let notification = Woojo.User.current.value?.notifications.value.first(where: { $0.id == notificationId }) as? CurrentUser.InteractionNotification {
                     Notifier.shared.tapOnNotification(notification: notification)
                     completionHandler?()
                 }

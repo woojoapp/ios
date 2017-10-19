@@ -28,6 +28,14 @@ struct Constants {
                 }
             }
         }
+        struct Bot {
+            static let firebaseNode = "bot"
+            struct properties {
+                struct firebaseNodes {
+                    static let uid = "uid"
+                }
+            }
+        }
         struct Device {
             static let firebaseNode = "devices"
             struct properties {
@@ -275,7 +283,7 @@ struct Constants {
             static let fieldID = "id"
         }
         
-        struct UserProfilePhoto {
+        /*struct UserProfilePhoto {
             static let path = "albums"
             static let fields = "type, picture.type(small), cover_photo{source}"
             struct keys {
@@ -289,7 +297,25 @@ struct Constants {
                 static let pictureData = "data"
                 static let pictureDataURL = "url"
             }
+        }*/
+        
+        struct UserProfilePhoto {
+            static let fields = "picture.width(3000).height(3000)"
+            struct keys {
+                static let picture = "picture"
+                static let data = "data"
+                static let url = "url"
+            }
         }
+        
+        /*struct UserProfilePhotoThumbnail {
+            static let path = "picture"
+            static let fields = ""
+            struct keys {
+                static let data = "data"
+                static let dataUrl = "url"
+            }
+        }*/
         
         struct UserEvents {
             static let path = "/me/events"

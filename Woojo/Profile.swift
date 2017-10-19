@@ -28,7 +28,7 @@ extension User {
         var birthday: Date?
         var description: Variable<String> = Variable("")
         var city: String?
-        var country: String?
+        var country: String?        
         var user: User
         var photos: Variable<[Photo?]> = Variable([nil, nil, nil, nil, nil, nil])
         var age: Int {
@@ -226,8 +226,7 @@ extension User {
             User.Profile.PhotoGraphRequest(profile: self)?.start { response, result in
                 switch result {
                 case .success(let response):
-                    if let photoID = response.photoID {
-                        //self.ref?.child(Constants.User.Profile.properties.firebaseNodes.photoID).setValue(photoID)
+                    if let photoID = self.user.fbAppScopedID {
                         if let photoURL = response.photoURL {
                             DispatchQueue.global().async {
                                 do {
@@ -317,7 +316,7 @@ extension User.Profile {
         }
         
         enum Size: Int {
-            case thumbnail = 100
+            case thumbnail = 200
             case full = 414
         }
         
@@ -537,37 +536,16 @@ extension User.Profile {
             
             init(rawResponse: Any?) {
                 self.rawResponse = rawResponse
-                if let dict = rawResponse as? [String:Any] {
-                    let albums = dict[Constants.GraphRequest.UserProfilePhoto.keys.data] as! NSArray
-                    for album in albums {
-                        if let album = album as? [String:Any] {
-                            if let albumType = album[Constants.GraphRequest.UserProfilePhoto.keys.type] as? String {
-                                if albumType == Constants.GraphRequest.UserProfilePhoto.keys.typeProfile {
-                                    if let albumCover = album[Constants.GraphRequest.UserProfilePhoto.keys.coverPhoto] as? [String:Any] {
-                                        if let url = albumCover[Constants.GraphRequest.UserProfilePhoto.keys.coverPhotoSource] as? String {
-                                            self.photoURL = URL(string: url)
-                                        }
-                                        if let id = albumCover[Constants.GraphRequest.UserProfilePhoto.keys.coverPhotoID] as? String {
-                                            self.photoID = id
-                                        }
-                                    }
-                                    if let picture = album[Constants.GraphRequest.UserProfilePhoto.keys.picture] as? [String:Any] {
-                                        if let pictureData = picture[Constants.GraphRequest.UserProfilePhoto.keys.pictureData] as? [String:Any] {
-                                            if let url = pictureData[Constants.GraphRequest.UserProfilePhoto.keys.pictureDataURL] as? String {
-                                                self.thumbnailURL = URL(string: url)
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                if let dict = rawResponse as? [String:Any],
+                    let picture = dict[Constants.GraphRequest.UserProfilePhoto.keys.picture] as? [String:Any],
+                    let data = picture[Constants.GraphRequest.UserProfilePhoto.keys.data] as? [String:Any],
+                    let url = data[Constants.GraphRequest.UserProfilePhoto.keys.url] as? String {
+                        self.photoURL = URL(string: url)
                 }
             }
             
             var rawResponse: Any?
             var photoURL: URL?
-            var photoID: String?
             var thumbnailURL: URL?
             
         }
@@ -576,13 +554,13 @@ extension User.Profile {
             if let fbAppScopedID = profile.user.fbAppScopedID {
                 self.fbAppScopedID = fbAppScopedID
             } else {
-                print("Failed to initialize User.Profile.PhotoGraphRequest from profile. Missing FB app scoped ID.", profile)
+                print("Failed to initialize User.Profile.PhotoFullGraphRequest from profile. Missing FB app scoped ID.", profile)
                 return nil
             }
             if let fbAccessToken = profile.user.fbAccessToken {
                 self.fbAccessToken = fbAccessToken
             } else {
-                print("Failed to initialize User.Profile.PhotoGraphRequest from profile. Missing FB access token.", profile)
+                print("Failed to initialize User.Profile.PhotoFullGraphRequest from profile. Missing FB access token.", profile)
                 return nil
             }
         }
@@ -591,7 +569,7 @@ extension User.Profile {
         var fbAccessToken: AccessToken?
         var graphPath: String {
             get {
-                return "/\(fbAppScopedID)/\(Constants.GraphRequest.UserProfilePhoto.path)"
+                return fbAppScopedID
             }
         }
         var parameters: [String:Any]? = [Constants.GraphRequest.fields:Constants.GraphRequest.UserProfilePhoto.fields]

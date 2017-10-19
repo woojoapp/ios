@@ -41,23 +41,23 @@ class MainTabBarController: UITabBarController {
             }).addDisposableTo(disposeBag)
     }
     
-    func showChatFor(otherId: String) {
+    func showChatFor(otherUid: String) {
         self.selectedIndex = 2
         if let chatsNavigationController = self.selectedViewController as? UINavigationController {
             if let chatViewController = chatsNavigationController.topViewController as? ChatViewController {
-                if chatViewController.contactIds != otherId {
+                if chatViewController.contactIds != otherUid {
                     HUD.flash(.progress, delay: 5.0)
                     _ = chatViewController.navigationController?.popViewController(animated: true)
                     if let messagesViewController = chatViewController.chatViewDelegate as? MessagesViewController {
-                        messagesViewController.showChatAfterDidAppear = otherId
+                        messagesViewController.showChatAfterDidAppear = otherUid
                     }
                 }
             } else if let messagesViewController = chatsNavigationController.topViewController as? MessagesViewController {
                 HUD.flash(.progress, delay: 5.0)
-                if messagesViewController.isViewLoaded {
-                    messagesViewController.createDetailChatViewController(otherId)
+                if messagesViewController.didAppear {
+                    messagesViewController.createDetailChatViewController(otherUid)
                 } else {
-                    messagesViewController.showChatAfterDidAppear = otherId
+                    messagesViewController.showChatAfterDidAppear = otherUid
                 }
             }
         }

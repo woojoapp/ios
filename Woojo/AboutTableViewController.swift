@@ -49,6 +49,11 @@ class AboutTableViewController: UITableViewController {
                             Analytics.Log(event: Constants.Analytics.Events.AboutPrivacyVisited.name)
                         }
                         break
+                    case 2:
+                        if let botUid = User.current.value?.botUid,
+                            let applicationDelegate = UIApplication.shared.delegate as? Application {
+                            applicationDelegate.navigateToChat(otherUid: botUid)
+                        }
                     default:
                         return
                     }

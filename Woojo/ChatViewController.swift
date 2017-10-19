@@ -37,10 +37,18 @@ class ChatViewController: ALChatViewController {
         
         self.placeHolderTxt = "Write a message..."
         ALApplozicSettings.setColorForSendMessages(self.view.tintColor)
+        
+        mTableView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 50.0, right: 0.0)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        print("DID LAYOUT SUBVIEWS")
+    }
+    
+    override func setTitle() {
+        super.setTitle()
+        setNavigationItemTitle()
     }
     
     func setContactProfilePhoto() {
@@ -72,7 +80,6 @@ class ChatViewController: ALChatViewController {
                 barButtonItem.customView = profileButton
             }
         }
-        setNavigationItemTitle()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -97,6 +104,7 @@ class ChatViewController: ALChatViewController {
         mTableView.backgroundColor = UIColor.white
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(newMessage), name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(doRefresh), name: NSNotification.Name(rawValue: "APP_ENTER_IN_FOREGROUND"), object: nil)
@@ -109,7 +117,7 @@ class ChatViewController: ALChatViewController {
             button.setAttributedTitle(titleString, for: .normal)
             button.setAttributedTitle(titleString, for: .focused)
         }
-        button.addTarget(self, action: #selector(doRefresh), for: .touchUpInside)        
+        button.addTarget(self, action: #selector(showProfile), for: .touchUpInside)
     }
     
     func doRefresh() {
@@ -121,7 +129,6 @@ class ChatViewController: ALChatViewController {
         super.viewDidAppear(animated)
         
         self.doRefresh()
-        self.setNavigationItemTitle()
         
         loadEarlierAction.backgroundColor = translucentColor
         let titleString = NSAttributedString(string: "Load earlier messages", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12.0), NSForegroundColorAttributeName: self.view.tintColor])
@@ -157,7 +164,6 @@ class ChatViewController: ALChatViewController {
     
     func newMessage() {
         print("MESSAGE RECEIVEDDDDDDD")
-        setNavigationItemTitle()
         scrollTableViewToBottom(withAnimation: true)
         CurrentUser.Notification.deleteAll(otherId: self.contactIds)
     }
@@ -208,10 +214,10 @@ class ChatViewController: ALChatViewController {
         }
     }
     
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard let navigationController = navigationController else { return }
+    //override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        //guard let navigationController = navigationController else { return }
         
-        if scrollView == sendMessageTextView {
+        /*if scrollView == sendMessageTextView {
             return
         }
         
@@ -229,8 +235,11 @@ class ChatViewController: ALChatViewController {
             self.loadEarlierAction.isHidden = false
         } else {
             self.loadEarlierAction.isHidden = true
-        }
-    }
+        }*/
+        
+        //print(scrollView, mTableView.contentOffset)
+        //mTableView.setContentOffset(CGPoint(x: mTableView.contentOffset.x, y: mTableView.contentOffset.y - 50.0), animated: true)
+    //}
     
     func showProfile() {
         if let userDetailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserDetailsViewController") as? UserDetailsViewController {
@@ -269,8 +278,22 @@ class ChatViewController: ALChatViewController {
         scrollTableViewToBottom(withAnimation: true)
     }
     
+    func keyboardWillHide(_ notification: NSNotification) {
+        if let keyboardFrameEnd = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect, let animationDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval {
+            self.checkBottomConstraint.constant = self.view.frame.size.height - keyboardFrameEnd.origin.y //+ 5.0
+            UIView.animate(withDuration: animationDuration, animations: {
+                self.view.layoutIfNeeded()
+                self.scrollTableViewToBottom(withAnimation: false)
+            }, completion: { finished in
+                if finished {
+                    self.scrollTableViewToBottom(withAnimation: true)
+                }
+            })
+        }
+    }
+    
     func keyboardDidHide(_ notification: NSNotification) {
-        scrollTableViewToBottom(withAnimation: true)
+        scrollTableViewToBottom(withAnimation: false)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

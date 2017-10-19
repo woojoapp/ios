@@ -105,6 +105,7 @@ class UserDetailsViewController: UIViewController {
         actionSheetController.addAction(unmatchButton)
         actionSheetController.addAction(reportButton)
         actionSheetController.addAction(cancelButton)
+        actionSheetController.popoverPresentationController?.sourceView = self.view
         self.present(actionSheetController, animated: true) {
             self.optionsButton.deselect()
         }

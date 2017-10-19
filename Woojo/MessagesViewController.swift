@@ -17,6 +17,7 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
     var disposeBag = DisposeBag()
     
     var showChatAfterDidAppear: String?
+    var didAppear = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +55,6 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
     
     func enteredForeground() {
         reloadData()
-        NSLog("ENTERED FOREGROUND \(showChatAfterDidAppear)")
         viewDidAppear(true)
     }
     
@@ -80,6 +80,7 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
             self.createDetailChatViewController(showChatAfterDidAppear)
             self.showChatAfterDidAppear = nil
         }
+        didAppear = true
         HUD.hide()
     }
     
@@ -94,6 +95,7 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
     
     override func viewDidDisappear(_ animated: Bool) {
         // Override to prevent unsubscribing MQTT from conversation
+        didAppear = false
     }
     
     func showSettings(sender : Any?) {
@@ -107,8 +109,8 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
     
     func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
         let unmatch = UITableViewRowAction(style: .destructive, title: "Unmatch") { action, index in
-            if let cell = tableView.cellForRow(at: editActionsForRowAt) as? ALContactCell{
-                print("Unmatching", super.detailChatViewController.alContact)
+            if let cell = tableView.cellForRow(at: editActionsForRowAt) as? ALContactCell {
+                
             }
         }
         

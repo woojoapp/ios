@@ -16,17 +16,6 @@ class Notifier {
     
     static let shared = Notifier()
     
-    func getTopViewController() -> UIViewController? {
-        if var topViewController = UIApplication.shared.keyWindow?.rootViewController {
-            while let presentedViewController = topViewController.presentedViewController {
-                topViewController = presentedViewController
-            }
-            return topViewController
-        } else {
-            return nil
-        }
-    }
-    
     func shout() {
         if shoutsQueue.count > 0 {
             if !shouldShout(notification: shoutsQueue[0]) {
@@ -65,7 +54,8 @@ class Notifier {
     }
     
     func shout(announcement: Announcement, completion: (() -> Void)? = nil) {
-        if let topViewController = getTopViewController() {
+        if let applicationDelegate = UIApplication.shared.delegate as? Application,
+            let topViewController = applicationDelegate.getTopViewController() {
             DispatchQueue.main.async {
                 show(shout: announcement, to: topViewController, completion: {
                     completion?()
@@ -86,7 +76,8 @@ class Notifier {
     }
     
     func shouldShout(notification: CurrentUser.Notification) -> Bool {
-        if let topViewController = getTopViewController() {
+        if let applicationDelegate = UIApplication.shared.delegate as? Application,
+            let topViewController = applicationDelegate.getTopViewController() {
             if let mainTabBarController = topViewController as? MainTabBarController,
                 let navigationController = mainTabBarController.selectedViewController as? NavigationController {
                 if let _ = navigationController.topViewController as? MessagesViewController { return false }
@@ -122,8 +113,11 @@ class Notifier {
         
     }
     
-    func tapOnNotification(notification: CurrentUser.Notification) {
-        let topViewController = getTopViewController()
+    func tapOnNotification(notification: CurrentUser.InteractionNotification) {
+        if let applicationDelegate = UIApplication.shared.delegate as? Application {
+            applicationDelegate.navigateToChat(otherUid: notification.otherId)
+        }
+        /*let topViewController = getTopViewController()
         //print("TOP VIEW CONTROLLER \(topViewController)")
         if let navigationController = topViewController as? NavigationController {
             navigationController.notification = notification
@@ -142,7 +136,7 @@ class Notifier {
             } else if let mainTabBarController = topViewController as? MainTabBarController {
                 mainTabBarController.showChatFor(otherId: notification.otherId)
             }
-        }
+        }*/
     }
     
     func announcement(notification: CurrentUser.MessageNotification, completion: ((Announcement?, Error?) -> Void)? = nil) {

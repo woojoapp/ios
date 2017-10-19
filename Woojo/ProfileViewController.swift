@@ -38,6 +38,8 @@ class ProfileViewController: UITableViewController {
     let imagePickerController = UIImagePickerController()
     var rskImageCropper: RSKImageCropViewController = RSKImageCropViewController()
     
+    var cellBeingMoved: UICollectionViewCell?
+    
     @IBAction func dismiss(sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -202,6 +204,7 @@ class ProfileViewController: UITableViewController {
                 if cell.photo == nil {
                     return
                 } else {
+                    cellBeingMoved = cell
                     photosCollectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
                     cell.layer.shadowOpacity = 0.5
                     cell.layer.shadowRadius = 5.0
@@ -212,12 +215,14 @@ class ProfileViewController: UITableViewController {
         case UIGestureRecognizerState.changed:
             photosCollectionView.updateInteractiveMovementTargetPosition(gesture.location(in: self.photosCollectionView))
         case UIGestureRecognizerState.ended:
-            guard let selectedIndexPath = self.photosCollectionView.indexPathForItem(at: gesture.location(in: self.photosCollectionView)) else {
-                break
+            if self.photosCollectionView.indexPathForItem(at: gesture.location(in: self.photosCollectionView)) == nil {
+                photosCollectionView.cancelInteractiveMovement()
+            } else {
+                photosCollectionView.endInteractiveMovement()
             }
-            photosCollectionView.endInteractiveMovement()
-            photosCollectionView.cellForItem(at: selectedIndexPath)?.layer.shadowOpacity = 0
-            photosCollectionView.cellForItem(at: selectedIndexPath)?.layer.masksToBounds = true
+            cellBeingMoved?.layer.shadowOpacity = 0.0
+            cellBeingMoved?.layer.masksToBounds = true
+            cellBeingMoved = nil
         default:
             photosCollectionView.cancelInteractiveMovement()
         }
@@ -259,10 +264,26 @@ extension ProfileViewController: UICollectionViewDelegate {
         if let cell = collectionView.cellForItem(at: indexPath) as? ProfilePhotoCollectionViewCell {
             if cell.photo != nil {
                 let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                let setAsMainButton = UIAlertAction(title: "Set as Main Photo", style: .default, handler: { (action) -> Void in
+                    /*HUD.show(.progress)
+                    User.current.value?.profile.deleteFiles(forPhotoAt: indexPath.row) { _ in
+                        User.current.value?.profile.remove(photoAt: indexPath.row) { _ in
+                            
+                            self.photosCollectionView.reloadItems(at: [indexPath])
+                            HUD.show(.success)
+                            HUD.hide(afterDelay: 1.0)
+                            Analytics.Log(event: Constants.Analytics.Events.PhotoRemoved.name)
+                        }
+                    }*/
+                    let mainIndexPath = IndexPath(row: 0, section: 0)
+                    self.photosCollectionView.moveItem(at: indexPath, to: mainIndexPath)
+                    self.collectionView(self.photosCollectionView, moveItemAt: indexPath, to: mainIndexPath)
+                })
                 let removeButton = UIAlertAction(title: "Remove", style: .destructive, handler: { (action) -> Void in
                     HUD.show(.progress)
                     User.current.value?.profile.deleteFiles(forPhotoAt: indexPath.row) { _ in
                         User.current.value?.profile.remove(photoAt: indexPath.row) { _ in
+                            
                             self.photosCollectionView.reloadItems(at: [indexPath])
                             HUD.show(.success)
                             HUD.hide(afterDelay: 1.0)
@@ -271,8 +292,10 @@ extension ProfileViewController: UICollectionViewDelegate {
                     }
                 })
                 let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                actionSheetController.addAction(setAsMainButton)
                 actionSheetController.addAction(removeButton)
                 actionSheetController.addAction(cancelButton)
+                actionSheetController.popoverPresentationController?.sourceView = self.view
                 self.present(actionSheetController, animated: true, completion: nil)
             } else {
                 let actionSheetController = UIAlertController(title: "Add Photo", message: nil, preferredStyle: .actionSheet)
@@ -309,6 +332,7 @@ extension ProfileViewController: UICollectionViewDelegate {
                 
                 let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
                 actionSheetController.addAction(cancelButton)
+                actionSheetController.popoverPresentationController?.sourceView = self.view
                 self.present(actionSheetController, animated: true, completion: nil)
             }
         }

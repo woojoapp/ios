@@ -31,6 +31,7 @@ class SettingsViewController: UITableViewController {
             User.current.value?.logOut()
         })
         logoutAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        logoutAlert.popoverPresentationController?.sourceView = self.view
         present(logoutAlert, animated: true)
     }
     
@@ -42,6 +43,7 @@ class SettingsViewController: UITableViewController {
             User.current.value?.deleteAccount()
         })
         deleteAccountAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        deleteAccountAlert.popoverPresentationController?.sourceView = self.view
         present(deleteAccountAlert, animated: true)
     }
     

@@ -100,6 +100,11 @@ class CurrentUser: User {
         func finish() {
             let group = DispatchGroup()
             group.enter()
+            self.loadData(completion: {
+                print("Loaded data", self.botUid)
+                group.leave()
+            })
+            group.enter()
             self.preferences.loadFromFirebase(completion: { _, _ in
                 print("Loaded preferences")
                 group.leave()
@@ -183,6 +188,15 @@ class CurrentUser: User {
                 completion?()
             })
         }
+    }
+    
+    func loadData(completion: (() -> Void)? = nil) {
+        ref.child(Constants.User.Bot.firebaseNode).observeSingleEvent(of: .value, with: { snap in
+            if let botUid = snap.childSnapshot(forPath: Constants.User.Bot.properties.firebaseNodes.uid).value as? String {
+                self.botUid = botUid
+            }
+            completion?()
+        })
     }
     
     // MARK: - Candidates

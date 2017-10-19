@@ -19,6 +19,7 @@ class EventsViewController: UITableViewController {
     var events: [Event] = []
     var disposeBag = DisposeBag()
     var reachabilityObserver: AnyObject?
+    @IBOutlet weak var longPressGestureRecognizer: UILongPressGestureRecognizer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +32,8 @@ class EventsViewController: UITableViewController {
         
         setupDataSource()
         tableView.tableFooterView = UIView()
+        
+        //longPressGestureRecognizer.addTarget(self, action: #selector(longPress))
     }
     
     override func viewDidLayoutSubviews() {
@@ -56,15 +59,12 @@ class EventsViewController: UITableViewController {
         User.current.asObservable()
             .flatMap { user -> Observable<[Event]> in
                 if let currentUser = user {
-                    print("RETURNING EVENTS")
                     return currentUser.events.asObservable()
                 } else {
-                    print("RETURNING MANUAL EMPTY")
                     return Variable([]).asObservable()
                 }
             }
             .subscribe(onNext: { events in
-                print("THE EVENTS", events)
                 self.events = events
                 self.tableView.reloadData()
             }).addDisposableTo(disposeBag)
@@ -91,25 +91,46 @@ class EventsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Remove", handler: { action, indexPath in
-            if let cell = self.tableView.cellForRow(at: indexPath) as? EventsTableViewCell, let event = cell.event {
-                HUD.show(.labeledProgress(title: "Remove Event", subtitle: "Removing event..."))
-                User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
-                    let analyticsEventParameters = [Constants.Analytics.Events.EventRemoved.Parameters.name: event.name,
-                                                    Constants.Analytics.Events.EventRemoved.Parameters.id: event.id,
-                                                    Constants.Analytics.Events.EventRemoved.Parameters.screen: String(describing: type(of: self))]
-                    Analytics.Log(event: Constants.Analytics.Events.EventAdded.name, with: analyticsEventParameters)
-                    HUD.show(.labeledSuccess(title: "Remove Event", subtitle: "Event removed!"))
-                    HUD.hide(afterDelay: 1.0)
-                })
-            }
+            self.removeEvent(at: indexPath)
         })
         return [deleteAction]
+    }
+    
+    func removeEvent(at indexPath: IndexPath) {
+        if let cell = self.tableView.cellForRow(at: indexPath) as? EventsTableViewCell, let event = cell.event {
+            HUD.show(.labeledProgress(title: "Remove Event", subtitle: "Removing event..."))
+            User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
+                let analyticsEventParameters = [Constants.Analytics.Events.EventRemoved.Parameters.name: event.name,
+                                                Constants.Analytics.Events.EventRemoved.Parameters.id: event.id,
+                                                Constants.Analytics.Events.EventRemoved.Parameters.screen: String(describing: type(of: self))]
+                Analytics.Log(event: Constants.Analytics.Events.EventAdded.name, with: analyticsEventParameters)
+                HUD.show(.labeledSuccess(title: "Remove Event", subtitle: "Event removed!"))
+                HUD.hide(afterDelay: 1.0)
+            })
+        }
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         if let reachable = isReachable(), reachable {
             return true
         } else { return false }
+    }
+    
+    func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        if longPressGestureRecognizer.state == UIGestureRecognizerState.began {
+            let touchPoint = longPressGestureRecognizer.location(in: self.view)
+            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                let removeButton = UIAlertAction(title: "Remove", style: .destructive, handler: { (action) -> Void in
+                    self.removeEvent(at: indexPath);
+                })
+                let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                actionSheetController.addAction(removeButton)
+                actionSheetController.addAction(cancelButton)
+                actionSheetController.popoverPresentationController?.sourceView = self.view
+                self.present(actionSheetController, animated: true, completion: nil)
+            }
+        }
     }
     
 }

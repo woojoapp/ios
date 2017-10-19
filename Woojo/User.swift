@@ -19,6 +19,7 @@ class User: Equatable {
     var fbAccessToken: AccessToken?
     var profile: Profile!
     var activity: Activity!
+    var botUid: String?
     
     static var current: Variable<CurrentUser?> = Variable(nil)
     

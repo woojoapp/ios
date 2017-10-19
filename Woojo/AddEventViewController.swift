@@ -48,7 +48,7 @@ class AddEventViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        self.segmentedControl.sectionTitles = ["Interested/Going", "Search"]
+        self.segmentedControl.sectionTitles = ["Your Facebook Events", "Search"]
         //self.segmentedControl.sectionTitles = ["Explore", "Interested/Going", "Search"]
         self.segmentedControl.selectionIndicatorColor = self.view.tintColor
         self.segmentedControl.selectionStyle = .fullWidthStripe

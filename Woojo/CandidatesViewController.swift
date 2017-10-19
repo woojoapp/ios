@@ -71,8 +71,6 @@ class CandidatesViewController: UIViewController {
         User.current.asObservable()
             .subscribe(onNext: { user in
                 user?.candidatesDelegate = self                
-                let token = Messaging.messaging().fcmToken
-                print("FCM token: \(token ?? "")")
             }).addDisposableTo(disposeBag)
         
         kolodaView.dataSource = self
@@ -151,6 +149,7 @@ class CandidatesViewController: UIViewController {
         pushNotificationsInvite.addAction(UIAlertAction(title: "Not now", style: .cancel) { _ in
             Woojo.User.current.value?.activity.setRepliedToPushNotificationsInvite()
         })
+        pushNotificationsInvite.popoverPresentationController?.sourceView = self.view
         present(pushNotificationsInvite, animated: true)
     }
     
