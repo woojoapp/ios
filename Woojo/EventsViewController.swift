@@ -20,6 +20,9 @@ class EventsViewController: UITableViewController {
     var disposeBag = DisposeBag()
     var reachabilityObserver: AnyObject?
     @IBOutlet weak var longPressGestureRecognizer: UILongPressGestureRecognizer!
+    @IBOutlet weak var tipView: UIView!
+    @IBOutlet weak var dismissTipButton: UIButton!
+    let tipId = "eventFilter"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +37,9 @@ class EventsViewController: UITableViewController {
         tableView.tableFooterView = UIView()
         
         //longPressGestureRecognizer.addTarget(self, action: #selector(longPress))
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "close"))
+        imageView.frame = CGRect(x: dismissTipButton.frame.width/2.0, y: dismissTipButton.frame.height/2.0, width: 10, height: 10)
+        dismissTipButton.addSubview(imageView)
     }
     
     override func viewDidLayoutSubviews() {
@@ -59,6 +65,9 @@ class EventsViewController: UITableViewController {
         User.current.asObservable()
             .flatMap { user -> Observable<[Event]> in
                 if let currentUser = user {
+                    if let tips = user?.tips, tips[self.tipId] != nil {
+                        self.tableView.tableHeaderView = nil
+                    }
                     return currentUser.events.asObservable()
                 } else {
                     return Variable([]).asObservable()
@@ -94,6 +103,14 @@ class EventsViewController: UITableViewController {
             self.removeEvent(at: indexPath)
         })
         return [deleteAction]
+    }
+    
+    @IBAction
+    func dismissTip() {
+        Woojo.User.current.value?.dismissTip(tipId: self.tipId)
+        UIView.beginAnimations("foldHeader", context: nil)
+        self.tableView.tableHeaderView = nil
+        UIView.commitAnimations()
     }
     
     func removeEvent(at indexPath: IndexPath) {

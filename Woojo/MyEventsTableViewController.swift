@@ -17,6 +17,9 @@ class MyEventsTableViewController: UITableViewController {
     var events: [Event] = []
     let disposeBag = DisposeBag()
     var reachabilityObserver: AnyObject?
+    @IBOutlet weak var tipView: UIView!
+    @IBOutlet weak var dismissTipButton: UIButton!
+    let tipId = "facebookEvents"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +38,10 @@ class MyEventsTableViewController: UITableViewController {
         User.current.value?.events.asObservable().subscribe(onNext: { _ in
             self.tableView.reloadData()
         }).addDisposableTo(disposeBag)
+        
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "close"))
+        imageView.frame = CGRect(x: dismissTipButton.frame.width/2.0, y: dismissTipButton.frame.height/2.0, width: 10, height: 10)
+        dismissTipButton.addSubview(imageView)
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,6 +69,14 @@ class MyEventsTableViewController: UITableViewController {
             self.tableView.refreshControl?.endRefreshing()
             self.tableView.backgroundView?.isHidden = self.events.count > 0
         }
+    }
+    
+    @IBAction
+    func dismissTip() {
+        Woojo.User.current.value?.dismissTip(tipId: self.tipId)
+        UIView.beginAnimations("foldHeader", context: nil)
+        self.tableView.tableHeaderView = nil
+        UIView.commitAnimations()
     }
     
     // MARK: - Table view data source
@@ -137,7 +152,7 @@ extension MyEventsTableViewController: DZNEmptyDataSetSource {
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        return NSAttributedString(string: "Events you're marked as \"going to\" or \"interested in\" on Facebook appear here. Only events from the past month or in the future are shown.\n\nPull to refresh", attributes: Constants.App.Appearance.EmptyDatasets.descriptionStringAttributes)
+        return NSAttributedString(string: "Only events from the past month or in the future are shown.\n\nPull to refresh", attributes: Constants.App.Appearance.EmptyDatasets.descriptionStringAttributes)
     }
     
     func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {

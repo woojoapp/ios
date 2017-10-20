@@ -12,7 +12,7 @@ import FirebaseAuth
 import RxSwift
 import PKHUD
 
-class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UITableViewDelegate {
+class MessagesViewController: ALMessagesViewController, ShowsSettingsButton/*, UITableViewDelegate*/ {
     
     var disposeBag = DisposeBag()
     
@@ -22,7 +22,7 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        mTableView.delegate = self
+        //mTableView.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -34,9 +34,9 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if self.detailChatViewController != nil {
+        /*if self.detailChatViewController != nil {
             self.detailChatViewController.refreshMainView = true
-        }
+        }*/
         super.viewWillAppear(animated)
         
         navigationController?.navigationBar.layer.shadowOpacity = 0.0
@@ -47,7 +47,7 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.view.backgroundColor = UIColor.clear
         
-        //NotificationCenter.default.addObserver(self, selector: #selector(self.newMessageReceived), name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.newMessageReceived), name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(enteredForeground), name: NSNotification.Name(rawValue: "APP_ENTER_IN_FOREGROUND"), object: nil)
         
         reloadData()
@@ -59,10 +59,7 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
     }
     
     func reloadData() {
-        print("FETCHING", ALUserDefaultsHandler.getDeviceKeyString())
-        ALMessageService.getLatestMessage(forUser: ALUserDefaultsHandler.getDeviceKeyString()) { (_, _) in
-            
-        }
+        ALMessageService.getLatestMessage(forUser: ALUserDefaultsHandler.getDeviceKeyString()) { (_, _) in }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -103,11 +100,11 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
         self.present(settingsNavigationController, animated: true, completion: nil)
     }
     
-    /*func newMessageReceived() {
+    func newMessageReceived() {
         print("MESSSAAAGEGE FROM MessagesViewController")
-    }*/
+    }
     
-    func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
+    /*func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
         let unmatch = UITableViewRowAction(style: .destructive, title: "Unmatch") { action, index in
             if let cell = tableView.cellForRow(at: editActionsForRowAt) as? ALContactCell {
                 
@@ -128,6 +125,6 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIT
         }
         
         return []
-    }
+    }*/
     
 }

@@ -76,7 +76,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         Database.database().isPersistenceEnabled = true
-        AnalyticsConfiguration.shared().setAnalyticsCollectionEnabled(false)
+        AnalyticsConfiguration.shared().setAnalyticsCollectionEnabled(true)
         UNUserNotificationCenter.current().delegate = self
         Messaging.messaging().delegate = self
         let token = Messaging.messaging().fcmToken

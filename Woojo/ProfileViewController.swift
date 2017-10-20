@@ -368,6 +368,9 @@ extension ProfileViewController: UICollectionViewDataSource {
         }
         cell.imageView.layer.cornerRadius = 12.0
         cell.imageView.layer.masksToBounds = true
+        
+        print("CELL", cell.frame.width, cell.frame.height)
+        
         return cell
     }
     

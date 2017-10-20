@@ -58,6 +58,7 @@ class CurrentUser: User {
     var events: Variable<[Event]> = Variable([])
     var notifications: Variable<[Notification]> = Variable([])
     var isLoading: Variable<Bool> = Variable(false)
+    var tips: [String:Any]?
     
     init?() {
         if let uid = Auth.auth().currentUser?.uid {
@@ -191,10 +192,22 @@ class CurrentUser: User {
     }
     
     func loadData(completion: (() -> Void)? = nil) {
+        let loadDataGroup = DispatchGroup()
+        loadDataGroup.enter()
         ref.child(Constants.User.Bot.firebaseNode).observeSingleEvent(of: .value, with: { snap in
             if let botUid = snap.childSnapshot(forPath: Constants.User.Bot.properties.firebaseNodes.uid).value as? String {
                 self.botUid = botUid
             }
+            loadDataGroup.leave()
+        })
+        loadDataGroup.enter()
+        ref.child(Constants.User.Tip.firebaseNode).observeSingleEvent(of: .value, with: { snap in
+            if let tips = snap.value as? [String:Any] {
+                self.tips = tips
+            }
+            loadDataGroup.leave()
+        })
+        loadDataGroup.notify(queue: .main, execute: {
             completion?()
         })
     }
@@ -476,5 +489,10 @@ class CurrentUser: User {
         let pass = Pass(by: self.uid, on: uid)
         pass.save(completion: completion)
     }
-
+    
+    func dismissTip(tipId: String, completion: ((Error?) -> Void)? = nil) {
+        self.ref.child(Constants.User.Tip.firebaseNode).child(tipId).setValue(Event.dateFormatter.string(from: Date())) { (error, _) in
+            completion?(error)
+        }
+    }
 }

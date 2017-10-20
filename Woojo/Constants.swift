@@ -191,6 +191,10 @@ struct Constants {
                 }
             }
         }
+        struct Tip {
+            static let firebaseNode = "tips"
+            static let dateFormat = "yyyy-MM-dd'T'HH:mm:ssxx"
+        }
     }
     
     struct Album {
@@ -283,22 +287,6 @@ struct Constants {
             static let fieldID = "id"
         }
         
-        /*struct UserProfilePhoto {
-            static let path = "albums"
-            static let fields = "type, picture.type(small), cover_photo{source}"
-            struct keys {
-                static let data = "data"
-                static let type = "type"
-                static let typeProfile = "profile"
-                static let coverPhoto = "cover_photo"
-                static let coverPhotoSource = "source"
-                static let coverPhotoID = "id"
-                static let picture = "picture"
-                static let pictureData = "data"
-                static let pictureDataURL = "url"
-            }
-        }*/
-        
         struct UserProfilePhoto {
             static let fields = "picture.width(3000).height(3000)"
             struct keys {
@@ -307,15 +295,6 @@ struct Constants {
                 static let url = "url"
             }
         }
-        
-        /*struct UserProfilePhotoThumbnail {
-            static let path = "picture"
-            static let fields = ""
-            struct keys {
-                static let data = "data"
-                static let dataUrl = "url"
-            }
-        }*/
         
         struct UserEvents {
             static let path = "/me/events"

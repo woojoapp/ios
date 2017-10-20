@@ -13,8 +13,8 @@ import FirebaseAnalytics
 class Analytics {
     
     static func Log(event name: String, with parameters: [String: String] = [:]) {
-        //AppEventsLogger.log(name, parameters: convertToFacebookFormat(parameters: parameters), valueToSum: nil, accessToken: nil)
-        //FirebaseAnalytics.Analytics.logEvent(withName: name, parameters: parameters as [String : NSObject])
+        AppEventsLogger.log(name, parameters: convertToFacebookFormat(parameters: parameters), valueToSum: nil, accessToken: nil)
+        FirebaseAnalytics.Analytics.logEvent(name, parameters: parameters as [String : NSObject])
     }
     
     fileprivate static func convertToFacebookFormat(parameters: [String:String]) -> AppEvent.ParametersDictionary {
