@@ -316,12 +316,22 @@ extension CandidatesViewController: CandidatesDelegate {
         kolodaView.reloadData()
     }
     
-    /*func didRemoveCandidate() {
+    func didRemoveCandidate(candidateId: String, index: Int) {
         //kolodaView.reloadData()
-        if let candidatesCount = Woojo.User.current.value?.candidates.count, candidatesCount == 0 {
+        print("REMOVED CANDIDATE \(candidateId) at index \(index), count is \(kolodaView.countOfCards)")
+        
+        //kolodaView.reloadData()
+        kolodaView.removeCardInIndexRange(index..<index, animated: false)
+        //kolodaView.currentCardIndex = 0
+        kolodaView.resetCurrentCardIndex()
+        print("AFTER RESET, count is \(kolodaView.countOfCards)")
+        if kolodaView.countOfCards == 0 {
             self.hideKolodaAndShowLoading()
         }
-    }*/
+        /*if let candidatesCount = Woojo.User.current.value?.candidates.count, candidatesCount == 0 {
+            self.hideKolodaAndShowLoading()
+        }*/
+    }
     
 }
 
@@ -332,7 +342,12 @@ extension CandidatesViewController: ReachabilityAware {
     func setReachabilityState(reachable: Bool) {
         if reachable {
             loadingView.progressTintColor = view.tintColor
-            if !self.shouldApplyAppearAnimation && !ranOutOfCards { showKolodaAndHideLoading() }
+            if !self.shouldApplyAppearAnimation && !ranOutOfCards {
+                showKolodaAndHideLoading()
+            }
+            if kolodaView.countOfCards == 0 {
+                hideKolodaAndShowLoading()
+            }
         } else {
             hideKolodaAndShowLoading()
             loadingView.progressTintColor = .white

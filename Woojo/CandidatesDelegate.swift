@@ -10,5 +10,5 @@ import Foundation
 
 protocol CandidatesDelegate {
     func didAddCandidate()
-    //func didRemoveCandidate()
+    func didRemoveCandidate(candidateId: String, index: Int)
 }
