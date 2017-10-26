@@ -63,6 +63,10 @@ class User: Equatable {
             }
         }
     }
+    
+    func getMatch(with user: User, completion: ((Match?) -> ())? = nil) {
+        Match.between(user: self, and: user, completion: completion)
+    }
 
 }
 

@@ -40,6 +40,15 @@ extension User {
                 }
             }
         }
+        var displaySummary: String {
+            get {
+                if let displayName = displayName {
+                    return "\(displayName), \(age)"
+                } else {
+                    return "User, \(age)"
+                }
+            }
+        }
         
         var isObserved = false
         
@@ -226,13 +235,13 @@ extension User {
             User.Profile.PhotoGraphRequest(profile: self)?.start { response, result in
                 switch result {
                 case .success(let response):
-                    if let photoID = self.user.fbAppScopedID {
+                    //if let photoID =  {
                         if let photoURL = response.photoURL {
                             DispatchQueue.global().async {
                                 do {
                                     let data = try Data(contentsOf: photoURL)
                                     if let image = UIImage(data: data) {
-                                        self.setPhoto(photo: image, id: photoID, index: 0) { _, error in
+                                        self.setPhoto(photo: image, id: UUID().uuidString, index: 0) { _, error in
                                             completion?(error)
                                         }
                                     } else {
@@ -244,7 +253,7 @@ extension User {
                                 }
                             }
                         }
-                    }
+                    //}
                 case .failed(let error):
                     print("UserProfilePhotoGraphRequest failed: \(error.localizedDescription)")
                     completion?(error)
@@ -423,9 +432,9 @@ extension User.Profile {
     func setPhoto(photo: UIImage, id: String, index: Int, completion: ((Photo?, Error?) -> Void)? = nil) {
         // Resize image to the maximum size we'll need
         let group = DispatchGroup()
-        
         group.enter()
-        guard let fullImage = resize(image: photo, targetSize: CGSize(width: User.Profile.Photo.Size.full.rawValue, height: User.Profile.Photo.Size.full.rawValue)), let fullImageJPEGData = UIImageJPEGRepresentation(fullImage, 0.9) else {
+        let aspectRatio = 1.6
+        guard let fullImage = resize(image: photo, targetSize: CGSize(width: Double(User.Profile.Photo.Size.full.rawValue), height: Double(User.Profile.Photo.Size.full.rawValue) * aspectRatio)), let fullImageJPEGData = UIImageJPEGRepresentation(fullImage, 0.9) else {
             print("Failed to resize photo to full size")
             return
         }

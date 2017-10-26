@@ -49,6 +49,7 @@ class ProfileViewController: UITableViewController {
         setupDataSources()
         setupBioTextView()
         imagePickerController.delegate = self
+        profilePhotoImageView.contentMode = .scaleAspectFill
     }
     
     override func viewWillAppear(_ animated: Bool) {

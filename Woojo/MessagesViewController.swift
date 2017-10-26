@@ -31,6 +31,10 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton/*, U
         self.showSettingsButton()
         let settingsButton = self.navigationItem.rightBarButtonItem?.customView as? UIButton
         settingsButton?.addTarget(self, action: #selector(showSettings(sender:)), for: .touchUpInside)
+        
+        for case let cell as ALContactCell in self.mTableView.visibleCells {
+            cell.mUserImageView.contentMode = .scaleAspectFill
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

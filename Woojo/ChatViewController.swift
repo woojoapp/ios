@@ -55,6 +55,7 @@ class ChatViewController: ALChatViewController {
         let profileItem = UIBarButtonItem()
         
         let profileButton = UIButton(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
+        profileButton.imageView?.contentMode = .scaleAspectFill
         profileButton.backgroundColor = UIColor.clear
         let widthConstraint = profileButton.widthAnchor.constraint(equalToConstant: 36)
         let heightConstraint = profileButton.heightAnchor.constraint(equalToConstant: 36)
@@ -243,12 +244,22 @@ class ChatViewController: ALChatViewController {
     
     func showProfile() {
         if let userDetailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserDetailsViewController") as? UserDetailsViewController {
-            userDetailsViewController.buttonsType = .options
+            //userDetailsViewController.buttonsType = .options
             userDetailsViewController.chatViewController = self
             let user = User(uid: alContact.userId)
             user.profile.loadFromFirebase { profile, error in
                 userDetailsViewController.user = user
-                self.present(userDetailsViewController, animated: true, completion: nil)
+                User.current.value?.getMatch(with: user, completion: { (match) in
+                    if let match = match {
+                        userDetailsViewController.commonEventInfos = match.commonEventInfos
+                        self.present(userDetailsViewController, animated: true, completion: {
+                            let closeTapGestureRecognizer = UITapGestureRecognizer(target: userDetailsViewController, action: #selector(userDetailsViewController.dismiss(sender:)))
+                            userDetailsViewController.cardView.addGestureRecognizer(closeTapGestureRecognizer)
+                            let toggleTapGestureRecognizer = UITapGestureRecognizer(target: userDetailsViewController.cardView, action: #selector(userDetailsViewController.cardView.toggleDescription))
+                            userDetailsViewController.cardView.carouselView.addGestureRecognizer(toggleTapGestureRecognizer)
+                        })
+                    }
+                })
             }
         }
     }

@@ -13,30 +13,27 @@ import PKHUD
 
 class UserDetailsViewController: UIViewController {
     
-    enum ButtonsType: String {
+    /*enum ButtonsType: String {
         case decide
         case options
-    }
+    }*/
     
-    @IBOutlet weak var carouselView: ImageSlideshow!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var likeButton: DOFavoriteButton!
-    @IBOutlet weak var passButton: DOFavoriteButton!
     @IBOutlet weak var optionsButton: DOFavoriteButton!
     @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var photoActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var cardView: UserCardView!
+    //@IBOutlet weak var photoActivityIndicator: UIActivityIndicatorView!
+    
     
     var user: User?
-    var imageSources: [ImageSource] = []
-    var buttonsType: ButtonsType = .decide
+    var commonEventInfos: [User.CommonEventInfo] = []
+    //var imageSources: [ImageSource] = []
+    //var buttonsType: ButtonsType = .decide
     
     var candidatesViewController: CandidatesViewController?
     var chatViewController: ChatViewController?
     var reachabilityObserver: AnyObject?
     
-    @IBAction func like() {
+    /*@IBAction func like() {
         set(button: passButton, enabled: false)
         candidatesViewController?.likeButton.select() // Required for analytics event type disambiguation
         likeButton.select()
@@ -66,7 +63,7 @@ class UserDetailsViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
             self.dismiss(sender: self)
         })
-    }
+    }*/
     
     @IBAction func showOptions() {
         optionsButton.select()
@@ -123,76 +120,23 @@ class UserDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        carouselView.backgroundColor = UIColor.white
-        carouselView.circular = false
-        carouselView.pageControlPosition = .custom(padding: 30.0)
-        carouselView.pageControl.currentPageIndicatorTintColor = view.tintColor
-        carouselView.pageControl.pageIndicatorTintColor = UIColor.lightGray
-        carouselView.scrollView.bounces = false
-        
-        if let user = user {
-            
-            func setFirstImageAndDownloadOthers(firstPhoto: User.Profile.Photo) {
-                if let firstImage = firstPhoto.images[.full] {
-                    self.imageSources.append(ImageSource(image: firstImage))
-                    self.carouselView.setImageInputs(self.imageSources)
-                    self.photoActivityIndicator.stopAnimating()
-                }
-                carouselView.pageControl.numberOfPages = user.profile.photos.value.flatMap{ $0 }.count
-                // Download the others and append
-                user.profile.downloadAllPhotos(size: .full) {
-                    for photo in user.profile.photos.value {
-                        if let photo = photo, let image = photo.images[.full] {
-                            if photo.id == firstPhoto.id { continue }
-                            else {
-                                self.imageSources.append(ImageSource(image: image))
-                            }
-                        }
-                    }
-                    self.carouselView.setImageInputs(self.imageSources)
-                }
-            }
-            
-            // Set first photo immediately to avoid flicker
-            if let firstPhoto = user.profile.photos.value[0] {
-                if firstPhoto.images[.full] != nil {
-                    setFirstImageAndDownloadOthers(firstPhoto: firstPhoto)
-                } else {
-                    firstPhoto.download(size: .full) {
-                        setFirstImageAndDownloadOthers(firstPhoto: firstPhoto)
-                    }
-                }
-                
-            }
-            
-            carouselView.currentPageChanged = { (index) -> () in
-                Analytics.Log(event: Constants.Analytics.Events.CandidateDetailsPhotoChanged.name, with: [Constants.Analytics.Events.CandidateDetailsPhotoChanged.Parameters.uid: user.uid])
-            }
-            
+        cardView.user = self.user
+        cardView.commonEventInfos = self.commonEventInfos
+        cardView.initiallyShowDescription = true
+        cardView.load {
+            self.cardView.carouselView.draggingEnabled = true
         }
-        carouselView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTap)))
-        
-        if let user = user, let name = user.profile.displayName {
-            nameLabel.text = "\(name), \(user.profile.age)"
-        }
-        
-        var descriptionString = user?.profile.description.value ?? ""
-        if let candidate = user as? CurrentUser.Candidate {
-            descriptionString = "\(candidate.commonEventsInfoString)\n\(descriptionString)"
-        }
-        descriptionLabel.text = descriptionString
-        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        closeButton.layer.masksToBounds = true
+        /*closeButton.layer.masksToBounds = true
         closeButton.layer.cornerRadius = 5.0
         closeButton.layer.backgroundColor = UIColor(colorLiteralRed: 0.0, green: 0.0, blue: 0.0, alpha: 0.5).cgColor
-        carouselView.bringSubview(toFront: closeButton)
+        cardView?.bringSubview(toFront: closeButton)*/
         
-        switch buttonsType {
+        /*switch buttonsType {
         case .options:
             optionsButton.isHidden = false
             optionsButton.layer.cornerRadius = optionsButton.frame.width / 2
@@ -205,7 +149,7 @@ class UserDetailsViewController: UIViewController {
             passButton.isHidden = false
             passButton.layer.cornerRadius = passButton.frame.width / 2
             passButton.layer.masksToBounds = true
-        }
+        }*/
         
         if let user = user {
             if user.uid.range(of: "woojo-") != nil {
@@ -249,13 +193,13 @@ extension UserDetailsViewController: ReachabilityAware {
     
     func setReachabilityState(reachable: Bool) {
         if reachable {
-            set(button: likeButton, enabled: true)
-            set(button: passButton, enabled: true)
+            //set(button: likeButton, enabled: true)
+            //set(button: passButton, enabled: true)
             set(button: optionsButton, enabled: true)
             
         } else {
-            set(button: likeButton, enabled: false)
-            set(button: passButton, enabled: false)
+            //set(button: likeButton, enabled: false)
+            //set(button: passButton, enabled: false)
             set(button: optionsButton, enabled: false)
         }
     }

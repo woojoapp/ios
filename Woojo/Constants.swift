@@ -36,6 +36,13 @@ struct Constants {
                 }
             }
         }
+        struct CommonEventInfo {
+            static let firebaseNode = "events"
+            struct firebaseNodes {
+                static let name = "name"
+                static let rsvpStatus = "rsvp_status"
+            }
+        }
         struct Device {
             static let firebaseNode = "devices"
             struct properties {
@@ -81,12 +88,6 @@ struct Constants {
                 struct firebaseNodes {
                     static let uid = "uid"
                     static let events = "events"
-                }
-            }
-            struct CommonEventInfo {
-                struct firebaseNodes {
-                    static let name = "name"
-                    static let rsvpStatus = "rsvp_status"
                 }
             }
         }
@@ -161,12 +162,13 @@ struct Constants {
         }
         struct Match {
             static let firebaseNode = "matches"
-            static let dateFormat = "yyyy-MM-dd'T'HH:mm:ssxx"
+            static let dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
             struct properties {
                 struct firebaseNodes {
                     static let by = "by"
                     static let on = "on"
                     static let created = "created"
+                    static let events = "events"
                 }
             }
         }

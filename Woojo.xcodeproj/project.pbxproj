@@ -89,8 +89,8 @@
 		85662C801F90BE1300D5701E /* ExploreEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D6E1DF6CF8F00116159 /* ExploreEventsViewController.swift */; };
 		85662C811F90BE1300D5701E /* CandidatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A89F1DCC97F600C18EC3 /* CandidatesViewController.swift */; };
 		85662C821F90BE1300D5701E /* CandidateOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85407D9F1DF03FD90033E696 /* CandidateOverlayView.xib */; };
-		85662C831F90BE1300D5701E /* CandidateCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85407DA11DF040070033E696 /* CandidateCardView.xib */; };
-		85662C841F90BE1300D5701E /* CandidateCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85407DA31DF042A00033E696 /* CandidateCardView.swift */; };
+		85662C831F90BE1300D5701E /* UserCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85407DA11DF040070033E696 /* UserCardView.xib */; };
+		85662C841F90BE1300D5701E /* UserCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85407DA31DF042A00033E696 /* UserCardView.swift */; };
 		85662C851F90BE1300D5701E /* ALChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4C41DD52D73003E2376 /* ALChatManager.swift */; };
 		85662C861F90BE1300D5701E /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D8915D1E54D63D00EC7FFF /* ChatViewController.swift */; };
 		85662C871F90BE1300D5701E /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D891611E54E45300EC7FFF /* MessagesViewController.swift */; };
@@ -127,8 +127,8 @@
 		85662CA71F90BE2200D5701E /* ExploreEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D6E1DF6CF8F00116159 /* ExploreEventsViewController.swift */; };
 		85662CA81F90BE2200D5701E /* CandidatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A89F1DCC97F600C18EC3 /* CandidatesViewController.swift */; };
 		85662CA91F90BE2200D5701E /* CandidateOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85407D9F1DF03FD90033E696 /* CandidateOverlayView.xib */; };
-		85662CAA1F90BE2200D5701E /* CandidateCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85407DA11DF040070033E696 /* CandidateCardView.xib */; };
-		85662CAB1F90BE2200D5701E /* CandidateCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85407DA31DF042A00033E696 /* CandidateCardView.swift */; };
+		85662CAA1F90BE2200D5701E /* UserCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85407DA11DF040070033E696 /* UserCardView.xib */; };
+		85662CAB1F90BE2200D5701E /* UserCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85407DA31DF042A00033E696 /* UserCardView.swift */; };
 		85662CAC1F90BE2200D5701E /* ALChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4C41DD52D73003E2376 /* ALChatManager.swift */; };
 		85662CAD1F90BE2200D5701E /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D8915D1E54D63D00EC7FFF /* ChatViewController.swift */; };
 		85662CAE1F90BE2200D5701E /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D891611E54E45300EC7FFF /* MessagesViewController.swift */; };
@@ -168,8 +168,8 @@
 		85662CD21F90BE2300D5701E /* ExploreEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D6E1DF6CF8F00116159 /* ExploreEventsViewController.swift */; };
 		85662CD31F90BE2300D5701E /* CandidatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A89F1DCC97F600C18EC3 /* CandidatesViewController.swift */; };
 		85662CD41F90BE2300D5701E /* CandidateOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85407D9F1DF03FD90033E696 /* CandidateOverlayView.xib */; };
-		85662CD51F90BE2300D5701E /* CandidateCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85407DA11DF040070033E696 /* CandidateCardView.xib */; };
-		85662CD61F90BE2300D5701E /* CandidateCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85407DA31DF042A00033E696 /* CandidateCardView.swift */; };
+		85662CD51F90BE2300D5701E /* UserCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85407DA11DF040070033E696 /* UserCardView.xib */; };
+		85662CD61F90BE2300D5701E /* UserCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85407DA31DF042A00033E696 /* UserCardView.swift */; };
 		85662CD71F90BE2300D5701E /* ALChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E5D4C41DD52D73003E2376 /* ALChatManager.swift */; };
 		85662CD81F90BE2300D5701E /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D8915D1E54D63D00EC7FFF /* ChatViewController.swift */; };
 		85662CD91F90BE2300D5701E /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D891611E54E45300EC7FFF /* MessagesViewController.swift */; };
@@ -213,6 +213,24 @@
 		85685F761DEC7B69009BAEE0 /* SearchEventsResultsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85685F751DEC7B69009BAEE0 /* SearchEventsResultsTableViewCell.xib */; };
 		85685F781DEC7B8D009BAEE0 /* SearchEventsResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85685F771DEC7B8D009BAEE0 /* SearchEventsResultsTableViewCell.swift */; };
 		85685F871DEF3310009BAEE0 /* CandidatesDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85685F861DEF3310009BAEE0 /* CandidatesDelegate.swift */; };
+		856B0A9E1FA0838F0041C11E /* CandidateCommonEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0A9C1FA0838F0041C11E /* CandidateCommonEventTableViewCell.swift */; };
+		856B0A9F1FA0838F0041C11E /* CandidateCommonEventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856B0A9D1FA0838F0041C11E /* CandidateCommonEventTableViewCell.xib */; };
+		856B0AA21FA084730041C11E /* CandidateDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0AA01FA084730041C11E /* CandidateDescriptionTableViewCell.swift */; };
+		856B0AA31FA084730041C11E /* CandidateDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856B0AA11FA084730041C11E /* CandidateDescriptionTableViewCell.xib */; };
+		856B0AA41FA084760041C11E /* CandidateDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0AA01FA084730041C11E /* CandidateDescriptionTableViewCell.swift */; };
+		856B0AA51FA084770041C11E /* CandidateDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0AA01FA084730041C11E /* CandidateDescriptionTableViewCell.swift */; };
+		856B0AA61FA0847F0041C11E /* CandidateDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856B0AA11FA084730041C11E /* CandidateDescriptionTableViewCell.xib */; };
+		856B0AA71FA084800041C11E /* CandidateDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856B0AA11FA084730041C11E /* CandidateDescriptionTableViewCell.xib */; };
+		856B0AA81FA084840041C11E /* CandidateCommonEventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856B0A9D1FA0838F0041C11E /* CandidateCommonEventTableViewCell.xib */; };
+		856B0AA91FA084850041C11E /* CandidateCommonEventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856B0A9D1FA0838F0041C11E /* CandidateCommonEventTableViewCell.xib */; };
+		856B0AAA1FA084870041C11E /* CandidateCommonEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0A9C1FA0838F0041C11E /* CandidateCommonEventTableViewCell.swift */; };
+		856B0AAB1FA084880041C11E /* CandidateCommonEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0A9C1FA0838F0041C11E /* CandidateCommonEventTableViewCell.swift */; };
+		856B0AAD1FA1D1260041C11E /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0AAC1FA1D1260041C11E /* Match.swift */; };
+		856B0AAE1FA1D1260041C11E /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0AAC1FA1D1260041C11E /* Match.swift */; };
+		856B0AAF1FA1D1260041C11E /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0AAC1FA1D1260041C11E /* Match.swift */; };
+		856B0AB11FA1D2970041C11E /* CommonEventInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0AB01FA1D2970041C11E /* CommonEventInfo.swift */; };
+		856B0AB21FA1D2970041C11E /* CommonEventInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0AB01FA1D2970041C11E /* CommonEventInfo.swift */; };
+		856B0AB31FA1D2970041C11E /* CommonEventInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0AB01FA1D2970041C11E /* CommonEventInfo.swift */; };
 		858FEE3C1E02A40C00322E8E /* AlbumsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE3A1E02A40C00322E8E /* AlbumsTableViewCell.swift */; };
 		858FEE3D1E02A40C00322E8E /* AlbumsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 858FEE3B1E02A40C00322E8E /* AlbumsTableViewCell.xib */; };
 		858FEE421E02B5E600322E8E /* AlbumPhotosGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE411E02B5E500322E8E /* AlbumPhotosGraphRequest.swift */; };
@@ -251,8 +269,8 @@
 		85396F2A1E5F516F007EDB18 /* Notifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifier.swift; sourceTree = "<group>"; };
 		85407D9B1DF028D50033E696 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		85407D9F1DF03FD90033E696 /* CandidateOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CandidateOverlayView.xib; sourceTree = "<group>"; };
-		85407DA11DF040070033E696 /* CandidateCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CandidateCardView.xib; sourceTree = "<group>"; };
-		85407DA31DF042A00033E696 /* CandidateCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandidateCardView.swift; sourceTree = "<group>"; };
+		85407DA11DF040070033E696 /* UserCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCardView.xib; sourceTree = "<group>"; };
+		85407DA31DF042A00033E696 /* UserCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCardView.swift; sourceTree = "<group>"; };
 		85407DA51DF1B0D00033E696 /* ProfilePhotoImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePhotoImageView.swift; sourceTree = "<group>"; };
 		8545D9721E66BE7300A2D70C /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		8545D9741E66C3F000A2D70C /* UnwindThenShowChatSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnwindThenShowChatSegue.swift; sourceTree = "<group>"; };
@@ -279,6 +297,12 @@
 		85685F771DEC7B8D009BAEE0 /* SearchEventsResultsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchEventsResultsTableViewCell.swift; sourceTree = "<group>"; };
 		85685F801DEF0BE9009BAEE0 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		85685F861DEF3310009BAEE0 /* CandidatesDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandidatesDelegate.swift; sourceTree = "<group>"; };
+		856B0A9C1FA0838F0041C11E /* CandidateCommonEventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateCommonEventTableViewCell.swift; sourceTree = "<group>"; };
+		856B0A9D1FA0838F0041C11E /* CandidateCommonEventTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CandidateCommonEventTableViewCell.xib; sourceTree = "<group>"; };
+		856B0AA01FA084730041C11E /* CandidateDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateDescriptionTableViewCell.swift; sourceTree = "<group>"; };
+		856B0AA11FA084730041C11E /* CandidateDescriptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CandidateDescriptionTableViewCell.xib; sourceTree = "<group>"; };
+		856B0AAC1FA1D1260041C11E /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
+		856B0AB01FA1D2970041C11E /* CommonEventInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonEventInfo.swift; sourceTree = "<group>"; };
 		8588901E1E6D80B200ACA69A /* ReachabilityAware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityAware.swift; sourceTree = "<group>"; };
 		858FEE361E0025A400322E8E /* AlbumsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumsTableViewController.swift; sourceTree = "<group>"; };
 		858FEE3A1E02A40C00322E8E /* AlbumsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumsTableViewCell.swift; sourceTree = "<group>"; };
@@ -400,6 +424,7 @@
 				8506A8A51DCCC85200C18EC3 /* Like.swift */,
 				85EC21321F89822000C9FC7C /* Report.swift */,
 				8506A8A71DCCCB5E00C18EC3 /* Pass.swift */,
+				856B0AAC1FA1D1260041C11E /* Match.swift */,
 				85E5D4CC1DD9EFBC003E2376 /* CurrentUser.swift */,
 				85E5D4CE1DD9FA41003E2376 /* Gender.swift */,
 				851CDBE71DDEF29900B887C0 /* Place.swift */,
@@ -410,6 +435,7 @@
 				85DC3D721DF70A6A00116159 /* Preferences.swift */,
 				8545A5FF1DDCDADC008F3DD2 /* GraphRequests */,
 				85DC3D7C1E0008B900116159 /* Album.swift */,
+				856B0AB01FA1D2970041C11E /* CommonEventInfo.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -585,8 +611,12 @@
 			children = (
 				8506A89F1DCC97F600C18EC3 /* CandidatesViewController.swift */,
 				85407D9F1DF03FD90033E696 /* CandidateOverlayView.xib */,
-				85407DA11DF040070033E696 /* CandidateCardView.xib */,
-				85407DA31DF042A00033E696 /* CandidateCardView.swift */,
+				85407DA11DF040070033E696 /* UserCardView.xib */,
+				85407DA31DF042A00033E696 /* UserCardView.swift */,
+				856B0A9C1FA0838F0041C11E /* CandidateCommonEventTableViewCell.swift */,
+				856B0A9D1FA0838F0041C11E /* CandidateCommonEventTableViewCell.xib */,
+				856B0AA01FA084730041C11E /* CandidateDescriptionTableViewCell.swift */,
+				856B0AA11FA084730041C11E /* CandidateDescriptionTableViewCell.xib */,
 			);
 			name = Candidates;
 			sourceTree = "<group>";
@@ -751,13 +781,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				85662CAA1F90BE2200D5701E /* CandidateCardView.xib in Resources */,
+				85662CAA1F90BE2200D5701E /* UserCardView.xib in Resources */,
 				85662CC91F90BE2200D5701E /* Main.storyboard in Resources */,
 				85662CCA1F90BE2200D5701E /* Assets.xcassets in Resources */,
 				8506A89B1DCC87A400C18EC3 /* EventsTableViewCell.xib in Resources */,
+				856B0A9F1FA0838F0041C11E /* CandidateCommonEventTableViewCell.xib in Resources */,
 				85685F761DEC7B69009BAEE0 /* SearchEventsResultsTableViewCell.xib in Resources */,
 				858FEE3D1E02A40C00322E8E /* AlbumsTableViewCell.xib in Resources */,
 				85512B191DCB5B020072C1B8 /* LaunchScreen.storyboard in Resources */,
+				856B0AA31FA084730041C11E /* CandidateDescriptionTableViewCell.xib in Resources */,
 				854DDABD1DE364D400655EFC /* MyEventsTableViewCell.xib in Resources */,
 				85662CCB1F90BE2200D5701E /* Info.plist in Resources */,
 				85662CA91F90BE2200D5701E /* CandidateOverlayView.xib in Resources */,
@@ -773,6 +805,7 @@
 				85662CE81F90BE2300D5701E /* LoginViewController.xib in Resources */,
 				85662C191F90BD7C00D5701E /* EventsTableViewCell.xib in Resources */,
 				85662C1D1F90BD7C00D5701E /* SearchEventsResultsTableViewCell.xib in Resources */,
+				856B0AA81FA084840041C11E /* CandidateCommonEventTableViewCell.xib in Resources */,
 				85662CD41F90BE2300D5701E /* CandidateOverlayView.xib in Resources */,
 				85662CF41F90BE2300D5701E /* Main.storyboard in Resources */,
 				85662D0B1F90E36500D5701E /* GoogleService-Info.plist in Resources */,
@@ -780,7 +813,8 @@
 				85662C531F90BDDD00D5701E /* AlbumsTableViewCell.xib in Resources */,
 				85662CF51F90BE2300D5701E /* Assets.xcassets in Resources */,
 				85662D081F90BFE800D5701E /* LaunchScreen.storyboard in Resources */,
-				85662CD51F90BE2300D5701E /* CandidateCardView.xib in Resources */,
+				856B0AA61FA0847F0041C11E /* CandidateDescriptionTableViewCell.xib in Resources */,
+				85662CD51F90BE2300D5701E /* UserCardView.xib in Resources */,
 				85662CF61F90BE2300D5701E /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -792,6 +826,7 @@
 				85662C961F90BE1300D5701E /* LoginViewController.xib in Resources */,
 				85662C4C1F90BDD900D5701E /* EventsTableViewCell.xib in Resources */,
 				85662C821F90BE1300D5701E /* CandidateOverlayView.xib in Resources */,
+				856B0AA91FA084850041C11E /* CandidateCommonEventTableViewCell.xib in Resources */,
 				85662CF71F90BE2400D5701E /* Main.storyboard in Resources */,
 				85662C4E1F90BDD900D5701E /* MyEventsTableViewCell.xib in Resources */,
 				85662C551F90BDDD00D5701E /* AlbumsTableViewCell.xib in Resources */,
@@ -799,7 +834,8 @@
 				85662CF81F90BE2400D5701E /* Assets.xcassets in Resources */,
 				85662D051F90BF8B00D5701E /* GoogleService-Info.plist in Resources */,
 				85662D091F90BFE900D5701E /* LaunchScreen.storyboard in Resources */,
-				85662C831F90BE1300D5701E /* CandidateCardView.xib in Resources */,
+				856B0AA71FA084800041C11E /* CandidateDescriptionTableViewCell.xib in Resources */,
+				85662C831F90BE1300D5701E /* UserCardView.xib in Resources */,
 				85662CF91F90BE2400D5701E /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1147,7 +1183,9 @@
 				854DDAC51DE47DE500655EFC /* User.swift in Sources */,
 				85662CC81F90BE2200D5701E /* Constants+Analytics.swift in Sources */,
 				85662CBA1F90BE2200D5701E /* AboutWebViewController.swift in Sources */,
+				856B0A9E1FA0838F0041C11E /* CandidateCommonEventTableViewCell.swift in Sources */,
 				85662CA71F90BE2200D5701E /* ExploreEventsViewController.swift in Sources */,
+				856B0AAD1FA1D1260041C11E /* Match.swift in Sources */,
 				858FEE421E02B5E600322E8E /* AlbumPhotosGraphRequest.swift in Sources */,
 				85662CA81F90BE2200D5701E /* CandidatesViewController.swift in Sources */,
 				85DC3D731DF70A6A00116159 /* Preferences.swift in Sources */,
@@ -1166,7 +1204,8 @@
 				85662CB41F90BE2200D5701E /* BioTableViewCell.swift in Sources */,
 				85EB2EE41DE20BCF00F0A55C /* Profile.swift in Sources */,
 				85662CC21F90BE2200D5701E /* ReachabilityAware.swift in Sources */,
-				85662CAB1F90BE2200D5701E /* CandidateCardView.swift in Sources */,
+				856B0AB11FA1D2970041C11E /* CommonEventInfo.swift in Sources */,
+				85662CAB1F90BE2200D5701E /* UserCardView.swift in Sources */,
 				85662CAF1F90BE2200D5701E /* SettingsViewController.swift in Sources */,
 				85662CC31F90BE2200D5701E /* Application.swift in Sources */,
 				85DC3D7D1E0008B900116159 /* Album.swift in Sources */,
@@ -1178,6 +1217,7 @@
 				85DC3D7B1E00088F00116159 /* UserAlbumsGraphRequest.swift in Sources */,
 				85662CC61F90BE2200D5701E /* Analytics.swift in Sources */,
 				8506A8A21DCCA61600C18EC3 /* Candidate.swift in Sources */,
+				856B0AA21FA084730041C11E /* CandidateDescriptionTableViewCell.swift in Sources */,
 				8506A8A81DCCCB5E00C18EC3 /* Pass.swift in Sources */,
 				85662CC41F90BE2200D5701E /* Notifier.swift in Sources */,
 				8506A8971DCBB0CC00C18EC3 /* Event.swift in Sources */,
@@ -1213,13 +1253,16 @@
 				85662CEB1F90BE2300D5701E /* NavigationController.swift in Sources */,
 				85662C0D1F90BD6500D5701E /* Place.swift in Sources */,
 				85662C121F90BD6500D5701E /* Preferences.swift in Sources */,
+				856B0AAA1FA084870041C11E /* CandidateCommonEventTableViewCell.swift in Sources */,
 				85662CF31F90BE2300D5701E /* Constants+Analytics.swift in Sources */,
 				85662CF01F90BE2300D5701E /* Constants.swift in Sources */,
+				856B0AAE1FA1D1260041C11E /* Match.swift in Sources */,
 				85662C081F90BD6500D5701E /* Like.swift in Sources */,
 				85662CDF1F90BE2300D5701E /* BioTableViewCell.swift in Sources */,
 				85662CD21F90BE2300D5701E /* ExploreEventsViewController.swift in Sources */,
 				85662CE01F90BE2300D5701E /* ProfilePhotoCollectionViewCell.swift in Sources */,
 				85662CE21F90BE2300D5701E /* PhotoCollectionViewController.swift in Sources */,
+				856B0AA41FA084760041C11E /* CandidateDescriptionTableViewCell.swift in Sources */,
 				85662C0E1F90BD6500D5701E /* Location.swift in Sources */,
 				85662C091F90BD6500D5701E /* Report.swift in Sources */,
 				8556C6341F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */,
@@ -1232,6 +1275,7 @@
 				85662CD31F90BE2300D5701E /* CandidatesViewController.swift in Sources */,
 				85662CD11F90BE2300D5701E /* SearchEventsViewController.swift in Sources */,
 				85662CEF1F90BE2300D5701E /* Notifier.swift in Sources */,
+				856B0AB21FA1D2970041C11E /* CommonEventInfo.swift in Sources */,
 				85662CE71F90BE2300D5701E /* LoginViewController.swift in Sources */,
 				85662CE61F90BE2300D5701E /* UserDetailsViewController.swift in Sources */,
 				85662CF11F90BE2300D5701E /* Analytics.swift in Sources */,
@@ -1241,7 +1285,7 @@
 				85662CE31F90BE2300D5701E /* AlbumPhotoCollectionViewCell.swift in Sources */,
 				85662C141F90BD7500D5701E /* SearchEventsGraphRequest.swift in Sources */,
 				85662C171F90BD7500D5701E /* Album.swift in Sources */,
-				85662CD61F90BE2300D5701E /* CandidateCardView.swift in Sources */,
+				85662CD61F90BE2300D5701E /* UserCardView.swift in Sources */,
 				85662CDD1F90BE2300D5701E /* RangeSlider.swift in Sources */,
 				85662CEA1F90BE2300D5701E /* ShowsSettingsButton.swift in Sources */,
 				85662C181F90BD7500D5701E /* CandidatesDelegate.swift in Sources */,
@@ -1280,13 +1324,16 @@
 				85662C991F90BE1300D5701E /* NavigationController.swift in Sources */,
 				85662C401F90BDD000D5701E /* Place.swift in Sources */,
 				85662C451F90BDD000D5701E /* Preferences.swift in Sources */,
+				856B0AAB1FA084880041C11E /* CandidateCommonEventTableViewCell.swift in Sources */,
 				85662CA11F90BE1300D5701E /* Constants+Analytics.swift in Sources */,
 				85662C9E1F90BE1300D5701E /* Constants.swift in Sources */,
+				856B0AAF1FA1D1260041C11E /* Match.swift in Sources */,
 				85662C3B1F90BDD000D5701E /* Like.swift in Sources */,
 				85662C8D1F90BE1300D5701E /* BioTableViewCell.swift in Sources */,
 				85662C801F90BE1300D5701E /* ExploreEventsViewController.swift in Sources */,
 				85662C8E1F90BE1300D5701E /* ProfilePhotoCollectionViewCell.swift in Sources */,
 				85662C901F90BE1300D5701E /* PhotoCollectionViewController.swift in Sources */,
+				856B0AA51FA084770041C11E /* CandidateDescriptionTableViewCell.swift in Sources */,
 				85662C411F90BDD000D5701E /* Location.swift in Sources */,
 				85662C3C1F90BDD000D5701E /* Report.swift in Sources */,
 				8556C6351F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */,
@@ -1299,6 +1346,7 @@
 				85662C811F90BE1300D5701E /* CandidatesViewController.swift in Sources */,
 				85662C7F1F90BE1300D5701E /* SearchEventsViewController.swift in Sources */,
 				85662C9D1F90BE1300D5701E /* Notifier.swift in Sources */,
+				856B0AB31FA1D2970041C11E /* CommonEventInfo.swift in Sources */,
 				85662C951F90BE1300D5701E /* LoginViewController.swift in Sources */,
 				85662C941F90BE1300D5701E /* UserDetailsViewController.swift in Sources */,
 				85662C9F1F90BE1300D5701E /* Analytics.swift in Sources */,
@@ -1308,7 +1356,7 @@
 				85662C911F90BE1300D5701E /* AlbumPhotoCollectionViewCell.swift in Sources */,
 				85662C471F90BDD400D5701E /* SearchEventsGraphRequest.swift in Sources */,
 				85662C4A1F90BDD400D5701E /* Album.swift in Sources */,
-				85662C841F90BE1300D5701E /* CandidateCardView.swift in Sources */,
+				85662C841F90BE1300D5701E /* UserCardView.swift in Sources */,
 				85662C8B1F90BE1300D5701E /* RangeSlider.swift in Sources */,
 				85662C981F90BE1300D5701E /* ShowsSettingsButton.swift in Sources */,
 				85662C4B1F90BDD400D5701E /* CandidatesDelegate.swift in Sources */,
@@ -1535,8 +1583,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.tastyelectrons.woojo;
 				PRODUCT_MODULE_NAME = Woojo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1151e18d-be74-446f-ad6d-e3cf193cf693";
-				PROVISIONING_PROFILE_SPECIFIER = "Tasty Electrons Distribution";
+				PROVISIONING_PROFILE = "844e158a-0bbe-47c3-8e25-c3acce109188";
+				PROVISIONING_PROFILE_SPECIFIER = "Tasty Electrons Ad Hoc";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

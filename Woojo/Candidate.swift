@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseDatabase
 import FirebaseStorage
+import SDWebImage
 
 extension CurrentUser {
     
@@ -38,7 +39,6 @@ extension CurrentUser {
             self.user = user
             for item in snapshot.childSnapshot(forPath: Constants.User.Candidate.properties.firebaseNodes.events).children {
                 if let commonEventInfoSnap = item as? DataSnapshot {
-                    print("COMMON EVENT", commonEventInfoSnap)
                     self.commonEventInfos.append(CommonEventInfo(snapshot: commonEventInfoSnap))
                 }
             }
@@ -68,36 +68,6 @@ extension CurrentUser {
                     print("Failed to remove candidate: \(error)")
                 }
                 completion?(error)
-            }
-        }
-        
-        class CommonEventInfo {
-            
-            var rsvpStatus = Event.RSVP.unsure
-            var name = "a common event"
-            
-            var displayString: String {
-                get {
-                    var rsvpString: String
-                    switch rsvpStatus {
-                    case .attending:
-                        rsvpString = "Going to"
-                    case .unsure:
-                        rsvpString = "Interested in"
-                    case .notReplied:
-                        rsvpString = "Invited to"
-                    }
-                    return "\(rsvpString) \(name)"
-                }
-            }
-            
-            init(snapshot: DataSnapshot) {
-                if let name = snapshot.childSnapshot(forPath: Constants.User.Candidate.CommonEventInfo.firebaseNodes.name).value as? String {
-                    self.name = name
-                }
-                if let rsvpStatus = snapshot.childSnapshot(forPath: Constants.User.Candidate.CommonEventInfo.firebaseNodes.rsvpStatus).value as? String {
-                    self.rsvpStatus = Event.RSVP(rawValue: rsvpStatus) ?? Event.RSVP.unsure
-                }
             }
         }
         

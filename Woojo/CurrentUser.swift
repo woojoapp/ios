@@ -371,7 +371,6 @@ class CurrentUser: User {
     }
     
     func getEventsFromFacebook(completion: @escaping (([Event]) -> Void)) {
-        print("GETTING EVENTS FROM FACEBOOK")
         var eventsAttendingOrUnsure: [Event] = []
         var eventsNotReplied: [Event] = []
         if AccessToken.current != nil {

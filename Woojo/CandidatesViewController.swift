@@ -221,7 +221,7 @@ extension CandidatesViewController: KolodaViewDelegate {
     }
     
     func koloda(_ koloda: KolodaView, didSelectCardAt index: Int) {
-        if let userDetailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserDetailsViewController") as? UserDetailsViewController {
+        /*if let userDetailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserDetailsViewController") as? UserDetailsViewController {
             if let candidate = User.current.value?.candidates[index] {
                 userDetailsViewController.user = candidate
                 userDetailsViewController.candidatesViewController = self
@@ -230,6 +230,13 @@ extension CandidatesViewController: KolodaViewDelegate {
                     let analyticsEventParameters = [Constants.Analytics.Events.CandidateDetailsDisplayed.Parameters.uid: uid]
                     Analytics.Log(event: Constants.Analytics.Events.CandidateDetailsDisplayed.name, with: analyticsEventParameters)
                 }
+            }
+        }*/
+        if let cardView = kolodaView.viewForCard(at: index) as? UserCardView {
+            if cardView.isShowingDescription {
+                cardView.hideDescription()
+            } else {
+                cardView.showDescription()
             }
         }
     }
@@ -249,43 +256,15 @@ extension CandidatesViewController: KolodaViewDataSource {
     }
     
     func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
-        
-        let cardView = CandidateCardView(frame: CGRect.zero)
-        if let count = User.current.value?.candidates.count, index >= count {
-            cardView.nameLabel.text = "Index out of range"
-            return cardView
+        let cardView = UserCardView(frame: CGRect.zero)
+        cardView.setRoundedCornersAndShadow()
+        cardView.user = User.current.value?.candidates[index]
+        if let commonEventInfos = User.current.value?.candidates[index].commonEventInfos {
+            cardView.commonEventInfos = commonEventInfos
         }
-        if let candidate = User.current.value?.candidates[index], let name = candidate.profile.displayName {
-            cardView.nameLabel.text = "\(name), \(candidate.profile.age)"
-            cardView.firstCommonEventLabel.text = candidate.commonEventInfos.first?.displayString
-            if candidate.commonEventInfos.count > 1 {
-                let eventString = (candidate.commonEventInfos.count > 2) ? "events" : "event"
-                cardView.additionalCommonEventsLabel.text = "+\(candidate.commonEventInfos.count - 1) more common \(eventString)"
-            }
-            
-            func setImage(image: UIImage?) {
-                DispatchQueue.main.async {
-                    cardView.imageView.image = image
-                    if let reachable = self.isReachable(), reachable, index == 0 {
-                        self.showKolodaAndHideLoading()
-                    }
-                }
-            }
-            
-            DispatchQueue.global(qos: .userInitiated).async {
-                if let photo = candidate.profile.photos.value[0] {
-                    if let fullImage = photo.images[.full] {
-                        setImage(image: fullImage)
-                    } else {
-                        photo.download {
-                            setImage(image: photo.images[.full])
-                        }
-                    }
-                } else {
-                    print("No photo")
-                    self.showKolodaAndHideLoading()
-                }
-            }
+        cardView.candidatesViewController = self
+        cardView.load {
+            self.showKolodaAndHideLoading()
         }
         return cardView
     }
