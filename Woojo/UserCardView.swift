@@ -187,7 +187,7 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
         
         self.tableView.frame = CGRect(x: 0.0, y: self.detailsView.frame.maxY, width: self.view.frame.width, height: self.view.frame.maxY - self.detailsView.frame.maxY)
         
-        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.8)
     }
     
     func showDescription() {
@@ -305,7 +305,7 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
         } else if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "descriptionCell", for: indexPath)
             if let user = user {
-                cell.textLabel?.text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."//user.profile.description.value
+                cell.textLabel?.text = user.profile.description.value
             }
             return cell
         }

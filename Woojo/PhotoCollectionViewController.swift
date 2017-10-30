@@ -21,6 +21,11 @@ class PhotoCollectionViewController: UICollectionViewController {
     var profileViewController: ProfileViewController?
     var reachabilityObserver: AnyObject?
     
+    //@IBOutlet weak var tipView: UIView!
+    //@IBOutlet weak var dismissTipButton: UIButton!
+    //let tipId = "bigEnoughPhotos"
+    //let headerId = "photosHeader"
+    
     // Photo collection view properties
     fileprivate let reuseIdentifier = "photoCell"
     fileprivate let itemsPerRow: CGFloat = 3
@@ -42,6 +47,11 @@ class PhotoCollectionViewController: UICollectionViewController {
         collectionView?.emptyDataSetSource = self
         collectionView?.emptyDataSetDelegate = self
         
+        //collectionView?.register(UINib(nibName: "HeaderTipCollectionReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+        
+        /*let imageView = UIImageView(image: #imageLiteral(resourceName: "close"))
+        imageView.frame = CGRect(x: dismissTipButton.frame.width/2.0, y: dismissTipButton.frame.height/2.0, width: 10, height: 10)
+        dismissTipButton.addSubview(imageView)*/
         //loadAlbumPhotos()
     }
 
@@ -74,6 +84,15 @@ class PhotoCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photos.count
     }
+    
+    /*override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath)
+        return headerView
+    }*/
+    
+    /*func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: self.view.frame.width, height: 106.0)
+    }*/
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! AlbumPhotoCollectionViewCell
@@ -94,6 +113,9 @@ class PhotoCollectionViewController: UICollectionViewController {
                                completed: { image, _, _, _, _ in
                                 if let image = image {
                                     cell.progressIndicator.isHidden = true
+                                    /*if !self.photos[indexPath.row].isBigEnough(size: .full) {
+                                        cell.alpha = 0.3
+                                    }*/
                                     cell.imageView.image = image
                                 }
                 }
@@ -105,6 +127,9 @@ class PhotoCollectionViewController: UICollectionViewController {
     // MARK: UICollectionViewDelegate
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        /*if !photos[indexPath.row].isBigEnough(size: .full) {
+            return
+        }*/
         if let image = photos[indexPath.row].getBiggestImage(), let url = image.url {
             do {
                 let data = try Data(contentsOf: url)

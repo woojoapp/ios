@@ -23,8 +23,8 @@ import UserNotifications
 class CandidatesViewController: UIViewController {
     
     @IBOutlet weak var kolodaView: KolodaView!
-    @IBOutlet weak var likeButton: DOFavoriteButton!
-    @IBOutlet weak var passButton: DOFavoriteButton!
+    //@IBOutlet weak var likeButton: DOFavoriteButton!
+    //@IBOutlet weak var passButton: DOFavoriteButton!
     @IBOutlet weak var loadingContainerView: UIView!
     @IBOutlet weak var loadingView: RPCircularProgress!
     
@@ -37,7 +37,7 @@ class CandidatesViewController: UIViewController {
     
     let buttonsBackgroundColor = UIColor.black.withAlphaComponent(0.3)
     
-    @IBAction func likePressed(_ sender: DOFavoriteButton) {
+    /*@IBAction func likePressed(_ sender: DOFavoriteButton) {
         likeButton.select()
         set(button: passButton, enabled: false)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
@@ -63,7 +63,7 @@ class CandidatesViewController: UIViewController {
             }
             self.kolodaView?.swipe(.left)
         })
-    }
+    }*/
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,13 +76,13 @@ class CandidatesViewController: UIViewController {
         kolodaView.dataSource = self
         kolodaView.delegate = self
         
-        likeButton.layer.cornerRadius = likeButton.frame.width / 2
+        /*likeButton.layer.cornerRadius = likeButton.frame.width / 2
         likeButton.layer.masksToBounds = true
         set(button: likeButton, enabled: false)
         
         passButton.layer.cornerRadius = passButton.frame.width / 2
         passButton.layer.masksToBounds = true
-        set(button: passButton, enabled: false)
+        set(button: passButton, enabled: false)*/
         
         self.view.bringSubview(toFront: kolodaView)
     }
@@ -99,7 +99,6 @@ class CandidatesViewController: UIViewController {
         loadingContainerView.layer.cornerRadius = 24.0
         
         loadingView.layer.borderColor = UIColor.lightGray.cgColor
-        loadingView.layer.cornerRadius = loadingView.frame.size.width / 2
         loadingView.layer.masksToBounds = true
         loadingView.layer.borderWidth = 1.0
         
@@ -112,6 +111,11 @@ class CandidatesViewController: UIViewController {
         checkReachability()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        loadingView.layer.cornerRadius = loadingView.frame.size.width / 2
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         stopMonitoringReachability()
@@ -120,23 +124,23 @@ class CandidatesViewController: UIViewController {
     func hideKolodaAndShowLoading() {
         kolodaView.isHidden = true
         loadingContainerView.isHidden = false
-        set(button: likeButton, enabled: false)
-        set(button: passButton, enabled: false)
+        //set(button: likeButton, enabled: false)
+        //set(button: passButton, enabled: false)
     }
     
     func showKolodaAndHideLoading() {
         kolodaView.isHidden = false
         loadingContainerView.isHidden = true
-        set(button: likeButton, enabled: true)
-        set(button: passButton, enabled: true)
-        likeButton.deselect()
-        passButton.deselect()
+        //set(button: likeButton, enabled: true)
+        //set(button: passButton, enabled: true)
+        //likeButton.deselect()
+        //passButton.deselect()
     }
     
-    func set(button: UIButton, enabled: Bool) {
+    /*func set(button: UIButton, enabled: Bool) {
         button.isEnabled = enabled
         button.alpha = (enabled) ? 1.0 : 0.3
-    }
+    }*/
     
     func showPushNotificationsInvite() {
         let pushNotificationsInvite = UIAlertController(title: "Push notifications", message: "Would you like to get push notifications when you match or receive messages?\n\nYou can also manage this behavior later from the Settings screen.", preferredStyle: .alert)
@@ -163,41 +167,41 @@ extension CandidatesViewController: KolodaViewDelegate {
         switch direction {
         case .left:
             User.current.value?.candidates[index].pass()
-            if !passButton.isSelected {
-                passButton.select()
-                set(button: likeButton, enabled: false)
+            //if !passButton.isSelected {
+                //passButton.select()
+                //set(button: likeButton, enabled: false)
                 if let uid = User.current.value?.candidates[index].uid {
                     let analyticsEventParameters = [Constants.Analytics.Events.CandidatePassed.Parameters.uid: uid,
                                                     Constants.Analytics.Events.CandidatePassed.Parameters.type: "swipe",
                                                     Constants.Analytics.Events.CandidatePassed.Parameters.screen: String(describing: type(of: self))]
                     Analytics.Log(event: Constants.Analytics.Events.CandidatePassed.name, with: analyticsEventParameters)
                 }
-            }
+            //}
         case .right:
             User.current.value?.candidates[index].like()
             if User.current.value?.activity.repliedToPushNotificationsInvite == nil {
                 self.showPushNotificationsInvite()
             }
-            if !likeButton.isSelected {
-                likeButton.select()
-                set(button: passButton, enabled: false)
+            //if !likeButton.isSelected {
+                //likeButton.select()
+                //set(button: passButton, enabled: false)
                 if let uid = User.current.value?.candidates[index].uid {
                     let analyticsEventParameters = [Constants.Analytics.Events.CandidateLiked.Parameters.uid: uid,
                                                     Constants.Analytics.Events.CandidateLiked.Parameters.type: "swipe",
                                                     Constants.Analytics.Events.CandidateLiked.Parameters.screen: String(describing: type(of: self))]
                     Analytics.Log(event: Constants.Analytics.Events.CandidateLiked.name, with: analyticsEventParameters)
                 }
-            }
+            //}
         default: break
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+        /*DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
             self.likeButton.deselect()
             self.passButton.deselect()
             if !self.ranOutOfCards {
                 self.set(button: self.likeButton, enabled: true)
                 self.set(button: self.passButton, enabled: true)
             }
-        })
+        })*/
         User.current.value?.candidates.remove(at: index)
         kolodaView.removeCardInIndexRange(index..<index, animated: false)
         kolodaView.currentCardIndex = 0

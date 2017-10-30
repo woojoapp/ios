@@ -22,7 +22,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SwX-cu-L3p">
-                        <rect key="frame" x="56" y="14.5" width="33" height="16"/>
+                        <rect key="frame" x="56" y="14.5" width="256" height="16"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -36,6 +36,7 @@
                     </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="SwX-cu-L3p" secondAttribute="trailing" constant="8" id="Ezk-bi-b7t"/>
                     <constraint firstItem="tWk-Rk-rPP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="JxH-4A-iJ3"/>
                     <constraint firstItem="SwX-cu-L3p" firstAttribute="leading" secondItem="tWk-Rk-rPP" secondAttribute="trailing" constant="8" id="MJQ-P0-6TU"/>
                     <constraint firstItem="tWk-Rk-rPP" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ptv-RM-PEh"/>

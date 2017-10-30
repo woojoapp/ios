@@ -122,9 +122,15 @@ extension CurrentUser {
         
         func setDisplayed(completion: ((Error?) -> Void)? = nil) {
             self.displayed = true
-            ref.child(Constants.User.Notification.properties.firebaseNodes.displayed).setValue(self.displayed, withCompletionBlock: { error, ref in
-                completion?(error)
-            })
+            ref.observe(.value, with: { (snapshot) in
+                if snapshot.exists() {
+                    snapshot.ref.child(Constants.User.Notification.properties.firebaseNodes.displayed).setValue(self.displayed, withCompletionBlock: { error, ref in
+                        completion?(error)
+                    })
+                } else {
+                    completion?(nil)
+                }
+            }, withCancel: nil)
         }
         
         func delete(completion: ((Error?) -> Void)? = nil) {

@@ -68,37 +68,57 @@ class UserDetailsViewController: UIViewController {
     @IBAction func showOptions() {
         optionsButton.select()
         let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let closeButton = UIAlertAction(title: "Close", style: .default, handler: { (action) -> Void in
+            self.dismiss(sender: self)
+        })
         let unmatchButton = UIAlertAction(title: "Unmatch", style: .destructive, handler: { (action) -> Void in
-            HUD.show(.labeledProgress(title: "Unmatch", subtitle: "Unmatching..."), onView: self.parent?.view)
-            self.user?.unmatch { error in
-                if let error = error {
-                    HUD.show(.labeledError(title: "Unmatch", subtitle: "Failed to unmatch"), onView: self.parent?.view)
-                    print("Failed to unmatch", error)
-                    HUD.hide(afterDelay: 1.0)
-                } else {
-                    HUD.show(.labeledSuccess(title: "Unmatch", subtitle: "Unmatched!"), onView: self.parent?.view)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-                        self.dismiss(sender: self)
-                    })
+            let confirmController = UIAlertController(title: "Unmatch", message: "Confirm unmatch?", preferredStyle: .alert)
+            let confirmAction = UIAlertAction(title: "Unmatch", style: .destructive, handler: { (_) in
+                HUD.show(.labeledProgress(title: "Unmatch", subtitle: "Unmatching..."), onView: self.parent?.view)
+                self.user?.unmatch { error in
+                    if let error = error {
+                        HUD.show(.labeledError(title: "Unmatch", subtitle: "Failed to unmatch"), onView: self.parent?.view)
+                        print("Failed to unmatch", error)
+                        HUD.hide(afterDelay: 1.0)
+                    } else {
+                        HUD.show(.labeledSuccess(title: "Unmatch", subtitle: "Unmatched!"), onView: self.parent?.view)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                            self.dismiss(sender: self)
+                        })
+                    }
                 }
-            }
-            // Don't forget to remove images from cache
+                // Don't forget to remove images from cache
+            })
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            confirmController.addAction(cancelAction)
+            confirmController.addAction(confirmAction)
+            confirmController.popoverPresentationController?.sourceView = self.view
+            self.present(confirmController, animated: true, completion: nil)
         })
         let reportButton = UIAlertAction(title: "Unmatch & report", style: .destructive, handler: { (action) -> Void in
-            HUD.show(.labeledProgress(title: "Unmatch & report", subtitle: "Unmatching and reporting..."), onView: self.parent?.view)
-            self.user?.report(message: nil) { error in
-                if let error = error {
-                    HUD.show(.labeledError(title: "Unmatch & report", subtitle: "Failed to unmatch and report"), onView: self.parent?.view)
-                    print("Failed to unmatch and report", error)
-                    HUD.hide(afterDelay: 1.0)
-                } else {
-                    HUD.show(.labeledSuccess(title: "Unmatch & report", subtitle: "Done!"), onView: self.parent?.view)
-                    self.dismiss(sender: self)
-                    self.chatViewController?.conversationDeleted()
+            let confirmController = UIAlertController(title: "Unmatch & report", message: "Confirm unmatch and report?", preferredStyle: .alert)
+            let confirmAction = UIAlertAction(title: "Unmatch & report", style: .destructive, handler: { (_) in
+                HUD.show(.labeledProgress(title: "Unmatch & report", subtitle: "Unmatching and reporting..."), onView: self.parent?.view)
+                self.user?.report(message: nil) { error in
+                    if let error = error {
+                        HUD.show(.labeledError(title: "Unmatch & report", subtitle: "Failed to unmatch and report"), onView: self.parent?.view)
+                        print("Failed to unmatch and report", error)
+                        HUD.hide(afterDelay: 1.0)
+                    } else {
+                        HUD.show(.labeledSuccess(title: "Unmatch & report", subtitle: "Done!"), onView: self.parent?.view)
+                        self.dismiss(sender: self)
+                        self.chatViewController?.conversationDeleted()
+                    }
                 }
-            }
+            })
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            confirmController.addAction(cancelAction)
+            confirmController.addAction(confirmAction)
+            confirmController.popoverPresentationController?.sourceView = self.view
+            self.present(confirmController, animated: true, completion: nil)
         })
         let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        actionSheetController.addAction(closeButton)
         actionSheetController.addAction(unmatchButton)
         actionSheetController.addAction(reportButton)
         actionSheetController.addAction(cancelButton)
@@ -131,6 +151,8 @@ class UserDetailsViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
+        optionsButton.layer.cornerRadius = optionsButton.frame.width / 2
+        optionsButton.layer.masksToBounds = true
         /*closeButton.layer.masksToBounds = true
         closeButton.layer.cornerRadius = 5.0
         closeButton.layer.backgroundColor = UIColor(colorLiteralRed: 0.0, green: 0.0, blue: 0.0, alpha: 0.5).cgColor

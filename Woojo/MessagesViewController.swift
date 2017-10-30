@@ -12,7 +12,7 @@ import FirebaseAuth
 import RxSwift
 import PKHUD
 
-class MessagesViewController: ALMessagesViewController, ShowsSettingsButton/*, UITableViewDelegate*/ {
+class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIGestureRecognizerDelegate/*, UITableViewDelegate*/ {
     
     var disposeBag = DisposeBag()
     
@@ -21,8 +21,6 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton/*, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        //mTableView.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -53,6 +51,9 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton/*, U
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.newMessageReceived), name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(enteredForeground), name: NSNotification.Name(rawValue: "APP_ENTER_IN_FOREGROUND"), object: nil)
+        
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
         reloadData()
     }
@@ -108,7 +109,7 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton/*, U
         print("MESSSAAAGEGE FROM MessagesViewController")
     }
     
-    /*func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
+    func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
         let unmatch = UITableViewRowAction(style: .destructive, title: "Unmatch") { action, index in
             if let cell = tableView.cellForRow(at: editActionsForRowAt) as? ALContactCell {
                 
@@ -129,6 +130,6 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton/*, U
         }
         
         return []
-    }*/
+    }
     
 }

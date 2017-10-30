@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0D9CE390A23EE87EE51E48F7 /* Pods_Woojo_Development.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A2EC49C5603EE727058B9CF /* Pods_Woojo_Development.framework */; };
+		8501BD731FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8501BD711FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift */; };
+		8501BD741FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8501BD711FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift */; };
+		8501BD751FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8501BD711FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift */; };
+		8501BD761FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8501BD721FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib */; };
+		8501BD771FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8501BD721FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib */; };
+		8501BD781FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8501BD721FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib */; };
 		8506A8971DCBB0CC00C18EC3 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8961DCBB0CC00C18EC3 /* Event.swift */; };
 		8506A8991DCBB9C000C18EC3 /* EventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8981DCBB9C000C18EC3 /* EventsTableViewCell.swift */; };
 		8506A89B1DCC87A400C18EC3 /* EventsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8506A89A1DCC87A400C18EC3 /* EventsTableViewCell.xib */; };
@@ -17,6 +23,7 @@
 		851CDBE61DDEF18A00B887C0 /* UserEventsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851CDBE51DDEF18A00B887C0 /* UserEventsGraphRequest.swift */; };
 		851CDBE81DDEF29900B887C0 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851CDBE71DDEF29900B887C0 /* Place.swift */; };
 		851CDBEA1DDEF2B100B887C0 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851CDBE91DDEF2B100B887C0 /* Location.swift */; };
+		8526EF601FA60062003B04DF /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85DD5EEC1E954C4A008DF346 /* AdSupport.framework */; };
 		85382E881F94B880003909D7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85382E871F94B87E003909D7 /* GoogleService-Info.plist */; };
 		85396F271E5F10EA007EDB18 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85396F261E5F10EA007EDB18 /* Notification.swift */; };
 		854DDABD1DE364D400655EFC /* MyEventsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 854DDABC1DE364D400655EFC /* MyEventsTableViewCell.xib */; };
@@ -252,6 +259,8 @@
 		2257588A92E58573D363F2E5 /* Pods-Woojo Development.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Woojo Development.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Woojo Development/Pods-Woojo Development.debug.xcconfig"; sourceTree = "<group>"; };
 		23E464082BF74BB81F3867C9 /* Pods_Woojo_Staging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Woojo_Staging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32E6FF74A7C48F63461EEAC3 /* Pods-Woojo Staging.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Woojo Staging.release.xcconfig"; path = "Pods/Target Support Files/Pods-Woojo Staging/Pods-Woojo Staging.release.xcconfig"; sourceTree = "<group>"; };
+		8501BD711FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTipCollectionReusableView.swift; sourceTree = "<group>"; };
+		8501BD721FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderTipCollectionReusableView.xib; sourceTree = "<group>"; };
 		8506A88C1DCB9A5D00C18EC3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		8506A8941DCBA14C00C18EC3 /* EventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		8506A8961DCBB0CC00C18EC3 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -351,6 +360,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8526EF601FA60062003B04DF /* AdSupport.framework in Frameworks */,
 				D4A39FA7A6A90074E8ADF2B7 /* Pods_Woojo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -571,6 +581,8 @@
 				858FEE361E0025A400322E8E /* AlbumsTableViewController.swift */,
 				858FEE3F1E02ACF400322E8E /* PhotoCollectionViewController.swift */,
 				858FEE431E04250B00322E8E /* AlbumPhotoCollectionViewCell.swift */,
+				8501BD711FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift */,
+				8501BD721FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib */,
 			);
 			name = Photos;
 			sourceTree = "<group>";
@@ -794,6 +806,7 @@
 				85662CCB1F90BE2200D5701E /* Info.plist in Resources */,
 				85662CA91F90BE2200D5701E /* CandidateOverlayView.xib in Resources */,
 				85382E881F94B880003909D7 /* GoogleService-Info.plist in Resources */,
+				8501BD761FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib in Resources */,
 				85662CBD1F90BE2200D5701E /* LoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -815,6 +828,7 @@
 				85662D081F90BFE800D5701E /* LaunchScreen.storyboard in Resources */,
 				856B0AA61FA0847F0041C11E /* CandidateDescriptionTableViewCell.xib in Resources */,
 				85662CD51F90BE2300D5701E /* UserCardView.xib in Resources */,
+				8501BD771FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib in Resources */,
 				85662CF61F90BE2300D5701E /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -836,6 +850,7 @@
 				85662D091F90BFE900D5701E /* LaunchScreen.storyboard in Resources */,
 				856B0AA71FA084800041C11E /* CandidateDescriptionTableViewCell.xib in Resources */,
 				85662C831F90BE1300D5701E /* UserCardView.xib in Resources */,
+				8501BD781FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib in Resources */,
 				85662CF91F90BE2400D5701E /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1199,6 +1214,7 @@
 				85685F741DEC7833009BAEE0 /* SearchEventsGraphRequest.swift in Sources */,
 				858FEE3C1E02A40C00322E8E /* AlbumsTableViewCell.swift in Sources */,
 				851CDBEA1DDEF2B100B887C0 /* Location.swift in Sources */,
+				8501BD731FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift in Sources */,
 				85662CAE1F90BE2200D5701E /* MessagesViewController.swift in Sources */,
 				85662CB91F90BE2200D5701E /* AboutTableViewController.swift in Sources */,
 				85662CB41F90BE2200D5701E /* BioTableViewCell.swift in Sources */,
@@ -1270,6 +1286,7 @@
 				85662CDE1F90BE2300D5701E /* ProfileViewController.swift in Sources */,
 				85662C051F90BD6500D5701E /* Activity.swift in Sources */,
 				85662CF21F90BE2300D5701E /* Constants+App.swift in Sources */,
+				8501BD741FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift in Sources */,
 				85662C071F90BD6500D5701E /* Candidate.swift in Sources */,
 				85662C0F1F90BD6500D5701E /* Notification.swift in Sources */,
 				85662CD31F90BE2300D5701E /* CandidatesViewController.swift in Sources */,
@@ -1341,6 +1358,7 @@
 				85662C8C1F90BE1300D5701E /* ProfileViewController.swift in Sources */,
 				85662C381F90BDD000D5701E /* Activity.swift in Sources */,
 				85662CA01F90BE1300D5701E /* Constants+App.swift in Sources */,
+				8501BD751FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift in Sources */,
 				85662C3A1F90BDD000D5701E /* Candidate.swift in Sources */,
 				85662C421F90BDD000D5701E /* Notification.swift in Sources */,
 				85662C811F90BE1300D5701E /* CandidatesViewController.swift in Sources */,
@@ -1583,8 +1601,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.tastyelectrons.woojo;
 				PRODUCT_MODULE_NAME = Woojo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "844e158a-0bbe-47c3-8e25-c3acce109188";
-				PROVISIONING_PROFILE_SPECIFIER = "Tasty Electrons Ad Hoc";
+				PROVISIONING_PROFILE = "1151e18d-be74-446f-ad6d-e3cf193cf693";
+				PROVISIONING_PROFILE_SPECIFIER = "Tasty Electrons Distribution";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

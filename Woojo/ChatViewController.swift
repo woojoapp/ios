@@ -14,7 +14,7 @@ import RxSwift
 import RxCocoa
 import FirebaseDatabase
 
-class ChatViewController: ALChatViewController {
+class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var loadEarlierAction: UIButton!
     @IBOutlet weak var loadEarlierActionTopConstraint: NSLayoutConstraint!
@@ -129,6 +129,8 @@ class ChatViewController: ALChatViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        
         self.doRefresh()
         
         loadEarlierAction.backgroundColor = translucentColor
@@ -163,8 +165,7 @@ class ChatViewController: ALChatViewController {
         self.unwireUnmatchObserver()
     }
     
-    func newMessage() {
-        print("MESSAGE RECEIVEDDDDDDD")
+    func newMessage() {        
         scrollTableViewToBottom(withAnimation: true)
         CurrentUser.Notification.deleteAll(otherId: self.contactIds)
     }
