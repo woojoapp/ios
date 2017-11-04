@@ -82,7 +82,6 @@ class MyEventsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        
         if events.count > 0 {
             return 1
         } else {

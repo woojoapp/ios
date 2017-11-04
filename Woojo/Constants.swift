@@ -9,6 +9,22 @@
 import Foundation
 
 struct Constants {
+    struct Request {
+        static let firebaseNode = "requests"
+        struct Properties {
+            static let type = "type"
+            static let uid = "uid"
+        }
+    }
+    
+    struct Response {
+        static let firebaseNode = "responses"
+        struct Properties {
+            static let type = "type"
+            static let uid = "uid"
+            static let data =  "data"
+        }
+    }
     
     struct User {
         static let firebaseNode = "users"
@@ -99,6 +115,16 @@ struct Constants {
                 }
             }
         }
+        
+        struct Recommendations {
+            static let firebaseNode = "recommendations"
+            struct properties {
+                struct events {
+                    static let firebaseNode = "events"
+                }
+            }
+        }
+        
         struct Preferences {
             static let firebaseNode = "preferences"
             struct properties {
@@ -225,7 +251,9 @@ struct Constants {
                 static let start = "start_time"
                 static let end = "end_time"
                 static let pictureURL = "picture_url"
+                static let coverURL = "cover_url"
                 static let description = "description"
+                static let attendingCount = "attending_count"
             }
             struct graphAPIKeys {
                 static let id = "id"
@@ -236,6 +264,8 @@ struct Constants {
                 static let picture = "picture"
                 static let pictureData = "data"
                 static let pictureDataURL = "url"
+                static let cover = "cover"
+                static let coverSource = "source"
                 static let description = "description"
                 static let attendingCount = "attending_count"
                 static let rsvpStatus = "rsvp_status"
@@ -301,6 +331,7 @@ struct Constants {
         struct UserEvents {
             static let path = "/me/events"
             static let fieldPictureUrl = "picture.type(normal){url}"
+            static let fieldCoverSource = "cover{source}"
             struct keys {
                 static let data = "data"
             }

@@ -19,6 +19,7 @@ class Event {
     var end: Date?
     var place: Place?
     var pictureURL: URL?
+    var coverURL: URL?
     var description: String?
     var attendingCount: Int?
     var rsvpStatus: String = "unsure"
@@ -68,8 +69,14 @@ extension Event {
             if let pictureURLString = value[Constants.Event.properties.firebaseNodes.pictureURL] as? String {
                 event.pictureURL = URL(string: pictureURLString)
             }
+            if let coverURLString = value[Constants.Event.properties.firebaseNodes.coverURL] as? String {
+                event.coverURL = URL(string: coverURLString)
+            }
             if let endTimeString = value[Constants.Event.properties.firebaseNodes.end] as? String {
                 event.end = Event.dateFormatter.date(from: endTimeString)
+            }
+            if let attendingCount = value[Constants.Event.properties.firebaseNodes.attendingCount] as? Int {
+                event.attendingCount = attendingCount
             }
             event.place = Place.from(firebase: snapshot.childSnapshot(forPath: Constants.Event.Place.firebaseNode))
             return event
@@ -100,6 +107,11 @@ extension Event {
                     }
                 }
             }
+            if let cover = dict[Constants.Event.properties.graphAPIKeys.cover] as? [String:Any] {
+                if let coverSource = cover[Constants.Event.properties.graphAPIKeys.coverSource] as? String {
+                    event.coverURL = URL(string: coverSource)
+                }
+            }
             event.place = Place.from(graphAPI: dict[Constants.Event.Place.graphAPIKey] as? [String:Any])
             if let attendingCount = dict[Constants.Event.properties.graphAPIKeys.attendingCount] as? Int {
                 event.attendingCount = attendingCount
@@ -126,6 +138,7 @@ extension Event {
         }
         dict[Constants.Event.properties.firebaseNodes.description] = self.description
         dict[Constants.Event.properties.firebaseNodes.pictureURL] = self.pictureURL?.absoluteString
+        dict[Constants.Event.properties.firebaseNodes.coverURL] = self.coverURL?.absoluteString
         dict[Constants.Event.properties.firebaseNodes.place] = self.place?.toDictionary()
         return dict
     }
@@ -167,5 +180,7 @@ extension Event {
         case attending
         case unsure
         case notReplied = "not_replied"
+        case iWasRecommendedOthers = "i_was_recommended_others"
+        case otherWasRecommendedMine = "other_was_recommended_mine"
     }
 }

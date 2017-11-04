@@ -8,6 +8,7 @@
 
 import UIKit
 import ImageSlideshow
+import DZNEmptyDataSet
 
 class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
     var view: UIView!
@@ -20,6 +21,7 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     //@IBOutlet var imageView: UIImageView!
     @IBOutlet var detailsView: UIView!
+    @IBOutlet var eventImageView: UIImageView!
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var centerNameLabel: UILabel!
     @IBOutlet var firstCommonEventLabel: UILabel!
@@ -76,6 +78,8 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
         carouselView.draggingEnabled = false
         carouselView.pageControlPosition = .hidden
         carouselView.scrollView.bounces = false
+        //carouselView.layer.borderWidth = 1.0
+        //carouselView.layer.borderColor = .wh
         
         previousPhotoImageView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: self.previousPhotoButton.frame.width, height: self.previousPhotoButton.frame.height))
         previousPhotoImageView?.contentMode = .scaleAspectFill
@@ -107,7 +111,24 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
         if let user = user {
             nameLabel.text = user.profile.displaySummary
             centerNameLabel.text = user.profile.displaySummary
-            firstCommonEventLabel.text = commonEventInfos.first?.displayString
+            firstCommonEventLabel.text = commonEventInfos.first?.name
+            
+            if commonEventInfos.count > 0 {
+                Event.get(for: commonEventInfos[0].id, completion: { (event) in
+                    if let event = event,
+                        let url = event.coverURL {
+                        do {
+                            let data = try Data(contentsOf: url)
+                            let image = UIImage(data: data)
+                            self.eventImageView.image = image
+                            self.eventImageView.contentMode = .scaleAspectFill
+                            self.eventImageView.alpha = 0.25
+                        } catch {
+                            print("Failed to read event cover image data from url:", url)
+                        }
+                    }
+                })
+            }
             if commonEventInfos.count > 1 {
                 let eventString = (commonEventInfos.count > 2) ? "events" : "event"
                 additionalCommonEventsLabel.text = "+\(commonEventInfos.count - 1) more common \(eventString)"
@@ -187,6 +208,8 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
         
         self.tableView.frame = CGRect(x: 0.0, y: self.detailsView.frame.maxY, width: self.view.frame.width, height: self.view.frame.maxY - self.detailsView.frame.maxY)
         
+        self.eventImageView.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height - self.tableView.frame.height)
+        
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.8)
     }
     
@@ -212,6 +235,8 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
         self.additionalCommonEventsLabel.isHidden = false
         
         self.tableView.frame = CGRect(x: 0.0, y: self.detailsView.frame.maxY, width: self.view.frame.width, height: self.view.frame.maxY - self.detailsView.frame.maxY)
+        
+        self.eventImageView.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height - self.tableView.frame.height)
         
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.0)
     }
@@ -292,14 +317,14 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "commonEventCell", for: indexPath) as! CandidateCommonEventTableViewCell
             let eventId = commonEventInfos[indexPath.row].id
-            if let event = User.current.value?.events.value.first(where: { $0.id == eventId }),
-                let pictureURL = event.pictureURL {
-                cell.eventImageView.layer.cornerRadius = 8.0
-                cell.eventImageView.layer.masksToBounds = true
-                cell.eventImageView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_100x100"))
-            } else {
-                cell.imageView?.image = #imageLiteral(resourceName: "placeholder_100x100")
-            }
+            Event.get(for: eventId, completion: { (event) in
+                if let event = event,
+                    let pictureURL = event.pictureURL {
+                    cell.eventImageView.layer.cornerRadius = 8.0
+                    cell.eventImageView.layer.masksToBounds = true
+                    cell.eventImageView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_100x100"))
+                }
+            })
             cell.eventTextLabel.text = commonEventInfos[indexPath.row].displayString
             return cell
         } else if indexPath.section == 1 {

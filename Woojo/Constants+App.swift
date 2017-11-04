@@ -16,6 +16,7 @@ extension Constants {
             struct Keys {
                 static let termsURL = "terms_url"
                 static let privacyURL = "privacy_url"
+                static let recommendedEventsEnabled = "recommended_events_enabled"
             }
         }
         struct Chat {

@@ -56,6 +56,7 @@ class CurrentUser: User {
     var preferences: Preferences!
     var candidates: [Candidate] = []
     var events: Variable<[Event]> = Variable([])
+    var recommendedEvents: Variable<[Event]> = Variable([])
     var notifications: Variable<[Notification]> = Variable([])
     var isLoading: Variable<Bool> = Variable(false)
     var tips: [String:Any]?
@@ -114,6 +115,7 @@ class CurrentUser: User {
                 self.profile.startObserving()
                 self.profile.startObservingPhotos()
                 self.startObservingEvents()
+                self.startObservingRecommendedEvents()
                 self.startObservingNotifications()
                 self.startObservingCandidates()
                 self.isLoading.value = false
@@ -370,6 +372,69 @@ class CurrentUser: User {
         isObservingEvents = false
     }
     
+    // MARK: - Recommended Events
+    
+    var recommendedEventsRef: DatabaseReference {
+        get {
+            return ref.child(Constants.User.Recommendations.firebaseNode).child(Constants.User.Recommendations.properties.events.firebaseNode)
+        }
+    }
+    
+    var isObservingRecommendedEvents: Bool = false
+    
+    func startObservingRecommendedEvents() {
+        isObservingRecommendedEvents = true
+        recommendedEventsRef.observe(.value, with: { arraySnapshot in
+            print("change in recommended events", arraySnapshot)
+            var newArray: [Event] = []
+            let group = DispatchGroup()
+            for i in 0..<Int(arraySnapshot.childrenCount) {
+                if let snapshot = arraySnapshot.children.allObjects[i] as? DataSnapshot,
+                    let eventId = snapshot.value as? String {
+                    group.enter()
+                    Event.get(for: eventId, completion: { (event) in
+                        if let event = event {
+                            newArray.append(event)
+                        }
+                        group.leave()
+                    })
+                }
+            }
+            group.notify(queue: .main, execute: {
+                self.recommendedEvents.value = newArray
+            })
+        }, withCancel: { error in
+            print("Cancelled observing recommendedEvents.childAdded: \(error)")
+            self.isObservingRecommendedEvents = false
+        })
+    }
+    
+    func requestRecommendedEventsUpdate(completion: (() -> ())?) {
+        let request = [
+            Constants.Request.Properties.type: "updateRecommendedEvents",
+            Constants.Request.Properties.uid: self.uid
+        ]
+        ref.root.child(Constants.Request.firebaseNode).childByAutoId().setValue(request) { (error, requestRef) in
+            let responseRef = self.ref.root.child(Constants.Response.firebaseNode).child(requestRef.key)
+            var handle: UInt = 0
+            handle = responseRef.observe(.childAdded, with: { _ in
+                requestRef.removeValue(completionBlock: { (_, _) in
+                    responseRef.removeObserver(withHandle: handle)
+                    responseRef.removeValue(completionBlock: { (_, _) in
+                        completion?()
+                    })
+                })
+            })
+        }
+    }
+    
+    func stopObservingRecommendedEvents() {
+        recommendedEventsRef.removeAllObservers()
+        isObservingRecommendedEvents = false
+    }
+    
+    // MARK: - Miscellaneous
+    
     func getEventsFromFacebook(completion: @escaping (([Event]) -> Void)) {
         var eventsAttendingOrUnsure: [Event] = []
         var eventsNotReplied: [Event] = []
@@ -455,6 +520,17 @@ class CurrentUser: User {
             }) == nil {
                 self.events.value.append(event)
                 self.events.value.sort(by: { $0.start > $1.start })
+            }
+        }
+    }
+    
+    func append(recommendedEvent: Event?) {
+        if let event = recommendedEvent {
+            if self.recommendedEvents.value.index(where: { e in
+                return e.id == event.id
+            }) == nil {
+                self.recommendedEvents.value.append(event)
+                //self.recommendedEvents.value.sort(by: { $0.start > $1.start })
             }
         }
     }

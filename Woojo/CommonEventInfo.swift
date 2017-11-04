@@ -20,13 +20,17 @@ extension User {
                 var rsvpString: String
                 switch rsvpStatus {
                 case .attending:
-                    rsvpString = "Going to"
+                    rsvpString = "Goes to \(name)"
                 case .unsure:
-                    rsvpString = "Interested in"
+                    rsvpString = "Interested in \(name)"
                 case .notReplied:
-                    rsvpString = "Invited to"
+                    rsvpString = "Invited to \(name)"
+                case .iWasRecommendedOthers:
+                    rsvpString = "Goes to \(name) (recommended for you)"
+                case .otherWasRecommendedMine:
+                    rsvpString = "Goes to events similar to \(name)"
                 }
-                return "\(rsvpString) \(name)"
+                return "\(rsvpString)"
             }
         }
         

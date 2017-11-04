@@ -18,6 +18,7 @@
                 <outlet property="carouselView" destination="Unl-xX-SUR" id="wVi-oq-vqk"/>
                 <outlet property="centerNameLabel" destination="rXi-fZ-mH2" id="dyZ-3U-bXN"/>
                 <outlet property="detailsView" destination="f7z-0P-aym" id="2k2-gb-0Gh"/>
+                <outlet property="eventImageView" destination="5V5-wa-daT" id="FqC-jk-C9n"/>
                 <outlet property="firstCommonEventLabel" destination="vkw-ib-qOI" id="Abs-qJ-iia"/>
                 <outlet property="nameLabel" destination="x4B-sI-WcI" id="dYe-Zj-HJd"/>
                 <outlet property="nextPhotoButton" destination="xwk-kZ-VtA" id="hgv-da-qvr"/>
@@ -30,6 +31,9 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5V5-wa-daT">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Unl-xX-SUR" userLabel="Carrousel View" customClass="ImageSlideshow" customModule="ImageSlideshow">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -110,10 +114,14 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="Unl-xX-SUR" secondAttribute="bottom" id="5ce-sv-GEj"/>
+                <constraint firstItem="e0j-Ln-bSk" firstAttribute="top" secondItem="5V5-wa-daT" secondAttribute="bottom" id="B8e-zt-3sa"/>
                 <constraint firstItem="e0j-Ln-bSk" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="B9l-ah-CWy"/>
                 <constraint firstAttribute="bottom" secondItem="e0j-Ln-bSk" secondAttribute="bottom" id="Bfp-GU-YZD"/>
+                <constraint firstItem="5V5-wa-daT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="QWb-e9-kK1"/>
                 <constraint firstItem="f7z-0P-aym" firstAttribute="bottom" secondItem="e0j-Ln-bSk" secondAttribute="top" id="aGi-nH-hXl"/>
                 <constraint firstItem="e0j-Ln-bSk" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="aHw-DV-GjL"/>
+                <constraint firstItem="5V5-wa-daT" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="gy5-lf-Fk3"/>
+                <constraint firstItem="5V5-wa-daT" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="h7j-m0-43f"/>
                 <constraint firstItem="f7z-0P-aym" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="lBd-ZX-HLG"/>
                 <constraint firstItem="Unl-xX-SUR" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="m0y-9x-8OZ"/>
                 <constraint firstAttribute="trailing" secondItem="f7z-0P-aym" secondAttribute="trailing" id="mZd-jL-WTm"/>
