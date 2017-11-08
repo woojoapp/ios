@@ -226,18 +226,18 @@
 		85685F761DEC7B69009BAEE0 /* SearchEventsResultsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85685F751DEC7B69009BAEE0 /* SearchEventsResultsTableViewCell.xib */; };
 		85685F781DEC7B8D009BAEE0 /* SearchEventsResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85685F771DEC7B8D009BAEE0 /* SearchEventsResultsTableViewCell.swift */; };
 		85685F871DEF3310009BAEE0 /* CandidatesDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85685F861DEF3310009BAEE0 /* CandidatesDelegate.swift */; };
-		856B0A9E1FA0838F0041C11E /* CandidateCommonEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0A9C1FA0838F0041C11E /* CandidateCommonEventTableViewCell.swift */; };
-		856B0A9F1FA0838F0041C11E /* CandidateCommonEventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856B0A9D1FA0838F0041C11E /* CandidateCommonEventTableViewCell.xib */; };
-		856B0AA21FA084730041C11E /* CandidateDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0AA01FA084730041C11E /* CandidateDescriptionTableViewCell.swift */; };
-		856B0AA31FA084730041C11E /* CandidateDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856B0AA11FA084730041C11E /* CandidateDescriptionTableViewCell.xib */; };
-		856B0AA41FA084760041C11E /* CandidateDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0AA01FA084730041C11E /* CandidateDescriptionTableViewCell.swift */; };
-		856B0AA51FA084770041C11E /* CandidateDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0AA01FA084730041C11E /* CandidateDescriptionTableViewCell.swift */; };
-		856B0AA61FA0847F0041C11E /* CandidateDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856B0AA11FA084730041C11E /* CandidateDescriptionTableViewCell.xib */; };
-		856B0AA71FA084800041C11E /* CandidateDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856B0AA11FA084730041C11E /* CandidateDescriptionTableViewCell.xib */; };
-		856B0AA81FA084840041C11E /* CandidateCommonEventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856B0A9D1FA0838F0041C11E /* CandidateCommonEventTableViewCell.xib */; };
-		856B0AA91FA084850041C11E /* CandidateCommonEventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856B0A9D1FA0838F0041C11E /* CandidateCommonEventTableViewCell.xib */; };
-		856B0AAA1FA084870041C11E /* CandidateCommonEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0A9C1FA0838F0041C11E /* CandidateCommonEventTableViewCell.swift */; };
-		856B0AAB1FA084880041C11E /* CandidateCommonEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0A9C1FA0838F0041C11E /* CandidateCommonEventTableViewCell.swift */; };
+		856B0A9E1FA0838F0041C11E /* UserCommonEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0A9C1FA0838F0041C11E /* UserCommonEventTableViewCell.swift */; };
+		856B0A9F1FA0838F0041C11E /* UserCommonEventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856B0A9D1FA0838F0041C11E /* UserCommonEventTableViewCell.xib */; };
+		856B0AA21FA084730041C11E /* UserDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0AA01FA084730041C11E /* UserDescriptionTableViewCell.swift */; };
+		856B0AA31FA084730041C11E /* UserDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856B0AA11FA084730041C11E /* UserDescriptionTableViewCell.xib */; };
+		856B0AA41FA084760041C11E /* UserDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0AA01FA084730041C11E /* UserDescriptionTableViewCell.swift */; };
+		856B0AA51FA084770041C11E /* UserDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0AA01FA084730041C11E /* UserDescriptionTableViewCell.swift */; };
+		856B0AA61FA0847F0041C11E /* UserDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856B0AA11FA084730041C11E /* UserDescriptionTableViewCell.xib */; };
+		856B0AA71FA084800041C11E /* UserDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856B0AA11FA084730041C11E /* UserDescriptionTableViewCell.xib */; };
+		856B0AA81FA084840041C11E /* UserCommonEventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856B0A9D1FA0838F0041C11E /* UserCommonEventTableViewCell.xib */; };
+		856B0AA91FA084850041C11E /* UserCommonEventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856B0A9D1FA0838F0041C11E /* UserCommonEventTableViewCell.xib */; };
+		856B0AAA1FA084870041C11E /* UserCommonEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0A9C1FA0838F0041C11E /* UserCommonEventTableViewCell.swift */; };
+		856B0AAB1FA084880041C11E /* UserCommonEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0A9C1FA0838F0041C11E /* UserCommonEventTableViewCell.swift */; };
 		856B0AAD1FA1D1260041C11E /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0AAC1FA1D1260041C11E /* Match.swift */; };
 		856B0AAE1FA1D1260041C11E /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0AAC1FA1D1260041C11E /* Match.swift */; };
 		856B0AAF1FA1D1260041C11E /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0AAC1FA1D1260041C11E /* Match.swift */; };
@@ -247,6 +247,36 @@
 		858FEE3C1E02A40C00322E8E /* AlbumsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE3A1E02A40C00322E8E /* AlbumsTableViewCell.swift */; };
 		858FEE3D1E02A40C00322E8E /* AlbumsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 858FEE3B1E02A40C00322E8E /* AlbumsTableViewCell.xib */; };
 		858FEE421E02B5E600322E8E /* AlbumPhotosGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE411E02B5E500322E8E /* AlbumPhotosGraphRequest.swift */; };
+		85B36AA21FADFE7F00A7B599 /* UserPageLikesGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36AA11FADFE7F00A7B599 /* UserPageLikesGraphRequest.swift */; };
+		85B36AA41FAE168700A7B599 /* Constants+Env.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36AA31FAE168700A7B599 /* Constants+Env.swift */; };
+		85B36AA61FAE170500A7B599 /* Constants+Env.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36AA51FAE170500A7B599 /* Constants+Env.swift */; };
+		85B36AA81FAE170800A7B599 /* Constants+Env.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36AA71FAE170800A7B599 /* Constants+Env.swift */; };
+		85B36AAA1FB1AEFB00A7B599 /* PageLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36AA91FB1AEFB00A7B599 /* PageLike.swift */; };
+		85B36AAB1FB1B9F900A7B599 /* PageLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36AA91FB1AEFB00A7B599 /* PageLike.swift */; };
+		85B36AAC1FB1B9F900A7B599 /* PageLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36AA91FB1AEFB00A7B599 /* PageLike.swift */; };
+		85B36AAD1FB1B9FD00A7B599 /* UserPageLikesGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36AA11FADFE7F00A7B599 /* UserPageLikesGraphRequest.swift */; };
+		85B36AAE1FB1B9FD00A7B599 /* UserPageLikesGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36AA11FADFE7F00A7B599 /* UserPageLikesGraphRequest.swift */; };
+		85B36AB01FB1BEA200A7B599 /* UserFriendsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36AAF1FB1BEA200A7B599 /* UserFriendsGraphRequest.swift */; };
+		85B36AB11FB1BEA200A7B599 /* UserFriendsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36AAF1FB1BEA200A7B599 /* UserFriendsGraphRequest.swift */; };
+		85B36AB21FB1BEA200A7B599 /* UserFriendsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36AAF1FB1BEA200A7B599 /* UserFriendsGraphRequest.swift */; };
+		85B36AB41FB1BF8A00A7B599 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36AB31FB1BF8A00A7B599 /* Friend.swift */; };
+		85B36AB51FB1BF8A00A7B599 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36AB31FB1BF8A00A7B599 /* Friend.swift */; };
+		85B36AB61FB1BF8A00A7B599 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36AB31FB1BF8A00A7B599 /* Friend.swift */; };
+		85B36ABD1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36ABB1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift */; };
+		85B36ABE1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36ABB1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift */; };
+		85B36ABF1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36ABB1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift */; };
+		85B36AC01FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85B36ABC1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.xib */; };
+		85B36AC11FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85B36ABC1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.xib */; };
+		85B36AC21FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85B36ABC1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.xib */; };
+		85B36AC51FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36AC31FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift */; };
+		85B36AC61FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36AC31FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift */; };
+		85B36AC71FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36AC31FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift */; };
+		85B36AC81FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85B36AC41FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.xib */; };
+		85B36AC91FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85B36AC41FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.xib */; };
+		85B36ACA1FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85B36AC41FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.xib */; };
+		85B36ACC1FB1CE5200A7B599 /* CommonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36ACB1FB1CE5100A7B599 /* CommonItem.swift */; };
+		85B36ACD1FB1CE5200A7B599 /* CommonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36ACB1FB1CE5100A7B599 /* CommonItem.swift */; };
+		85B36ACE1FB1CE5200A7B599 /* CommonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36ACB1FB1CE5100A7B599 /* CommonItem.swift */; };
 		85DC3D731DF70A6A00116159 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D721DF70A6A00116159 /* Preferences.swift */; };
 		85DC3D7B1E00088F00116159 /* UserAlbumsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D7A1E00088F00116159 /* UserAlbumsGraphRequest.swift */; };
 		85DC3D7D1E0008B900116159 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D7C1E0008B900116159 /* Album.swift */; };
@@ -314,10 +344,10 @@
 		85685F771DEC7B8D009BAEE0 /* SearchEventsResultsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchEventsResultsTableViewCell.swift; sourceTree = "<group>"; };
 		85685F801DEF0BE9009BAEE0 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		85685F861DEF3310009BAEE0 /* CandidatesDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandidatesDelegate.swift; sourceTree = "<group>"; };
-		856B0A9C1FA0838F0041C11E /* CandidateCommonEventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateCommonEventTableViewCell.swift; sourceTree = "<group>"; };
-		856B0A9D1FA0838F0041C11E /* CandidateCommonEventTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CandidateCommonEventTableViewCell.xib; sourceTree = "<group>"; };
-		856B0AA01FA084730041C11E /* CandidateDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateDescriptionTableViewCell.swift; sourceTree = "<group>"; };
-		856B0AA11FA084730041C11E /* CandidateDescriptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CandidateDescriptionTableViewCell.xib; sourceTree = "<group>"; };
+		856B0A9C1FA0838F0041C11E /* UserCommonEventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommonEventTableViewCell.swift; sourceTree = "<group>"; };
+		856B0A9D1FA0838F0041C11E /* UserCommonEventTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCommonEventTableViewCell.xib; sourceTree = "<group>"; };
+		856B0AA01FA084730041C11E /* UserDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDescriptionTableViewCell.swift; sourceTree = "<group>"; };
+		856B0AA11FA084730041C11E /* UserDescriptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserDescriptionTableViewCell.xib; sourceTree = "<group>"; };
 		856B0AAC1FA1D1260041C11E /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
 		856B0AB01FA1D2970041C11E /* CommonEventInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonEventInfo.swift; sourceTree = "<group>"; };
 		8588901E1E6D80B200ACA69A /* ReachabilityAware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityAware.swift; sourceTree = "<group>"; };
@@ -330,6 +360,18 @@
 		858FEE461E07115400322E8E /* UserDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailsViewController.swift; sourceTree = "<group>"; };
 		85A4A9131E098651002AD1D0 /* AboutTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutTableViewController.swift; sourceTree = "<group>"; };
 		85A4A9151E0989FE002AD1D0 /* AboutWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutWebViewController.swift; sourceTree = "<group>"; };
+		85B36AA11FADFE7F00A7B599 /* UserPageLikesGraphRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPageLikesGraphRequest.swift; sourceTree = "<group>"; };
+		85B36AA31FAE168700A7B599 /* Constants+Env.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Env.swift"; sourceTree = "<group>"; };
+		85B36AA51FAE170500A7B599 /* Constants+Env.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Env.swift"; sourceTree = "<group>"; };
+		85B36AA71FAE170800A7B599 /* Constants+Env.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Env.swift"; sourceTree = "<group>"; };
+		85B36AA91FB1AEFB00A7B599 /* PageLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLike.swift; sourceTree = "<group>"; };
+		85B36AAF1FB1BEA200A7B599 /* UserFriendsGraphRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFriendsGraphRequest.swift; sourceTree = "<group>"; };
+		85B36AB31FB1BF8A00A7B599 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
+		85B36ABB1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommonItemsTableViewCell.swift; sourceTree = "<group>"; };
+		85B36ABC1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCommonItemsTableViewCell.xib; sourceTree = "<group>"; };
+		85B36AC31FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommonItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		85B36AC41FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCommonItemCollectionViewCell.xib; sourceTree = "<group>"; };
+		85B36ACB1FB1CE5100A7B599 /* CommonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonItem.swift; sourceTree = "<group>"; };
 		85D8915D1E54D63D00EC7FFF /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		85D891611E54E45300EC7FFF /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		85D891631E55BDFF00EC7FFF /* ShowsSettingsButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowsSettingsButton.swift; sourceTree = "<group>"; };
@@ -454,6 +496,9 @@
 				8545A5FF1DDCDADC008F3DD2 /* GraphRequests */,
 				85DC3D7C1E0008B900116159 /* Album.swift */,
 				856B0AB01FA1D2970041C11E /* CommonEventInfo.swift */,
+				85B36AA91FB1AEFB00A7B599 /* PageLike.swift */,
+				85B36AB31FB1BF8A00A7B599 /* Friend.swift */,
+				85B36ACB1FB1CE5100A7B599 /* CommonItem.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -466,6 +511,8 @@
 				85DC3D7A1E00088F00116159 /* UserAlbumsGraphRequest.swift */,
 				858FEE411E02B5E500322E8E /* AlbumPhotosGraphRequest.swift */,
 				8556C6321F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift */,
+				85B36AA11FADFE7F00A7B599 /* UserPageLikesGraphRequest.swift */,
+				85B36AAF1FB1BEA200A7B599 /* UserFriendsGraphRequest.swift */,
 			);
 			name = GraphRequests;
 			sourceTree = "<group>";
@@ -495,9 +542,9 @@
 		85512B0B1DCB5B020072C1B8 /* Woojo */ = {
 			isa = PBXGroup;
 			children = (
-				85662D021F90BF3700D5701E /* GoogleService-Info-Development */,
-				85662D011F90BF2B00D5701E /* GoogleService-Info-Staging */,
-				85662CFF1F90BEF800D5701E /* GoogleService-Info-Production */,
+				85662D021F90BF3700D5701E /* Development */,
+				85662D011F90BF2B00D5701E /* Staging */,
+				85662CFF1F90BEF800D5701E /* Production */,
 				85E5D4D01DDA0E8F003E2376 /* Woojo.entitlements */,
 				8506A89E1DCC89FA00C18EC3 /* Models */,
 				85685F861DEF3310009BAEE0 /* CandidatesDelegate.swift */,
@@ -517,28 +564,31 @@
 			path = Woojo;
 			sourceTree = "<group>";
 		};
-		85662CFF1F90BEF800D5701E /* GoogleService-Info-Production */ = {
+		85662CFF1F90BEF800D5701E /* Production */ = {
 			isa = PBXGroup;
 			children = (
 				85382E871F94B87E003909D7 /* GoogleService-Info.plist */,
+				85B36AA31FAE168700A7B599 /* Constants+Env.swift */,
 			);
-			path = "GoogleService-Info-Production";
+			path = Production;
 			sourceTree = "<group>";
 		};
-		85662D011F90BF2B00D5701E /* GoogleService-Info-Staging */ = {
+		85662D011F90BF2B00D5701E /* Staging */ = {
 			isa = PBXGroup;
 			children = (
 				85662D0A1F90E35500D5701E /* GoogleService-Info.plist */,
+				85B36AA51FAE170500A7B599 /* Constants+Env.swift */,
 			);
-			path = "GoogleService-Info-Staging";
+			path = Staging;
 			sourceTree = "<group>";
 		};
-		85662D021F90BF3700D5701E /* GoogleService-Info-Development */ = {
+		85662D021F90BF3700D5701E /* Development */ = {
 			isa = PBXGroup;
 			children = (
 				85662D041F90BF7E00D5701E /* GoogleService-Info.plist */,
+				85B36AA71FAE170800A7B599 /* Constants+Env.swift */,
 			);
-			path = "GoogleService-Info-Development";
+			path = Development;
 			sourceTree = "<group>";
 		};
 		85685F7B1DEDA1D6009BAEE0 /* Events */ = {
@@ -635,10 +685,14 @@
 				85407D9F1DF03FD90033E696 /* CandidateOverlayView.xib */,
 				85407DA11DF040070033E696 /* UserCardView.xib */,
 				85407DA31DF042A00033E696 /* UserCardView.swift */,
-				856B0A9C1FA0838F0041C11E /* CandidateCommonEventTableViewCell.swift */,
-				856B0A9D1FA0838F0041C11E /* CandidateCommonEventTableViewCell.xib */,
-				856B0AA01FA084730041C11E /* CandidateDescriptionTableViewCell.swift */,
-				856B0AA11FA084730041C11E /* CandidateDescriptionTableViewCell.xib */,
+				856B0A9C1FA0838F0041C11E /* UserCommonEventTableViewCell.swift */,
+				856B0A9D1FA0838F0041C11E /* UserCommonEventTableViewCell.xib */,
+				856B0AA01FA084730041C11E /* UserDescriptionTableViewCell.swift */,
+				85B36ABB1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift */,
+				85B36ABC1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.xib */,
+				85B36AC31FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift */,
+				85B36AC41FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.xib */,
+				856B0AA11FA084730041C11E /* UserDescriptionTableViewCell.xib */,
 			);
 			name = Candidates;
 			sourceTree = "<group>";
@@ -807,12 +861,14 @@
 				85662CC91F90BE2200D5701E /* Main.storyboard in Resources */,
 				85662CCA1F90BE2200D5701E /* Assets.xcassets in Resources */,
 				8506A89B1DCC87A400C18EC3 /* EventsTableViewCell.xib in Resources */,
-				856B0A9F1FA0838F0041C11E /* CandidateCommonEventTableViewCell.xib in Resources */,
+				856B0A9F1FA0838F0041C11E /* UserCommonEventTableViewCell.xib in Resources */,
 				85685F761DEC7B69009BAEE0 /* SearchEventsResultsTableViewCell.xib in Resources */,
 				856264E51FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib in Resources */,
 				858FEE3D1E02A40C00322E8E /* AlbumsTableViewCell.xib in Resources */,
+				85B36AC01FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.xib in Resources */,
 				85512B191DCB5B020072C1B8 /* LaunchScreen.storyboard in Resources */,
-				856B0AA31FA084730041C11E /* CandidateDescriptionTableViewCell.xib in Resources */,
+				856B0AA31FA084730041C11E /* UserDescriptionTableViewCell.xib in Resources */,
+				85B36AC81FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.xib in Resources */,
 				854DDABD1DE364D400655EFC /* MyEventsTableViewCell.xib in Resources */,
 				85662CCB1F90BE2200D5701E /* Info.plist in Resources */,
 				85662CA91F90BE2200D5701E /* CandidateOverlayView.xib in Resources */,
@@ -829,16 +885,18 @@
 				85662CE81F90BE2300D5701E /* LoginViewController.xib in Resources */,
 				85662C191F90BD7C00D5701E /* EventsTableViewCell.xib in Resources */,
 				85662C1D1F90BD7C00D5701E /* SearchEventsResultsTableViewCell.xib in Resources */,
-				856B0AA81FA084840041C11E /* CandidateCommonEventTableViewCell.xib in Resources */,
+				856B0AA81FA084840041C11E /* UserCommonEventTableViewCell.xib in Resources */,
 				85662CD41F90BE2300D5701E /* CandidateOverlayView.xib in Resources */,
 				85662CF41F90BE2300D5701E /* Main.storyboard in Resources */,
 				856264E61FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib in Resources */,
 				85662D0B1F90E36500D5701E /* GoogleService-Info.plist in Resources */,
+				85B36AC11FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.xib in Resources */,
 				85662C1B1F90BD7C00D5701E /* MyEventsTableViewCell.xib in Resources */,
 				85662C531F90BDDD00D5701E /* AlbumsTableViewCell.xib in Resources */,
+				85B36AC91FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.xib in Resources */,
 				85662CF51F90BE2300D5701E /* Assets.xcassets in Resources */,
 				85662D081F90BFE800D5701E /* LaunchScreen.storyboard in Resources */,
-				856B0AA61FA0847F0041C11E /* CandidateDescriptionTableViewCell.xib in Resources */,
+				856B0AA61FA0847F0041C11E /* UserDescriptionTableViewCell.xib in Resources */,
 				85662CD51F90BE2300D5701E /* UserCardView.xib in Resources */,
 				8501BD771FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib in Resources */,
 				85662CF61F90BE2300D5701E /* Info.plist in Resources */,
@@ -852,16 +910,18 @@
 				85662C961F90BE1300D5701E /* LoginViewController.xib in Resources */,
 				85662C4C1F90BDD900D5701E /* EventsTableViewCell.xib in Resources */,
 				85662C821F90BE1300D5701E /* CandidateOverlayView.xib in Resources */,
-				856B0AA91FA084850041C11E /* CandidateCommonEventTableViewCell.xib in Resources */,
+				856B0AA91FA084850041C11E /* UserCommonEventTableViewCell.xib in Resources */,
 				85662CF71F90BE2400D5701E /* Main.storyboard in Resources */,
 				85662C4E1F90BDD900D5701E /* MyEventsTableViewCell.xib in Resources */,
 				856264E71FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib in Resources */,
 				85662C551F90BDDD00D5701E /* AlbumsTableViewCell.xib in Resources */,
+				85B36AC21FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.xib in Resources */,
 				85662C501F90BDD900D5701E /* SearchEventsResultsTableViewCell.xib in Resources */,
 				85662CF81F90BE2400D5701E /* Assets.xcassets in Resources */,
+				85B36ACA1FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.xib in Resources */,
 				85662D051F90BF8B00D5701E /* GoogleService-Info.plist in Resources */,
 				85662D091F90BFE900D5701E /* LaunchScreen.storyboard in Resources */,
-				856B0AA71FA084800041C11E /* CandidateDescriptionTableViewCell.xib in Resources */,
+				856B0AA71FA084800041C11E /* UserDescriptionTableViewCell.xib in Resources */,
 				85662C831F90BE1300D5701E /* UserCardView.xib in Resources */,
 				8501BD781FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib in Resources */,
 				85662CF91F90BE2400D5701E /* Info.plist in Resources */,
@@ -1212,18 +1272,22 @@
 				854DDAC51DE47DE500655EFC /* User.swift in Sources */,
 				85662CC81F90BE2200D5701E /* Constants+Analytics.swift in Sources */,
 				85662CBA1F90BE2200D5701E /* AboutWebViewController.swift in Sources */,
-				856B0A9E1FA0838F0041C11E /* CandidateCommonEventTableViewCell.swift in Sources */,
+				856B0A9E1FA0838F0041C11E /* UserCommonEventTableViewCell.swift in Sources */,
 				85662CA71F90BE2200D5701E /* ExploreEventsViewController.swift in Sources */,
 				856B0AAD1FA1D1260041C11E /* Match.swift in Sources */,
 				858FEE421E02B5E600322E8E /* AlbumPhotosGraphRequest.swift in Sources */,
 				85662CA81F90BE2200D5701E /* CandidatesViewController.swift in Sources */,
 				85DC3D731DF70A6A00116159 /* Preferences.swift in Sources */,
 				85662CA61F90BE2200D5701E /* SearchEventsViewController.swift in Sources */,
+				85B36AB41FB1BF8A00A7B599 /* Friend.swift in Sources */,
 				85662CAD1F90BE2200D5701E /* ChatViewController.swift in Sources */,
 				85662CC01F90BE2200D5701E /* NavigationController.swift in Sources */,
+				85B36AC51FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift in Sources */,
+				85B36ABD1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift in Sources */,
 				854DDABF1DE3654E00655EFC /* MyEventsTableViewCell.swift in Sources */,
 				8556C6331F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */,
 				85662CA31F90BE2200D5701E /* EventsViewController.swift in Sources */,
+				85B36AA41FAE168700A7B599 /* Constants+Env.swift in Sources */,
 				8506A8A61DCCC85200C18EC3 /* Like.swift in Sources */,
 				85685F741DEC7833009BAEE0 /* SearchEventsGraphRequest.swift in Sources */,
 				858FEE3C1E02A40C00322E8E /* AlbumsTableViewCell.swift in Sources */,
@@ -1232,6 +1296,7 @@
 				85662CAE1F90BE2200D5701E /* MessagesViewController.swift in Sources */,
 				85662CB91F90BE2200D5701E /* AboutTableViewController.swift in Sources */,
 				85662CB41F90BE2200D5701E /* BioTableViewCell.swift in Sources */,
+				85B36ACC1FB1CE5200A7B599 /* CommonItem.swift in Sources */,
 				85EB2EE41DE20BCF00F0A55C /* Profile.swift in Sources */,
 				85662CC21F90BE2200D5701E /* ReachabilityAware.swift in Sources */,
 				856B0AB11FA1D2970041C11E /* CommonEventInfo.swift in Sources */,
@@ -1245,13 +1310,16 @@
 				85662CBF1F90BE2200D5701E /* ShowsSettingsButton.swift in Sources */,
 				85662CBB1F90BE2200D5701E /* UserDetailsViewController.swift in Sources */,
 				85DC3D7B1E00088F00116159 /* UserAlbumsGraphRequest.swift in Sources */,
+				85B36AB01FB1BEA200A7B599 /* UserFriendsGraphRequest.swift in Sources */,
 				85662CC61F90BE2200D5701E /* Analytics.swift in Sources */,
 				8506A8A21DCCA61600C18EC3 /* Candidate.swift in Sources */,
-				856B0AA21FA084730041C11E /* CandidateDescriptionTableViewCell.swift in Sources */,
+				856B0AA21FA084730041C11E /* UserDescriptionTableViewCell.swift in Sources */,
 				8506A8A81DCCCB5E00C18EC3 /* Pass.swift in Sources */,
 				85662CC41F90BE2200D5701E /* Notifier.swift in Sources */,
 				8506A8971DCBB0CC00C18EC3 /* Event.swift in Sources */,
 				85662CB01F90BE2200D5701E /* ProfilePhotoImageView.swift in Sources */,
+				85B36AAA1FB1AEFB00A7B599 /* PageLike.swift in Sources */,
+				85B36AA21FADFE7F00A7B599 /* UserPageLikesGraphRequest.swift in Sources */,
 				85E5D4CD1DD9EFBC003E2376 /* CurrentUser.swift in Sources */,
 				85662CC11F90BE2200D5701E /* UnwindThenShowChatSegue.swift in Sources */,
 				85E5D4CF1DD9FA41003E2376 /* Gender.swift in Sources */,
@@ -1277,23 +1345,29 @@
 				85662C111F90BD6500D5701E /* User.swift in Sources */,
 				85662C161F90BD7500D5701E /* AlbumPhotosGraphRequest.swift in Sources */,
 				856264E31FAC5CA2000AC40E /* ExploreEventsTableViewCell.swift in Sources */,
+				85B36AAD1FB1B9FD00A7B599 /* UserPageLikesGraphRequest.swift in Sources */,
 				85662C151F90BD7500D5701E /* UserAlbumsGraphRequest.swift in Sources */,
 				85662CD71F90BE2300D5701E /* ALChatManager.swift in Sources */,
 				85662CE41F90BE2300D5701E /* AboutTableViewController.swift in Sources */,
 				85662CCF1F90BE2300D5701E /* AddEventViewController.swift in Sources */,
+				85B36AAB1FB1B9F900A7B599 /* PageLike.swift in Sources */,
 				85662CEB1F90BE2300D5701E /* NavigationController.swift in Sources */,
 				85662C0D1F90BD6500D5701E /* Place.swift in Sources */,
 				85662C121F90BD6500D5701E /* Preferences.swift in Sources */,
-				856B0AAA1FA084870041C11E /* CandidateCommonEventTableViewCell.swift in Sources */,
+				856B0AAA1FA084870041C11E /* UserCommonEventTableViewCell.swift in Sources */,
 				85662CF31F90BE2300D5701E /* Constants+Analytics.swift in Sources */,
 				85662CF01F90BE2300D5701E /* Constants.swift in Sources */,
 				856B0AAE1FA1D1260041C11E /* Match.swift in Sources */,
 				85662C081F90BD6500D5701E /* Like.swift in Sources */,
 				85662CDF1F90BE2300D5701E /* BioTableViewCell.swift in Sources */,
+				85B36AB51FB1BF8A00A7B599 /* Friend.swift in Sources */,
 				85662CD21F90BE2300D5701E /* ExploreEventsViewController.swift in Sources */,
 				85662CE01F90BE2300D5701E /* ProfilePhotoCollectionViewCell.swift in Sources */,
+				85B36AC61FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift in Sources */,
+				85B36ABE1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift in Sources */,
+				85B36AA61FAE170500A7B599 /* Constants+Env.swift in Sources */,
 				85662CE21F90BE2300D5701E /* PhotoCollectionViewController.swift in Sources */,
-				856B0AA41FA084760041C11E /* CandidateDescriptionTableViewCell.swift in Sources */,
+				856B0AA41FA084760041C11E /* UserDescriptionTableViewCell.swift in Sources */,
 				85662C0E1F90BD6500D5701E /* Location.swift in Sources */,
 				85662C091F90BD6500D5701E /* Report.swift in Sources */,
 				8556C6341F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */,
@@ -1303,6 +1377,7 @@
 				85662CF21F90BE2300D5701E /* Constants+App.swift in Sources */,
 				8501BD741FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift in Sources */,
 				85662C071F90BD6500D5701E /* Candidate.swift in Sources */,
+				85B36ACD1FB1CE5200A7B599 /* CommonItem.swift in Sources */,
 				85662C0F1F90BD6500D5701E /* Notification.swift in Sources */,
 				85662CD31F90BE2300D5701E /* CandidatesViewController.swift in Sources */,
 				85662CD11F90BE2300D5701E /* SearchEventsViewController.swift in Sources */,
@@ -1316,6 +1391,7 @@
 				85662C0A1F90BD6500D5701E /* Pass.swift in Sources */,
 				85662CE31F90BE2300D5701E /* AlbumPhotoCollectionViewCell.swift in Sources */,
 				85662C141F90BD7500D5701E /* SearchEventsGraphRequest.swift in Sources */,
+				85B36AB11FB1BEA200A7B599 /* UserFriendsGraphRequest.swift in Sources */,
 				85662C171F90BD7500D5701E /* Album.swift in Sources */,
 				85662CD61F90BE2300D5701E /* UserCardView.swift in Sources */,
 				85662CDD1F90BE2300D5701E /* RangeSlider.swift in Sources */,
@@ -1350,23 +1426,29 @@
 				85662C441F90BDD000D5701E /* User.swift in Sources */,
 				85662C491F90BDD400D5701E /* AlbumPhotosGraphRequest.swift in Sources */,
 				856264E41FAC5CA2000AC40E /* ExploreEventsTableViewCell.swift in Sources */,
+				85B36AAE1FB1B9FD00A7B599 /* UserPageLikesGraphRequest.swift in Sources */,
 				85662C481F90BDD400D5701E /* UserAlbumsGraphRequest.swift in Sources */,
 				85662C851F90BE1300D5701E /* ALChatManager.swift in Sources */,
 				85662C921F90BE1300D5701E /* AboutTableViewController.swift in Sources */,
 				85662C7D1F90BE1300D5701E /* AddEventViewController.swift in Sources */,
+				85B36AAC1FB1B9F900A7B599 /* PageLike.swift in Sources */,
 				85662C991F90BE1300D5701E /* NavigationController.swift in Sources */,
 				85662C401F90BDD000D5701E /* Place.swift in Sources */,
 				85662C451F90BDD000D5701E /* Preferences.swift in Sources */,
-				856B0AAB1FA084880041C11E /* CandidateCommonEventTableViewCell.swift in Sources */,
+				856B0AAB1FA084880041C11E /* UserCommonEventTableViewCell.swift in Sources */,
 				85662CA11F90BE1300D5701E /* Constants+Analytics.swift in Sources */,
 				85662C9E1F90BE1300D5701E /* Constants.swift in Sources */,
 				856B0AAF1FA1D1260041C11E /* Match.swift in Sources */,
 				85662C3B1F90BDD000D5701E /* Like.swift in Sources */,
 				85662C8D1F90BE1300D5701E /* BioTableViewCell.swift in Sources */,
+				85B36AB61FB1BF8A00A7B599 /* Friend.swift in Sources */,
 				85662C801F90BE1300D5701E /* ExploreEventsViewController.swift in Sources */,
 				85662C8E1F90BE1300D5701E /* ProfilePhotoCollectionViewCell.swift in Sources */,
+				85B36AC71FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift in Sources */,
+				85B36ABF1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift in Sources */,
+				85B36AA81FAE170800A7B599 /* Constants+Env.swift in Sources */,
 				85662C901F90BE1300D5701E /* PhotoCollectionViewController.swift in Sources */,
-				856B0AA51FA084770041C11E /* CandidateDescriptionTableViewCell.swift in Sources */,
+				856B0AA51FA084770041C11E /* UserDescriptionTableViewCell.swift in Sources */,
 				85662C411F90BDD000D5701E /* Location.swift in Sources */,
 				85662C3C1F90BDD000D5701E /* Report.swift in Sources */,
 				8556C6351F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */,
@@ -1376,6 +1458,7 @@
 				85662CA01F90BE1300D5701E /* Constants+App.swift in Sources */,
 				8501BD751FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift in Sources */,
 				85662C3A1F90BDD000D5701E /* Candidate.swift in Sources */,
+				85B36ACE1FB1CE5200A7B599 /* CommonItem.swift in Sources */,
 				85662C421F90BDD000D5701E /* Notification.swift in Sources */,
 				85662C811F90BE1300D5701E /* CandidatesViewController.swift in Sources */,
 				85662C7F1F90BE1300D5701E /* SearchEventsViewController.swift in Sources */,
@@ -1389,6 +1472,7 @@
 				85662C3D1F90BDD000D5701E /* Pass.swift in Sources */,
 				85662C911F90BE1300D5701E /* AlbumPhotoCollectionViewCell.swift in Sources */,
 				85662C471F90BDD400D5701E /* SearchEventsGraphRequest.swift in Sources */,
+				85B36AB21FB1BEA200A7B599 /* UserFriendsGraphRequest.swift in Sources */,
 				85662C4A1F90BDD400D5701E /* Album.swift in Sources */,
 				85662C841F90BE1300D5701E /* UserCardView.swift in Sources */,
 				85662C8B1F90BE1300D5701E /* RangeSlider.swift in Sources */,
@@ -1550,8 +1634,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tastyelectrons.woojo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "844e158a-0bbe-47c3-8e25-c3acce109188";
-				PROVISIONING_PROFILE_SPECIFIER = "Tasty Electrons Ad Hoc";
+				PROVISIONING_PROFILE = "1151e18d-be74-446f-ad6d-e3cf193cf693";
+				PROVISIONING_PROFILE_SPECIFIER = "Tasty Electrons Distribution";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1617,8 +1701,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.tastyelectrons.woojo;
 				PRODUCT_MODULE_NAME = Woojo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1151e18d-be74-446f-ad6d-e3cf193cf693";
-				PROVISIONING_PROFILE_SPECIFIER = "Tasty Electrons Distribution";
+				PROVISIONING_PROFILE = "844e158a-0bbe-47c3-8e25-c3acce109188";
+				PROVISIONING_PROFILE_SPECIFIER = "Tasty Electrons Ad Hoc";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

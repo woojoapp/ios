@@ -19,9 +19,9 @@ extension Constants {
                 static let recommendedEventsEnabled = "recommended_events_enabled"
             }
         }
-        struct Chat {
+        /*struct Chat {
             static let applozicApplicationId = "11730f77a2a9608dba95cd86d60c498d0"
-        }
+        }*/
         struct Appearance {
             struct EmptyDatasets {
                 static var titleStringAttributes: [String:Any] {

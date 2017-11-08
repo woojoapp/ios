@@ -153,21 +153,27 @@ class CurrentUser: User {
                     print("Loaded profile")
                     self.addFacebookEvents() {
                         print("Events added")
-                        // Make sure all event ids are written before adding preferences
-                        self.preferences.setDefaults()
-                        // This will trigger the candidates proposer through it's preferences change listener
-                        self.preferences.save { error in
-                            if let error = error {
-                                print("Failed to save default preferences to Firebase: \(error.localizedDescription)")
+                        self.setFacebookPageLikes() {
+                            print("Page Likes added")
+                            self.setFacebookFriends() {
+                                print("Friends added")
+                                // Make sure all event ids are written before adding preferences
+                                self.preferences.setDefaults()
+                                // This will trigger the candidates proposer through it's preferences change listener
+                                self.preferences.save { error in
+                                    if let error = error {
+                                        print("Failed to save default preferences to Firebase: \(error.localizedDescription)")
+                                    }
+                                    let group = DispatchGroup()
+                                    group.enter()
+                                    self.activity.setSignUp { _ in group.leave() }
+                                    group.enter()
+                                    self.activity.setLastSeen { _ in group.leave() }
+                                    group.notify(queue: .main, execute: {
+                                        completion?(nil)
+                                    })
+                                }
                             }
-                            let group = DispatchGroup()
-                            group.enter()
-                            self.activity.setSignUp { _ in group.leave() }
-                            group.enter()
-                            self.activity.setLastSeen { _ in group.leave() }
-                            group.notify(queue: .main, execute: {
-                                completion?(nil)
-                            })
                         }
                     }
                 })
@@ -188,6 +194,54 @@ class CurrentUser: User {
                 }
             }
             saveEventsGroup.notify(queue: .main, execute: {
+                completion?()
+            })
+        }
+    }
+    
+    var pageLikesRef: DatabaseReference {
+        get {
+            return ref.child(Constants.User.PageLike.firebaseNode)
+        }
+    }
+    
+    func setFacebookPageLikes(completion: (() -> Void)? = nil) {
+        getPageLikesFromFacebook { pageLikes in
+            let savePageLikesGroup = DispatchGroup()
+            for pageLike in pageLikes {
+                savePageLikesGroup.enter()
+                self.pageLikesRef.child(pageLike.id).setValue(pageLike.toDictionary(), withCompletionBlock: { (error, ref) in
+                    if let error = error {
+                        print("Failed to set page like for CurrentUser: \(error.localizedDescription)")
+                    }
+                    savePageLikesGroup.leave()
+                })
+            }
+            savePageLikesGroup.notify(queue: .main, execute: {
+                completion?()
+            })
+        }
+    }
+    
+    var friendsRef: DatabaseReference {
+        get {
+            return ref.child(Constants.User.Friend.firebaseNode)
+        }
+    }
+    
+    func setFacebookFriends(completion: (() -> Void)? = nil) {
+        getFriendsFromFacebook { friends in
+            let saveFriendsGroup = DispatchGroup()
+            for friend in friends {
+                saveFriendsGroup.enter()
+                self.friendsRef.child(friend.id).setValue(friend.toDictionary(), withCompletionBlock: { (error, ref) in
+                    if let error = error {
+                        print("Failed to set friend for CurrentUser: \(error.localizedDescription)")
+                    }
+                    saveFriendsGroup.leave()
+                })
+            }
+            saveFriendsGroup.notify(queue: .main, execute: {
                 completion?()
             })
         }
@@ -474,6 +528,46 @@ class CurrentUser: User {
             }
         } else {
             print("Failed to load user events from Facebook: No Facebook access token.")
+        }
+    }
+    
+    func getPageLikesFromFacebook(completion: @escaping (([PageLike]) -> Void)) {
+        if AccessToken.current != nil {
+            if firebaseAuthUser != nil {
+                let userPageLikesGraphRequest = UserPageLikesGraphRequest()
+                userPageLikesGraphRequest.start({ (response, result) in
+                    switch result {
+                    case .success(let response):
+                        completion(response.pageLikes)
+                    case .failed(let error):
+                        print("UserPageLikesGraphRequest failed: \(error.localizedDescription)")
+                    }
+                })
+            } else {
+                print("Failed to load user page likes data from Facebook: No authenticated Firebase user.")
+            }
+        } else {
+            print("Failed to load user page likes from Facebook: No Facebook access token.")
+        }
+    }
+    
+    func getFriendsFromFacebook(completion: @escaping (([Friend]) -> Void)) {
+        if AccessToken.current != nil {
+            if firebaseAuthUser != nil {
+                let userFriendsGraphRequest = UserFriendsGraphRequest()
+                userFriendsGraphRequest.start({ (response, result) in
+                    switch result {
+                    case .success(let response):
+                        completion(response.friends)
+                    case .failed(let error):
+                        print("UserFriendsGraphRequest failed: \(error.localizedDescription)")
+                    }
+                })
+            } else {
+                print("Failed to load user friends data from Facebook: No authenticated Firebase user.")
+            }
+        } else {
+            print("Failed to load user friends from Facebook: No Facebook access token.")
         }
     }
     

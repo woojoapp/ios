@@ -266,6 +266,10 @@ extension CandidatesViewController: KolodaViewDataSource {
         if let commonEventInfos = User.current.value?.candidates[index].commonEventInfos {
             cardView.commonEventInfos = commonEventInfos
         }
+        if let commonFriends = User.current.value?.candidates[index].commonFriends {
+            print("COMMON FRIENDS \(commonFriends)")
+            cardView.commonFriends = commonFriends
+        }
         cardView.candidatesViewController = self
         cardView.load {
             self.showKolodaAndHideLoading()

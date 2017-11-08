@@ -1,5 +1,5 @@
 //
-//  CandidateDescriptionTableViewCell.swift
+//  CandidateCommonEventCellTableViewCell.swift
 //  Woojo
 //
 //  Created by Edouard Goossens on 25/10/2017.
@@ -8,7 +8,10 @@
 
 import UIKit
 
-class CandidateDescriptionTableViewCell: UITableViewCell {
+class UserCommonEventTableViewCell: UITableViewCell {
+    
+    @IBOutlet var eventTextLabel: UILabel!
+    @IBOutlet var eventImageView: UIImageView!
 
     override func awakeFromNib() {
         super.awakeFromNib()

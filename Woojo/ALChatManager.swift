@@ -19,7 +19,7 @@ var APNS_TYPE_DISTRIBUTION : Int16 = 1
 
 class ALChatManager: NSObject {
     
-    static let shared = ALChatManager(applicationKey: Constants.App.Chat.applozicApplicationId)
+    static let shared = ALChatManager(applicationKey: Constants.Env.Chat.applozicApplicationId)
     
     init(applicationKey: String) {
         ALUserDefaultsHandler.setApplicationKey(applicationKey)
@@ -69,7 +69,7 @@ class ALChatManager: NSObject {
     func setup() {
         if let currentUser = User.current.value {
             let alUser : ALUser =  ALUser();
-            alUser.applicationId = Constants.App.Chat.applozicApplicationId
+            alUser.applicationId = Constants.Env.Chat.applozicApplicationId
             alUser.userId = currentUser.uid
             alUser.displayName = currentUser.profile.displayName
             currentUser.profile.photos.value[0]?.generatePhotoDownloadURL(size: .thumbnail) { url, error in

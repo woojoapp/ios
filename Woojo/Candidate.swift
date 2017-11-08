@@ -18,6 +18,8 @@ extension CurrentUser {
         var user: User
         //var events: [Event]?
         var commonEventInfos: [CommonEventInfo] = []
+        var commonFriends: [Friend] = []
+        var commonPageLikes: [PageLike] = []
         
         var candidateRef: DatabaseReference {
             get {
@@ -40,6 +42,16 @@ extension CurrentUser {
             for item in snapshot.childSnapshot(forPath: Constants.User.Candidate.properties.firebaseNodes.events).children {
                 if let commonEventInfoSnap = item as? DataSnapshot {
                     self.commonEventInfos.append(CommonEventInfo(snapshot: commonEventInfoSnap))
+                }
+            }
+            for item in snapshot.childSnapshot(forPath: Constants.User.Candidate.properties.firebaseNodes.friends).children {
+                if let friendSnap = item as? DataSnapshot {
+                    self.commonFriends.append(Friend.from(firebase: friendSnap))
+                }
+            }
+            for item in snapshot.childSnapshot(forPath: Constants.User.Candidate.properties.firebaseNodes.pageLikes).children {
+                if let pageLikeSnap = item as? DataSnapshot {
+                    self.commonPageLikes.append(PageLike.from(firebase: pageLikeSnap))
                 }
             }
             super.init(uid: snapshot.key)

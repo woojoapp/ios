@@ -14,6 +14,8 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
     var view: UIView!
     var user: User?
     var commonEventInfos: [User.CommonEventInfo] = []
+    var commonFriends: [Friend] = []
+    var commonPageLikes: [PageLike] = []
     var imageSources: [ImageSource] = []
     var initiallyShowDescription = false
     
@@ -103,8 +105,9 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
         firstCommonEventLabel.textAlignment = .center
         additionalCommonEventsLabel.textAlignment = .center
         
-        tableView.register(UINib(nibName: "CandidateCommonEventTableViewCell", bundle: nil), forCellReuseIdentifier: "commonEventCell")
-        tableView.register(UINib(nibName: "CandidateDescriptionTableViewCell", bundle: nil), forCellReuseIdentifier: "descriptionCell")
+        tableView.register(UINib(nibName: "UserCommonEventTableViewCell", bundle: nil), forCellReuseIdentifier: "commonEventCell")
+        tableView.register(UINib(nibName: "UserDescriptionTableViewCell", bundle: nil), forCellReuseIdentifier: "descriptionCell")
+        tableView.register(UINib(nibName: "UserCommonItemsTableViewCell", bundle: nil), forCellReuseIdentifier: "commonItemsCell")
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -280,8 +283,12 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
         if let user = user, let name = user.profile.displayName {
             if section == 0 {
                 return "Common Events"
-            } else if section == 1 {
+            } else  if section == 1 {
                 return "About \(name)"
+            } else if section == 2 {
+                return "Mutual Friends"
+            } else if section == 3 {
+                return "Mutual Interests"
             }
         }
         return nil
@@ -294,7 +301,7 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 4
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -302,6 +309,10 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
             return commonEventInfos.count
         } else if section == 1 {
             return 1
+        } else if section == 2 {
+            return commonFriends.count
+        } else if section == 3 {
+            return commonPageLikes.count
         } else {
             return 0
         }
@@ -309,13 +320,17 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     /*func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            
+            return commonEventInfos.count * 32.0
+        } else if indexPath.section
+            return 44.0
+        } else {
+            return 100.0
         }
     }*/
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "commonEventCell", for: indexPath) as! CandidateCommonEventTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "commonEventCell", for: indexPath) as! UserCommonEventTableViewCell
             let eventId = commonEventInfos[indexPath.row].id
             Event.get(for: eventId, completion: { (event) in
                 if let event = event,
@@ -332,6 +347,11 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
             if let user = user {
                 cell.textLabel?.text = user.profile.description.value
             }
+            return cell
+        } else if indexPath.section == 2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "commonItemsCell", for: indexPath) as! UserCommonItemsTableViewCell
+            cell.items = commonFriends
+            cell.collectionView.reloadData()
             return cell
         }
         return tableView.dequeueReusableCell(withIdentifier: "commonEventCell", for: indexPath)

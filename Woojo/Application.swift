@@ -171,7 +171,8 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         Messaging.messaging().apnsToken = deviceToken
         let device = [
             Constants.User.Device.properties.firebaseNodes.token: deviceTokenString,
-            Constants.User.Device.properties.firebaseNodes.platform: "iOS"
+            Constants.User.Device.properties.firebaseNodes.platform: "iOS",
+            Constants.User.Device.properties.firebaseNodes.fcm: Messaging.messaging().fcmToken
         ]
         User.current.value?.ref.child(Constants.User.Device.firebaseNode).child(deviceTokenString).setValue(device) { error, ref in
             if (error != nil) {

@@ -63,6 +63,7 @@ struct Constants {
             static let firebaseNode = "devices"
             struct properties {
                 struct firebaseNodes {
+                    static let fcm = "fcm"
                     static let token = "token"
                     static let platform = "platform"
                 }
@@ -104,6 +105,8 @@ struct Constants {
                 struct firebaseNodes {
                     static let uid = "uid"
                     static let events = "events"
+                    static let friends = "friends"
+                    static let pageLikes = "page-likes"
                 }
             }
         }
@@ -195,6 +198,8 @@ struct Constants {
                     static let on = "on"
                     static let created = "created"
                     static let events = "events"
+                    static let friends = "friends"
+                    static let pageLikes = "page-likes"
                 }
             }
         }
@@ -222,6 +227,40 @@ struct Constants {
         struct Tip {
             static let firebaseNode = "tips"
             static let dateFormat = "yyyy-MM-dd'T'HH:mm:ssxx"
+        }
+        struct PageLike {
+            static let firebaseNode = "page-likes"
+            struct properties {
+                struct firebaseNodes {
+                    static let name = "name"
+                    static let id = "id"
+                    static let pictureURL = "picture_url"
+                }
+                struct graphAPIKeys {
+                    static let id = "id"
+                    static let name = "name"
+                    static let picture = "picture"
+                    static let pictureData = "data"
+                    static let pictureDataURL = "url"
+                }
+            }
+        }
+        struct Friend {
+            static let firebaseNode = "friends"
+            struct properties {
+                struct firebaseNodes {
+                    static let name = "name"
+                    static let id = "id"
+                    static let pictureURL = "picture_url"
+                }
+                struct graphAPIKeys {
+                    static let id = "id"
+                    static let name = "first_name"
+                    static let picture = "picture"
+                    static let pictureData = "data"
+                    static let pictureDataURL = "url"
+                }
+            }
         }
     }
     
@@ -332,6 +371,22 @@ struct Constants {
             static let path = "/me/events"
             static let fieldPictureUrl = "picture.type(normal){url}"
             static let fieldCoverSource = "cover{source}"
+            struct keys {
+                static let data = "data"
+            }
+        }
+        
+        struct UserFriends {
+            static let path = "/me/friends"
+            static let fields = "id,first_name,picture.type(normal){url}"
+            struct keys {
+                static let data = "data"
+            }
+        }
+        
+        struct UserPageLikes {
+            static let path = "/me/likes"
+            static let fields = "id,name,picture.type(normal){url}"
             struct keys {
                 static let data = "data"
             }

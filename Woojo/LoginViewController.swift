@@ -77,7 +77,8 @@ class LoginViewController: UIViewController {
                                                               .custom("user_events"),
                                                               .custom("user_photos"),
                                                               .custom("user_location"),
-                                                              .custom("user_birthday")]
+                                                              .custom("user_birthday"),
+                                                              .custom("user_likes")]
         let loginButton = LoginButton(readPermissions: readPermissions)
         loginButton.delegate = self
         loginButton.center = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)

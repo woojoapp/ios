@@ -34,7 +34,7 @@ class Album {
             album.count = dict[Constants.Album.properties.graphAPIKeys.count] as? Int
             return album
         } else {
-            print("Failed to create Event from Graph API dictionary. Nil or missing required data.", dict as Any)
+            print("Failed to create Album from Graph API dictionary. Nil or missing required data.", dict as Any)
             return nil
         }
         
