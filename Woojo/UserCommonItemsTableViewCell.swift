@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserCommonItemsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
+class UserCommonItemsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -30,10 +30,13 @@ class UserCommonItemsTableViewCell: UITableViewCell, UICollectionViewDelegate, U
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("CELLFORITEMAT", items[indexPath.row].name)
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "commonItemCell", for: indexPath) as! UserCommonItemCollectionViewCell
         cell.item = items[indexPath.row]
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 64, height: 72)
     }
     
 }

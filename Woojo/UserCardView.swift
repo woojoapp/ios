@@ -282,13 +282,29 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if let user = user, let name = user.profile.displayName {
             if section == 0 {
-                return "Common Events"
-            } else  if section == 1 {
-                return "About \(name)"
+                if commonEventInfos.count == 0 {
+                    return nil
+                } else {
+                    return "Common Events"
+                }
+            } else if section == 1 {
+                if user.profile.description.value.count == 0 {
+                    return nil
+                } else {
+                    return "About \(name)"
+                }
             } else if section == 2 {
-                return "Mutual Friends"
+                if commonFriends.count == 0 {
+                    return nil
+                } else {
+                    return "Mutual Friends"
+                }
             } else if section == 3 {
-                return "Mutual Interests"
+                if commonPageLikes.count == 0 {
+                    return nil
+                } else {
+                    return "Common Interests"
+                }
             }
         }
         return nil
@@ -305,26 +321,41 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return commonEventInfos.count
-        } else if section == 1 {
-            return 1
-        } else if section == 2 {
-            return commonFriends.count
-        } else if section == 3 {
-            return commonPageLikes.count
-        } else {
-            return 0
+        if let user = user {
+            if section == 0 {
+                return commonEventInfos.count
+            } else if section == 1 {
+                if user.profile.description.value.count == 0 {
+                    return 0
+                } else {
+                    return 1
+                }
+            } else if section == 2 {
+                if commonFriends.count == 0 {
+                    return 0
+                } else {
+                    return 1
+                }
+            } else if section == 3 {
+                if commonPageLikes.count == 0 {
+                    return 0
+                } else {
+                    return 1
+                }
+            }
         }
+        return 0
     }
     
     /*func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return commonEventInfos.count * 32.0
-        } else if indexPath.section
-            return 44.0
-        } else {
+            return CGFloat(commonEventInfos.count) * 32.0
+        } else if indexPath.section == 1 {
             return 100.0
+        } else if indexPath.section == 2 {
+            return 80.0
+        } else {
+            return 60.0
         }
     }*/
     
@@ -351,6 +382,11 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
         } else if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "commonItemsCell", for: indexPath) as! UserCommonItemsTableViewCell
             cell.items = commonFriends
+            cell.collectionView.reloadData()
+            return cell
+        } else if indexPath.section == 3 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "commonItemsCell", for: indexPath) as! UserCommonItemsTableViewCell
+            cell.items = commonPageLikes
             cell.collectionView.reloadData()
             return cell
         }

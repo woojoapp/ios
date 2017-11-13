@@ -35,7 +35,8 @@ class CandidatesViewController: UIViewController {
     var shouldApplyAppearAnimation = true
     var ranOutOfCards = true
     
-    let buttonsBackgroundColor = UIColor.black.withAlphaComponent(0.3)
+    //private let kolodaAlphaValueSemiTransparent: CGFloat = 0.1
+    //let buttonsBackgroundColor = UIColor.black.withAlphaComponent(0.3)
     
     /*@IBAction func likePressed(_ sender: DOFavoriteButton) {
         likeButton.select()
@@ -267,8 +268,10 @@ extension CandidatesViewController: KolodaViewDataSource {
             cardView.commonEventInfos = commonEventInfos
         }
         if let commonFriends = User.current.value?.candidates[index].commonFriends {
-            print("COMMON FRIENDS \(commonFriends)")
             cardView.commonFriends = commonFriends
+        }
+        if let commonPageLikes = User.current.value?.candidates[index].commonPageLikes {
+            cardView.commonPageLikes = commonPageLikes
         }
         cardView.candidatesViewController = self
         cardView.load {
@@ -277,8 +280,11 @@ extension CandidatesViewController: KolodaViewDataSource {
         return cardView
     }
     
-    func koloda(koloda: KolodaView, viewForCardOverlayAtIndex index: Int) -> OverlayView? {
-        return Bundle.main.loadNibNamed("OverlayView", owner: self, options: nil)?[0] as? OverlayView
+    func koloda(_ koloda: KolodaView, viewForCardOverlayAt index: Int) -> OverlayView? {
+        print("OVERLAYVIEW ICI")
+        let overlayView = Bundle.main.loadNibNamed("CandidateOverlayView", owner: self, options: nil)?[0] as? CandidateOverlayView
+        print("OVERLAYVIEW", overlayView)
+        return overlayView
     }
     
 }

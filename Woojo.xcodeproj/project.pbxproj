@@ -285,6 +285,9 @@
 		85EB2EE41DE20BCF00F0A55C /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EB2EE31DE20BCF00F0A55C /* Profile.swift */; };
 		85EB2EE61DE20DAE00F0A55C /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EB2EE51DE20DAE00F0A55C /* Activity.swift */; };
 		85EC21331F89822000C9FC7C /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EC21321F89822000C9FC7C /* Report.swift */; };
+		85FF1D491FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */; };
+		85FF1D4A1FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */; };
+		85FF1D4B1FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */; };
 		A14AFB3EBB53A69AEE35D369 /* Pods_Woojo_Staging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23E464082BF74BB81F3867C9 /* Pods_Woojo_Staging.framework */; };
 		D4A39FA7A6A90074E8ADF2B7 /* Pods_Woojo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5F606FAEF706B6471319465 /* Pods_Woojo.framework */; };
 /* End PBXBuildFile section */
@@ -399,6 +402,7 @@
 		85ED4E631DCFF7F200F51857 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		85ED4E651DD1EC7D00F51857 /* AddEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
 		85ED4E6D1DD229D600F51857 /* MyEventsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyEventsTableViewController.swift; sourceTree = "<group>"; };
+		85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateOverlayView.swift; sourceTree = "<group>"; };
 		9A2EC49C5603EE727058B9CF /* Pods_Woojo_Development.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Woojo_Development.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5F606FAEF706B6471319465 /* Pods_Woojo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Woojo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA30A4C6D15F53EBF70A92B4 /* Pods-Woojo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Woojo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Woojo/Pods-Woojo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -682,6 +686,7 @@
 			isa = PBXGroup;
 			children = (
 				8506A89F1DCC97F600C18EC3 /* CandidatesViewController.swift */,
+				85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */,
 				85407D9F1DF03FD90033E696 /* CandidateOverlayView.xib */,
 				85407DA11DF040070033E696 /* UserCardView.xib */,
 				85407DA31DF042A00033E696 /* UserCardView.swift */,
@@ -1281,6 +1286,7 @@
 				85662CA61F90BE2200D5701E /* SearchEventsViewController.swift in Sources */,
 				85B36AB41FB1BF8A00A7B599 /* Friend.swift in Sources */,
 				85662CAD1F90BE2200D5701E /* ChatViewController.swift in Sources */,
+				85FF1D491FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */,
 				85662CC01F90BE2200D5701E /* NavigationController.swift in Sources */,
 				85B36AC51FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift in Sources */,
 				85B36ABD1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift in Sources */,
@@ -1362,6 +1368,7 @@
 				85662CDF1F90BE2300D5701E /* BioTableViewCell.swift in Sources */,
 				85B36AB51FB1BF8A00A7B599 /* Friend.swift in Sources */,
 				85662CD21F90BE2300D5701E /* ExploreEventsViewController.swift in Sources */,
+				85FF1D4A1FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */,
 				85662CE01F90BE2300D5701E /* ProfilePhotoCollectionViewCell.swift in Sources */,
 				85B36AC61FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift in Sources */,
 				85B36ABE1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift in Sources */,
@@ -1443,6 +1450,7 @@
 				85662C8D1F90BE1300D5701E /* BioTableViewCell.swift in Sources */,
 				85B36AB61FB1BF8A00A7B599 /* Friend.swift in Sources */,
 				85662C801F90BE1300D5701E /* ExploreEventsViewController.swift in Sources */,
+				85FF1D4B1FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */,
 				85662C8E1F90BE1300D5701E /* ProfilePhotoCollectionViewCell.swift in Sources */,
 				85B36AC71FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift in Sources */,
 				85B36ABF1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift in Sources */,
