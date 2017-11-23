@@ -28,9 +28,20 @@ class Notifier {
                         self.doShout(announcement: announcement)
                     }
                 }
-            }
-            else if let messageNotification = shoutsQueue[0] as? CurrentUser.MessageNotification {
+            } else if let messageNotification = shoutsQueue[0] as? CurrentUser.MessageNotification {
                 announcement(notification: messageNotification) { announcement, error in
+                    if let announcement = announcement {
+                        self.doShout(announcement: announcement)
+                    }
+                }
+            } else if let eventsNotification = shoutsQueue[0] as? CurrentUser.EventsNotification {
+                announcement(notification: eventsNotification) { announcement, error in
+                    if let announcement = announcement {
+                        self.doShout(announcement: announcement)
+                    }
+                }
+            } else if let peopleNotification = shoutsQueue[0] as? CurrentUser.PeopleNotification {
+                announcement(notification: peopleNotification) { announcement, error in
                     if let announcement = announcement {
                         self.doShout(announcement: announcement)
                     }
@@ -78,11 +89,25 @@ class Notifier {
     func shouldShout(notification: CurrentUser.Notification) -> Bool {
         if let applicationDelegate = UIApplication.shared.delegate as? Application,
             let topViewController = applicationDelegate.getTopViewController() {
-            if let mainTabBarController = topViewController as? MainTabBarController,
-                let navigationController = mainTabBarController.selectedViewController as? NavigationController {
-                if let _ = navigationController.topViewController as? MessagesViewController { return false }
-                else if let chatViewController = navigationController.topViewController as? ChatViewController, let notification = notification as? CurrentUser.MessageNotification {
-                    return chatViewController.contactIds != notification.otherId
+            if notification is CurrentUser.InteractionNotification {
+                if let mainTabBarController = topViewController as? MainTabBarController,
+                    let navigationController = mainTabBarController.selectedViewController as? NavigationController {
+                    if navigationController.topViewController is MessagesViewController { return false }
+                    else if let chatViewController = navigationController.topViewController as? ChatViewController, let notification = notification as? CurrentUser.MessageNotification {
+                        return chatViewController.contactIds != notification.otherId
+                    } else { return true }
+                } else { return true }
+            } else if notification is CurrentUser.EventsNotification {
+                if let mainTabBarController = topViewController as? MainTabBarController,
+                    let navigationController = mainTabBarController.selectedViewController as? NavigationController {
+                    if navigationController.topViewController is EventsViewController { return false }
+                    else { return true }
+                } else { return true }
+            } else if notification is CurrentUser.PeopleNotification {
+                if let mainTabBarController = topViewController as? MainTabBarController,
+                    let navigationController = mainTabBarController.selectedViewController as? NavigationController {
+                    if navigationController.topViewController is CandidatesViewController { return false }
+                    else { return true }
                 } else { return true }
             } else { return true }
         } else { return false }
@@ -110,7 +135,32 @@ class Notifier {
                 }
             }
         }
-        
+    }
+    
+    func announcement(notification: CurrentUser.EventsNotification, completion: ((Announcement?, Error?) -> Void)? = nil) {
+        let announcement = Announcement(title: Constants.User.Notification.Events.announcement.title, subtitle: "Discover people in your \(String(notification.count)) new events!", image: #imageLiteral(resourceName: "events_tab_padded"), duration: Constants.User.Notification.Events.announcement.duration, action: {
+            self.tapOnNotification(notification: notification)
+        })
+        completion?(announcement, nil)
+    }
+    
+    func announcement(notification: CurrentUser.PeopleNotification, completion: ((Announcement?, Error?) -> Void)? = nil) {
+        let announcement = Announcement(title: Constants.User.Notification.People.announcement.title, subtitle: "You have new people waiting!", image: #imageLiteral(resourceName: "people"), duration: Constants.User.Notification.People.announcement.duration, action: {
+            self.tapOnNotification(notification: notification)
+        })
+        completion?(announcement, nil)
+    }
+    
+    func tapOnNotification(notification: CurrentUser.EventsNotification) {
+        if let applicationDelegate = UIApplication.shared.delegate as? Application {
+            applicationDelegate.navigateToEvents()
+        }
+    }
+    
+    func tapOnNotification(notification: CurrentUser.PeopleNotification) {
+        if let applicationDelegate = UIApplication.shared.delegate as? Application {
+            applicationDelegate.navigateToPeople()
+        }
     }
     
     func tapOnNotification(notification: CurrentUser.InteractionNotification) {

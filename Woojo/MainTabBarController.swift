@@ -35,10 +35,30 @@ class MainTabBarController: UITabBarController {
                 }
             }
             .subscribe(onNext: { notifications in
+                if let eventsTabBarItem = self.tabBar.items?[0] {
+                    let eventsNotifications = notifications.filter({ $0 is CurrentUser.EventsNotification })
+                    eventsTabBarItem.badgeValue = (eventsNotifications.count > 0) ? "" : nil
+                }
+                if let peopleTabBarItem = self.tabBar.items?[1] {
+                    let peopleNotifications = notifications.filter({ $0 is CurrentUser.PeopleNotification })
+                    peopleTabBarItem.badgeValue = (peopleNotifications.count > 0) ? "" : nil
+                }
                 if let chatsTabBarItem = self.tabBar.items?[2] {
-                    chatsTabBarItem.badgeValue = (notifications.count > 0) ? String(notifications.count) : nil
+                    let interactionNotifications = notifications.filter({ $0 is CurrentUser.InteractionNotification })
+                    chatsTabBarItem.badgeValue = (interactionNotifications.count > 0) ? String(interactionNotifications.count) : nil
                 }
             }).addDisposableTo(disposeBag)
+    }
+    
+    func showEvents() {
+        self.selectedIndex = 0
+        if let eventsNavigationController = self.selectedViewController as? UINavigationController, eventsNavigationController.topViewController is EventDetailsViewController {
+                _ = eventsNavigationController.popViewController(animated: true)
+        }
+    }
+    
+    func showPeople() {
+        self.selectedIndex = 1
     }
     
     func showChatFor(otherUid: String) {
@@ -49,7 +69,7 @@ class MainTabBarController: UITabBarController {
                     HUD.flash(.progress, delay: 5.0)
                     _ = chatViewController.navigationController?.popViewController(animated: true)
                     if let messagesViewController = chatViewController.chatViewDelegate as? MessagesViewController {
-                        messagesViewController.showChatAfterDidAppear = otherUid
+                        messagesViewController.showAfterDidAppear = otherUid
                     }
                 }
             } else if let messagesViewController = chatsNavigationController.topViewController as? MessagesViewController {
@@ -57,10 +77,9 @@ class MainTabBarController: UITabBarController {
                 if messagesViewController.didAppear {
                     messagesViewController.createDetailChatViewController(otherUid)
                 } else {
-                    messagesViewController.showChatAfterDidAppear = otherUid
+                    messagesViewController.showAfterDidAppear = otherUid
                 }
             }
         }
     }
-    
 }

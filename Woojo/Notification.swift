@@ -13,6 +13,8 @@ extension CurrentUser {
     enum NotificationType: String {
         case match
         case message
+        case events
+        case people
     }
     
     class Notification {
@@ -99,15 +101,31 @@ extension CurrentUser {
         }*/
         
         class func deleteAll(otherId: String) {
-            let queryRef = ref.queryOrdered(byChild: Constants.User.Notification.Interaction.properties.firebaseNodes.otherId).queryEqual(toValue: otherId)
-            queryRef.observeSingleEvent(of: .value, with: { snapshot in
-                for child in snapshot.children {
-                    if let child = child as? DataSnapshot {
-                        child.ref.removeValue()
+            if User.current.value != nil {
+                let queryRef = ref.queryOrdered(byChild: Constants.User.Notification.Interaction.properties.firebaseNodes.otherId).queryEqual(toValue: otherId)
+                queryRef.observeSingleEvent(of: .value, with: { snapshot in
+                    for child in snapshot.children {
+                        if let child = child as? DataSnapshot {
+                            child.ref.removeValue()
+                        }
                     }
-                }
-                queryRef.removeAllObservers()
-            })
+                    queryRef.removeAllObservers()
+                })
+            }
+        }
+        
+        class func deleteAll(type: String) {
+            if User.current.value != nil {
+                let queryRef = ref.queryOrdered(byChild: Constants.User.Notification.properties.firebaseNodes.type).queryEqual(toValue: type)
+                queryRef.observeSingleEvent(of: .value, with: { snapshot in
+                    for child in snapshot.children {
+                        if let child = child as? DataSnapshot {
+                            child.ref.removeValue()
+                        }
+                    }
+                    queryRef.removeAllObservers()
+                })
+            }
         }
         
         func toDictionary() -> [String:Any] {
@@ -145,6 +163,66 @@ extension CurrentUser {
             }
         }
         
+    }
+    
+    class EventsNotification: Notification {
+        var count: Int
+        
+        init(id: String, created: Date, type: NotificationType, count: Int, displayed: Bool? = nil , data: [String:Any]? = nil) {
+            self.count = count
+            super.init(id: id, type: type, created: created, displayed: displayed, data: data)
+        }
+        
+        init(notification: Notification, count: Int) {
+            self.count = count
+            super.init(id: notification.id, type: notification.type, created: notification.created, displayed: notification.displayed, data: notification.data)
+        }
+        
+        convenience init?(fromFirebase snapshot: DataSnapshot) {
+            if let value = snapshot.value as? [String:Any],
+                let notification = Notification(fromFirebase: snapshot),
+                let count = value[Constants.User.Notification.Events.properties.firebaseNodes.count] as? Int {
+                self.init(notification: notification, count: count)
+            } else {
+                return nil
+            }
+        }
+        
+        override func toDictionary() -> [String:Any] {
+            var dict = super.toDictionary()
+            dict[Constants.User.Notification.Events.properties.firebaseNodes.count] = self.count
+            return dict
+        }
+    }
+    
+    class PeopleNotification: Notification {
+        var count: Int
+        
+        init(id: String, created: Date, type: NotificationType, count: Int, displayed: Bool? = nil , data: [String:Any]? = nil) {
+            self.count = count
+            super.init(id: id, type: type, created: created, displayed: displayed, data: data)
+        }
+        
+        init(notification: Notification, count: Int) {
+            self.count = count
+            super.init(id: notification.id, type: notification.type, created: notification.created, displayed: notification.displayed, data: notification.data)
+        }
+        
+        convenience init?(fromFirebase snapshot: DataSnapshot) {
+            if let value = snapshot.value as? [String:Any],
+                let notification = Notification(fromFirebase: snapshot),
+                let count = value[Constants.User.Notification.People.properties.firebaseNodes.count] as? Int {
+                self.init(notification: notification, count: count)
+            } else {
+                return nil
+            }
+        }
+        
+        override func toDictionary() -> [String:Any] {
+            var dict = super.toDictionary()
+            dict[Constants.User.Notification.People.properties.firebaseNodes.count] = self.count
+            return dict
+        }
     }
     
     class InteractionNotification: Notification {

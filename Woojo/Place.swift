@@ -13,6 +13,22 @@ struct Place {
     
     var name: String?
     var location: Location?
+    var displayString: String {
+        get {
+            var placeString = Constants.Event.Place.defaultDisplayString
+            if let placeName = name {
+                placeString = placeName
+            }
+            if let location = location, let city = location.city {
+                if placeString != Constants.Event.Place.defaultDisplayString && placeString != city {
+                    placeString = "\(placeString) (\(city))"
+                } else {
+                    placeString = city
+                }
+            }
+            return placeString
+        }
+    }
     
 }
 

@@ -17,6 +17,7 @@ import FacebookLogin
 import RxSwift
 import RxCocoa
 import Applozic
+import Branch
 
 class CurrentUser: User {
     
@@ -57,6 +58,7 @@ class CurrentUser: User {
     var candidates: [Candidate] = []
     var events: Variable<[Event]> = Variable([])
     var recommendedEvents: Variable<[Event]> = Variable([])
+    var pendingEvents: Variable<[Event]> = Variable([])
     var notifications: Variable<[Notification]> = Variable([])
     var isLoading: Variable<Bool> = Variable(false)
     var tips: [String:Any]?
@@ -116,6 +118,7 @@ class CurrentUser: User {
                 self.profile.startObservingPhotos()
                 self.startObservingEvents()
                 self.startObservingRecommendedEvents()
+                self.startObservingPendingEvents()
                 self.startObservingNotifications()
                 self.startObservingCandidates()
                 self.isLoading.value = false
@@ -324,7 +327,6 @@ class CurrentUser: User {
                 let type = NotificationType(rawValue: typeString) {
                 switch type {
                 case .match:
-                    print("match")
                     if let matchNotification = MatchNotification(fromFirebase: snapshot) {
                         self.notifications.value.append(matchNotification)
                         if matchNotification.displayed != true {
@@ -334,15 +336,24 @@ class CurrentUser: User {
                         }
                     }
                 case .message:
-                    print("message")
                     if let messageNotification = MessageNotification(fromFirebase: snapshot) {
-                        print("Parsed", messageNotification.displayed)
                         self.notifications.value.append(messageNotification)
                         if messageNotification.displayed != true {
-                            //DispatchQueue.main.async {
-                                print("Scheduling", messageNotification.displayed)
-                                Notifier.shared.schedule(notification: messageNotification)
-                            //}
+                            Notifier.shared.schedule(notification: messageNotification)
+                        }
+                    }
+                case .events:
+                    if let eventsNotification = EventsNotification(fromFirebase: snapshot) {
+                        self.notifications.value.append(eventsNotification)
+                        if eventsNotification.displayed != true {
+                            Notifier.shared.schedule(notification: eventsNotification)
+                        }
+                    }
+                case .people:
+                    if let peopleNotification = PeopleNotification(fromFirebase: snapshot) {
+                        self.notifications.value.append(peopleNotification)
+                        if peopleNotification.displayed != true {
+                            Notifier.shared.schedule(notification: peopleNotification)
                         }
                     }
                 }
@@ -487,7 +498,74 @@ class CurrentUser: User {
         isObservingRecommendedEvents = false
     }
     
+    var pendingEventsRef: DatabaseReference {
+        get {
+            return ref.child(Constants.User.PendingEvent.firebaseNode)
+        }
+    }
+    
+    var isObservingPendingEvents: Bool = false
+    
+    func startObservingPendingEvents() {
+        isObservingPendingEvents = true
+        pendingEventsRef.observe(.childAdded, with: { snapshot in
+            print("childAdded in pending events", snapshot)
+            self.getEventsFromFacebook(eventIds: [snapshot.key], completion: { (events) in
+                if events.count > 0 {
+                    self.append(pendingEvent: events[0])
+                }
+            })
+        }, withCancel: { error in
+            print("Cancelled observing pendingEvents.childAdded: \(error)")
+            self.isObservingPendingEvents = false
+        })
+        pendingEventsRef.observe(.childRemoved, with: { snapshot in
+            if let index = self.pendingEvents.value.index(where: { event in
+                return event.id == snapshot.key
+            }) {
+                self.pendingEvents.value.remove(at: index)
+            }
+        }, withCancel: { error in
+            print("Cancelled observing pendingEvents.childRemoved: \(error)")
+            self.isObservingPendingEvents = false
+        })
+    }
+    
+    func stopObservingPendingEvents() {
+        pendingEventsRef.removeAllObservers()
+        isObservingPendingEvents = false
+    }
+    
     // MARK: - Miscellaneous
+    
+    func getEventsFromFacebook(eventIds: [String], completion: @escaping (([Event]) -> Void)) {
+        var events: [Event] = []
+        if AccessToken.current != nil {
+            if firebaseAuthUser != nil {
+                let connection = GraphRequestConnection()
+                let requestsGroup = DispatchGroup()
+                for eventId in eventIds {
+                    requestsGroup.enter()
+                    let userEventGraphRequest = UserEventGraphRequest(eventId: eventId)
+                    connection.add(userEventGraphRequest, batchEntryName: nil, completion: { (response, result) in
+                        switch result {
+                        case .success(let response):
+                            if let event = response.event {
+                                events.append(event)
+                            }
+                        case .failed(let error):
+                            print("UserEventGraphRequest failed: \(error.localizedDescription)")
+                        }
+                        requestsGroup.leave()
+                    })
+                }
+                connection.start()
+                requestsGroup.notify(queue: .main, execute: {
+                    completion(events.sorted(by: { $0.start > $1.start }))
+                })
+            }
+        }
+    }
     
     func getEventsFromFacebook(completion: @escaping (([Event]) -> Void)) {
         var eventsAttendingOrUnsure: [Event] = []
@@ -498,7 +576,7 @@ class CurrentUser: User {
                 let requestsGroup = DispatchGroup()
                 requestsGroup.enter()
                 let userAttendingAndUnsureEventsGraphRequest = UserEventsGraphRequest()
-                connection.add(userAttendingAndUnsureEventsGraphRequest, batchEntryName: nil, completion: { (response, result) in
+                connection.add(userAttendingAndUnsureEventsGraphRequest, batchEntryName: nil, completion: { (_, result) in
                     switch result {
                     case .success(let response):
                         eventsAttendingOrUnsure = response.events
@@ -509,7 +587,7 @@ class CurrentUser: User {
                 })
                 requestsGroup.enter()
                 let userNotRepliedEventsGraphRequest = UserNotRepliedEventsGraphRequest()
-                connection.add(userNotRepliedEventsGraphRequest, batchEntryName: nil, completion: { (response, result) in
+                connection.add(userNotRepliedEventsGraphRequest, batchEntryName: nil, completion: { (_, result) in
                     switch result {
                     case .success(let response):
                         eventsNotReplied = response.events
@@ -580,6 +658,15 @@ class CurrentUser: User {
         }
     }
     
+    func removeAllPendingEvents(completion: ((Error?) -> Void)?) {
+        pendingEventsRef.removeValue { error, ref in
+            if let error = error {
+                print("Failed to remove user pending event: \(error.localizedDescription)")
+            }
+            completion?(error)
+        }
+    }
+    
     func add(event: Event, completion: ((Error?) -> Void)?) {
         ref.child(Constants.User.Properties.fbAccessToken).setValue(AccessToken.current?.authenticationToken) { error, ref in
             self.eventsRef.child(event.id).setValue(event.rsvpStatus, withCompletionBlock: { error, ref in
@@ -629,6 +716,17 @@ class CurrentUser: User {
         }
     }
     
+    func append(pendingEvent: Event?) {
+        if let event = pendingEvent {
+            if self.pendingEvents.value.index(where: { e in
+                return e.id == event.id
+            }) == nil {
+                self.pendingEvents.value.append(event)
+                self.pendingEvents.value.sort(by: { $0.start > $1.start })
+            }
+        }
+    }
+    
     func getAlbumsFromFacebook(completion: @escaping ([Album]) -> Void) {
         if AccessToken.current != nil {
             if firebaseAuthUser != nil {
@@ -662,6 +760,38 @@ class CurrentUser: User {
     func dismissTip(tipId: String, completion: ((Error?) -> Void)? = nil) {
         self.ref.child(Constants.User.Tip.firebaseNode).child(tipId).setValue(Event.dateFormatter.string(from: Date())) { (error, _) in
             completion?(error)
+        }
+    }
+    
+    func setNotificationsState(type: String, enabled: Bool, completion: ((Error?) -> ())?) {
+        self.ref.child(Constants.User.Settings.firebaseNode)
+                .child(Constants.User.Settings.Notifications.firebaseNode)
+                .child(type)
+                .setValue(enabled) { (error, _) in
+            completion?(error)
+        }
+    }
+    
+    func getNotificationsState(type: String, completion: @escaping ((Bool) -> ())) {
+        self.ref.child(Constants.User.Settings.firebaseNode)
+            .child(Constants.User.Settings.Notifications.firebaseNode)
+            .child(type)
+            .observe(.value, with: { (snapshot) in
+                if let enabled = snapshot.value as? Bool {
+                    completion(enabled)
+                } else {
+                    completion(false)
+                }
+            })
+    }
+    
+    func share(from: UIViewController?) {
+        let buo = BranchUniversalObject(canonicalIdentifier: "app")
+        let lp = BranchLinkProperties()
+        lp.channel = "inapp"
+        lp.feature = "sharing"
+        buo.showShareSheet(with: lp, andShareText: "Try Woojo and match with people going to the same events as you!", from: from) { (activity, complete) in
+            print("SHARED", activity, complete)
         }
     }
 }

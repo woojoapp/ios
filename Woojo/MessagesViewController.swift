@@ -16,7 +16,7 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIG
     
     var disposeBag = DisposeBag()
     
-    var showChatAfterDidAppear: String?
+    var showAfterDidAppear: String?
     var didAppear = false
     
     override func viewDidLoad() {
@@ -56,6 +56,8 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIG
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
         reloadData()
+        
+        User.current.value?.activity.setLastSeen()
     }
     
     func enteredForeground() {
@@ -78,9 +80,19 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIG
                 }
             }
         }
-        if let showChatAfterDidAppear = showChatAfterDidAppear {
-            self.createDetailChatViewController(showChatAfterDidAppear)
-            self.showChatAfterDidAppear = nil
+        if let showAfterDidAppear = showAfterDidAppear {
+            if showAfterDidAppear == "events" {
+                if let mainTabBarController = self.tabBarController as? MainTabBarController {
+                    mainTabBarController.selectedIndex = 0
+                }
+            } else if showAfterDidAppear == "people" {
+                if let mainTabBarController = self.tabBarController as? MainTabBarController {
+                    mainTabBarController.selectedIndex = 1
+                }
+            } else {
+                self.createDetailChatViewController(showAfterDidAppear)
+            }
+            self.showAfterDidAppear = nil
         }
         didAppear = true
         HUD.hide()
