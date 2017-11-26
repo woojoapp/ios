@@ -87,7 +87,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         } else if let mainTabBarController = topViewController as? MainTabBarController {
             if let navigationController = mainTabBarController.selectedViewController as? NavigationController,
                 let chatViewController = navigationController.topViewController as? ChatViewController {
-                HUD.flash(.progress, delay: 5.0)
+                //HUD.flash(.progress, delay: 5.0)
                 if let messagesViewController = chatViewController.chatViewDelegate as? MessagesViewController {
                     messagesViewController.showAfterDidAppear = "events"
                 }
@@ -115,7 +115,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         } else if let mainTabBarController = topViewController as? MainTabBarController {
             if let navigationController = mainTabBarController.selectedViewController as? NavigationController,
                 let chatViewController = navigationController.topViewController as? ChatViewController {
-                HUD.flash(.progress, delay: 5.0)
+                //HUD.flash(.progress, delay: 5.0)
                 if let messagesViewController = chatViewController.chatViewDelegate as? MessagesViewController {
                     messagesViewController.showAfterDidAppear = "people"
                 }
@@ -279,6 +279,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func handlePushNotificationTap(notificationId: String, completionHandler: (() -> Void)?) {
+        HUD.flash(.progress, delay: 10.0) // Show a progress HUD while Firebase synchronises data and retrieves notifications
         Woojo.User.current.asObservable().takeWhile({ $0 == nil }).subscribe(onCompleted: {
             Woojo.User.current.value?.notifications.asObservable().takeWhile({ (notifications) -> Bool in
                 return !notifications.contains(where: { $0.id == notificationId })
