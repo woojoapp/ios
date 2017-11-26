@@ -55,10 +55,12 @@ class MainTabBarController: UITabBarController {
         if let eventsNavigationController = self.selectedViewController as? UINavigationController, eventsNavigationController.topViewController is EventDetailsViewController {
                 _ = eventsNavigationController.popViewController(animated: true)
         }
+        HUD.hide()
     }
     
     func showPeople() {
         self.selectedIndex = 1
+        HUD.hide()
     }
     
     func showChatFor(otherUid: String) {
