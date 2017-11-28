@@ -97,7 +97,7 @@ class PhotoCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! AlbumPhotoCollectionViewCell
         //cell.imageView.image = nil
-        if let image = photos[indexPath.row].getBestImage(size: .thumbnail),
+        if let image = photos[indexPath.row].getSmallestBigEnoughImage(size: .thumbnail),
             let url = image.url {
             SDWebImageManager
                 .shared()
@@ -106,7 +106,6 @@ class PhotoCollectionViewController: UICollectionViewController {
                                progress: { (receivedSize: Int, expectedSize: Int) -> Void in
                                 DispatchQueue.main.async {
                                     cell.progressIndicator.isHidden = false
-                                    print(Float(receivedSize)/Float(expectedSize))
                                     cell.progressIndicator.setProgress(Float(receivedSize)/Float(expectedSize), animated: true)
                                 }
                 },
@@ -205,7 +204,6 @@ extension PhotoCollectionViewController: RSKImageCropViewControllerDataSource {
             height = self.view.frame.height - topMargin - bottomMargin - 32.0
             y = topMargin + 16.0
         }
-        print("DIMENSIONS", x, y, width, height, height / width, 16.0/9.0)
         return CGRect(x: x, y: y, width: width, height: height)
     }
 }
@@ -219,8 +217,8 @@ extension PhotoCollectionViewController: RSKImageCropViewControllerDelegate {
     func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect) {
         if let reachable = isReachable(), reachable {
             HUD.show(.progress)
-            if let selectedIndex = collectionView?.indexPathsForSelectedItems?[0].row, let id = photos[selectedIndex].id {
-                User.current.value?.profile.setPhoto(photo: croppedImage, id: id, index: self.photoIndex) { photo, error in
+            //if let selectedIndex = collectionView?.indexPathsForSelectedItems?[0].row/*, let id = photos[selectedIndex].id*/ {
+                User.current.value?.profile.setPhoto(photo: croppedImage, id: UUID().uuidString, index: self.photoIndex) { photo, error in
                     if error != nil {
                         HUD.show(.labeledError(title: "Error", subtitle: "Failed to add photo"))
                         HUD.hide(afterDelay: 1.0)
@@ -232,7 +230,7 @@ extension PhotoCollectionViewController: RSKImageCropViewControllerDelegate {
                     self.profileViewController?.photosCollectionView.reloadItems(at: [IndexPath(row: self.photoIndex, section: 0)])
                     Analytics.Log(event: Constants.Analytics.Events.PhotoAdded.name, with: [Constants.Analytics.Events.PhotoAdded.Parameters.source: "facebook"])
                 }
-            }
+            //}
         } else {
             HUD.show(.labeledError(title: "No internet", subtitle: nil))
             HUD.hide(afterDelay: 2.0)

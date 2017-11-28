@@ -434,7 +434,8 @@ extension User.Profile {
         let group = DispatchGroup()
         group.enter()
         let aspectRatio = 1.6
-        guard let fullImage = resize(image: photo, targetSize: CGSize(width: Double(User.Profile.Photo.Size.full.rawValue), height: Double(User.Profile.Photo.Size.full.rawValue) * aspectRatio)), let fullImageJPEGData = UIImageJPEGRepresentation(fullImage, 0.9) else {
+        let ppp = 3.0
+        guard let fullImage = resize(image: photo, targetSize: CGSize(width: Double(User.Profile.Photo.Size.full.rawValue) * ppp, height: Double(User.Profile.Photo.Size.full.rawValue) * aspectRatio * ppp)), let fullImageJPEGData = UIImageJPEGRepresentation(fullImage, 0.9) else {
             print("Failed to resize photo to full size")
             return
         }
@@ -447,7 +448,7 @@ extension User.Profile {
         })
         
         group.enter()
-        guard let thumbnailImage = resize(image: photo, targetSize: CGSize(width: User.Profile.Photo.Size.thumbnail.rawValue, height: User.Profile.Photo.Size.thumbnail.rawValue)), let thumbnailImageJPEGData = UIImageJPEGRepresentation(thumbnailImage, 0.9) else {
+        guard let thumbnailImage = resize(image: photo, targetSize: CGSize(width: Double(User.Profile.Photo.Size.thumbnail.rawValue) * ppp, height: Double(User.Profile.Photo.Size.thumbnail.rawValue) * ppp)), let thumbnailImageJPEGData = UIImageJPEGRepresentation(thumbnailImage, 0.9) else {
             print("Failed to resize photo to thumbnail size")
             return
         }

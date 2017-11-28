@@ -122,10 +122,10 @@ class Album {
             return biggerImages.count > 0
         }
         
-        func getBestImage(size: User.Profile.Photo.Size) -> Image? {
+        func getSmallestBigEnoughImage(size: User.Profile.Photo.Size) -> Image? {
             let biggerImages = images.filter{ $0.width > size.rawValue && $0.height > size.rawValue }
             if biggerImages.count == 0 {
-                print("Coulnd't find an image big enough to fit format")
+                print("Couldn't find an image big enough to fit format")
                 return nil
             }
             let best = biggerImages.min { $0.width * $0.height < $1.width * $1.height }
@@ -133,7 +133,8 @@ class Album {
         }
         
         func getBiggestImage() -> Image? {
-            return images.max { $0.width * $0.height < $1.width * $1.height }
+            let biggestImage = images.max { $0.width * $0.height < $1.width * $1.height }
+            return biggestImage
         }
         
     }
