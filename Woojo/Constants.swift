@@ -119,6 +119,10 @@ struct Constants {
             }
         }
         
+        struct PendingEvent {
+            static let firebaseNode = "pending-events"
+        }
+        
         struct Recommendations {
             static let firebaseNode = "recommendations"
             struct properties {
@@ -139,6 +143,20 @@ struct Constants {
                 }
             }
         }
+        
+        struct Settings {
+            static let firebaseNode = "settings"
+            struct Notifications {
+                static let firebaseNode = "notifications"
+                struct Types {
+                    static let Match = "match"
+                    static let Message = "message"
+                    static let People = "people"
+                    static let Events = "events"
+                }
+            }
+        }
+        
         struct Notification {
             static let firebaseNode = "notifications"
             static let dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
@@ -149,6 +167,28 @@ struct Constants {
                     static let created = "created"
                     static let displayed = "displayed"
                     static let data = "data"
+                }
+            }
+            struct Events {
+                struct announcement {
+                    static let title = "New events"
+                    static let duration = 2.0
+                }
+                struct properties {
+                    struct firebaseNodes {
+                        static let count = "count"
+                    }
+                }
+            }
+            struct People {
+                struct announcement {
+                    static let title = "New people"
+                    static let duration = 2.0
+                }
+                struct properties {
+                    struct firebaseNodes {
+                        static let count = "count"
+                    }
                 }
             }
             struct Interaction {
@@ -293,6 +333,8 @@ struct Constants {
                 static let coverURL = "cover_url"
                 static let description = "description"
                 static let attendingCount = "attending_count"
+                static let interestedCount = "interested_count"
+                static let noReplyCount = "noreply_count"
             }
             struct graphAPIKeys {
                 static let id = "id"
@@ -307,12 +349,15 @@ struct Constants {
                 static let coverSource = "source"
                 static let description = "description"
                 static let attendingCount = "attending_count"
+                static let interestedCount = "interested_count"
+                static let noReplyCount = "noreply_count"
                 static let rsvpStatus = "rsvp_status"
             }
         }
         struct Place {
             static let firebaseNode = "place"
             static let graphAPIKey = "place"
+            static let defaultDisplayString = "Unknown location"
             struct properties {
                 struct firebaseNodes {
                     static let name = "name"

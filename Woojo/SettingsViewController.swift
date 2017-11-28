@@ -14,8 +14,7 @@ import RxSwift
 class SettingsViewController: UITableViewController {
     
     @IBOutlet weak var logoutButton: UIButton!
-    @IBOutlet weak var deleteAccountButton: UIButton!
-    @IBOutlet weak var pushNotificationsSwitch: UISwitch!
+    @IBOutlet weak var deleteAccountButton: UIButton!    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var profilePhotoImageView: ProfilePhotoImageView!
@@ -50,17 +49,6 @@ class SettingsViewController: UITableViewController {
     @IBAction func dismiss(sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    @IBAction
-    func switchNotifications(sender: UISwitch) {
-        if sender.isOn {
-            if let application = UIApplication.shared.delegate as? Woojo.Application {
-                application.requestNotifications()
-            }
-        } else {
-            UIApplication.shared.unregisterForRemoteNotifications()
-        }
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,8 +58,7 @@ class SettingsViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         startMonitoringReachability()
-        checkReachability()
-        self.pushNotificationsSwitch.isOn = UIApplication.shared.isRegisteredForRemoteNotifications
+        checkReachability()        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -150,6 +137,11 @@ class SettingsViewController: UITableViewController {
                 UIView.commitAnimations()
             }
         }
+    }
+    
+    @IBAction
+    func share() {
+        User.current.value?.share(from: self)        
     }
     
     /*override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {

@@ -20,6 +20,7 @@ import RxSwift
 import RxCocoa
 import Whisper
 import UserNotifications
+import Branch
 
 @UIApplicationMain
 class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
@@ -53,7 +54,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func navigateToChat(otherUid: String) {
         let topViewController = getTopViewController()
         if let navigationController = topViewController as? NavigationController {
-            navigationController.otherUid = otherUid
+            navigationController.navigationDestination = otherUid
             navigationController.performSegue(withIdentifier: "unwindToMainTabBar", sender: navigationController)
         } else if let topViewController = topViewController as? UserDetailsViewController {
             if let mainTabBarController = topViewController.presentingViewController as? MainTabBarController {
@@ -62,10 +63,66 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         } else if let topViewController = topViewController as? UIImagePickerController,
             let navigationController = topViewController.presentingViewController as? NavigationController {
-            navigationController.otherUid = otherUid
+            navigationController.navigationDestination = otherUid
             navigationController.performSegue(withIdentifier: "unwindToMainTabBar", sender: navigationController)
         } else if let mainTabBarController = topViewController as? MainTabBarController {
             mainTabBarController.showChatFor(otherUid: otherUid)
+        }
+    }
+    
+    func navigateToEvents() {
+        let topViewController = getTopViewController()
+        if let navigationController = topViewController as? NavigationController {
+            navigationController.navigationDestination = "events"
+            navigationController.performSegue(withIdentifier: "unwindToMainTabBar", sender: navigationController)
+        } else if let topViewController = topViewController as? UserDetailsViewController {
+            if let mainTabBarController = topViewController.presentingViewController as? MainTabBarController {
+                topViewController.dismiss(sender: nil)
+                mainTabBarController.showEvents()
+            }
+        } else if let topViewController = topViewController as? UIImagePickerController,
+            let navigationController = topViewController.presentingViewController as? NavigationController {
+            navigationController.navigationDestination = "events"
+            navigationController.performSegue(withIdentifier: "unwindToMainTabBar", sender: navigationController)
+        } else if let mainTabBarController = topViewController as? MainTabBarController {
+            if let navigationController = mainTabBarController.selectedViewController as? NavigationController,
+                let chatViewController = navigationController.topViewController as? ChatViewController {
+                //HUD.flash(.progress, delay: 5.0)
+                if let messagesViewController = chatViewController.chatViewDelegate as? MessagesViewController {
+                    messagesViewController.showAfterDidAppear = "events"
+                }
+                navigationController.popViewController(animated: true)
+            } else {
+                mainTabBarController.showEvents()
+            }
+        }
+    }
+    
+    func navigateToPeople() {
+        let topViewController = getTopViewController()
+        if let navigationController = topViewController as? NavigationController {
+            navigationController.navigationDestination = "people"
+            navigationController.performSegue(withIdentifier: "unwindToMainTabBar", sender: navigationController)
+        } else if let topViewController = topViewController as? UserDetailsViewController {
+            if let mainTabBarController = topViewController.presentingViewController as? MainTabBarController {
+                topViewController.dismiss(sender: nil)
+                mainTabBarController.showPeople()
+            }
+        } else if let topViewController = topViewController as? UIImagePickerController,
+            let navigationController = topViewController.presentingViewController as? NavigationController {
+            navigationController.navigationDestination = "people"
+            navigationController.performSegue(withIdentifier: "unwindToMainTabBar", sender: navigationController)
+        } else if let mainTabBarController = topViewController as? MainTabBarController {
+            if let navigationController = mainTabBarController.selectedViewController as? NavigationController,
+                let chatViewController = navigationController.topViewController as? ChatViewController {
+                //HUD.flash(.progress, delay: 5.0)
+                if let messagesViewController = chatViewController.chatViewDelegate as? MessagesViewController {
+                    messagesViewController.showAfterDidAppear = "people"
+                }
+                navigationController.popViewController(animated: true)
+            } else {
+                mainTabBarController.showPeople()
+            }
         }
     }
     
@@ -123,6 +180,16 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
             }
         }
+        
+        Branch.getInstance().setDebug()
+        Branch.getInstance().initSession(launchOptions: launchOptions, andRegisterDeepLinkHandler: {params, error in
+            if error == nil {
+                // params are the deep linked params associated with the link that the user clicked -> was re-directed to this app
+                // params will be empty if no data found
+                // ... insert custom logic here ...
+                print("params: %@", params as? [String: AnyObject] ?? {})
+            }
+        })
         
         return true
     }
@@ -191,6 +258,8 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         let appState: NSNumber = NSNumber(value: 0 as Int32)                 // APP_STATE_INACTIVE
         alPushNotificationService.processPushNotification(userInfo, updateUI: appState)
+        
+        Branch.getInstance().handlePushNotification(userInfo)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
@@ -210,14 +279,20 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func handlePushNotificationTap(notificationId: String, completionHandler: (() -> Void)?) {
+        HUD.flash(.progress, delay: 10.0) // Show a progress HUD while Firebase synchronises data and retrieves notifications
         Woojo.User.current.asObservable().takeWhile({ $0 == nil }).subscribe(onCompleted: {
             Woojo.User.current.value?.notifications.asObservable().takeWhile({ (notifications) -> Bool in
                 return !notifications.contains(where: { $0.id == notificationId })
             }).subscribe(onCompleted: {
-                if let notification = Woojo.User.current.value?.notifications.value.first(where: { $0.id == notificationId }) as? CurrentUser.InteractionNotification {
+                let notification = Woojo.User.current.value?.notifications.value.first(where: { $0.id == notificationId })
+                if let notification = notification as? CurrentUser.InteractionNotification {
                     Notifier.shared.tapOnNotification(notification: notification)
-                    completionHandler?()
+                } else if let notification = notification as? CurrentUser.EventsNotification {
+                    Notifier.shared.tapOnNotification(notification: notification)
+                } else if let notification = notification as? CurrentUser.PeopleNotification {
+                    Notifier.shared.tapOnNotification(notification: notification)
                 }
+                completionHandler?()
             }).addDisposableTo(self.disposeBag)
         }).addDisposableTo(self.disposeBag)
     }
@@ -241,6 +316,9 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         print("APP_ENTER_IN_BACKGROUND")
         let registerUserClientService = ALRegisterUserClientService()
         registerUserClientService.disconnect()
+        
+        User.current.value?.activity.setLastSeen()
+        
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "APP_ENTER_IN_BACKGROUND"), object: nil)
     }
 
@@ -250,6 +328,8 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         registerUserClientService.connect()
         ALPushNotificationService.applicationEntersForeground()
         print("APP_ENTER_IN_FOREGROUND")
+        
+        User.current.value?.activity.setLastSeen()
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "APP_ENTER_IN_FOREGROUND"), object: nil)
         //UIApplication.shared.applicationIconBadgeNumber = 0
@@ -266,7 +346,19 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        return FacebookCore.SDKApplicationDelegate.shared.application(app, open: url, options: options)
+        // pass the url to the handle deep link call
+        let branchHandled = Branch.getInstance().application(app, open: url, options: options)
+        if (!branchHandled) {
+            return FacebookCore.SDKApplicationDelegate.shared.application(app, open: url, options: options)
+        }
+        return true
+    }
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        // pass the url to the handle deep link call
+        Branch.getInstance().continue(userActivity)
+        
+        return true
     }
     
     // MARK: - Remote config

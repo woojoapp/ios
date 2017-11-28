@@ -22,11 +22,40 @@ class Event {
     var coverURL: URL?
     var description: String?
     var attendingCount: Int?
+    var interestedCount: Int?
+    var noReplyCount: Int?
     var rsvpStatus: String = "unsure"
+    var matches: [User] = []
     
     var ref: DatabaseReference {
         get {
             return Database.database().reference().child(Constants.Event.firebaseNode).child(id)
+        }
+    }
+    
+    var timesString: String {
+        get {
+            var timesString = Event.humanDateFormatter.string(from: start)
+            if let end = end {
+                timesString = "\(timesString) - \(Event.humanDateFormatter.string(from: end))"
+            }
+            return timesString
+        }
+    }
+    
+    var rsvpString: String {
+        get {
+            var rsvpInfo: [String] = []
+            if let attendingCount = attendingCount {
+                rsvpInfo.append("\(String(attendingCount)) going")
+            }
+            if let interestedCount = interestedCount {
+                rsvpInfo.append("\(String(interestedCount)) maybe")
+            }
+            if let noReplyCount = noReplyCount {
+                rsvpInfo.append("\(String(noReplyCount)) invited")
+            }
+            return rsvpInfo.joined(separator: ", ")
         }
     }
     
@@ -78,6 +107,12 @@ extension Event {
             if let attendingCount = value[Constants.Event.properties.firebaseNodes.attendingCount] as? Int {
                 event.attendingCount = attendingCount
             }
+            if let interestedCount = value[Constants.Event.properties.firebaseNodes.interestedCount] as? Int {
+                event.interestedCount = interestedCount
+            }
+            if let noReplyCount = value[Constants.Event.properties.firebaseNodes.noReplyCount] as? Int {
+                event.noReplyCount = noReplyCount
+            }
             event.place = Place.from(firebase: snapshot.childSnapshot(forPath: Constants.Event.Place.firebaseNode))
             return event
             
@@ -116,6 +151,12 @@ extension Event {
             if let attendingCount = dict[Constants.Event.properties.graphAPIKeys.attendingCount] as? Int {
                 event.attendingCount = attendingCount
             }
+            if let interestedCount = dict[Constants.Event.properties.graphAPIKeys.interestedCount] as? Int {
+                event.interestedCount = interestedCount
+            }
+            if let noReplyCount = dict[Constants.Event.properties.graphAPIKeys.noReplyCount] as? Int {
+                event.noReplyCount = noReplyCount
+            }
             if let rsvpStatus = dict[Constants.Event.properties.graphAPIKeys.rsvpStatus] as? String {
                 event.rsvpStatus = rsvpStatus
             }
@@ -140,7 +181,34 @@ extension Event {
         dict[Constants.Event.properties.firebaseNodes.pictureURL] = self.pictureURL?.absoluteString
         dict[Constants.Event.properties.firebaseNodes.coverURL] = self.coverURL?.absoluteString
         dict[Constants.Event.properties.firebaseNodes.place] = self.place?.toDictionary()
+        dict[Constants.Event.properties.firebaseNodes.attendingCount] = self.attendingCount
+        dict[Constants.Event.properties.firebaseNodes.interestedCount] = self.interestedCount
+        dict[Constants.Event.properties.firebaseNodes.noReplyCount] = self.noReplyCount
         return dict
+    }
+    
+    func loadMatches(completion: (() -> ())? = nil) {
+        User.current.value?.matchesRef.queryOrdered(byChild: "\(Constants.User.Match.properties.firebaseNodes.events)/\(id)").queryStarting(atValue: 0).observeSingleEvent(of: .value, with: { (snapshot) in
+            let matchesGroup = DispatchGroup()
+            self.matches = []
+            for matchSnapshot in snapshot.children {
+                if let matchSnapshot = matchSnapshot as? DataSnapshot {
+                    let user = User(uid: matchSnapshot.key)
+                    matchesGroup.enter()
+                    user.profile.loadFromFirebase(completion: { (_, error) in
+                        if error == nil {
+                            //for i in 0..<10 {
+                                self.matches.append(user)
+                            //}
+                            matchesGroup.leave()
+                        }
+                    })
+                }
+            }
+            matchesGroup.notify(queue: .main, execute: {
+                completion?()
+            })
+        })
     }
     
     static func get(for id: String, completion: ((Event?) -> Void)? = nil) {

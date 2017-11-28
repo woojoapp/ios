@@ -35,7 +35,8 @@ class CandidatesViewController: UIViewController {
     var shouldApplyAppearAnimation = true
     var ranOutOfCards = true
     
-    let buttonsBackgroundColor = UIColor.black.withAlphaComponent(0.3)
+    //private let kolodaAlphaValueSemiTransparent: CGFloat = 0.1
+    //let buttonsBackgroundColor = UIColor.black.withAlphaComponent(0.3)
     
     /*@IBAction func likePressed(_ sender: DOFavoriteButton) {
         likeButton.select()
@@ -107,13 +108,16 @@ class CandidatesViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        loadingView.layer.cornerRadius = loadingView.frame.size.width / 2
         startMonitoringReachability()
-        checkReachability()
+        checkReachability()        
+        User.current.value?.activity.setLastSeen()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         loadingView.layer.cornerRadius = loadingView.frame.size.width / 2
+        CurrentUser.Notification.deleteAll(type: "people")
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -155,6 +159,10 @@ class CandidatesViewController: UIViewController {
         })
         pushNotificationsInvite.popoverPresentationController?.sourceView = self.view
         present(pushNotificationsInvite, animated: true)
+    }
+    
+    @IBAction func share() {
+        User.current.value?.share(from: self)
     }
     
 }
@@ -259,6 +267,10 @@ extension CandidatesViewController: KolodaViewDataSource {
         return .fast
     }
     
+    func koloda(_ koloda: KolodaView, allowedDirectionsForIndex index: Int) -> [SwipeResultDirection] {
+        return [SwipeResultDirection.left, SwipeResultDirection.right]
+    }
+    
     func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
         let cardView = UserCardView(frame: CGRect.zero)
         cardView.setRoundedCornersAndShadow()
@@ -267,8 +279,10 @@ extension CandidatesViewController: KolodaViewDataSource {
             cardView.commonEventInfos = commonEventInfos
         }
         if let commonFriends = User.current.value?.candidates[index].commonFriends {
-            print("COMMON FRIENDS \(commonFriends)")
             cardView.commonFriends = commonFriends
+        }
+        if let commonPageLikes = User.current.value?.candidates[index].commonPageLikes {
+            cardView.commonPageLikes = commonPageLikes
         }
         cardView.candidatesViewController = self
         cardView.load {
@@ -277,8 +291,11 @@ extension CandidatesViewController: KolodaViewDataSource {
         return cardView
     }
     
-    func koloda(koloda: KolodaView, viewForCardOverlayAtIndex index: Int) -> OverlayView? {
-        return Bundle.main.loadNibNamed("OverlayView", owner: self, options: nil)?[0] as? OverlayView
+    func koloda(_ koloda: KolodaView, viewForCardOverlayAt index: Int) -> OverlayView? {
+        let overlayView = CandidateOverlayView(frame: CGRect.zero)
+        overlayView.setRoundedCornersAndShadow()
+        overlayView.load()
+        return overlayView
     }
     
 }

@@ -19,10 +19,11 @@ class EventsViewController: UITableViewController {
     var events: [Event] = []
     var disposeBag = DisposeBag()
     var reachabilityObserver: AnyObject?
-    @IBOutlet weak var longPressGestureRecognizer: UILongPressGestureRecognizer!
+    //@IBOutlet weak var longPressGestureRecognizer: UILongPressGestureRecognizer!
     @IBOutlet weak var tipView: UIView!
     @IBOutlet weak var dismissTipButton: UIButton!
     let tipId = "eventFilter"
+    var pendingEventsCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +55,12 @@ class EventsViewController: UITableViewController {
         super.viewWillAppear(animated)
         startMonitoringReachability()
         checkReachability()
+        User.current.value?.activity.setLastSeen()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        CurrentUser.Notification.deleteAll(type: "events")
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -75,7 +82,20 @@ class EventsViewController: UITableViewController {
             }
             .subscribe(onNext: { events in
                 self.events = events
-                self.tableView.reloadData()
+                self.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+            }).addDisposableTo(disposeBag)
+        
+        User.current.asObservable()
+            .flatMap { user -> Observable<[Event]> in
+                if let currentUser = user {
+                    return currentUser.pendingEvents.asObservable()
+                } else {
+                    return Variable([]).asObservable()
+                }
+            }
+            .subscribe(onNext: { pendingEvents in
+                self.pendingEventsCount = pendingEvents.count
+                self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
             }).addDisposableTo(disposeBag)
     }
     
@@ -85,32 +105,72 @@ class EventsViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "eventCell", for: indexPath) as! EventsTableViewCell
-        cell.event = self.events[indexPath.row]
-        return cell
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "pendingEventsInfoCell", for: indexPath) as! PendingEventsInfoTableViewCell
+            cell.infoLabel.text = "You have \(pendingEventsCount) new event\((pendingEventsCount > 1) ? "s" : "") on Facebook"
+            cell.actionLabel.text = "Add \((pendingEventsCount > 1) ? "them" : "it") to discover new people!"
+            cell.borderView.layer.borderWidth = 1.0
+            cell.borderView.layer.borderColor = UIColor.lightGray.cgColor
+            cell.borderView.layer.cornerRadius = 12.0
+            cell.borderView.layer.masksToBounds = true
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "eventCell", for: indexPath) as! EventsTableViewCell
+            cell.event = self.events[indexPath.row]
+            return cell
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return events.count
+        if section == 0 {
+            if pendingEventsCount > 0 {
+                return 1
+            } else {
+                return 0
+            }
+        } else if section == 1 {
+            return events.count
+        } else {
+            return 0
+        }
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let deleteAction = UITableViewRowAction(style: .destructive, title: "Remove", handler: { action, indexPath in
-            self.removeEvent(at: indexPath)
-        })
-        return [deleteAction]
+        if indexPath.section == 1 {
+            let deleteAction = UITableViewRowAction(style: .destructive, title: "Remove", handler: { action, indexPath in
+                self.removeEvent(at: indexPath)
+            })
+            return [deleteAction]
+        } else {
+            return []
+        }
     }
     
-    @IBAction
-    func dismissTip() {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            
+        } else if indexPath.section == 1 {
+            let eventDetailsViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventDetailsViewController") as! EventDetailsViewController
+            eventDetailsViewController.event = events[indexPath.row]
+            eventDetailsViewController.event?.loadMatches {
+                self.navigationController?.pushViewController(eventDetailsViewController, animated: true)
+            }
+        }
+    }
+    
+    @IBAction func dismissTip() {
         Woojo.User.current.value?.dismissTip(tipId: self.tipId)
         UIView.beginAnimations("foldHeader", context: nil)
         self.tableView.tableHeaderView = nil
         UIView.commitAnimations()
+    }
+    
+    @IBAction func ignorePendingEvents() {
+        User.current.value?.removeAllPendingEvents(completion: nil)
     }
     
     func removeEvent(at indexPath: IndexPath) {
@@ -133,7 +193,7 @@ class EventsViewController: UITableViewController {
         } else { return false }
     }
     
-    func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+    /*func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
         if longPressGestureRecognizer.state == UIGestureRecognizerState.began {
             let touchPoint = longPressGestureRecognizer.location(in: self.view)
             if let indexPath = tableView.indexPathForRow(at: touchPoint) {
@@ -148,7 +208,7 @@ class EventsViewController: UITableViewController {
                 self.present(actionSheetController, animated: true, completion: nil)
             }
         }
-    }
+    }*/
     
 }
 

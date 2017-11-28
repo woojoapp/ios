@@ -13,6 +13,9 @@ def shared_pods
   pod 'FirebaseUI/Storage', '2.0.0'
   pod 'FirebaseInstanceID', '2.0.0'
 
+  # Branch
+  pod 'Branch', '0.19.5'
+
   # Facebook
   pod 'Bolts', '1.8.4'
   pod 'FacebookCore', '0.2.0'
