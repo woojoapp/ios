@@ -62,6 +62,7 @@ class CurrentUser: User {
     var notifications: Variable<[Notification]> = Variable([])
     var isLoading: Variable<Bool> = Variable(false)
     var tips: [String:Any]?
+    var defferedEvent: Event?
     
     init?() {
         if let uid = Auth.auth().currentUser?.uid {
@@ -105,7 +106,7 @@ class CurrentUser: User {
             let group = DispatchGroup()
             group.enter()
             self.loadData(completion: {
-                print("Loaded data", self.botUid)
+                print("Loaded data")
                 group.leave()
             })
             group.enter()
@@ -683,10 +684,16 @@ class CurrentUser: User {
                         if snapshot.exists() {
                             nameRef.removeObserver(withHandle: listenerHandle)
                             print("Removed observer")
-                            if !self.events.value.contains(where: { $0.id == event.id }) {
-                                self.append(event: event)
-                            }
-                            completion?(nil)
+                            var listenerHandleB: UInt = 0
+                            listenerHandleB = nameRef.parent!.observe(.value, with: { (snapshot) in
+                                print("GOT POTENTIAL EVENT", snapshot)
+                                if let e = Event.from(firebase: snapshot) {
+                                    print("WELL FORMED!", e)
+                                    if !self.events.value.contains(where: { $0.id == e.id }) { self.append(event: e) }
+                                    nameRef.parent!.removeObserver(withHandle: listenerHandleB)
+                                    completion?(nil)
+                                }
+                            })
                         }
                     })
                 }

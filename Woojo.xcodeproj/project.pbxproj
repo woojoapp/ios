@@ -265,6 +265,9 @@
 		858FEE3C1E02A40C00322E8E /* AlbumsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE3A1E02A40C00322E8E /* AlbumsTableViewCell.swift */; };
 		858FEE3D1E02A40C00322E8E /* AlbumsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 858FEE3B1E02A40C00322E8E /* AlbumsTableViewCell.xib */; };
 		858FEE421E02B5E600322E8E /* AlbumPhotosGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE411E02B5E500322E8E /* AlbumPhotosGraphRequest.swift */; };
+		859B408F20077DCF00A4449F /* Woojo.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 85E5D4D01DDA0E8F003E2376 /* Woojo.entitlements */; };
+		859B409020077E6200A4449F /* Woojo Staging.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 85662CFD1F90BE7900D5701E /* Woojo Staging.entitlements */; };
+		859B409120077E6800A4449F /* Woojo Development.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 85662CFC1F90BE7500D5701E /* Woojo Development.entitlements */; };
 		85B36AA21FADFE7F00A7B599 /* UserPageLikesGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36AA11FADFE7F00A7B599 /* UserPageLikesGraphRequest.swift */; };
 		85B36AA41FAE168700A7B599 /* Constants+Env.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36AA31FAE168700A7B599 /* Constants+Env.swift */; };
 		85B36AA61FAE170500A7B599 /* Constants+Env.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B36AA51FAE170500A7B599 /* Constants+Env.swift */; };
@@ -312,6 +315,21 @@
 		85EB2EE41DE20BCF00F0A55C /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EB2EE31DE20BCF00F0A55C /* Profile.swift */; };
 		85EB2EE61DE20DAE00F0A55C /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EB2EE51DE20DAE00F0A55C /* Activity.swift */; };
 		85EC21331F89822000C9FC7C /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EC21321F89822000C9FC7C /* Report.swift */; };
+		85F3CED42007E3B400FAB0FF /* PlansViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3CED32007E3B400FAB0FF /* PlansViewController.swift */; };
+		85F3CED52007E3B400FAB0FF /* PlansViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3CED32007E3B400FAB0FF /* PlansViewController.swift */; };
+		85F3CED62007E3B400FAB0FF /* PlansViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F3CED32007E3B400FAB0FF /* PlansViewController.swift */; };
+		85FB8C172007FA7100863E0F /* SearchPlacesGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FB8C162007FA7100863E0F /* SearchPlacesGraphRequest.swift */; };
+		85FB8C182007FA7100863E0F /* SearchPlacesGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FB8C162007FA7100863E0F /* SearchPlacesGraphRequest.swift */; };
+		85FB8C192007FA7100863E0F /* SearchPlacesGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FB8C162007FA7100863E0F /* SearchPlacesGraphRequest.swift */; };
+		85FB8C1B2007FABF00863E0F /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FB8C1A2007FABF00863E0F /* Plan.swift */; };
+		85FB8C1C2007FABF00863E0F /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FB8C1A2007FABF00863E0F /* Plan.swift */; };
+		85FB8C1D2007FABF00863E0F /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FB8C1A2007FABF00863E0F /* Plan.swift */; };
+		85FB8C2A2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FB8C282008FCBC00863E0F /* SearchPlacesResultsTableViewCell.swift */; };
+		85FB8C2B2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FB8C282008FCBC00863E0F /* SearchPlacesResultsTableViewCell.swift */; };
+		85FB8C2C2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FB8C282008FCBC00863E0F /* SearchPlacesResultsTableViewCell.swift */; };
+		85FB8C2D2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85FB8C292008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib */; };
+		85FB8C2E2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85FB8C292008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib */; };
+		85FB8C2F2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85FB8C292008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib */; };
 		85FF1D491FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */; };
 		85FF1D4A1FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */; };
 		85FF1D4B1FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */; };
@@ -438,6 +456,11 @@
 		85ED4E631DCFF7F200F51857 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		85ED4E651DD1EC7D00F51857 /* AddEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
 		85ED4E6D1DD229D600F51857 /* MyEventsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyEventsTableViewController.swift; sourceTree = "<group>"; };
+		85F3CED32007E3B400FAB0FF /* PlansViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansViewController.swift; sourceTree = "<group>"; };
+		85FB8C162007FA7100863E0F /* SearchPlacesGraphRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlacesGraphRequest.swift; sourceTree = "<group>"; };
+		85FB8C1A2007FABF00863E0F /* Plan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plan.swift; sourceTree = "<group>"; };
+		85FB8C282008FCBC00863E0F /* SearchPlacesResultsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlacesResultsTableViewCell.swift; sourceTree = "<group>"; };
+		85FB8C292008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchPlacesResultsTableViewCell.xib; sourceTree = "<group>"; };
 		85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateOverlayView.swift; sourceTree = "<group>"; };
 		9A2EC49C5603EE727058B9CF /* Pods_Woojo_Development.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Woojo_Development.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5F606FAEF706B6471319465 /* Pods_Woojo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Woojo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -490,6 +513,7 @@
 		8506A89C1DCC89DF00C18EC3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				85FB8C272008FC8400863E0F /* Plans */,
 				85685F7B1DEDA1D6009BAEE0 /* Events */,
 				858FEE3E1E02A41000322E8E /* Settings */,
 			);
@@ -539,6 +563,7 @@
 				85B36AA91FB1AEFB00A7B599 /* PageLike.swift */,
 				85B36AB31FB1BF8A00A7B599 /* Friend.swift */,
 				85B36ACB1FB1CE5100A7B599 /* CommonItem.swift */,
+				85FB8C1A2007FABF00863E0F /* Plan.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -554,6 +579,7 @@
 				85B36AA11FADFE7F00A7B599 /* UserPageLikesGraphRequest.swift */,
 				85B36AAF1FB1BEA200A7B599 /* UserFriendsGraphRequest.swift */,
 				85BE1DCA1FBDD7C50091A9D3 /* UserEventGraphRequest.swift */,
+				85FB8C162007FA7100863E0F /* SearchPlacesGraphRequest.swift */,
 			);
 			name = GraphRequests;
 			sourceTree = "<group>";
@@ -730,6 +756,7 @@
 				85DC3D6E1DF6CF8F00116159 /* ExploreEventsViewController.swift */,
 				858398D41FBB3A1200ECFFE3 /* EventDetailsViewController.swift */,
 				85BE1DCE1FBDF41E0091A9D3 /* PendingEventsTableViewController.swift */,
+				85F3CED32007E3B400FAB0FF /* PlansViewController.swift */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -773,6 +800,15 @@
 				8545D9741E66C3F000A2D70C /* UnwindThenShowChatSegue.swift */,
 			);
 			name = Segues;
+			sourceTree = "<group>";
+		};
+		85FB8C272008FC8400863E0F /* Plans */ = {
+			isa = PBXGroup;
+			children = (
+				85FB8C282008FCBC00863E0F /* SearchPlacesResultsTableViewCell.swift */,
+				85FB8C292008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib */,
+			);
+			name = Plans;
 			sourceTree = "<group>";
 		};
 		DD7E3B4C401DB42693CCCB61 /* Frameworks */ = {
@@ -926,6 +962,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85FB8C2D2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib in Resources */,
+				859B408F20077DCF00A4449F /* Woojo.entitlements in Resources */,
 				85662CAA1F90BE2200D5701E /* UserCardView.xib in Resources */,
 				85662CC91F90BE2200D5701E /* Main.storyboard in Resources */,
 				85662CCA1F90BE2200D5701E /* Assets.xcassets in Resources */,
@@ -951,6 +989,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85FB8C2E2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib in Resources */,
+				859B409020077E6200A4449F /* Woojo Staging.entitlements in Resources */,
 				85662CE81F90BE2300D5701E /* LoginViewController.xib in Resources */,
 				85662C191F90BD7C00D5701E /* EventsTableViewCell.xib in Resources */,
 				85662C1D1F90BD7C00D5701E /* SearchEventsResultsTableViewCell.xib in Resources */,
@@ -976,6 +1016,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85FB8C2F2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib in Resources */,
+				859B409120077E6800A4449F /* Woojo Development.entitlements in Resources */,
 				85662C961F90BE1300D5701E /* LoginViewController.xib in Resources */,
 				85662C4C1F90BDD900D5701E /* EventsTableViewCell.xib in Resources */,
 				856B0AA91FA084850041C11E /* UserCommonEventTableViewCell.xib in Resources */,
@@ -1329,6 +1371,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				85662CB51F90BE2200D5701E /* ProfilePhotoCollectionViewCell.swift in Sources */,
+				85FB8C1B2007FABF00863E0F /* Plan.swift in Sources */,
 				85685F781DEC7B8D009BAEE0 /* SearchEventsResultsTableViewCell.swift in Sources */,
 				85662CA41F90BE2200D5701E /* AddEventViewController.swift in Sources */,
 				85662CB81F90BE2200D5701E /* AlbumPhotoCollectionViewCell.swift in Sources */,
@@ -1341,6 +1384,7 @@
 				85662CC71F90BE2200D5701E /* Constants+App.swift in Sources */,
 				856264E21FAC5CA2000AC40E /* ExploreEventsTableViewCell.swift in Sources */,
 				85662CA51F90BE2200D5701E /* MyEventsTableViewController.swift in Sources */,
+				85F3CED42007E3B400FAB0FF /* PlansViewController.swift in Sources */,
 				85662CBE1F90BE2200D5701E /* MainTabBarController.swift in Sources */,
 				85662CB71F90BE2200D5701E /* PhotoCollectionViewController.swift in Sources */,
 				85662CB11F90BE2200D5701E /* PreferencesViewController.swift in Sources */,
@@ -1354,9 +1398,11 @@
 				856B0AAD1FA1D1260041C11E /* Match.swift in Sources */,
 				853DBC881FBB43CF00AC8E3C /* EventDescriptionTableViewCell.swift in Sources */,
 				858FEE421E02B5E600322E8E /* AlbumPhotosGraphRequest.swift in Sources */,
+				85FB8C2A2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.swift in Sources */,
 				85662CA81F90BE2200D5701E /* CandidatesViewController.swift in Sources */,
 				85DC3D731DF70A6A00116159 /* Preferences.swift in Sources */,
 				85662CA61F90BE2200D5701E /* SearchEventsViewController.swift in Sources */,
+				85FB8C172007FA7100863E0F /* SearchPlacesGraphRequest.swift in Sources */,
 				85B36AB41FB1BF8A00A7B599 /* Friend.swift in Sources */,
 				85662CAD1F90BE2200D5701E /* ChatViewController.swift in Sources */,
 				85BE1DCB1FBDD7C50091A9D3 /* UserEventGraphRequest.swift in Sources */,
@@ -1420,6 +1466,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				85662C0B1F90BD6500D5701E /* CurrentUser.swift in Sources */,
+				85FB8C1C2007FABF00863E0F /* Plan.swift in Sources */,
 				85662C101F90BD6500D5701E /* Profile.swift in Sources */,
 				85662C0C1F90BD6500D5701E /* Gender.swift in Sources */,
 				85662CEE1F90BE2300D5701E /* Application.swift in Sources */,
@@ -1432,6 +1479,7 @@
 				85662C161F90BD7500D5701E /* AlbumPhotosGraphRequest.swift in Sources */,
 				856264E31FAC5CA2000AC40E /* ExploreEventsTableViewCell.swift in Sources */,
 				85B36AAD1FB1B9FD00A7B599 /* UserPageLikesGraphRequest.swift in Sources */,
+				85F3CED52007E3B400FAB0FF /* PlansViewController.swift in Sources */,
 				85662C151F90BD7500D5701E /* UserAlbumsGraphRequest.swift in Sources */,
 				85662CD71F90BE2300D5701E /* ALChatManager.swift in Sources */,
 				85662CE41F90BE2300D5701E /* AboutTableViewController.swift in Sources */,
@@ -1445,9 +1493,11 @@
 				85662CF31F90BE2300D5701E /* Constants+Analytics.swift in Sources */,
 				853DBC891FBB43CF00AC8E3C /* EventDescriptionTableViewCell.swift in Sources */,
 				85662CF01F90BE2300D5701E /* Constants.swift in Sources */,
+				85FB8C2B2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.swift in Sources */,
 				856B0AAE1FA1D1260041C11E /* Match.swift in Sources */,
 				85662C081F90BD6500D5701E /* Like.swift in Sources */,
 				85662CDF1F90BE2300D5701E /* BioTableViewCell.swift in Sources */,
+				85FB8C182007FA7100863E0F /* SearchPlacesGraphRequest.swift in Sources */,
 				85B36AB51FB1BF8A00A7B599 /* Friend.swift in Sources */,
 				85662CD21F90BE2300D5701E /* ExploreEventsViewController.swift in Sources */,
 				85BE1DCC1FBDD7C50091A9D3 /* UserEventGraphRequest.swift in Sources */,
@@ -1511,6 +1561,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				85662C3E1F90BDD000D5701E /* CurrentUser.swift in Sources */,
+				85FB8C1D2007FABF00863E0F /* Plan.swift in Sources */,
 				85662C431F90BDD000D5701E /* Profile.swift in Sources */,
 				85662C3F1F90BDD000D5701E /* Gender.swift in Sources */,
 				85662C9C1F90BE1300D5701E /* Application.swift in Sources */,
@@ -1523,6 +1574,7 @@
 				85662C491F90BDD400D5701E /* AlbumPhotosGraphRequest.swift in Sources */,
 				856264E41FAC5CA2000AC40E /* ExploreEventsTableViewCell.swift in Sources */,
 				85B36AAE1FB1B9FD00A7B599 /* UserPageLikesGraphRequest.swift in Sources */,
+				85F3CED62007E3B400FAB0FF /* PlansViewController.swift in Sources */,
 				85662C481F90BDD400D5701E /* UserAlbumsGraphRequest.swift in Sources */,
 				85662C851F90BE1300D5701E /* ALChatManager.swift in Sources */,
 				85662C921F90BE1300D5701E /* AboutTableViewController.swift in Sources */,
@@ -1536,9 +1588,11 @@
 				85662CA11F90BE1300D5701E /* Constants+Analytics.swift in Sources */,
 				853DBC8A1FBB43CF00AC8E3C /* EventDescriptionTableViewCell.swift in Sources */,
 				85662C9E1F90BE1300D5701E /* Constants.swift in Sources */,
+				85FB8C2C2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.swift in Sources */,
 				856B0AAF1FA1D1260041C11E /* Match.swift in Sources */,
 				85662C3B1F90BDD000D5701E /* Like.swift in Sources */,
 				85662C8D1F90BE1300D5701E /* BioTableViewCell.swift in Sources */,
+				85FB8C192007FA7100863E0F /* SearchPlacesGraphRequest.swift in Sources */,
 				85B36AB61FB1BF8A00A7B599 /* Friend.swift in Sources */,
 				85662C801F90BE1300D5701E /* ExploreEventsViewController.swift in Sources */,
 				85BE1DCD1FBDD7C50091A9D3 /* UserEventGraphRequest.swift in Sources */,

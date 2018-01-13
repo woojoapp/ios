@@ -320,7 +320,7 @@ struct Constants {
     
     struct Event {
         static let firebaseNode = "events"
-        static let dateFormat = "yyyy-MM-dd'T'HH:mm:ssxx"
+        static let dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         static let humanDateFormat = "dd MMM yyyy, HH:mm"
         struct properties {
             struct firebaseNodes {
@@ -335,6 +335,7 @@ struct Constants {
                 static let attendingCount = "attending_count"
                 static let interestedCount = "interested_count"
                 static let noReplyCount = "noreply_count"
+                static let type = "type"
             }
             struct graphAPIKeys {
                 static let id = "id"
@@ -352,46 +353,67 @@ struct Constants {
                 static let interestedCount = "interested_count"
                 static let noReplyCount = "noreply_count"
                 static let rsvpStatus = "rsvp_status"
+                static let type = "type"
             }
         }
         struct Place {
             static let firebaseNode = "place"
             static let graphAPIKey = "place"
-            static let defaultDisplayString = "Unknown location"
+        }
+    }
+    
+    struct Place {
+        static let defaultDisplayString = "Unknown location"
+        struct properties {
+            struct firebaseNodes {
+                static let id = "id"
+                static let name = "name"
+                static let location = "location"
+                static let pictureURL = "picture_url"
+                static let coverURL = "cover_url"
+                static let verificationStatus = "verification_status"
+            }
+            struct graphAPIKeys {
+                static let id = "id"
+                static let name = "name"
+                static let location = "location"
+                static let picture = "picture"
+                static let pictureData = "data"
+                static let pictureDataURL = "url"
+                static let cover = "cover"
+                static let coverSource = "source"
+                static let verificationStatus = "verification_status"
+            }
+        }
+        struct Location {
+            static let firebaseNode = "location"
             struct properties {
                 struct firebaseNodes {
+                    static let country = "country"
+                    static let city = "city"
+                    static let zip = "zip"
+                    static let street = "street"
+                    static let latitude = "latitude"
+                    static let longitude = "longitude"
                     static let name = "name"
-                    static let location = "location"
                 }
                 struct graphAPIKeys {
+                    static let country = "country"
+                    static let city = "city"
+                    static let zip = "zip"
+                    static let street = "street"
+                    static let latitude = "latitude"
+                    static let longitude = "longitude"
                     static let name = "name"
-                    static let location = "location"
-                }
-            }
-            struct Location {
-                static let firebaseNode = "location"
-                struct properties {
-                    struct firebaseNodes {
-                        static let country = "country"
-                        static let city = "city"
-                        static let zip = "zip"
-                        static let street = "street"
-                        static let latitude = "latitude"
-                        static let longitude = "longitude"
-                        static let name = "name"
-                    }
-                    struct graphAPIKeys {
-                        static let country = "country"
-                        static let city = "city"
-                        static let zip = "zip"
-                        static let street = "street"
-                        static let latitude = "latitude"
-                        static let longitude = "longitude"
-                        static let name = "name"
-                    }
                 }
             }
         }
+    }
+    
+    struct Plan {
+        static let dateFormatForId = "yyyyMMdd"
+        static let dateFormatForName = "E, MMM dd"
+        static let humanDateFormat = "dd MMM yyyy"
     }
     
     struct GraphRequest {

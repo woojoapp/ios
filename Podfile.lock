@@ -1,5 +1,5 @@
 PODS:
-  - Applozic (4.3.0):
+  - Applozic (4.5.0):
     - SDWebImage (~> 3.8)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
@@ -126,7 +126,7 @@ PODS:
   - Whisper (4.0.0)
 
 DEPENDENCIES:
-  - Applozic (= 4.3.0)
+  - Applozic (= 4.5.0)
   - Bolts (= 1.8.4)
   - Branch (= 0.19.5)
   - DOFavoriteButton (from `https://github.com/woojoapp/DOFavoriteButton`, tag `woojo2.0`)
@@ -180,7 +180,7 @@ CHECKOUT OPTIONS:
     :tag: woojo2.0
 
 SPEC CHECKSUMS:
-  Applozic: fdfa55652170d1e26f65f4b578569e41ae8a2359
+  Applozic: 8cfee6478bf8cfade9f85f63ec4d72217c3a732a
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   Branch: 25312ed2f58a569df58e6560238433c2a9d58e99
   DOFavoriteButton: 866e15af173d2dd5233971a1f657a5f31d2491d5
@@ -220,6 +220,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   Whisper: 08be92623311f8e53201e62e17f6d7b9599a4714
 
-PODFILE CHECKSUM: 59ee340aa93045e60f4a5253093f7d9a3efa5219
+PODFILE CHECKSUM: 26d192dd74656d7a3b0f16555f4c156fe9e44bc8
 
 COCOAPODS: 1.3.1

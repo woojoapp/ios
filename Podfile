@@ -26,7 +26,7 @@ def shared_pods
   pod 'FBSDKShareKit', '4.15.0'
 
   # Appozic
-  pod 'Applozic', '4.3.0'
+  pod 'Applozic', '4.5.0'
 
   # RX
   pod 'RxSwift', '3.2.0'

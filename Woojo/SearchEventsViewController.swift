@@ -33,7 +33,6 @@ class SearchEventsViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        print("WWIIDIDIDID0000", resultsTableView.frame.width, searchBar.frame.width)
     }
     
     override func viewDidLayoutSubviews() {
@@ -43,8 +42,6 @@ class SearchEventsViewController: UIViewController {
         resultsTableView.emptyDataSetSource = self
         
         resultsTableView.layoutSubviews()
-        
-        print("WWIIDIDIDID", resultsTableView.frame.width, searchBar.frame.width)
     }
     
     deinit {

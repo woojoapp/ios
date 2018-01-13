@@ -35,6 +35,14 @@ extension Constants {
                     static let name = "name"
                 }
             }
+            struct PlanMade {
+                static let name = "plan_made"
+                struct Parameters {
+                    static let place = "place"
+                    static let id = "id"
+                    static let screen = "screen"
+                }
+            }
             // MARK: - Candidates
             struct CandidateLiked {
                 static let name = "candidate_liked"

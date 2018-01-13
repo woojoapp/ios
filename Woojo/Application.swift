@@ -21,6 +21,7 @@ import RxCocoa
 import Whisper
 import UserNotifications
 import Branch
+import SDWebImage
 
 @UIApplicationMain
 class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
@@ -28,6 +29,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     let loginViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
     static var remoteConfig: RemoteConfig = RemoteConfig.remoteConfig()
     let disposeBag = DisposeBag()
+    static var defferedEvent: Event?
     
     func requestNotifications() {
         if #available(iOS 10.0, *) {
@@ -187,7 +189,16 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 // params are the deep linked params associated with the link that the user clicked -> was re-directed to this app
                 // params will be empty if no data found
                 // ... insert custom logic here ...
-                print("params: %@", params as? [String: AnyObject] ?? {})
+                if let params = params as? [String: AnyObject] {
+                    if let action = params["action"] as? String, action == "add_event",
+                        let eventId = params["event_id"] as? String {
+                        Event.get(for: eventId, completion: { (event) in
+                            if let event = event {
+                                Application.defferedEvent = event
+                            }
+                        })
+                    }
+                }
             }
         })
         
@@ -357,7 +368,6 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         // pass the url to the handle deep link call
         Branch.getInstance().continue(userActivity)
-        
         return true
     }
     

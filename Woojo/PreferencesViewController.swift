@@ -31,7 +31,7 @@ class PreferencesViewController: UITableViewController/*, UIPickerViewDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         ageRangeSliderWrapper.addSubview(ageRangeSlider)
-        ageRangeSlider.maximumValue = 60.0
+        ageRangeSlider.maximumValue = 100.0
         ageRangeSlider.minimumValue = 18.0
         ageRangeMinLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17.0, weight: UIFontWeightRegular)
         ageRangeMaxLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17.0, weight: UIFontWeightRegular)

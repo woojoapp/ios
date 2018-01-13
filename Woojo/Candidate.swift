@@ -62,6 +62,7 @@ extension CurrentUser {
             User.current.value?.like(candidate: self.uid, visible: visible, message: message) { error in
                 // Remove it from the list
                 self.remove(completion: completion)
+                //completion?(error)
             }
         }
         
@@ -71,6 +72,7 @@ extension CurrentUser {
                 self.profile.removeAllPhotosFromCache()
                 // Remove it from the list
                 self.remove(completion: completion)
+                //completion?(error)
             }
         }
         

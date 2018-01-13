@@ -69,7 +69,9 @@ class EventDetailsViewController: UITableViewController {
             cell.nameLabel.text = event?.name
             cell.placeLabel.text = event?.place?.displayString
             cell.timesLabel.text = event?.timesString
-            cell.rsvpLabel.text = event?.rsvpString
+            print("EVENT TYPE", event?.type)
+            if event?.type != "plan" { cell.rsvpLabel.text = event?.rsvpString }
+            else { cell.rsvpLabel.isHidden = true }
             if let coverURL = event?.coverURL {
                 cell.coverImageView.contentMode = .scaleAspectFill
                 cell.coverImageView.sd_setImage(with: coverURL, placeholderImage: #imageLiteral(resourceName: "placeholder_100x100"))

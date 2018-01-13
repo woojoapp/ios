@@ -56,7 +56,7 @@ class EventsTableViewCell: UITableViewCell {
             thumbnailView.image = #imageLiteral(resourceName: "placeholder_100x100")
         }
         if let start = event?.start {
-            dateLabel?.text = Event.humanDateFormatter.string(from: start)
+            dateLabel?.text = event?.timesString
         }
     }
 

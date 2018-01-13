@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import PKHUD
+import SDWebImage
 
 class MainTabBarController: UITabBarController {
     
@@ -29,6 +30,9 @@ class MainTabBarController: UITabBarController {
         User.current.asObservable()
             .flatMap { user -> Observable<[CurrentUser.Notification]> in
                 if let currentUser = user {
+                    if let deferredEvent = Application.defferedEvent {
+                        self.addWithHUD(event: deferredEvent)
+                    }
                     return currentUser.notifications.asObservable()
                 } else {
                     return Variable([]).asObservable()
@@ -83,5 +87,35 @@ class MainTabBarController: UITabBarController {
                 }
             }
         }
+    }
+    
+    func addWithHUD(event: Event) {
+        HUD.show(.labeledProgress(title: "Adding Event...", subtitle: event.name))
+        User.current.value?.add(event: event, completion: { (error: Error?) -> Void in
+            
+            func showImagelessSuccess() {
+                HUD.show(.labeledSuccess(title: "Event added", subtitle: event.name))
+                HUD.hide(afterDelay: 3.0)
+                Application.defferedEvent = nil
+            }
+            
+            if let pictureURL = event.pictureURL {
+                SDWebImageManager.shared().downloadImage(with: pictureURL, options: [], progress: { (_, _) in }, completed: { (image, error, _, finished, url) in
+                    if let image = image, error == nil, finished == true {
+                        HUD.show(.labeledImage(image: image, title: "Event added", subtitle: "\(event.name)"))
+                        HUD.hide(afterDelay: 3.0)
+                        Application.defferedEvent = nil
+                    } else {
+                        showImagelessSuccess()
+                    }
+                })
+            } else {
+                showImagelessSuccess()
+            }
+            let analyticsEventParameters = [Constants.Analytics.Events.EventAdded.Parameters.name: event.name,
+                                            Constants.Analytics.Events.EventAdded.Parameters.id: event.id,
+                                            Constants.Analytics.Events.EventAdded.Parameters.screen: "Branch link"]
+            Analytics.Log(event: Constants.Analytics.Events.EventAdded.name, with: analyticsEventParameters)
+        })
     }
 }

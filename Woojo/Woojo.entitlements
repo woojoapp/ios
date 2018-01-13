@@ -8,6 +8,7 @@
 	<array>
 		<string>applinks:2r7c.app.link</string>
 		<string>applinks:2r7c-alternate.app.link</string>
+		<string>applinks:try.woojo.ooo</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>

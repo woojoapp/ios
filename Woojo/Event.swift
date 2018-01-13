@@ -25,6 +25,7 @@ class Event {
     var interestedCount: Int?
     var noReplyCount: Int?
     var rsvpStatus: String = "unsure"
+    var type: String?
     var matches: [User] = []
     
     var ref: DatabaseReference {
@@ -35,11 +36,15 @@ class Event {
     
     var timesString: String {
         get {
-            var timesString = Event.humanDateFormatter.string(from: start)
-            if let end = end {
-                timesString = "\(timesString) - \(Event.humanDateFormatter.string(from: end))"
+            if type != "plan" {
+                var timesString = Event.humanDateFormatter.string(from: start)
+                if let end = end {
+                    timesString = "\(timesString) - \(Event.humanDateFormatter.string(from: end))"
+                }
+                return timesString
+            } else {
+                return Plan.humanDateFormatter.string(from: start)
             }
-            return timesString
         }
     }
     
@@ -71,8 +76,8 @@ extension Event {
     static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .iso8601)
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        //formatter.locale = Locale(identifier: "en_US_POSIX")
+        //formatter.timeZone = TimeZone(secondsFromGMT: 0)
         formatter.dateFormat = Constants.Event.dateFormat
         return formatter
     }()
@@ -80,8 +85,8 @@ extension Event {
     static let humanDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .iso8601)
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        //formatter.locale = Locale(identifier: "en_US_POSIX")
+        //formatter.timeZone = NSTimeZone.local
         formatter.dateFormat = Constants.Event.humanDateFormat
         return formatter
     }()
@@ -91,7 +96,7 @@ extension Event {
             let id = value[Constants.Event.properties.firebaseNodes.id] as? String,
             let name = value[Constants.Event.properties.firebaseNodes.name] as? String,
             let startTimeString = value[Constants.Event.properties.firebaseNodes.start] as? String,
-            let start = Event.dateFormatter.date(from: startTimeString) {
+            let start = Event.dateFormatter.date(from: startTimeString.substring(to: startTimeString.index(startTimeString.endIndex, offsetBy: -5))) {
             
             let event = Event(id: id, name: name, start: start)
             event.description = value[Constants.Event.properties.firebaseNodes.description] as? String
@@ -113,6 +118,9 @@ extension Event {
             if let noReplyCount = value[Constants.Event.properties.firebaseNodes.noReplyCount] as? Int {
                 event.noReplyCount = noReplyCount
             }
+            if let type = value[Constants.Event.properties.firebaseNodes.type] as? String {
+                event.type = type
+            }
             event.place = Place.from(firebase: snapshot.childSnapshot(forPath: Constants.Event.Place.firebaseNode))
             return event
             
@@ -128,7 +136,7 @@ extension Event {
             let id = dict[Constants.Event.properties.graphAPIKeys.id] as? String,
             let name = dict[Constants.Event.properties.graphAPIKeys.name] as? String,
             let startTimeString = dict[Constants.Event.properties.graphAPIKeys.start] as? String,
-            let start = Event.dateFormatter.date(from: startTimeString){
+            let start = Event.dateFormatter.date(from: startTimeString.substring(to: startTimeString.index(startTimeString.endIndex, offsetBy: -5))){
             
             let event = Event(id: id, name: name, start: start)
             event.description = dict[Constants.Event.properties.graphAPIKeys.description] as? String
@@ -160,6 +168,7 @@ extension Event {
             if let rsvpStatus = dict[Constants.Event.properties.graphAPIKeys.rsvpStatus] as? String {
                 event.rsvpStatus = rsvpStatus
             }
+            event.type = dict[Constants.Event.properties.graphAPIKeys.type] as? String
             return event
             
         } else {
@@ -214,6 +223,7 @@ extension Event {
     static func get(for id: String, completion: ((Event?) -> Void)? = nil) {
         let ref = Database.database().reference().child(Constants.Event.firebaseNode).child(id)
         ref.observeSingleEvent(of: .value, with: { snapshot in
+            print("GOT SNAPSHOT", snapshot)
             completion?(from(firebase: snapshot))
         })
     }
