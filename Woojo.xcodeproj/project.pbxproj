@@ -48,6 +48,15 @@
 		8556C6331F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556C6321F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift */; };
 		8556C6341F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556C6321F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift */; };
 		8556C6351F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556C6321F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift */; };
+		85575C75201B78CE00D5B625 /* FlightsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85575C74201B78CE00D5B625 /* FlightsViewController.swift */; };
+		85575C76201B78CE00D5B625 /* FlightsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85575C74201B78CE00D5B625 /* FlightsViewController.swift */; };
+		85575C77201B78CE00D5B625 /* FlightsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85575C74201B78CE00D5B625 /* FlightsViewController.swift */; };
+		85575C79201BD20000D5B625 /* Airline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85575C78201BD20000D5B625 /* Airline.swift */; };
+		85575C7A201BD20000D5B625 /* Airline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85575C78201BD20000D5B625 /* Airline.swift */; };
+		85575C7B201BD20000D5B625 /* Airline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85575C78201BD20000D5B625 /* Airline.swift */; };
+		85575C7D201BD7BB00D5B625 /* FlightNumberTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85575C7C201BD7BB00D5B625 /* FlightNumberTextField.swift */; };
+		85575C7E201BD7BB00D5B625 /* FlightNumberTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85575C7C201BD7BB00D5B625 /* FlightNumberTextField.swift */; };
+		85575C7F201BD7BB00D5B625 /* FlightNumberTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85575C7C201BD7BB00D5B625 /* FlightNumberTextField.swift */; };
 		856264E21FAC5CA2000AC40E /* ExploreEventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856264E01FAC5CA2000AC40E /* ExploreEventsTableViewCell.swift */; };
 		856264E31FAC5CA2000AC40E /* ExploreEventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856264E01FAC5CA2000AC40E /* ExploreEventsTableViewCell.swift */; };
 		856264E41FAC5CA2000AC40E /* ExploreEventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856264E01FAC5CA2000AC40E /* ExploreEventsTableViewCell.swift */; };
@@ -382,6 +391,9 @@
 		85512B1A1DCB5B020072C1B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85512B221DCB74DA0072C1B8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8556C6321F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotRepliedEventsGraphRequest.swift; sourceTree = "<group>"; };
+		85575C74201B78CE00D5B625 /* FlightsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightsViewController.swift; sourceTree = "<group>"; };
+		85575C78201BD20000D5B625 /* Airline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Airline.swift; sourceTree = "<group>"; };
+		85575C7C201BD7BB00D5B625 /* FlightNumberTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightNumberTextField.swift; sourceTree = "<group>"; };
 		856264E01FAC5CA2000AC40E /* ExploreEventsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreEventsTableViewCell.swift; sourceTree = "<group>"; };
 		856264E11FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExploreEventsTableViewCell.xib; sourceTree = "<group>"; };
 		85662BEF1F90BCEF00D5701E /* Woojo Staging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Woojo Staging.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -564,6 +576,7 @@
 				85B36AB31FB1BF8A00A7B599 /* Friend.swift */,
 				85B36ACB1FB1CE5100A7B599 /* CommonItem.swift */,
 				85FB8C1A2007FABF00863E0F /* Plan.swift */,
+				85575C78201BD20000D5B625 /* Airline.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -682,6 +695,7 @@
 				853DBC8B1FBB4A1200AC8E3C /* EventMatchesTableViewCell.swift */,
 				853DBC8F1FBB567100AC8E3C /* EventMatchCollectionViewCell.swift */,
 				85BE1DC61FBDD2870091A9D3 /* PendingEventsInfoTableViewCell.swift */,
+				85575C7C201BD7BB00D5B625 /* FlightNumberTextField.swift */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -757,6 +771,7 @@
 				858398D41FBB3A1200ECFFE3 /* EventDetailsViewController.swift */,
 				85BE1DCE1FBDF41E0091A9D3 /* PendingEventsTableViewController.swift */,
 				85F3CED32007E3B400FAB0FF /* PlansViewController.swift */,
+				85575C74201B78CE00D5B625 /* FlightsViewController.swift */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -1391,6 +1406,7 @@
 				85662CBC1F90BE2200D5701E /* LoginViewController.swift in Sources */,
 				854DDAC51DE47DE500655EFC /* User.swift in Sources */,
 				85662CC81F90BE2200D5701E /* Constants+Analytics.swift in Sources */,
+				85575C75201B78CE00D5B625 /* FlightsViewController.swift in Sources */,
 				85662CBA1F90BE2200D5701E /* AboutWebViewController.swift in Sources */,
 				856B0A9E1FA0838F0041C11E /* UserCommonEventTableViewCell.swift in Sources */,
 				853DBC841FBB41C400AC8E3C /* EventDetailsTableViewCell.swift in Sources */,
@@ -1447,9 +1463,11 @@
 				85662CC41F90BE2200D5701E /* Notifier.swift in Sources */,
 				8506A8971DCBB0CC00C18EC3 /* Event.swift in Sources */,
 				85662CB01F90BE2200D5701E /* ProfilePhotoImageView.swift in Sources */,
+				85575C79201BD20000D5B625 /* Airline.swift in Sources */,
 				85B36AAA1FB1AEFB00A7B599 /* PageLike.swift in Sources */,
 				85B36AA21FADFE7F00A7B599 /* UserPageLikesGraphRequest.swift in Sources */,
 				854FDBC61FBF5C40006D9352 /* NotificationsViewController.swift in Sources */,
+				85575C7D201BD7BB00D5B625 /* FlightNumberTextField.swift in Sources */,
 				858398D51FBB3A1200ECFFE3 /* EventDetailsViewController.swift in Sources */,
 				85E5D4CD1DD9EFBC003E2376 /* CurrentUser.swift in Sources */,
 				85662CC11F90BE2200D5701E /* UnwindThenShowChatSegue.swift in Sources */,
@@ -1486,6 +1504,7 @@
 				85662CCF1F90BE2300D5701E /* AddEventViewController.swift in Sources */,
 				85B36AAB1FB1B9F900A7B599 /* PageLike.swift in Sources */,
 				85662CEB1F90BE2300D5701E /* NavigationController.swift in Sources */,
+				85575C76201B78CE00D5B625 /* FlightsViewController.swift in Sources */,
 				85662C0D1F90BD6500D5701E /* Place.swift in Sources */,
 				85662C121F90BD6500D5701E /* Preferences.swift in Sources */,
 				853DBC851FBB41C400AC8E3C /* EventDetailsTableViewCell.swift in Sources */,
@@ -1542,9 +1561,11 @@
 				85662C181F90BD7500D5701E /* CandidatesDelegate.swift in Sources */,
 				85662CD01F90BE2300D5701E /* MyEventsTableViewController.swift in Sources */,
 				85662C521F90BDDD00D5701E /* AlbumsTableViewCell.swift in Sources */,
+				85575C7A201BD20000D5B625 /* Airline.swift in Sources */,
 				85662C131F90BD7500D5701E /* UserEventsGraphRequest.swift in Sources */,
 				85662CCE1F90BE2300D5701E /* EventsViewController.swift in Sources */,
 				854FDBC71FBF5C40006D9352 /* NotificationsViewController.swift in Sources */,
+				85575C7E201BD7BB00D5B625 /* FlightNumberTextField.swift in Sources */,
 				858398D61FBB3A1200ECFFE3 /* EventDetailsViewController.swift in Sources */,
 				85662CE91F90BE2300D5701E /* MainTabBarController.swift in Sources */,
 				85662CDC1F90BE2300D5701E /* PreferencesViewController.swift in Sources */,
@@ -1581,6 +1602,7 @@
 				85662C7D1F90BE1300D5701E /* AddEventViewController.swift in Sources */,
 				85B36AAC1FB1B9F900A7B599 /* PageLike.swift in Sources */,
 				85662C991F90BE1300D5701E /* NavigationController.swift in Sources */,
+				85575C77201B78CE00D5B625 /* FlightsViewController.swift in Sources */,
 				85662C401F90BDD000D5701E /* Place.swift in Sources */,
 				85662C451F90BDD000D5701E /* Preferences.swift in Sources */,
 				853DBC861FBB41C400AC8E3C /* EventDetailsTableViewCell.swift in Sources */,
@@ -1637,9 +1659,11 @@
 				85662C4B1F90BDD400D5701E /* CandidatesDelegate.swift in Sources */,
 				85662C7E1F90BE1300D5701E /* MyEventsTableViewController.swift in Sources */,
 				85662C541F90BDDD00D5701E /* AlbumsTableViewCell.swift in Sources */,
+				85575C7B201BD20000D5B625 /* Airline.swift in Sources */,
 				85662C461F90BDD400D5701E /* UserEventsGraphRequest.swift in Sources */,
 				85662C7C1F90BE1300D5701E /* EventsViewController.swift in Sources */,
 				854FDBC81FBF5C40006D9352 /* NotificationsViewController.swift in Sources */,
+				85575C7F201BD7BB00D5B625 /* FlightNumberTextField.swift in Sources */,
 				858398D71FBB3A1200ECFFE3 /* EventDetailsViewController.swift in Sources */,
 				85662C971F90BE1300D5701E /* MainTabBarController.swift in Sources */,
 				85662C8A1F90BE1300D5701E /* PreferencesViewController.swift in Sources */,

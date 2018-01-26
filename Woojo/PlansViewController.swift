@@ -24,6 +24,7 @@ class PlansViewController: UIViewController {
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var resultsTableView: UITableView!
     @IBOutlet var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet var tipViewHeightConstraint: NSLayoutConstraint!
     var plan: Plan? {
         didSet {
             bindPlan()
@@ -34,13 +35,16 @@ class PlansViewController: UIViewController {
     @IBOutlet var planLabel: UILabel!
     @IBOutlet var changePlaceButton: UIButton!
     @IBOutlet var makePlanButton: UIButton!
+    let searchText = Variable<String?>(nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         User.current.asObservable().subscribe(onNext: { (user) in
             if let tips = user?.tips, tips[self.tipId] != nil {
-                self.tipView.isHidden = true
+                print("SHOULD HIDE TIP")
+                self.tipView.alpha = 0.0
+                self.tipViewHeightConstraint.constant = 0
             }
         }).addDisposableTo(disposeBag)
         
@@ -58,7 +62,28 @@ class PlansViewController: UIViewController {
     }
     
     func setupDataSource() {
-        let results = searchBar.rx.text.orEmpty
+        searchBar.rx.text.orEmpty.asDriver().drive(searchText).disposed(by: disposeBag)
+        let results = searchText.asDriver()
+            .throttle(0.3)
+            .distinctUntilChanged({ (a, b) -> Bool in
+                return a == b
+            })
+            .flatMapLatest { query -> SharedSequence<DriverSharingStrategy, Array<Place>> in
+                if let query = query {
+                    if query.isEmpty {
+                        return Observable.just([])
+                            .asDriver(onErrorJustReturn: [])
+                    } else {
+                        return Place.search(query: query)
+                            .retry(3)
+                            .startWith([])
+                            .asDriver(onErrorJustReturn: [])
+                    }
+                } else {
+                    return Observable.just([]).asDriver(onErrorJustReturn: [])
+                }
+            }
+        /*let results = searchBar.rx.text.orEmpty
             .asDriver()
             .throttle(0.3)
             .distinctUntilChanged()
@@ -72,11 +97,9 @@ class PlansViewController: UIViewController {
                         .startWith([])
                         .asDriver(onErrorJustReturn: [])
                 }
-        }
+        }*/
         
-        results
-            .drive(resultsTableView.rx.items(cellIdentifier: "searchPlaceCell", cellType: SearchPlacesResultsTableViewCell.self)) { (_, place, cell) in
-                print("PLACE", place)
+        results.drive(resultsTableView.rx.items(cellIdentifier: "searchPlaceCell", cellType: SearchPlacesResultsTableViewCell.self)) { (_, place, cell) in
                 cell.place = place
             }
             .addDisposableTo(disposeBag)
@@ -88,8 +111,7 @@ class PlansViewController: UIViewController {
                     let cell = self.resultsTableView.cellForRow(at: indexPath) as? SearchPlacesResultsTableViewCell,
                     let place = cell.place {
                     self.plan = Plan(place: place, date: self.datePicker.date)
-                    self.placeChooserView.isHidden = true
-                    self.placeButtonsView.isHidden = false
+                    self.showButtonsAndHideSearch()
                 }
             }).addDisposableTo(disposeBag)
     }
@@ -113,6 +135,7 @@ class PlansViewController: UIViewController {
         UIView.beginAnimations("foldHeader", context: nil)
         tipView.isHidden = true
         tipView.subviews.forEach { $0.isHidden = true }
+        self.tipViewHeightConstraint.constant = 0
         UIView.commitAnimations()
     }
     
@@ -154,12 +177,27 @@ class PlansViewController: UIViewController {
     }
     
     @IBAction func changePlace() {
-        placeButtonsView.isHidden = true
-        placeChooserView.isHidden = false
+        showSearchAndHideButtons()
     }
     
     @IBAction func dateChanged(sender: UIDatePicker) {
         
+    }
+    
+    func showSearchAndHideButtons() {
+        self.placeChooserView.superview?.bringSubview(toFront: self.placeChooserView)
+        UIView.animate(withDuration: 0.3, animations: {
+            self.placeChooserView.alpha = 1.0
+            self.placeButtonsView.alpha = 0.0
+        })
+    }
+    
+    func showButtonsAndHideSearch() {
+        self.placeButtonsView.superview?.bringSubview(toFront: self.placeButtonsView)
+        UIView.animate(withDuration: 0.3, animations: {
+            self.placeChooserView.alpha = 0.0
+            self.placeButtonsView.alpha = 1.0
+        })
     }
     
     @IBAction func makePlan() {
@@ -170,7 +208,9 @@ class PlansViewController: UIViewController {
                 HUD.show(.labeledProgress(title: "Make Plan", subtitle: "Making plan..."))
                 User.current.value?.add(event: event, completion: { (error: Error?) -> Void in
                     HUD.show(.labeledSuccess(title: "Make Plan", subtitle: "Done!"))
-                    HUD.hide(afterDelay: 1.0)
+                    HUD.hide(afterDelay: 1.0, completion: { (_) in
+                        self.plan = nil
+                    })
                     let analyticsEventParameters = [Constants.Analytics.Events.PlanMade.Parameters.id: event.id,
                                                     Constants.Analytics.Events.PlanMade.Parameters.screen: String(describing: type(of: self))]
                     Analytics.Log(event: Constants.Analytics.Events.EventRemoved.name, with: analyticsEventParameters)
@@ -214,6 +254,11 @@ class PlansViewController: UIViewController {
             } else {
                 thumbnailImageView.image = #imageLiteral(resourceName: "placeholder_40x40")
             }
+        } else {
+            datePicker.setDate(Date(), animated: true)
+            searchText.value = nil
+            searchBar.text = nil
+            showSearchAndHideButtons()
         }
     }
 }
