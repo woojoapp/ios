@@ -18,6 +18,7 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var loadEarlierAction: UIButton!
     @IBOutlet weak var loadEarlierActionTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bannerView: UIView!
     
     let translucentColor = UIColor(red: 247.0/255.0, green: 247.0/255.0, blue: 247.0/255.0, alpha: 0.95)
     var unmatchObserverHandle: UInt?
@@ -39,6 +40,12 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
         ALApplozicSettings.setColorForSendMessages(self.view.tintColor)
         
         mTableView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 50.0, right: 0.0)
+        
+        if let navigationController = navigationController {
+            let userChatBannerView = UserChatBannerView(frame: CGRect(x: 0, y: UIApplication.shared.statusBarFrame.height + navigationController.navigationBar.frame.height, width: view.frame.width, height: 100))
+            userChatBannerView.load(title: "Why not sit together?", description: "Choose your seat today and\nmeet on board your Joon flight!", image: #imageLiteral(resourceName: "joon"), actionText: "Go")
+            bannerView.addSubview(userChatBannerView)
+        }
     }
     
     override func viewDidLayoutSubviews() {

@@ -223,7 +223,7 @@ extension Event {
     static func get(for id: String, completion: ((Event?) -> Void)? = nil) {
         let ref = Database.database().reference().child(Constants.Event.firebaseNode).child(id)
         ref.observeSingleEvent(of: .value, with: { snapshot in
-            print("GOT SNAPSHOT", snapshot)
+            //print("GOT SNAPSHOT", snapshot)
             completion?(from(firebase: snapshot))
         })
     }

@@ -71,6 +71,28 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
         layer.shadowOpacity = 0.3
     }
     
+    func addPreviousPhotoButton() {
+        previousPhotoImageView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: self.previousPhotoButton.frame.width, height: self.previousPhotoButton.frame.height))
+        previousPhotoImageView?.contentMode = .scaleAspectFill
+        previousPhotoImageView?.clipsToBounds = true
+        previousPhotoImageView?.layer.masksToBounds = true
+        previousPhotoImageView?.layer.cornerRadius = self.previousPhotoButton.frame.width / 2.0
+        previousPhotoImageView?.layer.borderWidth = 1.0
+        previousPhotoImageView?.layer.borderColor = UIColor.white.cgColor
+        self.previousPhotoButton.addSubview(previousPhotoImageView!)
+    }
+    
+    func addNextPhotoButton() {
+        nextPhotoImageView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: self.nextPhotoButton.frame.width, height: self.nextPhotoButton.frame.height))
+        nextPhotoImageView?.contentMode = .scaleAspectFill
+        nextPhotoImageView?.clipsToBounds = true
+        nextPhotoImageView?.layer.masksToBounds = true
+        nextPhotoImageView?.layer.cornerRadius = self.nextPhotoButton.frame.width / 2.0
+        nextPhotoImageView?.layer.borderWidth = 1.0
+        nextPhotoImageView?.layer.borderColor = UIColor.white.cgColor
+        self.nextPhotoButton.addSubview(nextPhotoImageView!)
+    }
+    
     func load(completion: (() -> ())? = nil) {
         detailsView.backgroundColor = UIColor(cgColor: CGColor(colorLiteralRed: 0.0, green: 0.0, blue: 0.0, alpha: 0.7))
         
@@ -83,23 +105,8 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
         //carouselView.layer.borderWidth = 1.0
         //carouselView.layer.borderColor = .wh
         
-        previousPhotoImageView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: self.previousPhotoButton.frame.width, height: self.previousPhotoButton.frame.height))
-        previousPhotoImageView?.contentMode = .scaleAspectFill
-        previousPhotoImageView?.clipsToBounds = true
-        previousPhotoImageView?.layer.masksToBounds = true
-        previousPhotoImageView?.layer.cornerRadius = self.previousPhotoButton.frame.width / 2.0
-        previousPhotoImageView?.layer.borderWidth = 1.0
-        previousPhotoImageView?.layer.borderColor = UIColor.white.cgColor
-        self.previousPhotoButton.addSubview(previousPhotoImageView!)
-        
-        nextPhotoImageView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: self.nextPhotoButton.frame.width, height: self.nextPhotoButton.frame.height))
-        nextPhotoImageView?.contentMode = .scaleAspectFill
-        nextPhotoImageView?.clipsToBounds = true
-        nextPhotoImageView?.layer.masksToBounds = true
-        nextPhotoImageView?.layer.cornerRadius = self.nextPhotoButton.frame.width / 2.0
-        nextPhotoImageView?.layer.borderWidth = 1.0
-        nextPhotoImageView?.layer.borderColor = UIColor.white.cgColor
-        self.nextPhotoButton.addSubview(nextPhotoImageView!)
+        addNextPhotoButton()
+        addPreviousPhotoButton()
         
         nameLabel.textAlignment = .center
         firstCommonEventLabel.textAlignment = .center

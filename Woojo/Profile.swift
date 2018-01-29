@@ -103,7 +103,11 @@ extension User {
                 city = value[Constants.User.Profile.properties.firebaseNodes.city] as? String
                 country = value[Constants.User.Profile.properties.firebaseNodes.country] as? String
                 if let birthdayString = value[Constants.User.Profile.properties.firebaseNodes.birthday] as? String {
-                    birthday = birthdayFirebaseFormatter.date(from: birthdayString)
+                    if let birthday = birthdayFirebaseFormatter.date(from: birthdayString) {
+                        self.birthday = birthday
+                    } else if let birthday = birthdayFacebookFormatter.date(from: birthdayString) {
+                        self.birthday = birthday
+                    }
                 }
             } else {
                 print("Failed to create Profile from Firebase snapshot.", snapshot)

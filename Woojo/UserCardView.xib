@@ -41,7 +41,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f7z-0P-aym" userLabel="Details View">
                     <rect key="frame" x="0.0" y="577.5" width="375" height="89.5"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="USN-Zu-aaw">
+                        <button hidden="YES" opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="USN-Zu-aaw">
                             <rect key="frame" x="12" y="21" width="47" height="47"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="USN-Zu-aaw" secondAttribute="height" multiplier="1:1" id="821-To-m1A"/>
@@ -50,7 +50,7 @@
                                 <action selector="previousPhoto" destination="-1" eventType="touchUpInside" id="QYZ-9m-6Tr"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xwk-kZ-VtA">
+                        <button hidden="YES" opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xwk-kZ-VtA">
                             <rect key="frame" x="316" y="22" width="47" height="47"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="xwk-kZ-VtA" secondAttribute="height" multiplier="1:1" id="1jn-Ku-Agn"/>

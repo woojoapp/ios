@@ -71,7 +71,6 @@ class FlightsViewController: UIViewController, UIGestureRecognizerDelegate {
     }
 
     @IBAction func hideKeyboard() {
-        print("TAPPPPPPPED")
         view.endEditing(true)
         flightNumberTextField.resignFirstResponder()
     }

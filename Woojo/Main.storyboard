@@ -270,7 +270,7 @@
                             <constraint firstItem="v0f-RA-VAp" firstAttribute="centerX" secondItem="LT5-X9-ZcP" secondAttribute="centerX" id="yMR-Ko-pwx"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="People" id="CDk-lZ-eUH"/>
+                    <navigationItem key="navigationItem" id="CDk-lZ-eUH"/>
                     <connections>
                         <outlet property="kolodaView" destination="v0f-RA-VAp" id="STh-Uh-gR9"/>
                         <outlet property="loadingContainerView" destination="2si-Gv-7N3" id="5Xa-Bw-Crk"/>
@@ -2357,8 +2357,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MvC-rl-EsT">
+                                <rect key="frame" x="0.0" y="20" width="320" height="100"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="JkX-Z0-OwD"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="90" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="j3Z-SL-P7K">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="562"/>
+                                <rect key="frame" x="0.0" y="120" width="320" height="442"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="separatorColor" red="1" green="0.27631654849999998" blue="0.20548630309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
@@ -2379,7 +2386,7 @@
                                 <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="58h-r4-J9M">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
+                                <rect key="frame" x="0.0" y="120" width="320" height="30"/>
                                 <state key="normal" title="Load Earlier Messages"/>
                                 <connections>
                                     <action selector="loadEarlierButtonAction:" destination="get-Ko-mLC" eventType="touchDown" id="EeD-hu-hD5"/>
@@ -2457,7 +2464,7 @@
                                 </variation>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have no conversation." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dtA-Gh-exg">
-                                <rect key="frame" x="16" y="272.5" width="288" height="18"/>
+                                <rect key="frame" x="16" y="332.5" width="288" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -2478,12 +2485,14 @@
                             <constraint firstItem="58h-r4-J9M" firstAttribute="leading" secondItem="j3Z-SL-P7K" secondAttribute="leading" identifier="Load Earlier Action.leading" id="2SW-zw-GDG"/>
                             <constraint firstItem="dtA-Gh-exg" firstAttribute="centerX" secondItem="9Lf-Eh-TYH" secondAttribute="centerX" id="3oA-QJ-rzR"/>
                             <constraint firstItem="mqW-cB-RsZ" firstAttribute="top" secondItem="j3Z-SL-P7K" secondAttribute="bottom" id="4NC-1O-k7k"/>
+                            <constraint firstAttribute="trailing" secondItem="MvC-rl-EsT" secondAttribute="trailing" id="7WK-cM-FBj"/>
                             <constraint firstItem="mqW-cB-RsZ" firstAttribute="top" secondItem="KHH-CV-eba" secondAttribute="bottom" identifier="CheckBottom" id="9zr-fa-twX"/>
-                            <constraint firstItem="j3Z-SL-P7K" firstAttribute="top" secondItem="Azv-SG-Vj2" secondAttribute="top" identifier="MTable View.top" id="AaT-a7-QRT"/>
+                            <constraint firstItem="j3Z-SL-P7K" firstAttribute="top" secondItem="MvC-rl-EsT" secondAttribute="bottom" identifier="MTable View.top" id="AaT-a7-QRT"/>
                             <constraint firstItem="umg-X8-hXY" firstAttribute="trailing" secondItem="KHH-CV-eba" secondAttribute="trailing" id="BFz-bi-7uD"/>
                             <constraint firstItem="L4l-V7-9TC" firstAttribute="trailing" secondItem="58h-r4-J9M" secondAttribute="trailing" id="CYc-bk-1hE"/>
                             <constraint firstItem="58h-r4-J9M" firstAttribute="trailing" secondItem="j3Z-SL-P7K" secondAttribute="trailing" identifier="Load Earlier Action.trailing" id="CkZ-Bh-fr1"/>
                             <constraint firstItem="L4l-V7-9TC" firstAttribute="leading" secondItem="58h-r4-J9M" secondAttribute="leading" id="KSU-6O-OM6"/>
+                            <constraint firstItem="MvC-rl-EsT" firstAttribute="leading" secondItem="Azv-SG-Vj2" secondAttribute="leading" id="PCc-1s-8lh"/>
                             <constraint firstItem="9Lf-Eh-TYH" firstAttribute="top" secondItem="L4l-V7-9TC" secondAttribute="bottom" constant="74" identifier="ActivityIndicatorTop" id="TPQ-E9-Q4e"/>
                             <constraint firstItem="umg-X8-hXY" firstAttribute="leading" secondItem="KHH-CV-eba" secondAttribute="leading" id="WyS-5e-g2r"/>
                             <constraint firstItem="58h-r4-J9M" firstAttribute="top" secondItem="j3Z-SL-P7K" secondAttribute="top" identifier="Load Earlier Action.top" id="ZnF-hF-qHJ"/>
@@ -2494,6 +2503,7 @@
                             <constraint firstItem="KHH-CV-eba" firstAttribute="trailing" secondItem="58h-r4-J9M" secondAttribute="trailing" identifier="typingMessageViewTrailing" id="jpT-to-tAs"/>
                             <constraint firstItem="9Lf-Eh-TYH" firstAttribute="centerY" secondItem="Azv-SG-Vj2" secondAttribute="centerY" identifier="MActivity Indicator.centerY" id="m6Q-Ew-bok"/>
                             <constraint firstItem="KHH-CV-eba" firstAttribute="leading" secondItem="58h-r4-J9M" secondAttribute="leading" identifier="typingMessageViewLeading" id="rdf-cW-YPo"/>
+                            <constraint firstItem="MvC-rl-EsT" firstAttribute="top" secondItem="pJc-ar-Wnx" secondAttribute="bottom" id="uS4-WF-hV5"/>
                             <constraint firstAttribute="trailing" secondItem="j3Z-SL-P7K" secondAttribute="trailing" identifier="trailing" id="uqf-LZ-xqd"/>
                             <constraint firstItem="j3Z-SL-P7K" firstAttribute="leading" secondItem="Azv-SG-Vj2" secondAttribute="leading" identifier="MTable View.Leading" id="xKk-gB-ZeN"/>
                             <constraint firstItem="j3Z-SL-P7K" firstAttribute="centerX" secondItem="9Lf-Eh-TYH" secondAttribute="centerX" identifier="MTable View.centreX" id="zaI-O1-G7L"/>
@@ -2509,6 +2519,7 @@
                     </view>
                     <connections>
                         <outlet property="attachmentOutlet" destination="F5m-Lb-2me" id="NcS-7o-BXM"/>
+                        <outlet property="bannerView" destination="Azv-SG-Vj2" id="nks-44-UAm"/>
                         <outlet property="checkBottomConstraint" destination="9zr-fa-twX" id="Md9-XI-Lej"/>
                         <outlet property="loadEarlierAction" destination="58h-r4-J9M" id="1cR-gl-9ux"/>
                         <outlet property="loadEarlierActionTopConstraint" destination="ZnF-hF-qHJ" id="PYl-QI-uOB"/>
@@ -2917,7 +2928,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plane" translatesAutoresizingMaskIntoConstraints="NO" id="zxX-6Q-xIq">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="joon" translatesAutoresizingMaskIntoConstraints="NO" id="zxX-6Q-xIq">
                                         <rect key="frame" x="16" y="16" width="64" height="64"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="zxX-6Q-xIq" secondAttribute="height" multiplier="1:1" id="Fns-5U-moY"/>
@@ -3023,11 +3034,11 @@
         <image name="events_tab" width="25" height="25"/>
         <image name="ic_action_camera" width="64" height="64"/>
         <image name="icon_rounded" width="512" height="512"/>
+        <image name="joon" width="64" height="18"/>
         <image name="online_show" width="100" height="100"/>
         <image name="options" width="72" height="72"/>
         <image name="people" width="160" height="160"/>
         <image name="people_tab" width="50" height="50"/>
-        <image name="plane" width="64" height="64"/>
         <image name="tip" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>

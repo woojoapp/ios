@@ -764,6 +764,12 @@ class CurrentUser: User {
         pass.save(completion: completion)
     }
     
+    func remove(candidate uid: String, completion: ((Error?) -> Void)? = nil) {
+        ref.child(Constants.User.Candidate.firebaseNode).child(uid).removeValue { (error, _) in
+            completion?(error)
+        }
+    }
+    
     func dismissTip(tipId: String, completion: ((Error?) -> Void)? = nil) {
         self.ref.child(Constants.User.Tip.firebaseNode).child(tipId).setValue(Event.dateFormatter.string(from: Date())) { (error, _) in
             completion?(error)

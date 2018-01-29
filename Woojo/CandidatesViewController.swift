@@ -77,6 +77,10 @@ class CandidatesViewController: UIViewController {
         kolodaView.dataSource = self
         kolodaView.delegate = self
         
+        let titleImageView = UIImageView(image: #imageLiteral(resourceName: "woojo"))
+        titleImageView.contentMode = .scaleAspectFit
+        self.navigationItem.titleView = titleImageView
+        
         /*likeButton.layer.cornerRadius = likeButton.frame.width / 2
         likeButton.layer.masksToBounds = true
         set(button: likeButton, enabled: false)
@@ -172,49 +176,57 @@ class CandidatesViewController: UIViewController {
 extension CandidatesViewController: KolodaViewDelegate {
     
     func koloda(_ koloda: KolodaView, didSwipeCardAt index: Int, in direction: SwipeResultDirection) {
-        //DispatchQueue.global(qos: .background).async {
-            switch direction {
-            case .left:
-                User.current.value?.candidates[index].pass()
-                //if !passButton.isSelected {
-                //passButton.select()
-                //set(button: likeButton, enabled: false)
-                if let uid = User.current.value?.candidates[index].uid {
+        if let uid = User.current.value?.candidates[index].uid {
+            DispatchQueue.global(qos: .background).async {
+                switch direction {
+                case .left:
+                    //User.current.value?.candidates[index].pass()
+                    User.current.value?.pass(candidate: uid)
+                    User.current.value?.remove(candidate: uid)
+                    // - TODO: REMOVE CANDIDATE BASED ON UID ONLY
+                    //if !passButton.isSelected {
+                    //passButton.select()
+                    //set(button: likeButton, enabled: false)
+                    //if let uid = User.current.value?.candidates[index].uid {
                     let analyticsEventParameters = [Constants.Analytics.Events.CandidatePassed.Parameters.uid: uid,
                                                     Constants.Analytics.Events.CandidatePassed.Parameters.type: "swipe",
                                                     Constants.Analytics.Events.CandidatePassed.Parameters.screen: String(describing: type(of: self))]
                     Analytics.Log(event: Constants.Analytics.Events.CandidatePassed.name, with: analyticsEventParameters)
-                }
+                    //}
                 //}
-            case .right:
-                User.current.value?.candidates[index].like()
-                if User.current.value?.activity.repliedToPushNotificationsInvite == nil {
-                    self.showPushNotificationsInvite()
-                }
-                //if !likeButton.isSelected {
-                //likeButton.select()
-                //set(button: passButton, enabled: false)
-                if let uid = User.current.value?.candidates[index].uid {
+                case .right:
+                    //User.current.value?.candidates[index].like()
+                    User.current.value?.like(candidate: uid)
+                    User.current.value?.remove(candidate: uid)
+                    // - TODO: REMOVE CANDIDATE BASED ON UID ONLY
+                    if User.current.value?.activity.repliedToPushNotificationsInvite == nil {
+                        self.showPushNotificationsInvite()
+                    }
+                    //if !likeButton.isSelected {
+                    //likeButton.select()
+                    //set(button: passButton, enabled: false)
+                    //if let uid = User.current.value?.candidates[index].uid {
                     let analyticsEventParameters = [Constants.Analytics.Events.CandidateLiked.Parameters.uid: uid,
                                                     Constants.Analytics.Events.CandidateLiked.Parameters.type: "swipe",
                                                     Constants.Analytics.Events.CandidateLiked.Parameters.screen: String(describing: type(of: self))]
                     Analytics.Log(event: Constants.Analytics.Events.CandidateLiked.name, with: analyticsEventParameters)
-                }
+                    //}
                 //}
-            default: break
-            }
-            /*DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                self.likeButton.deselect()
-                self.passButton.deselect()
-                if !self.ranOutOfCards {
-                    self.set(button: self.likeButton, enabled: true)
-                    self.set(button: self.passButton, enabled: true)
+                default: break
                 }
-            })*/
-            User.current.value?.candidates.remove(at: index)
-            self.kolodaView.removeCardInIndexRange(index..<index, animated: false)
-            self.kolodaView.currentCardIndex = 0
-        //}
+                /*DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                 self.likeButton.deselect()
+                 self.passButton.deselect()
+                 if !self.ranOutOfCards {
+                 self.set(button: self.likeButton, enabled: true)
+                 self.set(button: self.passButton, enabled: true)
+                 }
+                 })*/
+            }
+        }
+        User.current.value?.candidates.remove(at: index)
+        self.kolodaView.removeCardInIndexRange(index..<index, animated: false)
+        self.kolodaView.currentCardIndex = 0
     }
     
     func kolodaShouldApplyAppearAnimation(_ koloda: KolodaView) -> Bool {
@@ -274,17 +286,20 @@ extension CandidatesViewController: KolodaViewDataSource {
     }
     
     func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
+        print("CandidatesViewController viewForCardAt", index, "count", User.current.value?.candidates.count)
         let cardView = UserCardView(frame: CGRect.zero)
         cardView.setRoundedCornersAndShadow()
-        cardView.user = User.current.value?.candidates[index]
-        if let commonEventInfos = User.current.value?.candidates[index].commonEventInfos {
-            cardView.commonEventInfos = commonEventInfos
-        }
-        if let commonFriends = User.current.value?.candidates[index].commonFriends {
-            cardView.commonFriends = commonFriends
-        }
-        if let commonPageLikes = User.current.value?.candidates[index].commonPageLikes {
-            cardView.commonPageLikes = commonPageLikes
+        if let count = User.current.value?.candidates.count, count > index {
+            cardView.user = User.current.value?.candidates[index]
+            if let commonEventInfos = User.current.value?.candidates[index].commonEventInfos {
+                cardView.commonEventInfos = commonEventInfos
+            }
+            if let commonFriends = User.current.value?.candidates[index].commonFriends {
+                cardView.commonFriends = commonFriends
+            }
+            if let commonPageLikes = User.current.value?.candidates[index].commonPageLikes {
+                cardView.commonPageLikes = commonPageLikes
+            }
         }
         cardView.candidatesViewController = self
         
@@ -320,18 +335,25 @@ extension CandidatesViewController: ShowsSettingsButton {
 extension CandidatesViewController: CandidatesDelegate {
     
     func didAddCandidate() {
-        kolodaView.reloadData()
+        //DispatchQueue.global(qos: .background).async {
+            self.kolodaView.reloadData()
+        //}
     }
     
     func didRemoveCandidate(candidateId: String, index: Int) {
         //kolodaView.reloadData()
-        print("REMOVED CANDIDATE \(candidateId) at index \(index), count is \(kolodaView.countOfCards)")
+        print("CandidatesViewController REMOVED CANDIDATE \(candidateId) at index \(index), count is \(kolodaView.countOfCards)")
         
         //kolodaView.reloadData()
-        kolodaView.removeCardInIndexRange(index..<index, animated: false)
+        if let cardView = kolodaView.viewForCard(at: index) as? UserCardView,
+            let cardUserId = cardView.user?.uid,
+            cardUserId == candidateId {
+            print("CandidatesViewController REMOVE CARD FOR USER", candidateId, "CARD HAS", cardView.user?.uid, "AT INDEX", index)
+            kolodaView.removeCardInIndexRange(index..<index, animated: false)
+            kolodaView.resetCurrentCardIndex()
+            print("CandidatesViewController AFTER RESET, count is \(kolodaView.countOfCards)")
+        }
         //kolodaView.currentCardIndex = 0
-        kolodaView.resetCurrentCardIndex()
-        print("AFTER RESET, count is \(kolodaView.countOfCards)")
         if kolodaView.countOfCards == 0 {
             self.hideKolodaAndShowLoading()
         }

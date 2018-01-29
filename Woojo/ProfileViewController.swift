@@ -449,7 +449,16 @@ extension ProfileViewController: UIImagePickerControllerDelegate {
             rskImageCropper.maskLayerStrokeColor = UIColor.white
             rskImageCropper.delegate = self
             rskImageCropper.avoidEmptySpaceAroundImage = true
-            rskImageCropper.cropMode = .square
+            rskImageCropper.cropMode = .custom
+            rskImageCropper.dataSource = self
+            let newMoveAndScaleLabel = UILabel()
+            newMoveAndScaleLabel.frame = CGRect(x: 0.0, y: 24.0, width: rskImageCropper.view.frame.width, height: 24.0)
+            newMoveAndScaleLabel.textAlignment = .center
+            newMoveAndScaleLabel.center.x = rskImageCropper.view.center.x
+            newMoveAndScaleLabel.text = "Move and Scale"
+            newMoveAndScaleLabel.textColor = .white
+            rskImageCropper.moveAndScaleLabel.isHidden = true
+            rskImageCropper.view.addSubview(newMoveAndScaleLabel)
             self.imagePickerController.pushViewController(rskImageCropper, animated: true)
         }
     }
@@ -459,6 +468,35 @@ extension ProfileViewController: UIImagePickerControllerDelegate {
 
 extension ProfileViewController: UINavigationControllerDelegate {
     // Required for UIImagePickerController
+}
+
+
+extension ProfileViewController: RSKImageCropViewControllerDataSource {
+    func imageCropViewControllerCustomMaskPath(_ controller: RSKImageCropViewController) -> UIBezierPath {
+        return UIBezierPath(roundedRect: self.rskImageCropper.maskRect, cornerRadius: 24.0)
+    }
+    
+    func imageCropViewControllerCustomMovementRect(_ controller: RSKImageCropViewController) -> CGRect {
+        return self.rskImageCropper.maskRect
+    }
+    
+    func imageCropViewControllerCustomMaskRect(_ controller: RSKImageCropViewController) -> CGRect {
+        var width = self.view.frame.width - 32.0
+        if width > 500.0 { width = 500.0 }
+        let x:CGFloat = 16.0
+        var height = width * 16.0 / 9.0
+        var y: CGFloat = 16.0
+        if let navigationController = self.navigationController {
+            let topMargin = UIApplication.shared.statusBarFrame.height + navigationController.navigationBar.frame.height
+            var bottomMargin = navigationController.navigationBar.frame.height
+            if let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController {
+                bottomMargin = mainTabBarController.tabBar.frame.height
+            }
+            height = self.view.frame.height - topMargin - bottomMargin - 32.0
+            y = topMargin + 16.0
+        }
+        return CGRect(x: x, y: y, width: width, height: height)
+    }
 }
 
 // MARK: - RSKIMageCropViewControllerDelegate
