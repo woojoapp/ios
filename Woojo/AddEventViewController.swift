@@ -75,14 +75,13 @@ class AddEventViewController: UIViewController {
     
     override func viewDidLoad() {
         self.segmentedControl.type = .images
-        self.segmentedControl.sectionImages = [#imageLiteral(resourceName: "explore_section"), #imageLiteral(resourceName: "facebook_section"), #imageLiteral(resourceName: "search_section"), #imageLiteral(resourceName: "plan_section"), #imageLiteral(resourceName: "flights_section")]
-        self.segmentedControl.sectionSelectedImages = [#imageLiteral(resourceName: "explore_section_selected"), #imageLiteral(resourceName: "facebook_section_selected"), #imageLiteral(resourceName: "search_section_selected"), #imageLiteral(resourceName: "plan_section_selected"), #imageLiteral(resourceName: "flights_section_selected")]
-        //self.segmentedControl.sectionTitles = ["Explore", "Your Facebook", "Search"]
+        self.segmentedControl.sectionImages = [#imageLiteral(resourceName: "explore_section"), #imageLiteral(resourceName: "facebook_section"),#imageLiteral(resourceName: "eventbrite_section"), #imageLiteral(resourceName: "search_section"), #imageLiteral(resourceName: "plan_section")]
+        self.segmentedControl.sectionSelectedImages = [#imageLiteral(resourceName: "explore_section_selected"), #imageLiteral(resourceName: "facebook_section_selected"),#imageLiteral(resourceName: "eventbrite_section_selected"), #imageLiteral(resourceName: "search_section_selected"), #imageLiteral(resourceName: "plan_section_selected")]
         self.segmentedControl.selectionIndicatorColor = self.view.tintColor
         self.segmentedControl.selectionStyle = .fullWidthStripe
         self.segmentedControl.selectionIndicatorLocation = .up
         self.segmentedControl.selectionIndicatorHeight = 2.0
-        self.segmentedControl.titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 12.0)]
+        self.segmentedControl.titleTextAttributes = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 12.0)]
         self.segmentedControl.selectedSegmentIndex = 1
         
         self.containerViewA.alpha = 0//1
@@ -100,7 +99,7 @@ class AddEventViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func tap(gesture: UITapGestureRecognizer) {
+    @objc func tap(gesture: UITapGestureRecognizer) {
         self.containerViewC.endEditing(true)
         self.containerViewD.endEditing(true)
         self.containerViewE.endEditing(true)

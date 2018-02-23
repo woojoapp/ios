@@ -94,7 +94,7 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func load(completion: (() -> ())? = nil) {
-        detailsView.backgroundColor = UIColor(cgColor: CGColor(colorLiteralRed: 0.0, green: 0.0, blue: 0.0, alpha: 0.7))
+        detailsView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.7)
         
         carouselView.backgroundColor = UIColor.white
         carouselView.circular = false
@@ -140,8 +140,8 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
                 })
             }
             if commonEventInfos.count > 1 {
-                let eventString = (commonEventInfos.count > 2) ? "events" : "event"
-                additionalCommonEventsLabel.text = "+\(commonEventInfos.count - 1) more common \(eventString)"
+                let eventString = (commonEventInfos.count > 2) ? NSLocalizedString("events", comment: "") : NSLocalizedString("event", comment: "")
+                additionalCommonEventsLabel.text = String(format: NSLocalizedString("+%d more common %@", comment: ""), commonEventInfos.count - 1, eventString)
             } else {
                 additionalCommonEventsLabel.text = ""
             }
@@ -259,7 +259,7 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
         })
     }
     
-    func toggleDescription() {
+    @objc func toggleDescription() {
         if isShowingDescription {
             hideDescription()
         } else {
@@ -292,25 +292,25 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
                 if commonEventInfos.count == 0 {
                     return nil
                 } else {
-                    return "Common Events"
+                    return NSLocalizedString("Common Events", comment: "")
                 }
             } else if section == 1 {
                 if user.profile.description.value.count == 0 {
                     return nil
                 } else {
-                    return "About \(name)"
+                    return String(format: NSLocalizedString("About %@", comment: ""), name)
                 }
             } else if section == 2 {
                 if commonFriends.count == 0 {
                     return nil
                 } else {
-                    return "Mutual Friends"
+                    return NSLocalizedString("Mutual Friends", comment: "")
                 }
             } else if section == 3 {
                 if commonPageLikes.count == 0 {
                     return nil
                 } else {
-                    return "Common Interests"
+                    return NSLocalizedString("Common Interests", comment: "")
                 }
             }
         }

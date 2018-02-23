@@ -52,13 +52,13 @@ class Event {
         get {
             var rsvpInfo: [String] = []
             if let attendingCount = attendingCount {
-                rsvpInfo.append("\(String(attendingCount)) going")
+                rsvpInfo.append(String(format: NSLocalizedString("%d going", comment: ""), attendingCount))
             }
             if let interestedCount = interestedCount {
-                rsvpInfo.append("\(String(interestedCount)) maybe")
+                rsvpInfo.append(String(format: NSLocalizedString("%d maybe", comment: ""), interestedCount))
             }
             if let noReplyCount = noReplyCount {
-                rsvpInfo.append("\(String(noReplyCount)) invited")
+                rsvpInfo.append(String(format: NSLocalizedString("%d invited", comment: ""), noReplyCount))
             }
             return rsvpInfo.joined(separator: ", ")
         }
@@ -95,35 +95,40 @@ extension Event {
         if let value = snapshot.value as? [String:Any],
             let id = value[Constants.Event.properties.firebaseNodes.id] as? String,
             let name = value[Constants.Event.properties.firebaseNodes.name] as? String,
-            let startTimeString = value[Constants.Event.properties.firebaseNodes.start] as? String,
-            let start = Event.dateFormatter.date(from: startTimeString.substring(to: startTimeString.index(startTimeString.endIndex, offsetBy: -5))) {
+            let startTimeString = value[Constants.Event.properties.firebaseNodes.start] as? String {
             
-            let event = Event(id: id, name: name, start: start)
-            event.description = value[Constants.Event.properties.firebaseNodes.description] as? String
-            if let pictureURLString = value[Constants.Event.properties.firebaseNodes.pictureURL] as? String {
-                event.pictureURL = URL(string: pictureURLString)
+            var startString = startTimeString
+            if (startTimeString.count > 19) {
+                startString = startTimeString.substring(to: startTimeString.index(startTimeString.endIndex, offsetBy: -5))
             }
-            if let coverURLString = value[Constants.Event.properties.firebaseNodes.coverURL] as? String {
-                event.coverURL = URL(string: coverURLString)
+            if let start = Event.dateFormatter.date(from: startString) {
+                let event = Event(id: id, name: name, start: start)
+                event.description = value[Constants.Event.properties.firebaseNodes.description] as? String
+                if let pictureURLString = value[Constants.Event.properties.firebaseNodes.pictureURL] as? String {
+                    event.pictureURL = URL(string: pictureURLString)
+                }
+                if let coverURLString = value[Constants.Event.properties.firebaseNodes.coverURL] as? String {
+                    event.coverURL = URL(string: coverURLString)
+                }
+                if let endTimeString = value[Constants.Event.properties.firebaseNodes.end] as? String {
+                    event.end = Event.dateFormatter.date(from: endTimeString)
+                }
+                if let attendingCount = value[Constants.Event.properties.firebaseNodes.attendingCount] as? Int {
+                    event.attendingCount = attendingCount
+                }
+                if let interestedCount = value[Constants.Event.properties.firebaseNodes.interestedCount] as? Int {
+                    event.interestedCount = interestedCount
+                }
+                if let noReplyCount = value[Constants.Event.properties.firebaseNodes.noReplyCount] as? Int {
+                    event.noReplyCount = noReplyCount
+                }
+                if let type = value[Constants.Event.properties.firebaseNodes.type] as? String {
+                    event.type = type
+                }
+                event.place = Place.from(firebase: snapshot.childSnapshot(forPath: Constants.Event.Place.firebaseNode))
+                return event
             }
-            if let endTimeString = value[Constants.Event.properties.firebaseNodes.end] as? String {
-                event.end = Event.dateFormatter.date(from: endTimeString)
-            }
-            if let attendingCount = value[Constants.Event.properties.firebaseNodes.attendingCount] as? Int {
-                event.attendingCount = attendingCount
-            }
-            if let interestedCount = value[Constants.Event.properties.firebaseNodes.interestedCount] as? Int {
-                event.interestedCount = interestedCount
-            }
-            if let noReplyCount = value[Constants.Event.properties.firebaseNodes.noReplyCount] as? Int {
-                event.noReplyCount = noReplyCount
-            }
-            if let type = value[Constants.Event.properties.firebaseNodes.type] as? String {
-                event.type = type
-            }
-            event.place = Place.from(firebase: snapshot.childSnapshot(forPath: Constants.Event.Place.firebaseNode))
-            return event
-            
+            return nil
         } else {
             print("Failed to create Event from Firebase snapshot. Nil or missing required data.", snapshot)
             return nil

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -47,7 +47,7 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By logging in, you agree to Terms &amp; Conditions and Privacy Policy " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bSC-MX-Ub9" customClass="TTTAttributedLabel">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By logging in, you agree to Terms &amp; Conditions and Privacy Policy " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bSC-MX-Ub9" customClass="TTTAttributedLabel">
                             <rect key="frame" x="0.0" y="22" width="288" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="tjO-4O-Z2R"/>
@@ -66,6 +66,7 @@
                         <constraint firstItem="wMC-mz-9w0" firstAttribute="centerX" secondItem="Ihq-YK-EZg" secondAttribute="centerX" id="YS3-yX-HKC"/>
                         <constraint firstAttribute="height" constant="48" id="qEf-ka-CXP"/>
                         <constraint firstItem="bSC-MX-Ub9" firstAttribute="top" secondItem="Ihq-YK-EZg" secondAttribute="centerY" constant="-2" id="tyz-Pc-K9I"/>
+                        <constraint firstAttribute="bottom" secondItem="bSC-MX-Ub9" secondAttribute="bottom" constant="5" id="wqL-MN-wUL"/>
                     </constraints>
                 </view>
             </subviews>

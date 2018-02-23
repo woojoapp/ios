@@ -141,7 +141,7 @@ class EventsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         if indexPath.section == 1 {
-            let deleteAction = UITableViewRowAction(style: .destructive, title: "Remove", handler: { action, indexPath in
+            let deleteAction = UITableViewRowAction(style: .destructive, title: NSLocalizedString("Remove", comment: ""), handler: { action, indexPath in
                 self.removeEvent(at: indexPath)
             })
             return [deleteAction]
@@ -175,13 +175,13 @@ class EventsViewController: UITableViewController {
     
     func removeEvent(at indexPath: IndexPath) {
         if let cell = self.tableView.cellForRow(at: indexPath) as? EventsTableViewCell, let event = cell.event {
-            HUD.show(.labeledProgress(title: "Remove Event", subtitle: "Removing event..."))
+            HUD.show(.labeledProgress(title: NSLocalizedString("Remove Event", comment: ""), subtitle: NSLocalizedString("Removing event...", comment: "")))
             User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
                 let analyticsEventParameters = [Constants.Analytics.Events.EventRemoved.Parameters.name: event.name,
                                                 Constants.Analytics.Events.EventRemoved.Parameters.id: event.id,
                                                 Constants.Analytics.Events.EventRemoved.Parameters.screen: String(describing: type(of: self))]
                 Analytics.Log(event: Constants.Analytics.Events.EventAdded.name, with: analyticsEventParameters)
-                HUD.show(.labeledSuccess(title: "Remove Event", subtitle: "Event removed!"))
+                HUD.show(.labeledSuccess(title: NSLocalizedString("Remove Event", comment: ""), subtitle: NSLocalizedString("Event removed!", comment: "")))
                 HUD.hide(afterDelay: 1.0)
             })
         }
@@ -214,7 +214,7 @@ class EventsViewController: UITableViewController {
 
 extension EventsViewController: ShowsSettingsButton {
     
-    func showSettings(sender : Any?) {
+    @objc func showSettings(sender : Any?) {
         if let settingsNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "SettingsNavigationController") {
             self.present(settingsNavigationController, animated: true, completion: nil)
         }
@@ -225,11 +225,11 @@ extension EventsViewController: ShowsSettingsButton {
 extension EventsViewController: DZNEmptyDataSetSource {
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        return NSAttributedString(string: "No Events Yet", attributes: Constants.App.Appearance.EmptyDatasets.titleStringAttributes)
+        return NSAttributedString(string: NSLocalizedString("No Events Yet", comment: ""), attributes: Constants.App.Appearance.EmptyDatasets.titleStringAttributes)
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        return NSAttributedString(string: "Click the + button to add events", attributes: Constants.App.Appearance.EmptyDatasets.descriptionStringAttributes)
+        return NSAttributedString(string: NSLocalizedString("Click the + button to add events", comment: ""), attributes: Constants.App.Appearance.EmptyDatasets.descriptionStringAttributes)
     }
     
     func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {

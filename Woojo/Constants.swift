@@ -69,6 +69,17 @@ struct Constants {
                 }
             }
         }
+        struct Integrations {
+            static let firebaseNode = "integrations"
+            struct Eventbrite {
+                static let firebaseNode = "eventbrite"
+                static let loginUrl = "https://www.eventbrite.com/oauth/authorize?response_type=token&client_id=VBM2KX25NKAKHKPT3H"
+                static let baseUrl = "https://www.eventbriteapi.com/v3"
+                struct properties {
+                    static let accessToken = "access_token"
+                }
+            }
+        }
         struct Profile {
             static let firebaseNode = "profile"
             struct Photo {
@@ -171,7 +182,7 @@ struct Constants {
             }
             struct Events {
                 struct announcement {
-                    static let title = "New events"
+                    static let title = NSLocalizedString("New events", comment: "")
                     static let duration = 2.0
                 }
                 struct properties {
@@ -182,7 +193,7 @@ struct Constants {
             }
             struct People {
                 struct announcement {
-                    static let title = "New people"
+                    static let title = NSLocalizedString("New people", comment: "")
                     static let duration = 2.0
                 }
                 struct properties {
@@ -199,7 +210,7 @@ struct Constants {
                 }
                 struct Match {
                     struct announcement {
-                        static let title = "New match"
+                        static let title = NSLocalizedString("New match", comment: "")
                         static let duration = 2.0
                     }
                 }
@@ -210,7 +221,7 @@ struct Constants {
                         }
                     }
                     struct announcement {
-                        static let title = "New message"
+                        static let title = NSLocalizedString("New message", comment: "")
                         static let duration = 2.0
                     }
                 }

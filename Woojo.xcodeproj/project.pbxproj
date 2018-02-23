@@ -8,22 +8,37 @@
 
 /* Begin PBXBuildFile section */
 		0D9CE390A23EE87EE51E48F7 /* Pods_Woojo_Development.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A2EC49C5603EE727058B9CF /* Pods_Woojo_Development.framework */; };
-		8501BD731FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8501BD711FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift */; };
-		8501BD741FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8501BD711FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift */; };
-		8501BD751FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8501BD711FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift */; };
-		8501BD761FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8501BD721FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib */; };
-		8501BD771FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8501BD721FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib */; };
-		8501BD781FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8501BD721FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib */; };
 		8506A8971DCBB0CC00C18EC3 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8961DCBB0CC00C18EC3 /* Event.swift */; };
 		8506A8991DCBB9C000C18EC3 /* EventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8981DCBB9C000C18EC3 /* EventsTableViewCell.swift */; };
 		8506A89B1DCC87A400C18EC3 /* EventsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8506A89A1DCC87A400C18EC3 /* EventsTableViewCell.xib */; };
 		8506A8A21DCCA61600C18EC3 /* Candidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8A11DCCA61600C18EC3 /* Candidate.swift */; };
 		8506A8A61DCCC85200C18EC3 /* Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8A51DCCC85200C18EC3 /* Like.swift */; };
 		8506A8A81DCCCB5E00C18EC3 /* Pass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8A71DCCCB5E00C18EC3 /* Pass.swift */; };
+		850F7D32202DC3C2005D6733 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 850F7D36202DC3C2005D6733 /* Main.storyboard */; };
+		850F7D33202DC3C2005D6733 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 850F7D36202DC3C2005D6733 /* Main.storyboard */; };
+		850F7D34202DC3C2005D6733 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 850F7D36202DC3C2005D6733 /* Main.storyboard */; };
+		850F7D3B202DCFE8005D6733 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 850F7D3F202DCFE8005D6733 /* LoginViewController.xib */; };
+		850F7D3C202DCFE8005D6733 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 850F7D3F202DCFE8005D6733 /* LoginViewController.xib */; };
+		850F7D3D202DCFE8005D6733 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 850F7D3F202DCFE8005D6733 /* LoginViewController.xib */; };
+		850F7D46202DD8D3005D6733 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 850F7D44202DD8D3005D6733 /* Localizable.strings */; };
+		850F7D47202DD8D3005D6733 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 850F7D44202DD8D3005D6733 /* Localizable.strings */; };
+		850F7D48202DD8D3005D6733 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 850F7D44202DD8D3005D6733 /* Localizable.strings */; };
 		851CDBE61DDEF18A00B887C0 /* UserEventsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851CDBE51DDEF18A00B887C0 /* UserEventsGraphRequest.swift */; };
 		851CDBE81DDEF29900B887C0 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851CDBE71DDEF29900B887C0 /* Place.swift */; };
 		851CDBEA1DDEF2B100B887C0 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851CDBE91DDEF2B100B887C0 /* Location.swift */; };
 		8526EF601FA60062003B04DF /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85DD5EEC1E954C4A008DF346 /* AdSupport.framework */; };
+		85304512203F58E800EF382B /* EventbriteLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85304511203F58E800EF382B /* EventbriteLoginViewController.swift */; };
+		85304513203F58E800EF382B /* EventbriteLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85304511203F58E800EF382B /* EventbriteLoginViewController.swift */; };
+		85304514203F58E800EF382B /* EventbriteLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85304511203F58E800EF382B /* EventbriteLoginViewController.swift */; };
+		853045162040161300EF382B /* EventbriteOrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853045152040161300EF382B /* EventbriteOrderResponse.swift */; };
+		853045172040161300EF382B /* EventbriteOrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853045152040161300EF382B /* EventbriteOrderResponse.swift */; };
+		853045182040161300EF382B /* EventbriteOrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853045152040161300EF382B /* EventbriteOrderResponse.swift */; };
+		8530451A2040165900EF382B /* EventbriteOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853045192040165900EF382B /* EventbriteOrder.swift */; };
+		8530451B2040165900EF382B /* EventbriteOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853045192040165900EF382B /* EventbriteOrder.swift */; };
+		8530451C2040165900EF382B /* EventbriteOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853045192040165900EF382B /* EventbriteOrder.swift */; };
+		8530451E2040166A00EF382B /* EventbriteEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8530451D2040166A00EF382B /* EventbriteEvent.swift */; };
+		8530451F2040166A00EF382B /* EventbriteEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8530451D2040166A00EF382B /* EventbriteEvent.swift */; };
+		853045202040166A00EF382B /* EventbriteEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8530451D2040166A00EF382B /* EventbriteEvent.swift */; };
 		85382E881F94B880003909D7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85382E871F94B87E003909D7 /* GoogleService-Info.plist */; };
 		85396F271E5F10EA007EDB18 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85396F261E5F10EA007EDB18 /* Notification.swift */; };
 		853DBC841FBB41C400AC8E3C /* EventDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853DBC831FBB41C400AC8E3C /* EventDetailsTableViewCell.swift */; };
@@ -144,7 +159,6 @@
 		85662C931F90BE1300D5701E /* AboutWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A4A9151E0989FE002AD1D0 /* AboutWebViewController.swift */; };
 		85662C941F90BE1300D5701E /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE461E07115400322E8E /* UserDetailsViewController.swift */; };
 		85662C951F90BE1300D5701E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85512B221DCB74DA0072C1B8 /* LoginViewController.swift */; };
-		85662C961F90BE1300D5701E /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85685F801DEF0BE9009BAEE0 /* LoginViewController.xib */; };
 		85662C971F90BE1300D5701E /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ED4E631DCFF7F200F51857 /* MainTabBarController.swift */; };
 		85662C981F90BE1300D5701E /* ShowsSettingsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D891631E55BDFF00EC7FFF /* ShowsSettingsButton.swift */; };
 		85662C991F90BE1300D5701E /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8545D9721E66BE7300A2D70C /* NavigationController.swift */; };
@@ -181,7 +195,6 @@
 		85662CBA1F90BE2200D5701E /* AboutWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A4A9151E0989FE002AD1D0 /* AboutWebViewController.swift */; };
 		85662CBB1F90BE2200D5701E /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE461E07115400322E8E /* UserDetailsViewController.swift */; };
 		85662CBC1F90BE2200D5701E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85512B221DCB74DA0072C1B8 /* LoginViewController.swift */; };
-		85662CBD1F90BE2200D5701E /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85685F801DEF0BE9009BAEE0 /* LoginViewController.xib */; };
 		85662CBE1F90BE2200D5701E /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ED4E631DCFF7F200F51857 /* MainTabBarController.swift */; };
 		85662CBF1F90BE2200D5701E /* ShowsSettingsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D891631E55BDFF00EC7FFF /* ShowsSettingsButton.swift */; };
 		85662CC01F90BE2200D5701E /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8545D9721E66BE7300A2D70C /* NavigationController.swift */; };
@@ -193,7 +206,6 @@
 		85662CC61F90BE2200D5701E /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD5EEA1E951D19008DF346 /* Analytics.swift */; };
 		85662CC71F90BE2200D5701E /* Constants+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD5EE81E951CA3008DF346 /* Constants+App.swift */; };
 		85662CC81F90BE2200D5701E /* Constants+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD5EE61E9517FF008DF346 /* Constants+Analytics.swift */; };
-		85662CC91F90BE2200D5701E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85407D9B1DF028D50033E696 /* Main.storyboard */; };
 		85662CCA1F90BE2200D5701E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85512B151DCB5B020072C1B8 /* Assets.xcassets */; };
 		85662CCB1F90BE2200D5701E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85512B1A1DCB5B020072C1B8 /* Info.plist */; };
 		85662CCE1F90BE2300D5701E /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8941DCBA14C00C18EC3 /* EventsViewController.swift */; };
@@ -221,7 +233,6 @@
 		85662CE51F90BE2300D5701E /* AboutWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A4A9151E0989FE002AD1D0 /* AboutWebViewController.swift */; };
 		85662CE61F90BE2300D5701E /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE461E07115400322E8E /* UserDetailsViewController.swift */; };
 		85662CE71F90BE2300D5701E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85512B221DCB74DA0072C1B8 /* LoginViewController.swift */; };
-		85662CE81F90BE2300D5701E /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85685F801DEF0BE9009BAEE0 /* LoginViewController.xib */; };
 		85662CE91F90BE2300D5701E /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ED4E631DCFF7F200F51857 /* MainTabBarController.swift */; };
 		85662CEA1F90BE2300D5701E /* ShowsSettingsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D891631E55BDFF00EC7FFF /* ShowsSettingsButton.swift */; };
 		85662CEB1F90BE2300D5701E /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8545D9721E66BE7300A2D70C /* NavigationController.swift */; };
@@ -233,10 +244,8 @@
 		85662CF11F90BE2300D5701E /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD5EEA1E951D19008DF346 /* Analytics.swift */; };
 		85662CF21F90BE2300D5701E /* Constants+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD5EE81E951CA3008DF346 /* Constants+App.swift */; };
 		85662CF31F90BE2300D5701E /* Constants+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD5EE61E9517FF008DF346 /* Constants+Analytics.swift */; };
-		85662CF41F90BE2300D5701E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85407D9B1DF028D50033E696 /* Main.storyboard */; };
 		85662CF51F90BE2300D5701E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85512B151DCB5B020072C1B8 /* Assets.xcassets */; };
 		85662CF61F90BE2300D5701E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85512B1A1DCB5B020072C1B8 /* Info.plist */; };
-		85662CF71F90BE2400D5701E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85407D9B1DF028D50033E696 /* Main.storyboard */; };
 		85662CF81F90BE2400D5701E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85512B151DCB5B020072C1B8 /* Assets.xcassets */; };
 		85662CF91F90BE2400D5701E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85512B1A1DCB5B020072C1B8 /* Info.plist */; };
 		85662D051F90BF8B00D5701E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85662D041F90BF7E00D5701E /* GoogleService-Info.plist */; };
@@ -322,6 +331,9 @@
 		85BE1DCF1FBDF41E0091A9D3 /* PendingEventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BE1DCE1FBDF41E0091A9D3 /* PendingEventsTableViewController.swift */; };
 		85BE1DD01FBDF41E0091A9D3 /* PendingEventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BE1DCE1FBDF41E0091A9D3 /* PendingEventsTableViewController.swift */; };
 		85BE1DD11FBDF41E0091A9D3 /* PendingEventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BE1DCE1FBDF41E0091A9D3 /* PendingEventsTableViewController.swift */; };
+		85C18422203ED55100E46AE2 /* EventbriteEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C18421203ED55100E46AE2 /* EventbriteEventsViewController.swift */; };
+		85C18423203ED55100E46AE2 /* EventbriteEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C18421203ED55100E46AE2 /* EventbriteEventsViewController.swift */; };
+		85C18424203ED55100E46AE2 /* EventbriteEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C18421203ED55100E46AE2 /* EventbriteEventsViewController.swift */; };
 		85DC3D731DF70A6A00116159 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D721DF70A6A00116159 /* Preferences.swift */; };
 		85DC3D7B1E00088F00116159 /* UserAlbumsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D7A1E00088F00116159 /* UserAlbumsGraphRequest.swift */; };
 		85DC3D7D1E0008B900116159 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC3D7C1E0008B900116159 /* Album.swift */; };
@@ -358,8 +370,6 @@
 		2257588A92E58573D363F2E5 /* Pods-Woojo Development.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Woojo Development.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Woojo Development/Pods-Woojo Development.debug.xcconfig"; sourceTree = "<group>"; };
 		23E464082BF74BB81F3867C9 /* Pods_Woojo_Staging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Woojo_Staging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32E6FF74A7C48F63461EEAC3 /* Pods-Woojo Staging.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Woojo Staging.release.xcconfig"; path = "Pods/Target Support Files/Pods-Woojo Staging/Pods-Woojo Staging.release.xcconfig"; sourceTree = "<group>"; };
-		8501BD711FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTipCollectionReusableView.swift; sourceTree = "<group>"; };
-		8501BD721FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderTipCollectionReusableView.xib; sourceTree = "<group>"; };
 		8506A88C1DCB9A5D00C18EC3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		8506A8941DCBA14C00C18EC3 /* EventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		8506A8961DCBB0CC00C18EC3 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -369,9 +379,21 @@
 		8506A8A11DCCA61600C18EC3 /* Candidate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Candidate.swift; sourceTree = "<group>"; };
 		8506A8A51DCCC85200C18EC3 /* Like.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Like.swift; sourceTree = "<group>"; };
 		8506A8A71DCCCB5E00C18EC3 /* Pass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pass.swift; sourceTree = "<group>"; };
+		850F7D35202DC3C2005D6733 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		850F7D38202DC45E005D6733 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		850F7D39202DC5AA005D6733 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		850F7D3E202DCFE8005D6733 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LoginViewController.xib; sourceTree = "<group>"; };
+		850F7D41202DCFEA005D6733 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LoginViewController.strings; sourceTree = "<group>"; };
+		850F7D43202DCFEC005D6733 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LoginViewController.strings; sourceTree = "<group>"; };
+		850F7D45202DD8D3005D6733 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Woojo/Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		850F7D4A202DD8ED005D6733 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = Woojo/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		851CDBE51DDEF18A00B887C0 /* UserEventsGraphRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEventsGraphRequest.swift; sourceTree = "<group>"; };
 		851CDBE71DDEF29900B887C0 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		851CDBE91DDEF2B100B887C0 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		85304511203F58E800EF382B /* EventbriteLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventbriteLoginViewController.swift; sourceTree = "<group>"; };
+		853045152040161300EF382B /* EventbriteOrderResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventbriteOrderResponse.swift; sourceTree = "<group>"; };
+		853045192040165900EF382B /* EventbriteOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventbriteOrder.swift; sourceTree = "<group>"; };
+		8530451D2040166A00EF382B /* EventbriteEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventbriteEvent.swift; sourceTree = "<group>"; };
 		85382E871F94B87E003909D7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		85396F261E5F10EA007EDB18 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		85396F2A1E5F516F007EDB18 /* Notifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifier.swift; sourceTree = "<group>"; };
@@ -379,7 +401,6 @@
 		853DBC871FBB43CF00AC8E3C /* EventDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		853DBC8B1FBB4A1200AC8E3C /* EventMatchesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMatchesTableViewCell.swift; sourceTree = "<group>"; };
 		853DBC8F1FBB567100AC8E3C /* EventMatchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMatchCollectionViewCell.swift; sourceTree = "<group>"; };
-		85407D9B1DF028D50033E696 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		85407DA11DF040070033E696 /* UserCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCardView.xib; sourceTree = "<group>"; };
 		85407DA31DF042A00033E696 /* UserCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCardView.swift; sourceTree = "<group>"; };
 		85407DA51DF1B0D00033E696 /* ProfilePhotoImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePhotoImageView.swift; sourceTree = "<group>"; };
@@ -412,7 +433,6 @@
 		85685F731DEC7833009BAEE0 /* SearchEventsGraphRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchEventsGraphRequest.swift; sourceTree = "<group>"; };
 		85685F751DEC7B69009BAEE0 /* SearchEventsResultsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchEventsResultsTableViewCell.xib; sourceTree = "<group>"; };
 		85685F771DEC7B8D009BAEE0 /* SearchEventsResultsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchEventsResultsTableViewCell.swift; sourceTree = "<group>"; };
-		85685F801DEF0BE9009BAEE0 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		85685F861DEF3310009BAEE0 /* CandidatesDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandidatesDelegate.swift; sourceTree = "<group>"; };
 		856B0A9C1FA0838F0041C11E /* UserCommonEventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommonEventTableViewCell.swift; sourceTree = "<group>"; };
 		856B0A9D1FA0838F0041C11E /* UserCommonEventTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCommonEventTableViewCell.xib; sourceTree = "<group>"; };
@@ -449,6 +469,7 @@
 		85BE1DC61FBDD2870091A9D3 /* PendingEventsInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingEventsInfoTableViewCell.swift; sourceTree = "<group>"; };
 		85BE1DCA1FBDD7C50091A9D3 /* UserEventGraphRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEventGraphRequest.swift; sourceTree = "<group>"; };
 		85BE1DCE1FBDF41E0091A9D3 /* PendingEventsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingEventsTableViewController.swift; sourceTree = "<group>"; };
+		85C18421203ED55100E46AE2 /* EventbriteEventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventbriteEventsViewController.swift; sourceTree = "<group>"; };
 		85D8915D1E54D63D00EC7FFF /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		85D891611E54E45300EC7FFF /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		85D891631E55BDFF00EC7FFF /* ShowsSettingsButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowsSettingsButton.swift; sourceTree = "<group>"; };
@@ -549,7 +570,7 @@
 				85E5D4C91DD72127003E2376 /* Settings */,
 				858FEE461E07115400322E8E /* UserDetailsViewController.swift */,
 				85512B221DCB74DA0072C1B8 /* LoginViewController.swift */,
-				85685F801DEF0BE9009BAEE0 /* LoginViewController.xib */,
+				850F7D3F202DCFE8005D6733 /* LoginViewController.xib */,
 				85ED4E631DCFF7F200F51857 /* MainTabBarController.swift */,
 				85D891631E55BDFF00EC7FFF /* ShowsSettingsButton.swift */,
 				8545D9721E66BE7300A2D70C /* NavigationController.swift */,
@@ -585,6 +606,9 @@
 				85B36ACB1FB1CE5100A7B599 /* CommonItem.swift */,
 				85FB8C1A2007FABF00863E0F /* Plan.swift */,
 				85575C78201BD20000D5B625 /* Airline.swift */,
+				853045152040161300EF382B /* EventbriteOrderResponse.swift */,
+				853045192040165900EF382B /* EventbriteOrder.swift */,
+				8530451D2040166A00EF382B /* EventbriteEvent.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -638,6 +662,7 @@
 		85512B0B1DCB5B020072C1B8 /* Woojo */ = {
 			isa = PBXGroup;
 			children = (
+				850F7D44202DD8D3005D6733 /* Localizable.strings */,
 				85662D021F90BF3700D5701E /* Development */,
 				85662D011F90BF2B00D5701E /* Staging */,
 				85662CFF1F90BEF800D5701E /* Production */,
@@ -652,7 +677,7 @@
 				85DD5EEA1E951D19008DF346 /* Analytics.swift */,
 				85DD5EE81E951CA3008DF346 /* Constants+App.swift */,
 				85DD5EE61E9517FF008DF346 /* Constants+Analytics.swift */,
-				85407D9B1DF028D50033E696 /* Main.storyboard */,
+				850F7D36202DC3C2005D6733 /* Main.storyboard */,
 				85512B151DCB5B020072C1B8 /* Assets.xcassets */,
 				85512B171DCB5B020072C1B8 /* LaunchScreen.storyboard */,
 				85512B1A1DCB5B020072C1B8 /* Info.plist */,
@@ -743,8 +768,6 @@
 				858FEE361E0025A400322E8E /* AlbumsTableViewController.swift */,
 				858FEE3F1E02ACF400322E8E /* PhotoCollectionViewController.swift */,
 				858FEE431E04250B00322E8E /* AlbumPhotoCollectionViewCell.swift */,
-				8501BD711FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift */,
-				8501BD721FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib */,
 			);
 			name = Photos;
 			sourceTree = "<group>";
@@ -779,9 +802,11 @@
 				85685F711DEC758A009BAEE0 /* SearchEventsViewController.swift */,
 				85DC3D6E1DF6CF8F00116159 /* ExploreEventsViewController.swift */,
 				858398D41FBB3A1200ECFFE3 /* EventDetailsViewController.swift */,
+				85C18421203ED55100E46AE2 /* EventbriteEventsViewController.swift */,
 				85BE1DCE1FBDF41E0091A9D3 /* PendingEventsTableViewController.swift */,
 				85F3CED32007E3B400FAB0FF /* PlansViewController.swift */,
 				85575C74201B78CE00D5B625 /* FlightsViewController.swift */,
+				85304511203F58E800EF382B /* EventbriteLoginViewController.swift */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -969,6 +994,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = 85512B001DCB5B020072C1B8;
 			productRefGroup = 85512B0A1DCB5B020072C1B8 /* Products */;
@@ -990,7 +1016,7 @@
 				85FB8C2D2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib in Resources */,
 				859B408F20077DCF00A4449F /* Woojo.entitlements in Resources */,
 				85662CAA1F90BE2200D5701E /* UserCardView.xib in Resources */,
-				85662CC91F90BE2200D5701E /* Main.storyboard in Resources */,
+				850F7D32202DC3C2005D6733 /* Main.storyboard in Resources */,
 				85662CCA1F90BE2200D5701E /* Assets.xcassets in Resources */,
 				8506A89B1DCC87A400C18EC3 /* EventsTableViewCell.xib in Resources */,
 				856B0A9F1FA0838F0041C11E /* UserCommonEventTableViewCell.xib in Resources */,
@@ -1000,14 +1026,14 @@
 				858398D11FBB221A00ECFFE3 /* CandidateOverlayView.xib in Resources */,
 				858FEE3D1E02A40C00322E8E /* AlbumsTableViewCell.xib in Resources */,
 				85B36AC01FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.xib in Resources */,
+				850F7D46202DD8D3005D6733 /* Localizable.strings in Resources */,
 				85512B191DCB5B020072C1B8 /* LaunchScreen.storyboard in Resources */,
 				856B0AA31FA084730041C11E /* UserDescriptionTableViewCell.xib in Resources */,
 				85B36AC81FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.xib in Resources */,
 				854DDABD1DE364D400655EFC /* MyEventsTableViewCell.xib in Resources */,
 				85662CCB1F90BE2200D5701E /* Info.plist in Resources */,
 				85382E881F94B880003909D7 /* GoogleService-Info.plist in Resources */,
-				8501BD761FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib in Resources */,
-				85662CBD1F90BE2200D5701E /* LoginViewController.xib in Resources */,
+				850F7D3B202DCFE8005D6733 /* LoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1017,24 +1043,24 @@
 			files = (
 				85FB8C2E2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib in Resources */,
 				859B409020077E6200A4449F /* Woojo Staging.entitlements in Resources */,
-				85662CE81F90BE2300D5701E /* LoginViewController.xib in Resources */,
+				850F7D3C202DCFE8005D6733 /* LoginViewController.xib in Resources */,
 				85662C191F90BD7C00D5701E /* EventsTableViewCell.xib in Resources */,
 				85662C1D1F90BD7C00D5701E /* SearchEventsResultsTableViewCell.xib in Resources */,
 				856B0AA81FA084840041C11E /* UserCommonEventTableViewCell.xib in Resources */,
-				85662CF41F90BE2300D5701E /* Main.storyboard in Resources */,
+				850F7D33202DC3C2005D6733 /* Main.storyboard in Resources */,
 				85990101201F36CA00D63530 /* UserChatBannerView.xib in Resources */,
 				856264E61FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib in Resources */,
 				85662D0B1F90E36500D5701E /* GoogleService-Info.plist in Resources */,
 				858398D21FBB221A00ECFFE3 /* CandidateOverlayView.xib in Resources */,
 				85B36AC11FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.xib in Resources */,
 				85662C1B1F90BD7C00D5701E /* MyEventsTableViewCell.xib in Resources */,
+				850F7D47202DD8D3005D6733 /* Localizable.strings in Resources */,
 				85662C531F90BDDD00D5701E /* AlbumsTableViewCell.xib in Resources */,
 				85B36AC91FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.xib in Resources */,
 				85662CF51F90BE2300D5701E /* Assets.xcassets in Resources */,
 				85662D081F90BFE800D5701E /* LaunchScreen.storyboard in Resources */,
 				856B0AA61FA0847F0041C11E /* UserDescriptionTableViewCell.xib in Resources */,
 				85662CD51F90BE2300D5701E /* UserCardView.xib in Resources */,
-				8501BD771FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib in Resources */,
 				85662CF61F90BE2300D5701E /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1045,10 +1071,10 @@
 			files = (
 				85FB8C2F2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib in Resources */,
 				859B409120077E6800A4449F /* Woojo Development.entitlements in Resources */,
-				85662C961F90BE1300D5701E /* LoginViewController.xib in Resources */,
+				850F7D3D202DCFE8005D6733 /* LoginViewController.xib in Resources */,
 				85662C4C1F90BDD900D5701E /* EventsTableViewCell.xib in Resources */,
 				856B0AA91FA084850041C11E /* UserCommonEventTableViewCell.xib in Resources */,
-				85662CF71F90BE2400D5701E /* Main.storyboard in Resources */,
+				850F7D34202DC3C2005D6733 /* Main.storyboard in Resources */,
 				85662C4E1F90BDD900D5701E /* MyEventsTableViewCell.xib in Resources */,
 				85990102201F36CA00D63530 /* UserChatBannerView.xib in Resources */,
 				856264E71FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib in Resources */,
@@ -1056,13 +1082,13 @@
 				858398D31FBB221A00ECFFE3 /* CandidateOverlayView.xib in Resources */,
 				85B36AC21FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.xib in Resources */,
 				85662C501F90BDD900D5701E /* SearchEventsResultsTableViewCell.xib in Resources */,
+				850F7D48202DD8D3005D6733 /* Localizable.strings in Resources */,
 				85662CF81F90BE2400D5701E /* Assets.xcassets in Resources */,
 				85B36ACA1FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.xib in Resources */,
 				85662D051F90BF8B00D5701E /* GoogleService-Info.plist in Resources */,
 				85662D091F90BFE900D5701E /* LaunchScreen.storyboard in Resources */,
 				856B0AA71FA084800041C11E /* UserDescriptionTableViewCell.xib in Resources */,
 				85662C831F90BE1300D5701E /* UserCardView.xib in Resources */,
-				8501BD781FA3333E0065DF30 /* HeaderTipCollectionReusableView.xib in Resources */,
 				85662CF91F90BE2400D5701E /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1408,6 +1434,7 @@
 				859900FC201F369C00D63530 /* UserChatBannerView.swift in Sources */,
 				85BE1DCF1FBDF41E0091A9D3 /* PendingEventsTableViewController.swift in Sources */,
 				85EB2EE61DE20DAE00F0A55C /* Activity.swift in Sources */,
+				8530451E2040166A00EF382B /* EventbriteEvent.swift in Sources */,
 				8506A8991DCBB9C000C18EC3 /* EventsTableViewCell.swift in Sources */,
 				85662CB61F90BE2200D5701E /* AlbumsTableViewController.swift in Sources */,
 				85662CC71F90BE2200D5701E /* Constants+App.swift in Sources */,
@@ -1431,6 +1458,7 @@
 				85FB8C2A2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.swift in Sources */,
 				85662CA81F90BE2200D5701E /* CandidatesViewController.swift in Sources */,
 				85DC3D731DF70A6A00116159 /* Preferences.swift in Sources */,
+				853045162040161300EF382B /* EventbriteOrderResponse.swift in Sources */,
 				85662CA61F90BE2200D5701E /* SearchEventsViewController.swift in Sources */,
 				85FB8C172007FA7100863E0F /* SearchPlacesGraphRequest.swift in Sources */,
 				85B36AB41FB1BF8A00A7B599 /* Friend.swift in Sources */,
@@ -1438,6 +1466,7 @@
 				85BE1DCB1FBDD7C50091A9D3 /* UserEventGraphRequest.swift in Sources */,
 				85FF1D491FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */,
 				853DBC911FBB567100AC8E3C /* EventMatchCollectionViewCell.swift in Sources */,
+				85C18422203ED55100E46AE2 /* EventbriteEventsViewController.swift in Sources */,
 				85662CC01F90BE2200D5701E /* NavigationController.swift in Sources */,
 				85B36AC51FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift in Sources */,
 				85B36ABD1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift in Sources */,
@@ -1449,7 +1478,6 @@
 				85685F741DEC7833009BAEE0 /* SearchEventsGraphRequest.swift in Sources */,
 				858FEE3C1E02A40C00322E8E /* AlbumsTableViewCell.swift in Sources */,
 				851CDBEA1DDEF2B100B887C0 /* Location.swift in Sources */,
-				8501BD731FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift in Sources */,
 				85662CAE1F90BE2200D5701E /* MessagesViewController.swift in Sources */,
 				85662CB91F90BE2200D5701E /* AboutTableViewController.swift in Sources */,
 				85662CB41F90BE2200D5701E /* BioTableViewCell.swift in Sources */,
@@ -1462,6 +1490,7 @@
 				85662CC31F90BE2200D5701E /* Application.swift in Sources */,
 				85DC3D7D1E0008B900116159 /* Album.swift in Sources */,
 				853DBC8C1FBB4A1200AC8E3C /* EventMatchesTableViewCell.swift in Sources */,
+				85304512203F58E800EF382B /* EventbriteLoginViewController.swift in Sources */,
 				85662CAC1F90BE2200D5701E /* ALChatManager.swift in Sources */,
 				85662CC51F90BE2200D5701E /* Constants.swift in Sources */,
 				851CDBE61DDEF18A00B887C0 /* UserEventsGraphRequest.swift in Sources */,
@@ -1484,6 +1513,7 @@
 				85575C7D201BD7BB00D5B625 /* FlightNumberTextField.swift in Sources */,
 				858398D51FBB3A1200ECFFE3 /* EventDetailsViewController.swift in Sources */,
 				85E5D4CD1DD9EFBC003E2376 /* CurrentUser.swift in Sources */,
+				8530451A2040165900EF382B /* EventbriteOrder.swift in Sources */,
 				85662CC11F90BE2200D5701E /* UnwindThenShowChatSegue.swift in Sources */,
 				85E5D4CF1DD9FA41003E2376 /* Gender.swift in Sources */,
 				85685F871DEF3310009BAEE0 /* CandidatesDelegate.swift in Sources */,
@@ -1507,6 +1537,7 @@
 				859900FD201F369C00D63530 /* UserChatBannerView.swift in Sources */,
 				85BE1DD01FBDF41E0091A9D3 /* PendingEventsTableViewController.swift in Sources */,
 				85662C1A1F90BD7C00D5701E /* EventsTableViewCell.swift in Sources */,
+				8530451F2040166A00EF382B /* EventbriteEvent.swift in Sources */,
 				85662CDA1F90BE2300D5701E /* SettingsViewController.swift in Sources */,
 				85662C111F90BD6500D5701E /* User.swift in Sources */,
 				85662C161F90BD7500D5701E /* AlbumPhotosGraphRequest.swift in Sources */,
@@ -1530,6 +1561,7 @@
 				85FB8C2B2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.swift in Sources */,
 				856B0AAE1FA1D1260041C11E /* Match.swift in Sources */,
 				85662C081F90BD6500D5701E /* Like.swift in Sources */,
+				853045172040161300EF382B /* EventbriteOrderResponse.swift in Sources */,
 				85662CDF1F90BE2300D5701E /* BioTableViewCell.swift in Sources */,
 				85FB8C182007FA7100863E0F /* SearchPlacesGraphRequest.swift in Sources */,
 				85B36AB51FB1BF8A00A7B599 /* Friend.swift in Sources */,
@@ -1537,6 +1569,7 @@
 				85BE1DCC1FBDD7C50091A9D3 /* UserEventGraphRequest.swift in Sources */,
 				85FF1D4A1FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */,
 				853DBC921FBB567100AC8E3C /* EventMatchCollectionViewCell.swift in Sources */,
+				85C18423203ED55100E46AE2 /* EventbriteEventsViewController.swift in Sources */,
 				85662CE01F90BE2300D5701E /* ProfilePhotoCollectionViewCell.swift in Sources */,
 				85B36AC61FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift in Sources */,
 				85B36ABE1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift in Sources */,
@@ -1550,7 +1583,6 @@
 				85662CDE1F90BE2300D5701E /* ProfileViewController.swift in Sources */,
 				85662C051F90BD6500D5701E /* Activity.swift in Sources */,
 				85662CF21F90BE2300D5701E /* Constants+App.swift in Sources */,
-				8501BD741FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift in Sources */,
 				85662C071F90BD6500D5701E /* Candidate.swift in Sources */,
 				85B36ACD1FB1CE5200A7B599 /* CommonItem.swift in Sources */,
 				85662C0F1F90BD6500D5701E /* Notification.swift in Sources */,
@@ -1561,6 +1593,7 @@
 				85662CE71F90BE2300D5701E /* LoginViewController.swift in Sources */,
 				85662CE61F90BE2300D5701E /* UserDetailsViewController.swift in Sources */,
 				853DBC8D1FBB4A1200AC8E3C /* EventMatchesTableViewCell.swift in Sources */,
+				85304513203F58E800EF382B /* EventbriteLoginViewController.swift in Sources */,
 				85662CF11F90BE2300D5701E /* Analytics.swift in Sources */,
 				85662C1C1F90BD7C00D5701E /* MyEventsTableViewCell.swift in Sources */,
 				85662CD91F90BE2300D5701E /* MessagesViewController.swift in Sources */,
@@ -1583,6 +1616,7 @@
 				85575C7E201BD7BB00D5B625 /* FlightNumberTextField.swift in Sources */,
 				858398D61FBB3A1200ECFFE3 /* EventDetailsViewController.swift in Sources */,
 				85662CE91F90BE2300D5701E /* MainTabBarController.swift in Sources */,
+				8530451B2040165900EF382B /* EventbriteOrder.swift in Sources */,
 				85662CDC1F90BE2300D5701E /* PreferencesViewController.swift in Sources */,
 				85662CED1F90BE2300D5701E /* ReachabilityAware.swift in Sources */,
 				85662C061F90BD6500D5701E /* Event.swift in Sources */,
@@ -1606,6 +1640,7 @@
 				859900FE201F369C00D63530 /* UserChatBannerView.swift in Sources */,
 				85BE1DD11FBDF41E0091A9D3 /* PendingEventsTableViewController.swift in Sources */,
 				85662C4D1F90BDD900D5701E /* EventsTableViewCell.swift in Sources */,
+				853045202040166A00EF382B /* EventbriteEvent.swift in Sources */,
 				85662C881F90BE1300D5701E /* SettingsViewController.swift in Sources */,
 				85662C441F90BDD000D5701E /* User.swift in Sources */,
 				85662C491F90BDD400D5701E /* AlbumPhotosGraphRequest.swift in Sources */,
@@ -1629,6 +1664,7 @@
 				85FB8C2C2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.swift in Sources */,
 				856B0AAF1FA1D1260041C11E /* Match.swift in Sources */,
 				85662C3B1F90BDD000D5701E /* Like.swift in Sources */,
+				853045182040161300EF382B /* EventbriteOrderResponse.swift in Sources */,
 				85662C8D1F90BE1300D5701E /* BioTableViewCell.swift in Sources */,
 				85FB8C192007FA7100863E0F /* SearchPlacesGraphRequest.swift in Sources */,
 				85B36AB61FB1BF8A00A7B599 /* Friend.swift in Sources */,
@@ -1636,6 +1672,7 @@
 				85BE1DCD1FBDD7C50091A9D3 /* UserEventGraphRequest.swift in Sources */,
 				85FF1D4B1FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */,
 				853DBC931FBB567100AC8E3C /* EventMatchCollectionViewCell.swift in Sources */,
+				85C18424203ED55100E46AE2 /* EventbriteEventsViewController.swift in Sources */,
 				85662C8E1F90BE1300D5701E /* ProfilePhotoCollectionViewCell.swift in Sources */,
 				85B36AC71FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift in Sources */,
 				85B36ABF1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift in Sources */,
@@ -1649,7 +1686,6 @@
 				85662C8C1F90BE1300D5701E /* ProfileViewController.swift in Sources */,
 				85662C381F90BDD000D5701E /* Activity.swift in Sources */,
 				85662CA01F90BE1300D5701E /* Constants+App.swift in Sources */,
-				8501BD751FA3333E0065DF30 /* HeaderTipCollectionReusableView.swift in Sources */,
 				85662C3A1F90BDD000D5701E /* Candidate.swift in Sources */,
 				85B36ACE1FB1CE5200A7B599 /* CommonItem.swift in Sources */,
 				85662C421F90BDD000D5701E /* Notification.swift in Sources */,
@@ -1660,6 +1696,7 @@
 				85662C951F90BE1300D5701E /* LoginViewController.swift in Sources */,
 				85662C941F90BE1300D5701E /* UserDetailsViewController.swift in Sources */,
 				853DBC8E1FBB4A1200AC8E3C /* EventMatchesTableViewCell.swift in Sources */,
+				85304514203F58E800EF382B /* EventbriteLoginViewController.swift in Sources */,
 				85662C9F1F90BE1300D5701E /* Analytics.swift in Sources */,
 				85662C4F1F90BDD900D5701E /* MyEventsTableViewCell.swift in Sources */,
 				85662C871F90BE1300D5701E /* MessagesViewController.swift in Sources */,
@@ -1682,6 +1719,7 @@
 				85575C7F201BD7BB00D5B625 /* FlightNumberTextField.swift in Sources */,
 				858398D71FBB3A1200ECFFE3 /* EventDetailsViewController.swift in Sources */,
 				85662C971F90BE1300D5701E /* MainTabBarController.swift in Sources */,
+				8530451C2040165900EF382B /* EventbriteOrder.swift in Sources */,
 				85662C8A1F90BE1300D5701E /* PreferencesViewController.swift in Sources */,
 				85662C9B1F90BE1300D5701E /* ReachabilityAware.swift in Sources */,
 				85662C391F90BDD000D5701E /* Event.swift in Sources */,
@@ -1694,6 +1732,35 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		850F7D36202DC3C2005D6733 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				850F7D35202DC3C2005D6733 /* Base */,
+				850F7D38202DC45E005D6733 /* en */,
+				850F7D39202DC5AA005D6733 /* fr */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		850F7D3F202DCFE8005D6733 /* LoginViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				850F7D3E202DCFE8005D6733 /* Base */,
+				850F7D41202DCFEA005D6733 /* en */,
+				850F7D43202DCFEC005D6733 /* fr */,
+			);
+			name = LoginViewController.xib;
+			sourceTree = "<group>";
+		};
+		850F7D44202DD8D3005D6733 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				850F7D45202DD8D3005D6733 /* Base */,
+				850F7D4A202DD8ED005D6733 /* fr */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		85512B171DCB5B020072C1B8 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1709,6 +1776,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1759,6 +1827,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1814,7 +1883,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "cf5e3c1b-0bec-4b21-a4c1-578ea50de808";
 				PROVISIONING_PROFILE_SPECIFIER = "com.tastyelectrons.woojo Development";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1835,7 +1904,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "844e158a-0bbe-47c3-8e25-c3acce109188";
 				PROVISIONING_PROFILE_SPECIFIER = "Tasty Electrons Ad Hoc";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1868,7 +1937,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "cf5e3c1b-0bec-4b21-a4c1-578ea50de808";
 				PROVISIONING_PROFILE_SPECIFIER = "com.tastyelectrons.woojo Development";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1902,7 +1971,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "844e158a-0bbe-47c3-8e25-c3acce109188";
 				PROVISIONING_PROFILE_SPECIFIER = "Tasty Electrons Ad Hoc";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1935,7 +2004,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "cf5e3c1b-0bec-4b21-a4c1-578ea50de808";
 				PROVISIONING_PROFILE_SPECIFIER = "com.tastyelectrons.woojo Development";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1969,7 +2038,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "844e158a-0bbe-47c3-8e25-c3acce109188";
 				PROVISIONING_PROFILE_SPECIFIER = "Tasty Electrons Ad Hoc";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

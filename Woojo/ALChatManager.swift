@@ -344,7 +344,7 @@ class ALChatManager: NSObject {
         ALUserDefaultsHandler.setBackButtonHidden(true)
         //ALUserDefaultsHandler.setNavigationRightButtonHidden(false)
         ALUserDefaultsHandler.setBottomTabBarHidden(false)
-        ALApplozicSettings.setTitleForConversationScreen("Chats")
+        ALApplozicSettings.setTitleForConversationScreen(NSLocalizedString("Chats", comment: ""))
         
         ALApplozicSettings.hideRefreshButton(true)
         ALApplozicSettings.setCustomNavRightButtonMsgVC(false)               /*  SET VISIBILITY FOR REFRESH BUTTON (COMES FROM TOP IN MSG VC)   */
@@ -417,7 +417,7 @@ class ALChatManager: NSObject {
         /********************************************* CHAT VIEW SETTINGS  **********************************************/
         
         ALApplozicSettings.setVisibilityForNoMoreConversationMsgVC(false)               /*  SET VISIBILITY NO MORE CONVERSATION (COMES FROM TOP IN MSG VC)  */
-        ALApplozicSettings.setEmptyConversationText("You have no conversations yet")    /*  SET TEXT FOR EMPTY CONVERSATION    */
+        ALApplozicSettings.setEmptyConversationText(NSLocalizedString("You have no conversations yet", comment: ""))    /*  SET TEXT FOR EMPTY CONVERSATION    */
         ALApplozicSettings.setVisibilityForOnlineIndicator(true)                        /*  SET VISIBILITY FOR ONLINE INDICATOR */
         
         ALApplozicSettings.setColorForSendButton(UIColor.white) /*  SET COLOR FOR SEND BUTTON   */

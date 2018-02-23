@@ -68,7 +68,7 @@ class MyEventsTableViewController: UITableViewController {
         stopMonitoringReachability()
     }
 
-    func loadFacebookEvents() {
+    @objc func loadFacebookEvents() {
         User.current.value?.getEventsFromFacebook { events in
             self.events = events
             self.tableView.reloadData()
@@ -116,11 +116,11 @@ class MyEventsTableViewController: UITableViewController {
                 print(isUserEvent)
                 if let cell = tableView.cellForRow(at: indexPath) as? MyEventsTableViewCell {
                     if isUserEvent {
-                        HUD.show(.labeledProgress(title: "Remove Event", subtitle: "Removing event..."))
+                        HUD.show(.labeledProgress(title: NSLocalizedString("Remove Event", comment: ""), subtitle: NSLocalizedString("Removing event...", comment: "")))
                         User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
                             cell.checkView.isHidden = true
                             tableView.reloadRows(at: [indexPath], with: .none)
-                            HUD.show(.labeledSuccess(title: "Remove Event", subtitle: "Event removed!"))
+                            HUD.show(.labeledSuccess(title: NSLocalizedString("Remove Event", comment: ""), subtitle: NSLocalizedString("Event removed!", comment: "")))
                             HUD.hide(afterDelay: 1.0)
                             let analyticsEventParameters = [Constants.Analytics.Events.EventRemoved.Parameters.name: event.name,
                                                             Constants.Analytics.Events.EventRemoved.Parameters.id: event.id,
@@ -128,11 +128,11 @@ class MyEventsTableViewController: UITableViewController {
                             Analytics.Log(event: Constants.Analytics.Events.EventRemoved.name, with: analyticsEventParameters)
                         })
                     } else {
-                        HUD.show(.labeledProgress(title: "Add Event", subtitle: "Adding event..."))
+                        HUD.show(.labeledProgress(title: NSLocalizedString("Add Event", comment: ""), subtitle: NSLocalizedString("Adding event...", comment: "")))
                         User.current.value?.add(event: event, completion: { (error: Error?) -> Void in
                             cell.checkView.isHidden = false
                             tableView.reloadRows(at: [indexPath], with: .none)
-                            HUD.show(.labeledSuccess(title: "Add Event", subtitle: "Event added!"))
+                            HUD.show(.labeledSuccess(title: NSLocalizedString("Add Event", comment: ""), subtitle: NSLocalizedString("Event added!", comment: "")))
                             HUD.hide(afterDelay: 1.0)
                             let analyticsEventParameters = [Constants.Analytics.Events.EventAdded.Parameters.name: event.name,
                                                             Constants.Analytics.Events.EventAdded.Parameters.id: event.id,
@@ -152,11 +152,11 @@ class MyEventsTableViewController: UITableViewController {
 extension MyEventsTableViewController: DZNEmptyDataSetSource {
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        return NSAttributedString(string: "My Events", attributes: Constants.App.Appearance.EmptyDatasets.titleStringAttributes)
+        return NSAttributedString(string: NSLocalizedString("Facebook Events", comment: ""), attributes: Constants.App.Appearance.EmptyDatasets.titleStringAttributes)
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        return NSAttributedString(string: "Only events from the past month or in the future are shown.\n\nPull to refresh", attributes: Constants.App.Appearance.EmptyDatasets.descriptionStringAttributes)
+        return NSAttributedString(string: NSLocalizedString("Only events from the past month or in the future are shown.\n\nPull to refresh", comment: ""), attributes: Constants.App.Appearance.EmptyDatasets.descriptionStringAttributes)
     }
     
     func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {

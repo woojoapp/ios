@@ -44,13 +44,14 @@ class EventDetailsViewController: UITableViewController {
                 if event.matches.count == 0 {
                     return nil
                 } else {
-                    return "You have \(String(event.matches.count)) \((event.matches.count > 1) ? "matches" : "match") in this event"
+                    let people = (event.matches.count > 1) ? NSLocalizedString("people", comment: "") : NSLocalizedString("person", comment: "")
+                    return String(format: NSLocalizedString("You matched with %d %@ in this event", comment: ""), event.matches.count, people)
                 }
             } else if section == 2 {
                 if event.description == nil {
                     return nil
                 } else {
-                    return "About \(event.name)"
+                    return String(format: NSLocalizedString("About %@", comment: ""), event.name)
                 }
             }
         }
@@ -69,7 +70,6 @@ class EventDetailsViewController: UITableViewController {
             cell.nameLabel.text = event?.name
             cell.placeLabel.text = event?.place?.displayString
             cell.timesLabel.text = event?.timesString
-            print("EVENT TYPE", event?.type)
             if event?.type != "plan" { cell.rsvpLabel.text = event?.rsvpString }
             else { cell.rsvpLabel.isHidden = true }
             if let coverURL = event?.coverURL {

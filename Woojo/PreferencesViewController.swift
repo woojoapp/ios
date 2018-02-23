@@ -33,8 +33,8 @@ class PreferencesViewController: UITableViewController/*, UIPickerViewDelegate, 
         ageRangeSliderWrapper.addSubview(ageRangeSlider)
         ageRangeSlider.maximumValue = 100.0
         ageRangeSlider.minimumValue = 18.0
-        ageRangeMinLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17.0, weight: UIFontWeightRegular)
-        ageRangeMaxLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17.0, weight: UIFontWeightRegular)
+        ageRangeMinLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17.0, weight: UIFont.Weight.regular)
+        ageRangeMaxLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17.0, weight: UIFont.Weight.regular)
         ageRangeSlider.addTarget(self, action: #selector(ageRangeSliderValueChanged(_:)), for: .valueChanged)
         ageRangeSlider.addTarget(self, action: #selector(saveAgeRange(_:)), for: .editingDidEnd)
         setupDataSource()
@@ -71,7 +71,7 @@ class PreferencesViewController: UITableViewController/*, UIPickerViewDelegate, 
         ageRangeSlider.frame = CGRect(x: 0.0, y: 0.0, width: ageRangeSliderWrapper.bounds.width, height: 24.0)
     }
     
-    func ageRangeSliderValueChanged(_ rangeSlider: RangeSlider) {
+    @objc func ageRangeSliderValueChanged(_ rangeSlider: RangeSlider) {
         ageRange.min = Int(floor(rangeSlider.lowerValue))
         ageRange.max = Int(ceil(rangeSlider.upperValue))
         ageRangeMinLabel.text = String(ageRange.min)
@@ -86,7 +86,7 @@ class PreferencesViewController: UITableViewController/*, UIPickerViewDelegate, 
         }
     }
     
-    func saveAgeRange(_ rangeSlider: RangeSlider) {
+    @objc func saveAgeRange(_ rangeSlider: RangeSlider) {
         User.current.value?.preferences.ageRange = ageRange
         savePreferences()
         Analytics.Log(event: Constants.Analytics.Events.PreferencesAgeRangeUpdated.name)

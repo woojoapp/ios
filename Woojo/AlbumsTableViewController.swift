@@ -41,7 +41,7 @@ class AlbumsTableViewController: UITableViewController {
         }).addDisposableTo(disposeBag)
     }
     
-    func loadFacebookAlbums() {
+    @objc func loadFacebookAlbums() {
         User.current.value?.getAlbumsFromFacebook { albums in
             self.albums = albums
             self.tableView.reloadData()
@@ -109,11 +109,11 @@ class AlbumsTableViewController: UITableViewController {
 extension AlbumsTableViewController: DZNEmptyDataSetSource {
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        return NSAttributedString(string: "Facebook Albums", attributes: Constants.App.Appearance.EmptyDatasets.titleStringAttributes)
+        return NSAttributedString(string: NSLocalizedString("Facebook Albums", comment: ""), attributes: Constants.App.Appearance.EmptyDatasets.titleStringAttributes)
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        return NSAttributedString(string: "No albums found\n\nPull to refresh", attributes: Constants.App.Appearance.EmptyDatasets.descriptionStringAttributes)
+        return NSAttributedString(string: NSLocalizedString("No albums found\n\nPull to refresh", comment: ""), attributes: Constants.App.Appearance.EmptyDatasets.descriptionStringAttributes)
     }
     
     func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {

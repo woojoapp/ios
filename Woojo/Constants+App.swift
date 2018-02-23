@@ -16,7 +16,6 @@ extension Constants {
             struct Keys {
                 static let termsURL = "terms_url"
                 static let privacyURL = "privacy_url"
-                static let recommendedEventsEnabled = "recommended_events_enabled"
             }
         }
         /*struct Chat {
@@ -24,27 +23,27 @@ extension Constants {
         }*/
         struct Appearance {
             struct EmptyDatasets {
-                static var titleStringAttributes: [String:Any] {
+                static var titleStringAttributes: [NSAttributedStringKey:Any] {
                     get {
                         let paragraphStyle = NSMutableParagraphStyle()
                         paragraphStyle.alignment = .center
                         let attributes = [
-                            NSFontAttributeName: UIFont.boldSystemFont(ofSize: 20.0),
-                            NSForegroundColorAttributeName: UIColor.lightGray,
-                            NSParagraphStyleAttributeName: paragraphStyle
+                            NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 20.0),
+                            NSAttributedStringKey.foregroundColor: UIColor.lightGray,
+                            NSAttributedStringKey.paragraphStyle: paragraphStyle
                         ]
                         return attributes
                     }
                 }
-                static var descriptionStringAttributes: [String:Any] {
+                static var descriptionStringAttributes: [NSAttributedStringKey:Any] {
                     get {
                         let paragraphStyle = NSMutableParagraphStyle()
                         paragraphStyle.lineBreakMode = .byWordWrapping
                         paragraphStyle.alignment = .center
                         let attributes = [
-                            NSFontAttributeName: UIFont.systemFont(ofSize: 13.0),
-                            NSForegroundColorAttributeName: UIColor.lightGray,
-                            NSParagraphStyleAttributeName: paragraphStyle
+                            NSAttributedStringKey.font: UIFont.systemFont(ofSize: 13.0),
+                            NSAttributedStringKey.foregroundColor: UIColor.lightGray,
+                            NSAttributedStringKey.paragraphStyle: paragraphStyle
                         ]
                         return attributes
                     }

@@ -42,8 +42,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var acceptLabel: TTTAttributedLabel!
     @IBOutlet weak var smallPrintView: UIView!
     
-    let termsText = "Terms & Conditions"
-    let privacyText = "Privacy Policy"
+    let termsText = NSLocalizedString("Terms & Conditions", comment: "")
+    let privacyText = NSLocalizedString("Privacy Policy", comment: "")
     
     var authListenerHandle: AuthStateDidChangeListenerHandle?
     
@@ -89,8 +89,8 @@ class LoginViewController: UIViewController {
         smallPrintView.layer.cornerRadius = 10.0
         
         acceptLabel.delegate = self
-        acceptLabel.activeLinkAttributes = [NSForegroundColorAttributeName: UIColor.white]
-        acceptLabel.linkAttributes = [NSForegroundColorAttributeName: UIColor.white, NSUnderlineStyleAttributeName: 1]
+        acceptLabel.activeLinkAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        acceptLabel.linkAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.underlineStyle: 1]
         
         if let acceptString = acceptLabel.text {
             

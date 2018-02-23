@@ -66,7 +66,7 @@ class PhotoCollectionViewController: UICollectionViewController {
         stopMonitoringReachability()
     }
     
-    func loadAlbumPhotos() {
+    @objc func loadAlbumPhotos() {
         album?.getPhotos { photos in
             self.photos = photos.filter{ $0.isBigEnough(size: .full) }
             self.collectionView?.reloadData()
@@ -145,7 +145,7 @@ class PhotoCollectionViewController: UICollectionViewController {
                     newMoveAndScaleLabel.frame = CGRect(x: 0.0, y: 24.0, width: rskImageCropper.view.frame.width, height: 24.0)
                     newMoveAndScaleLabel.textAlignment = .center
                     newMoveAndScaleLabel.center.x = rskImageCropper.view.center.x
-                    newMoveAndScaleLabel.text = "Move and Scale"
+                    newMoveAndScaleLabel.text = NSLocalizedString("Move and Scale", comment: "")
                     newMoveAndScaleLabel.textColor = .white
                     rskImageCropper.moveAndScaleLabel.isHidden = true
                     rskImageCropper.view.addSubview(newMoveAndScaleLabel)
@@ -220,11 +220,11 @@ extension PhotoCollectionViewController: RSKImageCropViewControllerDelegate {
             //if let selectedIndex = collectionView?.indexPathsForSelectedItems?[0].row/*, let id = photos[selectedIndex].id*/ {
                 User.current.value?.profile.setPhoto(photo: croppedImage, id: UUID().uuidString, index: self.photoIndex) { photo, error in
                     if error != nil {
-                        HUD.show(.labeledError(title: "Error", subtitle: "Failed to add photo"))
+                        HUD.show(.labeledError(title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Failed to add photo", comment: "")))
                         HUD.hide(afterDelay: 1.0)
                     } else {
                         self.navigationController?.dismiss(animated: true, completion: nil)
-                        HUD.show(.labeledSuccess(title: "Success", subtitle: "Photo added!"))
+                        HUD.show(.labeledSuccess(title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("Photo added!", comment: "")))
                         HUD.hide(afterDelay: 1.0)
                     }
                     self.profileViewController?.photosCollectionView.reloadItems(at: [IndexPath(row: self.photoIndex, section: 0)])
@@ -232,7 +232,7 @@ extension PhotoCollectionViewController: RSKImageCropViewControllerDelegate {
                 }
             //}
         } else {
-            HUD.show(.labeledError(title: "No internet", subtitle: nil))
+            HUD.show(.labeledError(title: NSLocalizedString("No internet", comment: ""), subtitle: nil))
             HUD.hide(afterDelay: 2.0)
         }
     }
@@ -244,11 +244,11 @@ extension PhotoCollectionViewController: RSKImageCropViewControllerDelegate {
 extension PhotoCollectionViewController: DZNEmptyDataSetSource {
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        return NSAttributedString(string: "Facebook Photos", attributes: Constants.App.Appearance.EmptyDatasets.titleStringAttributes)
+        return NSAttributedString(string: NSLocalizedString("Facebook Photos", comment: ""), attributes: Constants.App.Appearance.EmptyDatasets.titleStringAttributes)
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        return NSAttributedString(string: "No photos found in this album\n\nPull to refresh", attributes: Constants.App.Appearance.EmptyDatasets.descriptionStringAttributes)
+        return NSAttributedString(string: NSLocalizedString("No photos found in this album\n\nPull to refresh", comment: ""), attributes: Constants.App.Appearance.EmptyDatasets.descriptionStringAttributes)
     }
     
     func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {

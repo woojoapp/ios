@@ -36,16 +36,16 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.placeHolderTxt = "Write a message..."
+        self.placeHolderTxt = NSLocalizedString("Write a message...", comment: "")
         ALApplozicSettings.setColorForSendMessages(self.view.tintColor)
         
         mTableView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 50.0, right: 0.0)
         
-        if let navigationController = navigationController {
+        /*if let navigationController = navigationController {
             let userChatBannerView = UserChatBannerView(frame: CGRect(x: 0, y: UIApplication.shared.statusBarFrame.height + navigationController.navigationBar.frame.height, width: view.frame.width, height: 100))
             userChatBannerView.load(title: "Why not sit together?", description: "Choose your seat today and\nmeet on board your Joon flight!", image: #imageLiteral(resourceName: "joon"), actionText: "Go")
             bannerView.addSubview(userChatBannerView)
-        }
+        }*/
     }
     
     override func viewDidLayoutSubviews() {
@@ -121,14 +121,14 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
     func setNavigationItemTitle() {
         let button = navigationItem.titleView as! UIButton
         if let title = button.title(for: .normal) {
-            let titleString = NSAttributedString(string: title, attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 17.0)])
+            let titleString = NSAttributedString(string: title, attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 17.0)])
             button.setAttributedTitle(titleString, for: .normal)
             button.setAttributedTitle(titleString, for: .focused)
         }
         button.addTarget(self, action: #selector(showProfile), for: .touchUpInside)
     }
     
-    func doRefresh() {
+    @objc func doRefresh() {
         print("REFRESHING CHAT")
         super.fetchAndRefresh()
     }
@@ -141,7 +141,7 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
         self.doRefresh()
         
         loadEarlierAction.backgroundColor = translucentColor
-        let titleString = NSAttributedString(string: "Load earlier messages", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12.0), NSForegroundColorAttributeName: self.view.tintColor])
+        let titleString = NSAttributedString(string: NSLocalizedString("Load earlier messages", comment: ""), attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12.0), NSAttributedStringKey.foregroundColor: self.view.tintColor])
         loadEarlierAction.setAttributedTitle(titleString, for: .normal)
         let bottomBorder = UIView(frame: CGRect(x: 0, y: loadEarlierAction.frame.height - 4, width: loadEarlierAction.frame.width, height: 1))
         bottomBorder.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
@@ -172,7 +172,7 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
         self.unwireUnmatchObserver()
     }
     
-    func newMessage() {        
+    @objc func newMessage() {
         scrollTableViewToBottom(withAnimation: true)
         CurrentUser.Notification.deleteAll(otherId: self.contactIds)
     }
@@ -209,15 +209,12 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
     }
     
     func showUnmatchHUDAndPop() {
-        HUD.flash(.labeledError(title: "Closing chat", subtitle: "You're no longer connected to this user"), onView: self.view, delay: 2.0) { _ in
-            print("FINISHED FLASHING")
+        HUD.flash(.labeledError(title: NSLocalizedString("Closing chat", comment: ""), subtitle: NSLocalizedString("You're no longer connected to this user", comment: "")), onView: self.view, delay: 2.0) { _ in
             if let presentedViewController = self.presentedViewController as? UserDetailsViewController {
-                print("presentedViewController", presentedViewController)
                 presentedViewController.dismiss(animated: true) {
                     self.navigationController?.popViewController(animated: true)
                 }
             } else {
-                print("POP")
                 self.navigationController?.popViewController(animated: true)
             }
         }
@@ -250,7 +247,7 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
         //mTableView.setContentOffset(CGPoint(x: mTableView.contentOffset.x, y: mTableView.contentOffset.y - 50.0), animated: true)
     //}
     
-    func showProfile() {
+    @objc func showProfile() {
         if let userDetailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserDetailsViewController") as? UserDetailsViewController {
             //userDetailsViewController.buttonsType = .options
             userDetailsViewController.chatViewController = self
@@ -272,7 +269,7 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    func keyboardWillShow(_ notification: NSNotification) {
+    @objc func keyboardWillShow(_ notification: NSNotification) {
         if let keyboardFrameEnd = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect, let animationDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval {
             self.checkBottomConstraint.constant = self.view.frame.size.height - keyboardFrameEnd.origin.y //+ 5.0
             UIView.animate(withDuration: animationDuration, animations: {
@@ -297,7 +294,7 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
         scrollTableViewToBottom(withAnimation: true)
     }
     
-    func keyboardWillHide(_ notification: NSNotification) {
+    @objc func keyboardWillHide(_ notification: NSNotification) {
         if let keyboardFrameEnd = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect, let animationDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval {
             self.checkBottomConstraint.constant = self.view.frame.size.height - keyboardFrameEnd.origin.y //+ 5.0
             UIView.animate(withDuration: animationDuration, animations: {
@@ -311,7 +308,7 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    func keyboardDidHide(_ notification: NSNotification) {
+    @objc func keyboardDidHide(_ notification: NSNotification) {
         scrollTableViewToBottom(withAnimation: false)
     }
     

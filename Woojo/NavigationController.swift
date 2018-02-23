@@ -15,8 +15,8 @@ class NavigationController: UINavigationController, ReachabilityAware {
     //var otherUid: String?
     var navigationDestination: String?
     
-    var reachableMessage = Message(title: "Online", backgroundColor: UIColor(colorLiteralRed: 0.0, green: 150.0/255.0, blue: 0.0, alpha: 0.8))
-    var unreachableMessage = Message(title: "Offline mode")
+    var reachableMessage = Message(title: NSLocalizedString("Online", comment: ""), backgroundColor: UIColor(red: 0.0, green: 150.0/255.0, blue: 0.0, alpha: 0.8))
+    var unreachableMessage = Message(title: NSLocalizedString("Offline mode", comment: ""))
     
     var showingReachableWhisper = false
     var showingUnreachableWhisper = false

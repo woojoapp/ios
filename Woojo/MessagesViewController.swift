@@ -60,7 +60,7 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIG
         User.current.value?.activity.setLastSeen()
     }
     
-    func enteredForeground() {
+    @objc func enteredForeground() {
         reloadData()
         viewDidAppear(true)
     }
@@ -112,23 +112,23 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIG
         didAppear = false
     }
     
-    func showSettings(sender : Any?) {
+    @objc func showSettings(sender : Any?) {
         let settingsNavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SettingsNavigationController")
         self.present(settingsNavigationController, animated: true, completion: nil)
     }
     
-    func newMessageReceived() {
+    @objc func newMessageReceived() {
         print("MESSSAAAGEGE FROM MessagesViewController")
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
-        let unmatch = UITableViewRowAction(style: .destructive, title: "Unmatch") { action, index in
+        let unmatch = UITableViewRowAction(style: .destructive, title: NSLocalizedString("Unmatch", comment: "")) { action, index in
             if let cell = tableView.cellForRow(at: editActionsForRowAt) as? ALContactCell {
                 
             }
         }
         
-        let report = UITableViewRowAction(style: .normal, title: "Report") { action, index in
+        let report = UITableViewRowAction(style: .normal, title: NSLocalizedString("Report", comment: "")) { action, index in
             print("Reporting")
         }
         report.backgroundColor = .orange

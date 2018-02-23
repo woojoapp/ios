@@ -7,7 +7,7 @@
 		<key>Woojo Development.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>34</integer>
+			<integer>2</integer>
 		</dict>
 		<key>Woojo Staging.xcscheme</key>
 		<dict>
@@ -25,17 +25,17 @@
 		<key>85512B081DCB5B020072C1B8</key>
 		<dict>
 			<key>primary</key>
-			<true/>
+			<true />
 		</dict>
 		<key>85662BEE1F90BCEF00D5701E</key>
 		<dict>
 			<key>primary</key>
-			<true/>
+			<true />
 		</dict>
 		<key>85662C221F90BD9500D5701E</key>
 		<dict>
 			<key>primary</key>
-			<true/>
+			<true />
 		</dict>
 	</dict>
 </dict>

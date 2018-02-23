@@ -610,6 +610,52 @@ class CurrentUser: User {
         }
     }
     
+    func getEventsFromEventbrite(completion: @escaping (([Event]) -> Void)) {
+        getEventbriteAccessTokenReference().observeSingleEvent(of: .value, with: { (snapshot) in
+            if let accessToken = snapshot.value as? String {
+                let url = "\(Constants.User.Integrations.Eventbrite.baseUrl)/users/me/orders?token=\(accessToken)&expand=event,event.venue,event.logo&time_filter=all"
+                let request = NSMutableURLRequest(url: URL(string: url)!)
+                request.httpMethod = "GET"
+                let requestAPI = URLSession.shared.dataTask(with: request as URLRequest) {data, response, error in
+                    if (error != nil) {
+                        print(error!.localizedDescription)
+                    }
+                    if let httpStatus = response as? HTTPURLResponse , httpStatus.statusCode != 200 {
+                        print("Error response: \(String(describing: response))")
+                    }
+                    if error == nil && data != nil {
+                        do {
+                            let orderResponse = try JSONDecoder().decode(EventbriteOrderResponse.self, from: data!)
+                            DispatchQueue.main.async {
+                                completion(orderResponse.orders.map({ $0.event.toEvent() }))
+                            }
+                        } catch {
+                            print("Error decoding JSON", error.localizedDescription)
+                        }
+                    }
+                }
+                requestAPI.resume()
+            }
+        })
+    }
+    
+    func setEventbriteAccessToken(accessToken: String, completion: ((Error?) -> Void)?) {
+        self.ref
+            .child(Constants.User.Integrations.firebaseNode)
+            .child(Constants.User.Integrations.Eventbrite.firebaseNode)
+            .child(Constants.User.Integrations.Eventbrite.properties.accessToken)
+            .setValue(accessToken) { (error, _) in
+                completion?(error)
+            }
+    }
+    
+    func getEventbriteAccessTokenReference() -> DatabaseReference {
+        return ref
+            .child(Constants.User.Integrations.firebaseNode)
+            .child(Constants.User.Integrations.Eventbrite.firebaseNode)
+            .child(Constants.User.Integrations.Eventbrite.properties.accessToken)
+    }
+    
     func getPageLikesFromFacebook(completion: @escaping (([PageLike]) -> Void)) {
         if AccessToken.current != nil {
             if firebaseAuthUser != nil {
@@ -803,7 +849,7 @@ class CurrentUser: User {
         let lp = BranchLinkProperties()
         lp.channel = "inapp"
         lp.feature = "sharing"
-        buo.showShareSheet(with: lp, andShareText: "Try Woojo and match with people going to the same events as you!", from: from) { (activity, complete) in
+        buo.showShareSheet(with: lp, andShareText: NSLocalizedString("Try Woojo and match with people going to the same events as you!", comment: ""), from: from) { (activity, complete) in
             print("SHARED", activity, complete)
         }
     }

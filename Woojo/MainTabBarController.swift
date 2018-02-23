@@ -90,11 +90,11 @@ class MainTabBarController: UITabBarController {
     }
     
     func addWithHUD(event: Event) {
-        HUD.show(.labeledProgress(title: "Adding Event...", subtitle: event.name))
+        HUD.show(.labeledProgress(title: NSLocalizedString("Adding Event...", comment: ""), subtitle: event.name))
         User.current.value?.add(event: event, completion: { (error: Error?) -> Void in
             
             func showImagelessSuccess() {
-                HUD.show(.labeledSuccess(title: "Event added", subtitle: event.name))
+                HUD.show(.labeledSuccess(title: NSLocalizedString("Event added!", comment: ""), subtitle: event.name))
                 HUD.hide(afterDelay: 3.0)
                 Application.defferedEvent = nil
             }
@@ -102,7 +102,7 @@ class MainTabBarController: UITabBarController {
             if let pictureURL = event.pictureURL {
                 SDWebImageManager.shared().downloadImage(with: pictureURL, options: [], progress: { (_, _) in }, completed: { (image, error, _, finished, url) in
                     if let image = image, error == nil, finished == true {
-                        HUD.show(.labeledImage(image: image, title: "Event added", subtitle: "\(event.name)"))
+                        HUD.show(.labeledImage(image: image, title: NSLocalizedString("Event added!", comment: ""), subtitle: "\(event.name)"))
                         HUD.hide(afterDelay: 3.0)
                         Application.defferedEvent = nil
                     } else {

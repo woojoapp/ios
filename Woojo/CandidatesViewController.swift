@@ -151,14 +151,14 @@ class CandidatesViewController: UIViewController {
     }*/
     
     func showPushNotificationsInvite() {
-        let pushNotificationsInvite = UIAlertController(title: "Push notifications", message: "Would you like to get push notifications when you match or receive messages?\n\nYou can also manage this behavior later from the Settings screen.", preferredStyle: .alert)
-        pushNotificationsInvite.addAction(UIAlertAction(title: "Yes, notify me", style: .default) { _ in
+        let pushNotificationsInvite = UIAlertController(title: NSLocalizedString("Push notifications", comment: ""), message: NSLocalizedString("Would you like to get push notifications when you match or receive messages?\n\nYou can also manage this behavior later from the Settings screen.", comment: ""), preferredStyle: .alert)
+        pushNotificationsInvite.addAction(UIAlertAction(title: NSLocalizedString("Yes, notify me", comment: ""), style: .default) { _ in
             Woojo.User.current.value?.activity.setRepliedToPushNotificationsInvite()
             if let application = UIApplication.shared.delegate as? Application {
                 application.requestNotifications()
             }
         })
-        pushNotificationsInvite.addAction(UIAlertAction(title: "Not now", style: .cancel) { _ in
+        pushNotificationsInvite.addAction(UIAlertAction(title: NSLocalizedString("Not now", comment: ""), style: .cancel) { _ in
             Woojo.User.current.value?.activity.setRepliedToPushNotificationsInvite()
         })
         pushNotificationsInvite.popoverPresentationController?.sourceView = self.view
@@ -322,7 +322,7 @@ extension CandidatesViewController: KolodaViewDataSource {
 
 extension CandidatesViewController: ShowsSettingsButton {
     
-    func showSettings(sender : Any?) {
+    @objc func showSettings(sender : Any?) {
         if let settingsNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "SettingsNavigationController") {
             self.present(settingsNavigationController, animated: true, completion: nil)
         }

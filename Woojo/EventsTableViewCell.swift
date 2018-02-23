@@ -34,22 +34,25 @@ class EventsTableViewCell: UITableViewCell {
     
     func populate(with event: Event?) {
         nameLabel.text = event?.name
-        var placeString = "Unknown location"
+        var placeString: String = ""
         if let place = event?.place, let placeName = place.name {
             placeString = placeName
         }
         if let location = event?.place?.location, let city = location.city {
-            if placeString != "Unknown location" && placeString != city {
+            if placeString != "" && placeString != city {
                 placeString = "\(placeString) (\(city))"
             } else {
                 placeString = city
             }
         }
+        if placeString == "" {
+            placeString = NSLocalizedString("Unknown location", comment: "")
+        }
         //cell.accessoryType
         placeLabel.text = placeString
-        print("URL", event?.pictureURL)
         thumbnailView.layer.cornerRadius = 12.0
         thumbnailView.layer.masksToBounds = true
+        thumbnailView.contentMode = .scaleAspectFill
         if let pictureURL = event?.pictureURL {
             thumbnailView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_100x100"))
         } else {
