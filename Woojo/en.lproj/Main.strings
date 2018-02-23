@@ -20,6 +20,9 @@
 /* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "3SK-xZ-JLz"; */
 "3SK-xZ-JLz.text" = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.";
 
+/* Class = "UILabel"; text = "You're going, interested or invited."; ObjectID = "3Zk-E8-xO8"; */
+"3Zk-E8-xO8.text" = "You have a ticket";
+
 /* Class = "UIButton"; normalTitle = "Load Earlier Messages"; ObjectID = "58h-r4-J9M"; */
 "58h-r4-J9M.normalTitle" = "Load Earlier Messages";
 
@@ -40,6 +43,9 @@
 
 /* Class = "UILabel"; text = "16:05"; ObjectID = "7fi-us-QwZ"; */
 "7fi-us-QwZ.text" = "16:05";
+
+/* Class = "UILabel"; text = "Tap to add or remove from your filter."; ObjectID = "873-IC-JAg"; */
+"873-IC-JAg.text" = "Tap to add or remove from your filter.";
 
 /* Class = "UILabel"; text = "Tap to add to your filter."; ObjectID = "8Sb-Qb-fMA"; */
 "8Sb-Qb-fMA.text" = "Tap to add to your filter.";
@@ -67,6 +73,9 @@
 
 /* Class = "UITableViewSection"; headerTitle = "Age"; ObjectID = "Ctz-iO-zb0"; */
 "Ctz-iO-zb0.headerTitle" = "Age";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "DAu-iK-CaL"; */
+"DAu-iK-CaL.normalTitle" = "Button";
 
 /* Class = "UIButton"; normalTitle = "Delete Account"; ObjectID = "DNQ-iD-RU8"; */
 "DNQ-iD-RU8.normalTitle" = "Delete Account";
@@ -107,6 +116,9 @@
 /* Class = "UITableViewController"; title = "Preferences"; ObjectID = "Ku7-SS-nN9"; */
 "Ku7-SS-nN9.title" = "Preferences";
 
+/* Class = "UILabel"; text = "Those in your filter have a green checkmark."; ObjectID = "LtQ-Ix-Uj7"; */
+"LtQ-Ix-Uj7.text" = "Those in your filter have a green checkmark.";
+
 /* Class = "UILabel"; text = "Terms & Conditions"; ObjectID = "M8a-b0-eBM"; */
 "M8a-b0-eBM.text" = "Terms & Conditions";
 
@@ -115,6 +127,9 @@
 
 /* Class = "UILabel"; text = "You recently added these events."; ObjectID = "Mk6-Qx-3RA"; */
 "Mk6-Qx-3RA.text" = "You recently added these events.";
+
+/* Class = "UILabel"; text = "These are your Eventbrite events"; ObjectID = "ONa-aL-hcT"; */
+"ONa-aL-hcT.text" = "These are your Eventbrite events";
 
 /* Class = "UITextField"; placeholder = "1234"; ObjectID = "OWs-aP-9BD"; */
 "OWs-aP-9BD.placeholder" = "1234";
@@ -254,6 +269,9 @@
 /* Class = "UILabel"; text = "New Matches"; ObjectID = "iB6-YQ-U39"; */
 "iB6-YQ-U39.text" = "New Matches";
 
+/* Class = "UINavigationItem"; title = "Eventbrite"; ObjectID = "iND-9b-RqH"; */
+"iND-9b-RqH.title" = "Eventbrite";
+
 /* Class = "UITableViewSection"; footerTitle = "12345 characters left"; ObjectID = "jFy-Ej-gbr"; */
 "jFy-Ej-gbr.footerTitle" = "12345 characters left";
 
@@ -322,6 +340,12 @@
 
 /* Class = "UILabel"; text = "Notifications"; ObjectID = "xCR-E5-8Sp"; */
 "xCR-E5-8Sp.text" = "Notifications";
+
+/* Class = "UILabel"; text = "Tap the logo to integrate"; ObjectID = "xYz-kd-h5P"; */
+"xYz-kd-h5P.text" = "Tap the logo to integrate";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "yN8-Ho-cI5"; */
+"yN8-Ho-cI5.title" = "Cancel";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "ynd-2m-iTk"; */
 "ynd-2m-iTk.text" = "Label";

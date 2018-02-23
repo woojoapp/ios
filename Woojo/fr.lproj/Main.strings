@@ -334,3 +334,21 @@
 
 /* Class = "UILabel"; text = "Enter your flight details"; ObjectID = "zL2-CS-kvy"; */
 "zL2-CS-kvy.text" = "Entrez votre vol";
+
+/* Class = "UILabel"; text = "These are your Eventbrite events"; ObjectID = "ONa-aL-hcT"; */
+"ONa-aL-hcT.text" = "Vos événements Eventbrite";
+
+/* Class = "UILabel"; text = "You're going, interested or invited."; ObjectID = "3Zk-E8-xO8"; */
+"3Zk-E8-xO8.text" = "Vous avez un ticket";
+
+/* Class = "UILabel"; text = "Tap the logo to integrate"; ObjectID = "xYz-kd-h5P"; */
+"xYz-kd-h5P.text" = "Appuyez sur le logo pour intégrer";
+
+/* Class = "UILabel"; text = "Tap to add or remove from your filter."; ObjectID = "873-IC-JAg"; */
+"873-IC-JAg.text" = "Touchez pour ajouter";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "yN8-Ho-cI5"; */
+"yN8-Ho-cI5.title" = "Annuler";
+
+/* Class = "UILabel"; text = "Those in your filter have a green checkmark."; ObjectID = "LtQ-Ix-Uj7"; */
+"LtQ-Ix-Uj7.text" = "Ceux cochés sont déjà dans votre filtre";
