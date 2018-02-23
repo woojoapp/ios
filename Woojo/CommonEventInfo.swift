@@ -12,7 +12,7 @@ import FirebaseDatabase
 extension User {
     class CommonEventInfo {
         var rsvpStatus = Event.RSVP.unsure
-        var name = "a common event"
+        var name = ""
         var id: String
         
         var displayString: String {
@@ -20,15 +20,15 @@ extension User {
                 var rsvpString: String
                 switch rsvpStatus {
                 case .attending:
-                    rsvpString = "Goes to \(name)"
+                    rsvpString = String(format: NSLocalizedString("Goes to %@", comment: ""), name)
                 case .unsure:
-                    rsvpString = "Interested in \(name)"
+                    rsvpString = String(format: NSLocalizedString("Interested in %@", comment: ""), name)
                 case .notReplied:
-                    rsvpString = "Invited to \(name)"
+                    rsvpString = String(format: NSLocalizedString("Invited to %@", comment: ""), name)
                 case .iWasRecommendedOthers:
-                    rsvpString = "Goes to \(name) (recommended for you)"
+                    rsvpString = String(format: NSLocalizedString("Goes to %@ (recommended for you)", comment: ""), name)
                 case .otherWasRecommendedMine:
-                    rsvpString = "Goes to events similar to \(name)"
+                    rsvpString = String(format: NSLocalizedString("Goes to events similar to %@", comment: ""), name)
                 }
                 return "\(rsvpString)"
             }

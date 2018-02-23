@@ -1,0 +1,336 @@
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "0yc-dU-293"; */
+"0yc-dU-293.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Choose a date and a place"; ObjectID = "1XI-hs-iyq"; */
+"1XI-hs-iyq.text" = "Choisissez un lieu et une date";
+
+/* Class = "UILabel"; text = "Swipe left to remove one."; ObjectID = "23S-7S-YNd"; */
+"23S-7S-YNd.text" = "Glissez pour en supprimer";
+
+/* Class = "UILabel"; text = "Discover great events and people."; ObjectID = "2XR-Bv-E3N"; */
+"2XR-Bv-E3N.text" = "Découvrez les participants";
+
+/* Class = "UILabel"; text = "CDG - Paris"; ObjectID = "2r9-Gv-SfW"; */
+"2r9-Gv-SfW.text" = "CDG - Paris";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "38B-PR-JBp"; */
+"38B-PR-JBp.text" = "Label";
+
+/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "3SK-xZ-JLz"; */
+"3SK-xZ-JLz.text" = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.";
+
+/* Class = "UIButton"; normalTitle = "Load Earlier Messages"; ObjectID = "58h-r4-J9M"; */
+"58h-r4-J9M.normalTitle" = "Charger les messages précédents";
+
+/* Class = "UIButton"; normalTitle = "Make Plan!"; ObjectID = "5vF-7e-PIf"; */
+"5vF-7e-PIf.normalTitle" = "Ajouter!";
+
+/* Class = "UILabel"; text = "WW"; ObjectID = "6AJ-qu-1uP"; */
+"6AJ-qu-1uP.text" = "WW";
+
+/* Class = "UITableViewSection"; headerTitle = "Gender"; ObjectID = "6jp-bn-pSj"; */
+"6jp-bn-pSj.headerTitle" = "Genre";
+
+/* Class = "UINavigationItem"; title = "New Events"; ObjectID = "748-zk-yBb"; */
+"748-zk-yBb.title" = "Nouveaux Événements";
+
+/* Class = "UILabel"; text = "Contact the Woojo Team"; ObjectID = "7Ci-Qf-Xvp"; */
+"7Ci-Qf-Xvp.text" = "Contacter l'équipe Woojo";
+
+/* Class = "UILabel"; text = "16:05"; ObjectID = "7fi-us-QwZ"; */
+"7fi-us-QwZ.text" = "16:05";
+
+/* Class = "UILabel"; text = "Tap to add to your filter."; ObjectID = "8Sb-Qb-fMA"; */
+"8Sb-Qb-fMA.text" = "Touchez pour ajouter";
+
+/* Class = "UILabel"; text = "Based on your tastes."; ObjectID = "8jw-s5-H1L"; */
+"8jw-s5-H1L.text" = "Basés sur vos goûts";
+
+/* Class = "UILabel"; text = "New Messages"; ObjectID = "9nE-in-qfM"; */
+"9nE-in-qfM.text" = "Nouveaux messages";
+
+/* Class = "UILabel"; text = "Muserlabel"; ObjectID = "9xM-gN-4BB"; */
+"9xM-gN-4BB.text" = "Muserlabel";
+
+/* Class = "UILabel"; text = "Help grow the community"; ObjectID = "AAf-6W-VyR"; */
+"AAf-6W-VyR.text" = "Faites grandir la communauté";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "AeB-qU-OFD"; */
+"AeB-qU-OFD.title" = "Item";
+
+/* Class = "UILabel"; text = "Woojo for iOS v2.0"; ObjectID = "CME-Fb-FXM"; */
+"CME-Fb-FXM.text" = "Woojo pour iOS v2.0";
+
+/* Class = "UINavigationItem"; title = "Albums"; ObjectID = "CMN-DQ-ynz"; */
+"CMN-DQ-ynz.title" = "Albums";
+
+/* Class = "UITableViewSection"; headerTitle = "Age"; ObjectID = "Ctz-iO-zb0"; */
+"Ctz-iO-zb0.headerTitle" = "Âge";
+
+/* Class = "UIButton"; normalTitle = "Delete Account"; ObjectID = "DNQ-iD-RU8"; */
+"DNQ-iD-RU8.normalTitle" = "Suppression du compte";
+
+/* Class = "UINavigationItem"; title = "Photos"; ObjectID = "DXM-yh-9hh"; */
+"DXM-yh-9hh.title" = "Photos";
+
+/* Class = "UIButton"; normalTitle = "Save Flight"; ObjectID = "DaR-lO-Gcf"; */
+"DaR-lO-Gcf.normalTitle" = "Ajouter";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "EEv-cH-oTo"; */
+"EEv-cH-oTo.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "14:14"; ObjectID = "GJ6-O3-bKI"; */
+"GJ6-O3-bKI.text" = "14:14";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Ga6-qQ-LOS"; */
+"Ga6-qQ-LOS.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Gnz-7f-xmw"; */
+"Gnz-7f-xmw.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Logout"; ObjectID = "IaJ-wM-dCg"; */
+"IaJ-wM-dCg.normalTitle" = "Déconnexion";
+
+/* Class = "UITextView"; text = "Say something about yourself..."; ObjectID = "JW2-MP-UwZ"; */
+"JW2-MP-UwZ.text" = "À propos de vous...";
+
+/* Class = "UILabel"; text = "MMessageLabel"; ObjectID = "JXe-lx-oQF"; */
+"JXe-lx-oQF.text" = "MMessageLabel";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "JXy-u4-CRF"; */
+"JXy-u4-CRF.text" = "Label";
+
+/* Class = "UILabel"; text = "© Tasty Electrons SAS"; ObjectID = "KCi-6b-nys"; */
+"KCi-6b-nys.text" = "© Tasty Electrons SAS";
+
+/* Class = "UITableViewController"; title = "Preferences"; ObjectID = "Ku7-SS-nN9"; */
+"Ku7-SS-nN9.title" = "Préférences";
+
+/* Class = "UILabel"; text = "Terms & Conditions"; ObjectID = "M8a-b0-eBM"; */
+"M8a-b0-eBM.text" = "Conditions générales";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "MII-EO-dRe"; */
+"MII-EO-dRe.text" = "Label";
+
+/* Class = "UILabel"; text = "You recently added these events."; ObjectID = "Mk6-Qx-3RA"; */
+"Mk6-Qx-3RA.text" = "Événements ajoutés récemment.";
+
+/* Class = "UITextField"; placeholder = "1234"; ObjectID = "OWs-aP-9BD"; */
+"OWs-aP-9BD.placeholder" = "1234";
+
+/* Class = "UILabel"; text = "Profile"; ObjectID = "OyC-91-bHX"; */
+"OyC-91-bHX.text" = "Profil";
+
+/* Class = "UILabel"; text = "Discover awesome people!"; ObjectID = "Ozn-qh-DuI"; */
+"Ozn-qh-DuI.text" = "Découvrez des profils intéressants!";
+
+/* Class = "UILabel"; text = "New People"; ObjectID = "PF7-ES-bhp"; */
+"PF7-ES-bhp.text" = "Nouveaux profils";
+
+/* Class = "UITableViewSection"; headerTitle = "Notify me of"; ObjectID = "Ptb-jp-8pB"; */
+"Ptb-jp-8pB.headerTitle" = "M'avertir pour";
+
+/* Class = "UILabel"; text = "Discover people to meet there!"; ObjectID = "QJe-sq-77u"; */
+"QJe-sq-77u.text" = "Découvrez qui y sera aussi";
+
+/* Class = "UITableViewSection"; footerTitle = "Drag and drop to order, tap for options"; ObjectID = "QMa-J1-q3l"; */
+"QMa-J1-q3l.footerTitle" = "Glissez pour ordonner, touchez pour des options";
+
+/* Class = "UITableViewSection"; headerTitle = "Photos"; ObjectID = "QMa-J1-q3l"; */
+"QMa-J1-q3l.headerTitle" = "Photos";
+
+/* Class = "UILabel"; text = "Couldn't find an event?"; ObjectID = "Rms-I7-mQl"; */
+"Rms-I7-mQl.text" = "Pas d'événement?";
+
+/* Class = "UILabel"; text = "15:25"; ObjectID = "SdI-Gs-1ox"; */
+"SdI-Gs-1ox.text" = "15:25";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "SrP-sr-tSR"; */
+"SrP-sr-tSR.text" = "Label";
+
+/* Class = "UINavigationItem"; title = "Events"; ObjectID = "TCh-MH-JMb"; */
+"TCh-MH-JMb.title" = "Événements";
+
+/* Class = "UIButton"; normalTitle = "Share Woojo!"; ObjectID = "U4U-EG-yDK"; */
+"U4U-EG-yDK.normalTitle" = "Partager Woojo!";
+
+/* Class = "UIButton"; normalTitle = "Ignore"; ObjectID = "V8w-Fr-t25"; */
+"V8w-Fr-t25.normalTitle" = "Ignorer";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "VUF-F4-Her"; */
+"VUF-F4-Her.text" = "Label";
+
+/* Class = "UILabel"; text = "Preferences"; ObjectID = "VYb-UP-1h4"; */
+"VYb-UP-1h4.text" = "Préférences";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "Va2-Sr-F53"; */
+"Va2-Sr-F53.title" = "Réglages";
+
+/* Class = "UIViewController"; title = "Candidates"; ObjectID = "Vc7-JZ-mOB"; */
+"Vc7-JZ-mOB.title" = "Profils";
+
+/* Class = "UILabel"; text = "100"; ObjectID = "WMd-Mf-aXa"; */
+"WMd-Mf-aXa.text" = "100";
+
+/* Class = "UIButton"; normalTitle = "Change Place"; ObjectID = "Wkl-Uz-us3"; */
+"Wkl-Uz-us3.normalTitle" = "Changer le lieu";
+
+/* Class = "UILabel"; text = "Flying soon?"; ObjectID = "ZTk-Nx-d9j"; */
+"ZTk-Nx-d9j.text" = "Vous prenez l'avion?";
+
+/* Class = "UILabel"; text = "About Woojo"; ObjectID = "ZVL-Tm-PqV"; */
+"ZVL-Tm-PqV.text" = "À propos de Woojo";
+
+/* Class = "UILabel"; text = "It filters who you see on the People tab."; ObjectID = "a3a-OY-zoH"; */
+"a3a-OY-zoH.text" = "Il filtre les profils que vous voyez";
+
+/* Class = "UILabel"; text = "New Events"; ObjectID = "aG4-Il-NNE"; */
+"aG4-Il-NNE.text" = "Nouveaux événements";
+
+/* Class = "UILabel"; text = "Flight number"; ObjectID = "as0-xJ-h2Q"; */
+"as0-xJ-h2Q.text" = "Numéro de vol";
+
+/* Class = "UILabel"; text = "This is your Events Filter"; ObjectID = "b2X-bw-F6N"; */
+"b2X-bw-F6N.text" = "Ceci est votre filtre d'événements";
+
+/* Class = "UILabel"; text = "Meet at the airport or on the plane!"; ObjectID = "bNu-cd-yVZ"; */
+"bNu-cd-yVZ.text" = "A l'aéroport ou dans l'avion, rencontrez du monde!";
+
+/* Class = "UINavigationItem"; title = "Event"; ObjectID = "cRn-ZF-Bck"; */
+"cRn-ZF-Bck.title" = "Événement";
+
+/* Class = "UILabel"; text = "Tap to add or remove from your filter."; ObjectID = "cY6-SS-cae"; */
+"cY6-SS-cae.text" = "Touchez pour ajouter ou supprimer";
+
+/* Class = "UIButton"; normalTitle = "Review"; ObjectID = "d3P-ts-bHy"; */
+"d3P-ts-bHy.normalTitle" = "Voir";
+
+/* Class = "UILabel"; text = "BCN - Barcelona"; ObjectID = "dCf-Qz-b9s"; */
+"dCf-Qz-b9s.text" = "BCN - Barcelona";
+
+/* Class = "UILabel"; text = "Those in your filter have a green checkmark."; ObjectID = "dYB-hG-UVG"; */
+"dYB-hG-UVG.text" = "Ceux cochés sont déjà dans votre filtre";
+
+/* Class = "UILabel"; text = "You have no conversation."; ObjectID = "dtA-Gh-exg"; */
+"dtA-Gh-exg.text" = "Pas de conversations.";
+
+/* Class = "UILabel"; text = "18"; ObjectID = "e4n-Kt-XGX"; */
+"e4n-Kt-XGX.text" = "18";
+
+/* Class = "UIButton"; normalTitle = "Send"; ObjectID = "eYN-K0-m5F"; */
+"eYN-K0-m5F.normalTitle" = "Envoi";
+
+/* Class = "UINavigationItem"; title = "About Web"; ObjectID = "f8I-Hc-QWC"; */
+"f8I-Hc-QWC.title" = "About Web";
+
+/* Class = "UINavigationItem"; title = "Profile"; ObjectID = "fzj-io-MZ0"; */
+"fzj-io-MZ0.title" = "Profil";
+
+/* Class = "UILabel"; text = "Meet people on the go"; ObjectID = "gBD-j4-2aT"; */
+"gBD-j4-2aT.text" = "Faites des rencontres en voyage";
+
+/* Class = "UILabel"; text = "Tap + to add any event from Facebook."; ObjectID = "gF4-wT-55L"; */
+"gF4-wT-55L.text" = "Appuyez sur + pour en ajouter";
+
+/* Class = "UILabel"; text = "Tell us your plan"; ObjectID = "gH7-Er-6U3"; */
+"gH7-Er-6U3.text" = "Quel est votre plan?";
+
+/* Class = "UITableViewController"; title = "Notifications"; ObjectID = "gOo-0s-PHM"; */
+"gOo-0s-PHM.title" = "Notifications";
+
+/* Class = "UILabel"; text = "New Facebook events"; ObjectID = "gvl-FM-nM7"; */
+"gvl-FM-nM7.text" = "Nouveaux événements Facebook";
+
+/* Class = "UINavigationItem"; title = "Preferences"; ObjectID = "gyn-Mc-umo"; */
+"gyn-Mc-umo.title" = "Préférences";
+
+/* Class = "UILabel"; text = "Manage Events Filter or Preferences"; ObjectID = "hVP-o1-fRj"; */
+"hVP-o1-fRj.text" = "Gérez votre filtre d'événements et vos préférences";
+
+/* Class = "UINavigationItem"; title = "Add Events"; ObjectID = "hcK-4s-VgH"; */
+"hcK-4s-VgH.title" = "Ajout d'événements";
+
+/* Class = "UILabel"; text = "New Matches"; ObjectID = "iB6-YQ-U39"; */
+"iB6-YQ-U39.text" = "Nouveaux match";
+
+/* Class = "UITableViewSection"; footerTitle = "12345 characters left"; ObjectID = "jFy-Ej-gbr"; */
+"jFy-Ej-gbr.footerTitle" = "12345 caractères restant";
+
+/* Class = "UITableViewSection"; headerTitle = "About"; ObjectID = "jFy-Ej-gbr"; */
+"jFy-Ej-gbr.headerTitle" = "À propos";
+
+/* Class = "UILabel"; text = "Enabled"; ObjectID = "jOF-Yt-EwC"; */
+"jOF-Yt-EwC.text" = "Activées";
+
+/* Class = "UINavigationItem"; title = "About"; ObjectID = "lmA-SI-9y1"; */
+"lmA-SI-9y1.title" = "À propos";
+
+/* Class = "UILabel"; text = "These are your Facebook events"; ObjectID = "lvj-AZ-MNc"; */
+"lvj-AZ-MNc.text" = "Vos événements Facebook";
+
+/* Class = "UITableViewSection"; footerTitle = "Get notified even when outside the app"; ObjectID = "nHB-DZ-vja"; */
+"nHB-DZ-vja.footerTitle" = "M'avertir également hors de l'app";
+
+/* Class = "UITableViewSection"; headerTitle = "Push notifications"; ObjectID = "nHB-DZ-vja"; */
+"nHB-DZ-vja.headerTitle" = "Notifications Push";
+
+/* Class = "UILabel"; text = "Privacy Policy"; ObjectID = "nqP-Hh-0VP"; */
+"nqP-Hh-0VP.text" = "Charte de la vie privée";
+
+/* Class = "UILabel"; text = "Image Label "; ObjectID = "o6A-dG-8EZ"; */
+"o6A-dG-8EZ.text" = "Image Label ";
+
+/* Class = "UIButton"; normalTitle = "Share Woojo!"; ObjectID = "pJa-Wc-77D"; */
+"pJa-Wc-77D.normalTitle" = "Partager Woojo!";
+
+/* Class = "UILabel"; text = "Wanna see more people?"; ObjectID = "qC8-B4-GVs"; */
+"qC8-B4-GVs.text" = "Envie de voir plus de monde?";
+
+/* Class = "UILabel"; text = "Tap to add to your filter."; ObjectID = "s8o-Xc-mhk"; */
+"s8o-Xc-mhk.text" = "Touchez pour ajouter au filtre";
+
+/* Class = "UISegmentedControl"; sr9-Bl-S56.segmentTitles[0] = "Women"; ObjectID = "sr9-Bl-S56"; */
+"sr9-Bl-S56.segmentTitles[0]" = "Femmes";
+
+/* Class = "UISegmentedControl"; sr9-Bl-S56.segmentTitles[1] = "Men"; ObjectID = "sr9-Bl-S56"; */
+"sr9-Bl-S56.segmentTitles[1]" = "Hommes";
+
+/* Class = "UISegmentedControl"; sr9-Bl-S56.segmentTitles[2] = "All"; ObjectID = "sr9-Bl-S56"; */
+"sr9-Bl-S56.segmentTitles[2]" = "Tous";
+
+/* Class = "UILabel"; text = "These are recommended events"; ObjectID = "swl-FF-G5k"; */
+"swl-FF-G5k.text" = "Événements recommandés";
+
+/* Class = "UILabel"; text = "You're going, interested or invited."; ObjectID = "ufY-zH-Xps"; */
+"ufY-zH-Xps.text" = "Confirmé, intéressé ou invité";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "umg-X8-hXY"; */
+"umg-X8-hXY.text" = "Label";
+
+/* Class = "UILabel"; text = "L"; ObjectID = "urm-am-ul4"; */
+"urm-am-ul4.text" = "L";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "wZ7-qP-doC"; */
+"wZ7-qP-doC.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "wnp-yw-g7L"; */
+"wnp-yw-g7L.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "wq2-ru-auX"; */
+"wq2-ru-auX.text" = "Label";
+
+/* Class = "UILabel"; text = "Notifications"; ObjectID = "xCR-E5-8Sp"; */
+"xCR-E5-8Sp.text" = "Notifications";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "ynd-2m-iTk"; */
+"ynd-2m-iTk.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Create Group"; ObjectID = "z26-mt-YNI"; */
+"z26-mt-YNI.normalTitle" = "Create Group";
+
+/* Class = "UINavigationItem"; title = "Chats"; ObjectID = "zDq-s1-zSc"; */
+"zDq-s1-zSc.title" = "Discussions";
+
+/* Class = "UILabel"; text = "Enter your flight details"; ObjectID = "zL2-CS-kvy"; */
+"zL2-CS-kvy.text" = "Entrez votre vol";

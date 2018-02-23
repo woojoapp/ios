@@ -381,9 +381,8 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
         let defaults: [String:NSObject] = [
-            Constants.App.RemoteConfig.Keys.termsURL:"https://www.woojo.ooo/terms.html" as NSObject,
-            Constants.App.RemoteConfig.Keys.privacyURL:"https://www.woojo.ooo/privacy.html" as NSObject,
-            Constants.App.RemoteConfig.Keys.recommendedEventsEnabled: false as NSObject
+            Constants.App.RemoteConfig.Keys.termsURL:"https://www.woojo.ooo/terms_app.html" as NSObject,
+            Constants.App.RemoteConfig.Keys.privacyURL:"https://www.woojo.ooo/privacy_app.html" as NSObject
         ]
         // Change next 2 lines for production
         activateDebugMode()

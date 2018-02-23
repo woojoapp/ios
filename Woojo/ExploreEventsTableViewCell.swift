@@ -35,16 +35,19 @@ class ExploreEventsTableViewCell: UITableViewCell {
     
     func populate(with event: Event?) {
         nameLabel.text = event?.name
-        var placeString = "Unknown location"
+        var placeString = ""
         if let place = event?.place, let placeName = place.name {
             placeString = placeName
         }
         if let location = event?.place?.location, let city = location.city {
-            if placeString != "Unknown location" {
+            if placeString != "" {
                 placeString = "\(placeString) (\(city))"
             } else {
                 placeString = city
             }
+        }
+        if placeString == "" {
+            placeString = NSLocalizedString("Unknown location", comment: "")
         }
         thumbnailView.layer.cornerRadius = 12.0
         thumbnailView.layer.masksToBounds = true

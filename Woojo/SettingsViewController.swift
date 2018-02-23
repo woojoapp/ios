@@ -23,25 +23,25 @@ class SettingsViewController: UITableViewController {
     var reachabilityObserver: AnyObject?
     
     @IBAction func logout(sender: UIButton) {
-        let logoutAlert = UIAlertController(title: "Logout", message: "Confirm you want to logout?", preferredStyle: .alert)
-        logoutAlert.addAction(UIAlertAction(title: "Logout", style: .default) { _ in
+        let logoutAlert = UIAlertController(title: NSLocalizedString("Logout", comment: ""), message: NSLocalizedString("Sure you want to logout?", comment: ""), preferredStyle: .alert)
+        logoutAlert.addAction(UIAlertAction(title: NSLocalizedString("Logout", comment: ""), style: .default) { _ in
             self.dismiss(animated: true, completion: nil)
             Analytics.Log(event: Constants.Analytics.Events.LoggedOut.name)
             User.current.value?.logOut()
         })
-        logoutAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        logoutAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
         logoutAlert.popoverPresentationController?.sourceView = self.view
         present(logoutAlert, animated: true)
     }
     
     @IBAction func deleteAccount(sender: UIButton) {
-        let deleteAccountAlert = UIAlertController(title: "Delete Account", message: "Confirm you want to delete your account?", preferredStyle: .alert)
-        deleteAccountAlert.addAction(UIAlertAction(title: "Delete", style: .destructive) { _ in
+        let deleteAccountAlert = UIAlertController(title: NSLocalizedString("Delete Account", comment: ""), message: NSLocalizedString("Sure you want to delete your account?", comment: ""), preferredStyle: .alert)
+        deleteAccountAlert.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive) { _ in
             self.dismiss(animated: true, completion: nil)
             Analytics.Log(event: Constants.Analytics.Events.AccountDeleted.name)
             User.current.value?.deleteAccount()
         })
-        deleteAccountAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        deleteAccountAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
         deleteAccountAlert.popoverPresentationController?.sourceView = self.view
         present(deleteAccountAlert, animated: true)
     }

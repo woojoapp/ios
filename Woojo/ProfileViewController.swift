@@ -24,7 +24,7 @@ class ProfileViewController: UITableViewController {
     @IBOutlet weak var longPressGestureRecognizer: UILongPressGestureRecognizer!
     
     let disposeBag = DisposeBag()
-    fileprivate let bioTextViewPlaceholderText = "Say something about yourself..."
+    fileprivate let bioTextViewPlaceholderText = NSLocalizedString("Write something about yourself...", comment: "")
     
     // Photos collection view properties
     fileprivate let photoCount: CGFloat = 6
@@ -140,7 +140,7 @@ class ProfileViewController: UITableViewController {
         tapGestureRecognizer.cancelsTouchesInView = false
         tableView.estimatedRowHeight = 70
         bioTableViewCell.bioTextView.rx.text
-            .map{ $0?.characters.count }
+            .map{ $0?.count }
             .subscribe(onNext: { count in
                 self.setBioFooter(count: count)
             }).addDisposableTo(disposeBag)
@@ -148,8 +148,8 @@ class ProfileViewController: UITableViewController {
     
     func setBioFooter(count: Int?) {
         if let count = count {
-            let s = count != 249 ? "s" : ""
-            self.tableView.footerView(forSection: 0)?.textLabel?.text = "\(max(250 - count, 0)) character\(s) left"
+            let s = count != 249 ? NSLocalizedString("characters", comment: "") : NSLocalizedString("character", comment: "")
+            self.tableView.footerView(forSection: 0)?.textLabel?.text = String(format: NSLocalizedString("%d %@ left", comment: ""), max(250 - count, 0), s)
         }
     }
 
@@ -185,11 +185,11 @@ class ProfileViewController: UITableViewController {
         }
     }
     
-    func tap(gesture: UITapGestureRecognizer) {
+    @objc func tap(gesture: UITapGestureRecognizer) {
         bioTableViewCell.bioTextView.resignFirstResponder()
     }
     
-    func longPress(gesture: UILongPressGestureRecognizer) {
+    @objc func longPress(gesture: UILongPressGestureRecognizer) {
         if let reachable = isReachable(), !reachable {
             photosCollectionView.cancelInteractiveMovement()
             return
@@ -265,7 +265,7 @@ extension ProfileViewController: UICollectionViewDelegate {
         if let cell = collectionView.cellForItem(at: indexPath) as? ProfilePhotoCollectionViewCell {
             if cell.photo != nil {
                 let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                let setAsMainButton = UIAlertAction(title: "Set as Main Photo", style: .default, handler: { (action) -> Void in
+                let setAsMainButton = UIAlertAction(title: NSLocalizedString("Set as Main Photo", comment: ""), style: .default, handler: { (action) -> Void in
                     /*HUD.show(.progress)
                     User.current.value?.profile.deleteFiles(forPhotoAt: indexPath.row) { _ in
                         User.current.value?.profile.remove(photoAt: indexPath.row) { _ in
@@ -280,7 +280,7 @@ extension ProfileViewController: UICollectionViewDelegate {
                     self.photosCollectionView.moveItem(at: indexPath, to: mainIndexPath)
                     self.collectionView(self.photosCollectionView, moveItemAt: indexPath, to: mainIndexPath)
                 })
-                let removeButton = UIAlertAction(title: "Remove", style: .destructive, handler: { (action) -> Void in
+                let removeButton = UIAlertAction(title: NSLocalizedString("Remove", comment: ""), style: .destructive, handler: { (action) -> Void in
                     HUD.show(.progress)
                     User.current.value?.profile.deleteFiles(forPhotoAt: indexPath.row) { _ in
                         User.current.value?.profile.remove(photoAt: indexPath.row) { _ in
@@ -292,16 +292,16 @@ extension ProfileViewController: UICollectionViewDelegate {
                         }
                     }
                 })
-                let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                let cancelButton = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
                 actionSheetController.addAction(setAsMainButton)
                 actionSheetController.addAction(removeButton)
                 actionSheetController.addAction(cancelButton)
                 actionSheetController.popoverPresentationController?.sourceView = self.view
                 self.present(actionSheetController, animated: true, completion: nil)
             } else {
-                let actionSheetController = UIAlertController(title: "Add Photo", message: nil, preferredStyle: .actionSheet)
+                let actionSheetController = UIAlertController(title: NSLocalizedString("Add Photo", comment: ""), message: nil, preferredStyle: .actionSheet)
                 
-                let facebookButton = UIAlertAction(title: "Facebook", style: .default, handler: { (action) -> Void in
+                let facebookButton = UIAlertAction(title: NSLocalizedString("Facebook", comment: ""), style: .default, handler: { (action) -> Void in
                     if let navigationController = self.storyboard?.instantiateViewController(withIdentifier: "FacebookPhotosNavigationController"),
                         let albumTableViewController = navigationController.childViewControllers[0] as? AlbumsTableViewController {
                         albumTableViewController.photoIndex = indexPath.row
@@ -312,7 +312,7 @@ extension ProfileViewController: UICollectionViewDelegate {
                 actionSheetController.addAction(facebookButton)
                 
                 if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-                    let libraryButton = UIAlertAction(title: "Photo Library", style: .default, handler: { (action) -> Void in
+                    let libraryButton = UIAlertAction(title: NSLocalizedString("Photo Library", comment: ""), style: .default, handler: { (action) -> Void in
                         self.imagePickerController.allowsEditing = false
                         self.imagePickerController.sourceType = .photoLibrary
                         self.present(self.imagePickerController, animated: true, completion: nil)
@@ -331,7 +331,7 @@ extension ProfileViewController: UICollectionViewDelegate {
                 }*/
 
                 
-                let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                let cancelButton = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
                 actionSheetController.addAction(cancelButton)
                 actionSheetController.popoverPresentationController?.sourceView = self.view
                 self.present(actionSheetController, animated: true, completion: nil)
@@ -369,8 +369,6 @@ extension ProfileViewController: UICollectionViewDataSource {
         }
         cell.imageView.layer.cornerRadius = 12.0
         cell.imageView.layer.masksToBounds = true
-        
-        print("CELL", cell.frame.width, cell.frame.height)
         
         return cell
     }
@@ -455,7 +453,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate {
             newMoveAndScaleLabel.frame = CGRect(x: 0.0, y: 24.0, width: rskImageCropper.view.frame.width, height: 24.0)
             newMoveAndScaleLabel.textAlignment = .center
             newMoveAndScaleLabel.center.x = rskImageCropper.view.center.x
-            newMoveAndScaleLabel.text = "Move and Scale"
+            newMoveAndScaleLabel.text = NSLocalizedString("Move and Scale", comment: "")
             newMoveAndScaleLabel.textColor = .white
             rskImageCropper.moveAndScaleLabel.isHidden = true
             rskImageCropper.view.addSubview(newMoveAndScaleLabel)
@@ -513,11 +511,11 @@ extension ProfileViewController: RSKImageCropViewControllerDelegate {
             if let selectedIndex = photosCollectionView.indexPathsForSelectedItems?[0].row {
                 User.current.value?.profile.setPhoto(photo: croppedImage, id: UUID().uuidString, index: selectedIndex) { photo, error in
                     if error != nil {
-                        HUD.show(.labeledError(title: "Error", subtitle: "Failed to add photo"))
+                        HUD.show(.labeledError(title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Failed to add photo", comment: "")))
                         HUD.hide(afterDelay: 1.0)
                     } else {
                         self.navigationController?.dismiss(animated: true, completion: nil)
-                        HUD.show(.labeledSuccess(title: "Success", subtitle: "Photo added!"))
+                        HUD.show(.labeledSuccess(title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("Photo added!", comment: "")))
                         HUD.hide(afterDelay: 1.0)
                     }
                     self.photosCollectionView.reloadItems(at: [IndexPath(row: selectedIndex, section: 0)])
@@ -525,7 +523,7 @@ extension ProfileViewController: RSKImageCropViewControllerDelegate {
                 }
             }
         } else {
-            HUD.show(.labeledError(title: "No internet", subtitle: nil))
+            HUD.show(.labeledError(title: NSLocalizedString("No internet", comment: ""), subtitle: nil))
             HUD.hide(afterDelay: 2.0)
         }
     }

@@ -154,7 +154,7 @@ class PlansViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    func keyboardWillShow(_ notification: NSNotification) {
+    @objc func keyboardWillShow(_ notification: NSNotification) {
         if let keyboardFrameEnd = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect, let animationDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval, let navigationController = navigationController {
             bottomConstraint.constant = self.view.frame.size.height - keyboardFrameEnd.origin.y + navigationController.navigationBar.frame.size.height + UIApplication.shared.statusBarFrame.size.height + searchBar.frame.size.height
             UIView.animate(withDuration: animationDuration, animations: {
@@ -165,7 +165,7 @@ class PlansViewController: UIViewController {
         }
     }
     
-    func keyboardWillHide(_ notification: NSNotification) {
+    @objc func keyboardWillHide(_ notification: NSNotification) {
         if let animationDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval {
             bottomConstraint.constant = 0
             UIView.animate(withDuration: animationDuration, animations: {
@@ -205,9 +205,9 @@ class PlansViewController: UIViewController {
             let plan = plan {
             plan.date = datePicker.date
             if let event = plan.toEvent() {
-                HUD.show(.labeledProgress(title: "Make Plan", subtitle: "Making plan..."))
+                HUD.show(.labeledProgress(title: NSLocalizedString("Make Plan", comment: ""), subtitle: NSLocalizedString("Making plan...", comment: "")))
                 User.current.value?.add(event: event, completion: { (error: Error?) -> Void in
-                    HUD.show(.labeledSuccess(title: "Make Plan", subtitle: "Done!"))
+                    HUD.show(.labeledSuccess(title: NSLocalizedString("Make Plan", comment: ""), subtitle: NSLocalizedString("Done!", comment: "")))
                     HUD.hide(afterDelay: 1.0, completion: { (_) in
                         self.plan = nil
                     })
@@ -224,7 +224,7 @@ class PlansViewController: UIViewController {
             datePicker.setDate(plan.date, animated: true)
             let attributedString = NSMutableAttributedString()
             if let name = plan.place.name {
-                attributedString.append(NSMutableAttributedString(string: name, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 17)]))
+                attributedString.append(NSMutableAttributedString(string: name, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17)]))
             }
             if let verificationStatus = plan.place.verificationStatus {
                 let verifiedImage = NSTextAttachment()
@@ -239,11 +239,11 @@ class PlansViewController: UIViewController {
                 if verifiedImage.image != nil {
                     verifiedImage.bounds = CGRect(x: 0.0, y: planLabel.font.descender / 2.0, width: verifiedImage.image!.size.width, height: verifiedImage.image!.size.height)
                 }
-                attributedString.append(NSAttributedString(string: " ", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 17)]))
+                attributedString.append(NSAttributedString(string: " ", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17)]))
                 attributedString.append(NSAttributedString(attachment: verifiedImage))
             }
             if let location = plan.place.location {
-                attributedString.append(NSMutableAttributedString(string: "\n\(location.addressString)", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12)]))
+                attributedString.append(NSMutableAttributedString(string: "\n\(location.addressString)", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12)]))
             }
             planLabel.attributedText = attributedString
             //placeLabel.text = place?.location?.addressString
@@ -268,11 +268,11 @@ class PlansViewController: UIViewController {
 extension PlansViewController: DZNEmptyDataSetSource {
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        return NSAttributedString(string: "Make a Plan", attributes: Constants.App.Appearance.EmptyDatasets.titleStringAttributes)
+        return NSAttributedString(string: NSLocalizedString("Make a Plan", comment: ""), attributes: Constants.App.Appearance.EmptyDatasets.titleStringAttributes)
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        return NSAttributedString(string: "Choose a date and a place\nDiscover people with the same plan!", attributes: Constants.App.Appearance.EmptyDatasets.descriptionStringAttributes)
+        return NSAttributedString(string: NSLocalizedString("Choose a date and a place\nDiscover people with the same plan!", comment: ""), attributes: Constants.App.Appearance.EmptyDatasets.descriptionStringAttributes)
     }
     
     func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {

@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="459cfdb2-536b-4b2f-9ab6-db23eba294cd" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Woojo/Woojo/Base.lproj/Localizable.strings" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Woojo/Woojo/en.lproj/Localizable.strings" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Woojo/Woojo/fr.lproj/Localizable.strings" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Woojo/en.lproj/LoginViewController.strings" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Woojo/en.lproj/Main.strings" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Woojo/fr.lproj/LaunchScreen.strings" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Woojo/fr.lproj/LoginViewController.strings" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Woojo/fr.lproj/Main.strings" />
+      <change beforePath="$PROJECT_DIR$/Woojo.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/Woojo.xcodeproj/project.pbxproj" />
+      <change beforePath="$PROJECT_DIR$/Woojo.xcodeproj/xcuserdata/egoossens.xcuserdatad/xcschemes/xcschememanagement.plist" afterPath="$PROJECT_DIR$/Woojo.xcodeproj/xcuserdata/egoossens.xcuserdatad/xcschemes/xcschememanagement.plist" />
+      <change beforePath="$PROJECT_DIR$/Woojo/ALChatManager.swift" afterPath="$PROJECT_DIR$/Woojo/ALChatManager.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/AddEventViewController.swift" afterPath="$PROJECT_DIR$/Woojo/AddEventViewController.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/AlbumsTableViewCell.swift" afterPath="$PROJECT_DIR$/Woojo/AlbumsTableViewCell.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/AlbumsTableViewController.swift" afterPath="$PROJECT_DIR$/Woojo/AlbumsTableViewController.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/Application.swift" afterPath="$PROJECT_DIR$/Woojo/Application.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/CandidatesViewController.swift" afterPath="$PROJECT_DIR$/Woojo/CandidatesViewController.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/ChatViewController.swift" afterPath="$PROJECT_DIR$/Woojo/ChatViewController.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/CommonEventInfo.swift" afterPath="$PROJECT_DIR$/Woojo/CommonEventInfo.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/Constants+App.swift" afterPath="$PROJECT_DIR$/Woojo/Constants+App.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/Constants.swift" afterPath="$PROJECT_DIR$/Woojo/Constants.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/CurrentUser.swift" afterPath="$PROJECT_DIR$/Woojo/CurrentUser.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/Event.swift" afterPath="$PROJECT_DIR$/Woojo/Event.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/EventDetailsViewController.swift" afterPath="$PROJECT_DIR$/Woojo/EventDetailsViewController.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/EventsTableViewCell.swift" afterPath="$PROJECT_DIR$/Woojo/EventsTableViewCell.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/EventsViewController.swift" afterPath="$PROJECT_DIR$/Woojo/EventsViewController.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/ExploreEventsTableViewCell.swift" afterPath="$PROJECT_DIR$/Woojo/ExploreEventsTableViewCell.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/ExploreEventsViewController.swift" afterPath="$PROJECT_DIR$/Woojo/ExploreEventsViewController.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/HeaderTipCollectionReusableView.swift" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Woojo/HeaderTipCollectionReusableView.xib" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Woojo/Info.plist" afterPath="$PROJECT_DIR$/Woojo/Info.plist" />
+      <change beforePath="$PROJECT_DIR$/Woojo/LoginViewController.swift" afterPath="$PROJECT_DIR$/Woojo/LoginViewController.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/LoginViewController.xib" afterPath="$PROJECT_DIR$/Woojo/Base.lproj/LoginViewController.xib" />
+      <change beforePath="$PROJECT_DIR$/Woojo/Main.storyboard" afterPath="$PROJECT_DIR$/Woojo/Base.lproj/Main.storyboard" />
+      <change beforePath="$PROJECT_DIR$/Woojo/MainTabBarController.swift" afterPath="$PROJECT_DIR$/Woojo/MainTabBarController.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/MessagesViewController.swift" afterPath="$PROJECT_DIR$/Woojo/MessagesViewController.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/MyEventsTableViewCell.swift" afterPath="$PROJECT_DIR$/Woojo/MyEventsTableViewCell.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/MyEventsTableViewController.swift" afterPath="$PROJECT_DIR$/Woojo/MyEventsTableViewController.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/NavigationController.swift" afterPath="$PROJECT_DIR$/Woojo/NavigationController.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/Notifier.swift" afterPath="$PROJECT_DIR$/Woojo/Notifier.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/PendingEventsTableViewController.swift" afterPath="$PROJECT_DIR$/Woojo/PendingEventsTableViewController.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/PhotoCollectionViewController.swift" afterPath="$PROJECT_DIR$/Woojo/PhotoCollectionViewController.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/PlansViewController.swift" afterPath="$PROJECT_DIR$/Woojo/PlansViewController.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/ProfileViewController.swift" afterPath="$PROJECT_DIR$/Woojo/ProfileViewController.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/SearchEventsResultsTableViewCell.swift" afterPath="$PROJECT_DIR$/Woojo/SearchEventsResultsTableViewCell.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/SearchEventsViewController.swift" afterPath="$PROJECT_DIR$/Woojo/SearchEventsViewController.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/SettingsViewController.swift" afterPath="$PROJECT_DIR$/Woojo/SettingsViewController.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/UserCardView.swift" afterPath="$PROJECT_DIR$/Woojo/UserCardView.swift" />
+      <change beforePath="$PROJECT_DIR$/Woojo/UserDetailsViewController.swift" afterPath="$PROJECT_DIR$/Woojo/UserDetailsViewController.swift" />
+    </list>
+    <ignored path="$USER_HOME$/Library/Developer/Xcode/DerivedData/Woojo-grcibiixfyfvfycanlmgablhkkct/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="iphoneos_17310f50ee2e3b82bbd8b34f94bb4ea259fa9449" />
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="UserCardView.swift" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Woojo/UserCardView.swift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="825">
+              <caret line="57" column="18" lean-forward="false" selection-start-line="57" selection-start-column="18" selection-end-line="57" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="2445" />
+    <option name="y" value="-881" />
+    <option name="width" value="2243" />
+    <option name="height" value="1612" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Cidr.FilesView" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Woojo" type="1d218c8b:XcodeProjectNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Woojo" type="1d218c8b:XcodeProjectNode" />
+              <item name="Products" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Woojo" type="1d218c8b:XcodeProjectNode" />
+              <item name="Woojo" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Woojo" type="1d218c8b:XcodeProjectNode" />
+              <item name="Woojo" type="fcab9f18:XcodeViewNode" />
+              <item name="Controllers" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Woojo" type="1d218c8b:XcodeProjectNode" />
+              <item name="Woojo" type="fcab9f18:XcodeViewNode" />
+              <item name="Controllers" type="fcab9f18:XcodeViewNode" />
+              <item name="Candidates" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Woojo" type="1d218c8b:XcodeProjectNode" />
+              <item name="Woojo" type="fcab9f18:XcodeViewNode" />
+              <item name="Controllers" type="fcab9f18:XcodeViewNode" />
+              <item name="Chats" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Woojo" type="1d218c8b:XcodeProjectNode" />
+              <item name="Woojo" type="fcab9f18:XcodeViewNode" />
+              <item name="Controllers" type="fcab9f18:XcodeViewNode" />
+              <item name="Events" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Woojo" type="1d218c8b:XcodeProjectNode" />
+              <item name="Woojo" type="fcab9f18:XcodeViewNode" />
+              <item name="Development" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Woojo" type="1d218c8b:XcodeProjectNode" />
+              <item name="Woojo" type="fcab9f18:XcodeViewNode" />
+              <item name="Models" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Woojo" type="1d218c8b:XcodeProjectNode" />
+              <item name="Woojo" type="fcab9f18:XcodeViewNode" />
+              <item name="Production" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Woojo" type="1d218c8b:XcodeProjectNode" />
+              <item name="Woojo" type="fcab9f18:XcodeViewNode" />
+              <item name="Staging" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Woojo" type="1d218c8b:XcodeProjectNode" />
+              <item name="Woojo" type="fcab9f18:XcodeViewNode" />
+              <item name="Views" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Woojo" type="1d218c8b:XcodeProjectNode" />
+              <item name="Woojo" type="fcab9f18:XcodeViewNode" />
+              <item name="Views" type="fcab9f18:XcodeViewNode" />
+              <item name="Events" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Woojo" type="1d218c8b:XcodeProjectNode" />
+              <item name="Woojo" type="fcab9f18:XcodeViewNode" />
+              <item name="Views" type="fcab9f18:XcodeViewNode" />
+              <item name="Plans" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Woojo" type="1d218c8b:XcodeProjectNode" />
+              <item name="Woojo" type="fcab9f18:XcodeViewNode" />
+              <item name="Views" type="fcab9f18:XcodeViewNode" />
+              <item name="Settings" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Woojo" type="1d218c8b:XcodeProjectNode" />
+              <item name="Woojo" type="fcab9f18:XcodeViewNode" />
+              <item name="Main.storyboard" type="fcab9f18:XcodeViewNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.Woojo Development">
+    <configuration name="Woojo Development" type="AppleRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Woojo" TARGET_NAME="Woojo Development" CONFIG_NAME="Debug" SCHEME_NAME="Woojo Development" RUN_TARGET_PROJECT_NAME="Woojo" RUN_TARGET_NAME="Woojo Development" MAKE_ACTIVE="TRUE">
+      <envs />
+      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
+        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
+      </EXTENSION>
+    </configuration>
+    <configuration name="Woojo Staging" type="AppleRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Woojo" TARGET_NAME="Woojo Staging" CONFIG_NAME="Debug" SCHEME_NAME="Woojo Staging" RUN_TARGET_PROJECT_NAME="Woojo" RUN_TARGET_NAME="Woojo Staging" MAKE_ACTIVE="TRUE">
+      <envs />
+      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
+        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
+      </EXTENSION>
+    </configuration>
+    <configuration name="Woojo" type="AppleRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-FIRAnalyticsDebugEnabled" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Woojo" TARGET_NAME="Woojo" CONFIG_NAME="Release" SCHEME_NAME="Woojo" RUN_TARGET_PROJECT_NAME="Woojo" RUN_TARGET_NAME="Woojo" MAKE_ACTIVE="TRUE">
+      <envs />
+      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
+        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
+      </EXTENSION>
+    </configuration>
+    <list size="3">
+      <item index="0" class="java.lang.String" itemvalue="Application.Woojo" />
+      <item index="1" class="java.lang.String" itemvalue="Application.Woojo Staging" />
+      <item index="2" class="java.lang.String" itemvalue="Application.Woojo Development" />
+    </list>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="459cfdb2-536b-4b2f-9ab6-db23eba294cd" name="Default" comment="" />
+      <created>1519235268615</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1519235268615</updated>
+      <workItem from="1519235271948" duration="1484000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="1484000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="2445" y="-881" width="2243" height="1612" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19616584" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32987013" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32987013" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Woojo/UserCardView.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="825">
+          <caret line="57" column="18" lean-forward="false" selection-start-line="57" selection-start-column="18" selection-end-line="57" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

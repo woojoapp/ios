@@ -125,7 +125,7 @@ class Notifier {
                     let displayName = profile.displayName,
                     let photo = profile.photos.value[0] {
                     photo.download(size: .thumbnail) {
-                        let announcement = Announcement(title: Constants.User.Notification.Interaction.Match.announcement.title, subtitle: "You matched with \(displayName)!", image: photo.images[.thumbnail], duration: Constants.User.Notification.Interaction.Match.announcement.duration, action: {
+                        let announcement = Announcement(title: Constants.User.Notification.Interaction.Match.announcement.title, subtitle: String(format: NSLocalizedString("You matched with %@!", comment: ""), displayName), image: photo.images[.thumbnail], duration: Constants.User.Notification.Interaction.Match.announcement.duration, action: {
                                 self.tapOnNotification(notification: notification)
                         })
                         completion?(announcement, nil)
@@ -139,14 +139,14 @@ class Notifier {
     }
     
     func announcement(notification: CurrentUser.EventsNotification, completion: ((Announcement?, Error?) -> Void)? = nil) {
-        let announcement = Announcement(title: Constants.User.Notification.Events.announcement.title, subtitle: "Discover people in your \(String(notification.count)) new events!", image: #imageLiteral(resourceName: "events_tab_padded"), duration: Constants.User.Notification.Events.announcement.duration, action: {
+        let announcement = Announcement(title: Constants.User.Notification.Events.announcement.title, subtitle: String(format: NSLocalizedString("Discover people in your %d new events!", comment: ""), notification.count), image: #imageLiteral(resourceName: "events_tab_padded"), duration: Constants.User.Notification.Events.announcement.duration, action: {
             self.tapOnNotification(notification: notification)
         })
         completion?(announcement, nil)
     }
     
     func announcement(notification: CurrentUser.PeopleNotification, completion: ((Announcement?, Error?) -> Void)? = nil) {
-        let announcement = Announcement(title: Constants.User.Notification.People.announcement.title, subtitle: "You have new people waiting!", image: #imageLiteral(resourceName: "people"), duration: Constants.User.Notification.People.announcement.duration, action: {
+        let announcement = Announcement(title: Constants.User.Notification.People.announcement.title, subtitle: NSLocalizedString("You have new people waiting!", comment: ""), image: #imageLiteral(resourceName: "people"), duration: Constants.User.Notification.People.announcement.duration, action: {
             self.tapOnNotification(notification: notification)
         })
         completion?(announcement, nil)

@@ -35,7 +35,7 @@ class AlbumsTableViewCell: UITableViewCell {
         nameLabel.text = album?.name
         let count = album?.count ?? 0
         let s = count != 1 ? "s" : ""
-        countLabel.text = "\(count) photo\(s)"
+        countLabel.text = String(format: NSLocalizedString("%d photo%@", comment: ""), count, s)
         if let pictureURL = album?.pictureURL {
             thumbnailView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_100x100"))
         } else {

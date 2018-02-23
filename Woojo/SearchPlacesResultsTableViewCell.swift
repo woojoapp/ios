@@ -33,7 +33,7 @@ class SearchPlacesResultsTableViewCell: UITableViewCell {
     func populate(with place: Place?) {
         let attributedString = NSMutableAttributedString()
         if let name = place?.name {
-            attributedString.append(NSMutableAttributedString(string: name, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 17)]))
+            attributedString.append(NSMutableAttributedString(string: name, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17)]))
         }
         if let verificationStatus = place?.verificationStatus {
             let verifiedImage = NSTextAttachment()
@@ -48,11 +48,11 @@ class SearchPlacesResultsTableViewCell: UITableViewCell {
             if verifiedImage.image != nil {
                 verifiedImage.bounds = CGRect(x: 0.0, y: nameLabel.font.descender / 2.0, width: verifiedImage.image!.size.width, height: verifiedImage.image!.size.height)
             }
-            attributedString.append(NSAttributedString(string: " ", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 17)]))
+            attributedString.append(NSAttributedString(string: " ", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17)]))
             attributedString.append(NSAttributedString(attachment: verifiedImage))
         }
         if let location = place?.location {
-            attributedString.append(NSMutableAttributedString(string: "\n\(location.addressString)", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12)]))
+            attributedString.append(NSMutableAttributedString(string: "\n\(location.addressString)", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12)]))
         }
         nameLabel.attributedText = attributedString
         //placeLabel.text = place?.location?.addressString

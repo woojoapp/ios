@@ -84,7 +84,7 @@ class FlightsViewController: UIViewController, UIGestureRecognizerDelegate {
         return false
     }
     
-    func keyboardWillShow(_ notification: NSNotification) {
+    @objc func keyboardWillShow(_ notification: NSNotification) {
         if let keyboardFrameEnd = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect, let animationDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval, let navigationController = navigationController {
             //bottomConstraint.constant = self.view.frame.size.height - keyboardFrameEnd.origin.y + navigationController.navigationBar.frame.size.height + UIApplication.shared.statusBarFrame.size.height + searchBar.frame.size.height
             UIView.animate(withDuration: animationDuration, animations: {
@@ -95,7 +95,7 @@ class FlightsViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    func keyboardWillHide(_ notification: NSNotification) {
+    @objc func keyboardWillHide(_ notification: NSNotification) {
         if let animationDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval {
             //bottomConstraint.constant = 0
             UIView.animate(withDuration: animationDuration, animations: {

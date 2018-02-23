@@ -115,11 +115,11 @@ class SearchEventsViewController: UIViewController {
     }
     
     func remove(event: Event, completion: ((Error?) -> Void)? = nil) {
-        HUD.show(.labeledProgress(title: "Remove Event", subtitle: "Removing event..."))
+        HUD.show(.labeledProgress(title: NSLocalizedString("Remove Event", comment: ""), subtitle: NSLocalizedString("Removing event...", comment: "")))
         User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
             completion?(error)
             self.resultsTableView.reloadData()
-            HUD.show(.labeledSuccess(title: "Remove Event", subtitle: "Event removed!"))
+            HUD.show(.labeledSuccess(title: NSLocalizedString("Remove Event", comment: ""), subtitle: NSLocalizedString("Event removed!", comment: "")))
             HUD.hide(afterDelay: 1.0)
             let analyticsEventParameters = [Constants.Analytics.Events.EventRemoved.Parameters.name: event.name,
                                             Constants.Analytics.Events.EventRemoved.Parameters.id: event.id,
@@ -129,11 +129,11 @@ class SearchEventsViewController: UIViewController {
     }
     
     func add(event: Event, completion: ((Error?) -> Void)? = nil) {
-        HUD.show(.labeledProgress(title: "Add Event", subtitle: "Adding event..."))
+        HUD.show(.labeledProgress(title: NSLocalizedString("Add Event", comment: ""), subtitle: NSLocalizedString("Adding event...", comment: "")))
         User.current.value?.add(event: event, completion: { (error: Error?) -> Void in
             completion?(error)
             self.resultsTableView.reloadData()
-            HUD.show(.labeledSuccess(title: "Add Event", subtitle: "Event added!"))
+            HUD.show(.labeledSuccess(title: NSLocalizedString("Add Event", comment: ""), subtitle: NSLocalizedString("Event added!", comment: "")))
             HUD.hide(afterDelay: 1.0)
             let analyticsEventParameters = [Constants.Analytics.Events.EventAdded.Parameters.name: event.name,
                                             Constants.Analytics.Events.EventAdded.Parameters.id: event.id,
@@ -142,7 +142,7 @@ class SearchEventsViewController: UIViewController {
         })
     }
     
-    func keyboardWillShow(_ notification: NSNotification) {
+    @objc func keyboardWillShow(_ notification: NSNotification) {
         if let keyboardFrameEnd = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect, let animationDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval, let navigationController = navigationController {
             bottomConstraint.constant = self.view.frame.size.height - keyboardFrameEnd.origin.y + navigationController.navigationBar.frame.size.height + UIApplication.shared.statusBarFrame.size.height + searchBar.frame.size.height
             UIView.animate(withDuration: animationDuration, animations: {
@@ -153,7 +153,7 @@ class SearchEventsViewController: UIViewController {
         }
     }
     
-    func keyboardWillHide(_ notification: NSNotification) {
+    @objc func keyboardWillHide(_ notification: NSNotification) {
         if let animationDuration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval {
             bottomConstraint.constant = 0
             UIView.animate(withDuration: animationDuration, animations: {
@@ -181,11 +181,11 @@ class SearchEventsViewController: UIViewController {
 extension SearchEventsViewController: DZNEmptyDataSetSource {
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        return NSAttributedString(string: "Search Events", attributes: Constants.App.Appearance.EmptyDatasets.titleStringAttributes)
+        return NSAttributedString(string: NSLocalizedString("Search Events", comment: ""), attributes: Constants.App.Appearance.EmptyDatasets.titleStringAttributes)
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        return NSAttributedString(string: "Find events by name", attributes: Constants.App.Appearance.EmptyDatasets.descriptionStringAttributes)
+        return NSAttributedString(string: NSLocalizedString("Find events by name", comment: ""), attributes: Constants.App.Appearance.EmptyDatasets.descriptionStringAttributes)
     }
     
     func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {

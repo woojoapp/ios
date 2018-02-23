@@ -68,20 +68,19 @@ class UserDetailsViewController: UIViewController {
     @IBAction func showOptions() {
         optionsButton.select()
         let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let closeButton = UIAlertAction(title: "Close", style: .default, handler: { (action) -> Void in
+        let closeButton = UIAlertAction(title: NSLocalizedString("Close", comment: ""), style: .default, handler: { (action) -> Void in
             self.dismiss(sender: self)
         })
-        let unmatchButton = UIAlertAction(title: "Unmatch", style: .destructive, handler: { (action) -> Void in
-            let confirmController = UIAlertController(title: "Unmatch", message: "Confirm unmatch?", preferredStyle: .alert)
-            let confirmAction = UIAlertAction(title: "Unmatch", style: .destructive, handler: { (_) in
-                HUD.show(.labeledProgress(title: "Unmatch", subtitle: "Unmatching..."), onView: self.parent?.view)
+        let unmatchButton = UIAlertAction(title: NSLocalizedString("Unmatch", comment: ""), style: .destructive, handler: { (action) -> Void in
+            let confirmController = UIAlertController(title: NSLocalizedString("Unmatch", comment: ""), message: NSLocalizedString("Confirm unmatch?", comment: ""), preferredStyle: .alert)
+            let confirmAction = UIAlertAction(title: NSLocalizedString("Unmatch", comment: ""), style: .destructive, handler: { (_) in
+                HUD.show(.labeledProgress(title: NSLocalizedString("Unmatch", comment: ""), subtitle: NSLocalizedString("Unmatching...", comment: "")), onView: self.parent?.view)
                 self.user?.unmatch { error in
                     if let error = error {
-                        HUD.show(.labeledError(title: "Unmatch", subtitle: "Failed to unmatch"), onView: self.parent?.view)
-                        print("Failed to unmatch", error)
+                        HUD.show(.labeledError(title: NSLocalizedString("Unmatch", comment: ""), subtitle: NSLocalizedString("Failed to unmatch", comment: "")), onView: self.parent?.view)
                         HUD.hide(afterDelay: 1.0)
                     } else {
-                        HUD.show(.labeledSuccess(title: "Unmatch", subtitle: "Unmatched!"), onView: self.parent?.view)
+                        HUD.show(.labeledSuccess(title: NSLocalizedString("Unmatch", comment: ""), subtitle: NSLocalizedString("Unmatched!", comment: "")), onView: self.parent?.view)
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
                             self.dismiss(sender: self)
                         })
@@ -89,35 +88,34 @@ class UserDetailsViewController: UIViewController {
                 }
                 // Don't forget to remove images from cache
             })
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
             confirmController.addAction(cancelAction)
             confirmController.addAction(confirmAction)
             confirmController.popoverPresentationController?.sourceView = self.view
             self.present(confirmController, animated: true, completion: nil)
         })
-        let reportButton = UIAlertAction(title: "Unmatch & report", style: .destructive, handler: { (action) -> Void in
-            let confirmController = UIAlertController(title: "Unmatch & report", message: "Confirm unmatch and report?", preferredStyle: .alert)
-            let confirmAction = UIAlertAction(title: "Unmatch & report", style: .destructive, handler: { (_) in
-                HUD.show(.labeledProgress(title: "Unmatch & report", subtitle: "Unmatching and reporting..."), onView: self.parent?.view)
+        let reportButton = UIAlertAction(title: NSLocalizedString("Unmatch & report", comment: ""), style: .destructive, handler: { (action) -> Void in
+            let confirmController = UIAlertController(title: NSLocalizedString("Unmatch & report", comment: ""), message: NSLocalizedString("Confirm unmatch and report?", comment: ""), preferredStyle: .alert)
+            let confirmAction = UIAlertAction(title: NSLocalizedString("Unmatch & report", comment: ""), style: .destructive, handler: { (_) in
+                HUD.show(.labeledProgress(title: NSLocalizedString("Unmatch & report", comment: ""), subtitle: NSLocalizedString("Unmatching and reporting...", comment: "")), onView: self.parent?.view)
                 self.user?.report(message: nil) { error in
                     if let error = error {
-                        HUD.show(.labeledError(title: "Unmatch & report", subtitle: "Failed to unmatch and report"), onView: self.parent?.view)
-                        print("Failed to unmatch and report", error)
+                        HUD.show(.labeledError(title: NSLocalizedString("Unmatch & report", comment: ""), subtitle: NSLocalizedString("Failed to unmatch and report", comment: "")), onView: self.parent?.view)
                         HUD.hide(afterDelay: 1.0)
                     } else {
-                        HUD.show(.labeledSuccess(title: "Unmatch & report", subtitle: "Done!"), onView: self.parent?.view)
+                        HUD.show(.labeledSuccess(title: NSLocalizedString("Unmatch & report", comment: ""), subtitle: NSLocalizedString("Done!", comment: "")), onView: self.parent?.view)
                         self.dismiss(sender: self)
                         self.chatViewController?.conversationDeleted()
                     }
                 }
             })
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
             confirmController.addAction(cancelAction)
             confirmController.addAction(confirmAction)
             confirmController.popoverPresentationController?.sourceView = self.view
             self.present(confirmController, animated: true, completion: nil)
         })
-        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelButton = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
         actionSheetController.addAction(closeButton)
         actionSheetController.addAction(unmatchButton)
         actionSheetController.addAction(reportButton)
