@@ -1900,7 +1900,7 @@
                                                 <constraint firstAttribute="width" secondItem="jTf-Rv-Giy" secondAttribute="height" multiplier="1:1" id="bRd-sW-G4o"/>
                                             </constraints>
                                             <connections>
-                                                <action selector="dismissTip" destination="Rrg-D2-oZq" eventType="touchUpInside" id="mxt-GH-Rxs"/>
+                                                <action selector="dismissTip" destination="vj2-pj-ghB" eventType="touchUpInside" id="ouK-46-Zj5"/>
                                             </connections>
                                         </button>
                                     </subviews>

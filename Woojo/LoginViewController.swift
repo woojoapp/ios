@@ -133,16 +133,25 @@ extension LoginViewController: LoginButtonDelegate {
     func loginButtonDidCompleteLogin(_ loginButton: LoginButton, result: LoginResult) {
         activityIndicator.startAnimating()
         switch result {
-        case .success(_, _, let accessToken):
-            print("Facebook login success")
-            let credential = FacebookAuthProvider.credential(withAccessToken: accessToken.authenticationToken)
-            Auth.auth().signIn(with: credential) { (user, error) in
-                if let user = user {
-                    print("Firebase login success \(user.uid)")
-                    //self.dismiss(animated: true, completion: nil)
-                }
-                if let error = error {
-                    print("Firebase login failure \(error.localizedDescription)")
+        case .success(_, let declinedPermissions, let accessToken):
+            if declinedPermissions.count > 0 && (declinedPermissions.contains(Permission(name: "user_events")) || declinedPermissions.contains(Permission(name: "user_birthday"))) {
+                let alert = UIAlertController(title: NSLocalizedString("Missing permissions", comment: ""), message: NSLocalizedString("Woojo needs to know at least your birthday and access your events in order to function properly.", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: {
+                    LoginManager().logOut()
+                    self.activityIndicator.stopAnimating()
+                })
+            } else {
+                print("Facebook login success")
+                let credential = FacebookAuthProvider.credential(withAccessToken: accessToken.authenticationToken)
+                Auth.auth().signIn(with: credential) { (user, error) in
+                    if let user = user {
+                        print("Firebase login success \(user.uid)")
+                        //self.dismiss(animated: true, completion: nil)
+                    }
+                    if let error = error {
+                        print("Firebase login failure \(error.localizedDescription)")
+                    }
                 }
             }
         case .failed(let error):

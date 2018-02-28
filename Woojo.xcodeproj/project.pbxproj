@@ -1881,7 +1881,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tastyelectrons.woojo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "cf5e3c1b-0bec-4b21-a4c1-578ea50de808";
+				PROVISIONING_PROFILE = "85947096-446d-42d4-9840-82b388c8218f";
 				PROVISIONING_PROFILE_SPECIFIER = "com.tastyelectrons.woojo Development";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

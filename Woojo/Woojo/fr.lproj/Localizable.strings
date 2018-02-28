@@ -112,3 +112,5 @@
 "lastSeenJustNowLabelText" = "Vu à l'instant";
 "hrsAgo" = "heures";
 "mins" = "minutes";
+"Missing permissions" = "Permissions manquantes";
+"Woojo needs to know at least your birthday and access your events in order to function properly." = "Pour fonctionner, Woojo a besoin a minima de votre date de naissance et d\'un accès à vos événements.";
