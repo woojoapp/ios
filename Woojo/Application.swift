@@ -22,6 +22,7 @@ import Whisper
 import UserNotifications
 import Branch
 import SDWebImage
+import Crashlytics
 
 @UIApplicationMain
 class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
@@ -217,6 +218,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             if let currentUser = CurrentUser() {
                 currentUser.load {
                     ALChatManager.shared.setup()
+                    //Crashlytics.sharedInstance().setUserIdentifier(currentUser.uid)
                     self.loginViewController.dismiss(animated: true, completion: nil)
                 }
             } else {

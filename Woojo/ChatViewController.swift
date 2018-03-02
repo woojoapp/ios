@@ -69,7 +69,7 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
         heightConstraint.isActive = true
         widthConstraint.isActive = true
         if let contactImageUrl = alContact.contactImageUrl {
-            SDWebImageManager.shared().downloadImage(with: URL(string: contactImageUrl), options: [], progress: nil, completed: { image, _, _, _, _ in
+            SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: contactImageUrl), options: [], progress: nil, completed: { image, _, _, _ in
                 if let image = image {
                     profileButton.setImage(image, for: .normal)
                 }

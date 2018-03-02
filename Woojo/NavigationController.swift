@@ -45,12 +45,14 @@ class NavigationController: UINavigationController, ReachabilityAware {
     func checkReachability() {
         if let reachable = isReachable(), reachable {
             print("CHECK REACHABILITY", reachable)
-            Whisper.hide(whisperFrom: self, after: 0.0, animate: false)
+            Whisper.hide(whisperFrom: self, after: 0.0)
+            //Whisper.hide(whisperFrom: self, after: 0.0, animate: false)
             showingReachableWhisper = false
             showingUnreachableWhisper = false
         } else {
             print("CHECK REACHABILITY", false)
-            Whisper.show(whisper: unreachableMessage, to: self, action: .present, animate: false)
+            //Whisper.show(whisper: unreachableMessage, to: self, action: .present, animate: false)
+            Whisper.show(whisper: unreachableMessage, to: self, action: .present)
             showingUnreachableWhisper = true
         }
     }
@@ -61,26 +63,29 @@ class NavigationController: UINavigationController, ReachabilityAware {
         if reachable {
             print("CHANGE REACHABILITY", reachable, showingUnreachableWhisper, showingReachableWhisper)
             if showingUnreachableWhisper && !showingReachableWhisper {
-                Whisper.hide(whisperFrom: self, after: 0.0, animate: true, completion: {
+                //Whisper.hide(whisperFrom: self, after: 0.0, animate: true, completion: {
+                Whisper.hide(whisperFrom: self, after: 0.0)
                     self.showingUnreachableWhisper = false
                     Whisper.show(whisper: self.reachableMessage, to: self, action: .present)
                     self.showingReachableWhisper = true
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-                        Whisper.hide(whisperFrom: self, after: 0.0, animate: true, completion: {
+                        //Whisper.hide(whisperFrom: self, after: 0.0, animate: true, completion: {
+                        Whisper.hide(whisperFrom: self, after: 0.0)
                             self.showingReachableWhisper = false
                             self.handlingReachabilityChange = false
-                        })
+                        //})
                     })
-                })
+                //})
             } else {
                 handlingReachabilityChange = false
             }
         } else {
             print("CHANGE REACHABILITY", reachable, showingUnreachableWhisper, showingReachableWhisper)
             if !showingUnreachableWhisper {
-                Whisper.show(whisper: unreachableMessage, to: self, action: .present, animate: true, completion: {
+                //Whisper.show(whisper: unreachableMessage, to: self, action: .present, animate: true, completion: {
+                Whisper.show(whisper: unreachableMessage, to: self, action: .present)
                     self.handlingReachabilityChange = false
-                })
+                //})
                 showingUnreachableWhisper = true
             } else {
                 handlingReachabilityChange = false

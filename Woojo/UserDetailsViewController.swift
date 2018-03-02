@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import DOFavoriteButton
+// import DOFavoriteButton
 import ImageSlideshow
 import PKHUD
 
@@ -18,7 +18,7 @@ class UserDetailsViewController: UIViewController {
         case options
     }*/
     
-    @IBOutlet weak var optionsButton: DOFavoriteButton!
+    @IBOutlet weak var optionsButton: UIButton!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var cardView: UserCardView!
     //@IBOutlet weak var photoActivityIndicator: UIActivityIndicatorView!
@@ -66,7 +66,7 @@ class UserDetailsViewController: UIViewController {
     }*/
     
     @IBAction func showOptions() {
-        optionsButton.select()
+        //optionsButton.select()
         let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let closeButton = UIAlertAction(title: NSLocalizedString("Close", comment: ""), style: .default, handler: { (action) -> Void in
             self.dismiss(sender: self)
@@ -122,7 +122,7 @@ class UserDetailsViewController: UIViewController {
         actionSheetController.addAction(cancelButton)
         actionSheetController.popoverPresentationController?.sourceView = self.view
         self.present(actionSheetController, animated: true) {
-            self.optionsButton.deselect()
+            //self.optionsButton.deselect()
         }
     }
     

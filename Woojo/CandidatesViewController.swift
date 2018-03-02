@@ -14,11 +14,12 @@ import FirebaseMessaging
 import Koloda
 import RxSwift
 import RxCocoa
-import DOFavoriteButton
+// import DOFavoriteButton
 import RPCircularProgress
 import Whisper
 import SDWebImage
 import UserNotifications
+import Crashlytics
 
 class CandidatesViewController: UIViewController {
     
@@ -90,6 +91,16 @@ class CandidatesViewController: UIViewController {
         set(button: passButton, enabled: false)*/
         
         self.view.bringSubview(toFront: kolodaView)
+        
+        let button = UIButton(type: .roundedRect)
+        button.frame = CGRect(x: 20, y: 50, width: 100, height: 30)
+        button.setTitle("Crash", for: [])
+        button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
+        view.addSubview(button)
+    }
+    
+    @IBAction func crashButtonTapped(_ sender: AnyObject) {
+        Crashlytics.sharedInstance().crash()
     }
     
     override func viewDidLayoutSubviews() {

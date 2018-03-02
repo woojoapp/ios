@@ -13,6 +13,7 @@ import FacebookLogin
 import RxCocoa
 import RxSwift
 import TTTAttributedLabel
+import Crashlytics
 
 extension UIImage {
     func drawInRectAspectFill(rect: CGRect) {
@@ -123,6 +124,16 @@ class LoginViewController: UIViewController {
         activityDriver
             .drive(self.activityIndicator.rx.isAnimating)
             .addDisposableTo(disposeBag)
+        
+        let button = UIButton(type: .roundedRect)
+        button.frame = CGRect(x: 20, y: 50, width: 100, height: 30)
+        button.setTitle("Crash", for: [])
+        button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
+        view.addSubview(button)
+    }
+    
+    @IBAction func crashButtonTapped(_ sender: AnyObject) {
+        Crashlytics.sharedInstance().crash()
     }
 }
 

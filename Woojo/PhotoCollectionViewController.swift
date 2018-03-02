@@ -101,15 +101,16 @@ class PhotoCollectionViewController: UICollectionViewController {
             let url = image.url {
             SDWebImageManager
                 .shared()
+                .imageDownloader?
                 .downloadImage(with: url,
-                               options: [SDWebImageOptions.cacheMemoryOnly],
-                               progress: { (receivedSize: Int, expectedSize: Int) -> Void in
+                               options: [],
+                               progress: { (receivedSize: Int, expectedSize: Int, _) -> Void in
                                 DispatchQueue.main.async {
                                     cell.progressIndicator.isHidden = false
                                     cell.progressIndicator.setProgress(Float(receivedSize)/Float(expectedSize), animated: true)
                                 }
                 },
-                               completed: { image, _, _, _, _ in
+                               completed: { image, _, _, _ in
                                 if let image = image {
                                     cell.progressIndicator.isHidden = true
                                     /*if !self.photos[indexPath.row].isBigEnough(size: .full) {

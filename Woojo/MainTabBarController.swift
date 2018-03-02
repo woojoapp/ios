@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import PKHUD
 import SDWebImage
+import Crashlytics
 
 class MainTabBarController: UITabBarController {
     
@@ -100,7 +101,7 @@ class MainTabBarController: UITabBarController {
             }
             
             if let pictureURL = event.pictureURL {
-                SDWebImageManager.shared().downloadImage(with: pictureURL, options: [], progress: { (_, _) in }, completed: { (image, error, _, finished, url) in
+                SDWebImageManager.shared().imageDownloader?.downloadImage(with: pictureURL, options: [], progress: { (_, _, _) in }, completed: { (image, _, error, finished) in
                     if let image = image, error == nil, finished == true {
                         HUD.show(.labeledImage(image: image, title: NSLocalizedString("Event added!", comment: ""), subtitle: "\(event.name)"))
                         HUD.hide(afterDelay: 3.0)

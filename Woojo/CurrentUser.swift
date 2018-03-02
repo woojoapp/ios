@@ -18,6 +18,7 @@ import RxSwift
 import RxCocoa
 import Applozic
 import Branch
+import Crashlytics
 
 class CurrentUser: User {
     
@@ -81,6 +82,7 @@ class CurrentUser: User {
         self.stopObservingNotifications()
         self.stopObservingCandidates()
         LoginManager().logOut()
+        Crashlytics.sharedInstance().setUserIdentifier("")
         do {
             try Auth.auth().signOut()
             if (ALUserDefaultsHandler.isLoggedIn()) {
@@ -102,32 +104,6 @@ class CurrentUser: User {
     }
     func load(completion: (() -> Void)? = nil) {
         
-        func finish() {
-            let group = DispatchGroup()
-            group.enter()
-            self.loadData(completion: {
-                print("Loaded data")
-                group.leave()
-            })
-            group.enter()
-            self.preferences.loadFromFirebase(completion: { _, _ in
-                print("Loaded preferences")
-                group.leave()
-            })
-            group.notify(queue: .main, execute: {
-                self.profile.startObserving()
-                self.profile.startObservingPhotos()
-                self.startObservingEvents()
-                self.startObservingRecommendedEvents()
-                self.startObservingPendingEvents()
-                self.startObservingNotifications()
-                self.startObservingCandidates()
-                self.isLoading.value = false
-                print("User loaded.")
-                completion?()
-            })
-        }
-        
         User.current.value = self
         isLoading.value = true
         
@@ -136,16 +112,44 @@ class CurrentUser: User {
             if self.activity.signUp == nil {
                 self.performSignUpActions { _ in
                     print("Performed signUp actions")
-                    finish()
+                    self.finishLoad(completion: completion)
                 }
             } else {
                 self.profile.loadFromFirebase(completion: { _, _ in
                     print("Loaded profile")
-                    finish()
+                    self.finishLoad(completion: completion)
                 })
             }
         })
 
+    }
+    
+    func finishLoad(completion: (() -> Void)? = nil) {
+        let group = DispatchGroup()
+        group.enter()
+        print("START Loading data")
+        self.loadData(completion: {
+            print("Loaded data")
+            group.leave()
+        })
+        group.enter()
+        print("START Loading preferences")
+        self.preferences.loadFromFirebase(completion: { _, _ in
+            print("Loaded preferences")
+            group.leave()
+        })
+        group.notify(queue: .main, execute: {
+            self.profile.startObserving()
+            self.profile.startObservingPhotos()
+            self.startObservingEvents()
+            self.startObservingRecommendedEvents()
+            // self.startObservingPendingEvents()
+            self.startObservingNotifications()
+            self.startObservingCandidates()
+            self.isLoading.value = false
+            print("User loaded.")
+            completion?()
+        })
     }
     
     func performSignUpActions(completion: ((Error?) -> Void)? = nil) {
@@ -186,7 +190,9 @@ class CurrentUser: User {
     }
     
     func addFacebookEvents(completion: (() -> Void)? = nil) {
+        print("GETTING EVENTS FROM FB")
         getEventsFromFacebook { events in
+            print("GOT EVENTS FROM FB", events.count)
             let saveEventsGroup = DispatchGroup()
             for event in events {
                 saveEventsGroup.enter()
@@ -198,6 +204,7 @@ class CurrentUser: User {
                 }
             }
             saveEventsGroup.notify(queue: .main, execute: {
+                print("GOT EVENTS FROM FB - NOTIFYING")
                 completion?()
             })
         }
@@ -284,6 +291,7 @@ class CurrentUser: User {
     var isObservingCandidates = false
     
     func startObservingCandidates() {
+        print("START observing candidates")
         isObservingCandidates = true
         candidatesRef.observe(.childAdded, with: { snapshot in
             let candidate = Candidate(snapshot: snapshot, for: self)
@@ -321,6 +329,7 @@ class CurrentUser: User {
     }
     
     func startObservingNotifications() {
+        print("START observing notifications")
         //isObservingEvents = true
         notificationsRef.observe(.childAdded, with: { snapshot in
             print("childAdded in notifications", snapshot)
@@ -411,6 +420,7 @@ class CurrentUser: User {
     var isObservingEvents: Bool = false
     
     func startObservingEvents() {
+        print("START observing events")
         isObservingEvents = true
         eventsRef.observe(.childAdded, with: { snapshot in
             print("childAdded in events", snapshot)
@@ -449,6 +459,7 @@ class CurrentUser: User {
     var isObservingRecommendedEvents: Bool = false
     
     func startObservingRecommendedEvents() {
+        print("START observing recommended events")
         isObservingRecommendedEvents = true
         recommendedEventsRef.observe(.value, with: { arraySnapshot in
             print("change in recommended events", arraySnapshot)
@@ -738,6 +749,8 @@ class CurrentUser: User {
                                     if !self.events.value.contains(where: { $0.id == e.id }) { self.append(event: e) }
                                     nameRef.parent!.removeObserver(withHandle: listenerHandleB)
                                     completion?(nil)
+                                } else {
+                                    print("MALFORMED!")
                                 }
                             })
                         }
