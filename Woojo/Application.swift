@@ -218,7 +218,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             if let currentUser = CurrentUser() {
                 currentUser.load {
                     ALChatManager.shared.setup()
-                    //Crashlytics.sharedInstance().setUserIdentifier(currentUser.uid)
+                    Crashlytics.sharedInstance().setUserIdentifier(currentUser.uid)
                     self.loginViewController.dismiss(animated: true, completion: nil)
                 }
             } else {
