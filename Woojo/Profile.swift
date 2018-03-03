@@ -31,6 +31,11 @@ extension User {
         var country: String?        
         var user: User
         var photos: Variable<[Photo?]> = Variable([nil, nil, nil, nil, nil, nil])
+        var photoCount: Int {
+            get {
+                return photos.value.filter({ $0 != nil }).count ?? 0
+            }
+        }
         var age: Int {
             get {
                 if let birthday = birthday {
@@ -224,9 +229,22 @@ extension User {
                             if let error = error {
                                 print("Failed to update user profile in database: \(error)")
                             }
+                            if let firstName = response.profile?.displayName {
+                                Analytics.setUserProperties(properties: ["first_name": firstName])
+                            }
+                            if let gender = response.profile?.gender {
+                                Analytics.setUserProperties(properties: ["gender": gender.rawValue])
+                            }
+                            if let birthDate = response.profile?.birthday {
+                                let birthDateString = self.birthdayFirebaseFormatter.string(from: birthDate)
+                                Analytics.setUserProperties(properties: ["birth_date": birthDateString])
+                            }
                             completion?(error)
                         }
                         self.ref?.child(Constants.User.Properties.fbAppScopedID).setValue(response.fbAppScopedID)
+                        if let fbAppScopedId = response.fbAppScopedID {
+                            Analytics.setUserProperties(properties: ["facebook_app_scoped_id": fbAppScopedId])
+                        }
                     }
                 case .failed(let error):
                     print("UserProfileGraphRequest failed: \(error.localizedDescription) \(AccessToken.current)")

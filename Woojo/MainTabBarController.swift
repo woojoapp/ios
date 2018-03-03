@@ -11,7 +11,6 @@ import RxSwift
 import RxCocoa
 import PKHUD
 import SDWebImage
-import Crashlytics
 
 class MainTabBarController: UITabBarController {
     

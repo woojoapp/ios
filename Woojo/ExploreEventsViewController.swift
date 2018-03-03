@@ -82,7 +82,7 @@ class ExploreEventsViewController: UITableViewController {
             .subscribe(onNext: { events in
                 self.events = events
                 self.tableView.reloadData()
-            }).addDisposableTo(disposeBag)
+            }).disposed(by: disposeBag)
     }
     
     @IBAction

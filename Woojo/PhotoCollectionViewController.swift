@@ -229,7 +229,10 @@ extension PhotoCollectionViewController: RSKImageCropViewControllerDelegate {
                         HUD.hide(afterDelay: 1.0)
                     }
                     self.profileViewController?.photosCollectionView.reloadItems(at: [IndexPath(row: self.photoIndex, section: 0)])
-                    Analytics.Log(event: Constants.Analytics.Events.PhotoAdded.name, with: [Constants.Analytics.Events.PhotoAdded.Parameters.source: "facebook"])
+                    if let photoCount = User.current.value?.profile.photoCount {
+                        Analytics.setUserProperties(properties: ["profile_photo_count": String(photoCount)])
+                        Analytics.Log(event: "Profile_photo_added", with: ["photo_count": String(photoCount), "source": "facebook"])
+                    }
                 }
             //}
         } else {

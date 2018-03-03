@@ -123,17 +123,7 @@ class LoginViewController: UIViewController {
         
         activityDriver
             .drive(self.activityIndicator.rx.isAnimating)
-            .addDisposableTo(disposeBag)
-        
-        let button = UIButton(type: .roundedRect)
-        button.frame = CGRect(x: 20, y: 50, width: 100, height: 30)
-        button.setTitle("Crash", for: [])
-        button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
-        view.addSubview(button)
-    }
-    
-    @IBAction func crashButtonTapped(_ sender: AnyObject) {
-        Crashlytics.sharedInstance().crash()
+            .disposed(by: disposeBag)
     }
 }
 
@@ -144,7 +134,7 @@ extension LoginViewController: LoginButtonDelegate {
     func loginButtonDidCompleteLogin(_ loginButton: LoginButton, result: LoginResult) {
         activityIndicator.startAnimating()
         switch result {
-        case .success(_, let declinedPermissions, let accessToken):
+        case .success(let acceptedPermissions, let declinedPermissions, let accessToken):
             if declinedPermissions.count > 0 && (declinedPermissions.contains(Permission(name: "user_events")) || declinedPermissions.contains(Permission(name: "user_birthday"))) {
                 let alert = UIAlertController(title: NSLocalizedString("Missing permissions", comment: ""), message: NSLocalizedString("Woojo needs to know at least your birthday and access your events in order to function properly.", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
@@ -158,6 +148,16 @@ extension LoginViewController: LoginButtonDelegate {
                 Auth.auth().signIn(with: credential) { (user, error) in
                     if let user = user {
                         print("Firebase login success \(user.uid)")
+                        var permissions: [String: String] = [:]
+                        for permission in acceptedPermissions {
+                            permissions[permission.name] = "true"
+                            Analytics.setUserProperties(properties: ["accepted_\(permission.name)_permission": "true"])
+                        }
+                        for permission in declinedPermissions {
+                            permissions[permission.name] = "false"
+                            Analytics.setUserProperties(properties: ["accepted_\(permission.name)_permission": "false"])
+                        }
+                        Analytics.Log(event: "Account_log_in", with: permissions)
                         //self.dismiss(animated: true, completion: nil)
                     }
                     if let error = error {

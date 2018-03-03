@@ -73,7 +73,7 @@ class CandidatesViewController: UIViewController {
         User.current.asObservable()
             .subscribe(onNext: { user in
                 user?.candidatesDelegate = self                
-            }).addDisposableTo(disposeBag)
+            }).disposed(by: disposeBag)
         
         kolodaView.dataSource = self
         kolodaView.delegate = self
@@ -91,16 +91,6 @@ class CandidatesViewController: UIViewController {
         set(button: passButton, enabled: false)*/
         
         self.view.bringSubview(toFront: kolodaView)
-        
-        let button = UIButton(type: .roundedRect)
-        button.frame = CGRect(x: 20, y: 50, width: 100, height: 30)
-        button.setTitle("Crash", for: [])
-        button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
-        view.addSubview(button)
-    }
-    
-    @IBAction func crashButtonTapped(_ sender: AnyObject) {
-        Crashlytics.sharedInstance().crash()
     }
     
     override func viewDidLayoutSubviews() {

@@ -83,6 +83,7 @@ class CurrentUser: User {
         self.stopObservingCandidates()
         LoginManager().logOut()
         Crashlytics.sharedInstance().setUserIdentifier("")
+        Analytics.Log(event: "Account_log_out")
         do {
             try Auth.auth().signOut()
             if (ALUserDefaultsHandler.isLoggedIn()) {
@@ -98,6 +99,7 @@ class CurrentUser: User {
     }
     
     func deleteAccount() {
+        Analytics.Log(event: "Account_delete")
         ref.removeValue()
         self.logOut()
         Auth.auth().currentUser?.delete(completion: nil)
@@ -175,6 +177,7 @@ class CurrentUser: User {
                                     let group = DispatchGroup()
                                     group.enter()
                                     self.activity.setSignUp { _ in group.leave() }
+                                    Analytics.Log(event: "Account_sign_up")
                                     group.enter()
                                     self.activity.setLastSeen { _ in group.leave() }
                                     group.notify(queue: .main, execute: {
@@ -229,6 +232,7 @@ class CurrentUser: User {
                 })
             }
             savePageLikesGroup.notify(queue: .main, execute: {
+                Analytics.setUserProperties(properties: ["page_like_count": String(pageLikes.count)])
                 completion?()
             })
         }
@@ -253,6 +257,7 @@ class CurrentUser: User {
                 })
             }
             saveFriendsGroup.notify(queue: .main, execute: {
+                Analytics.setUserProperties(properties: ["friend_count": String(friends.count)])
                 completion?()
             })
         }

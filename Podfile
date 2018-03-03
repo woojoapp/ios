@@ -17,6 +17,7 @@ def shared_pods
 
   # Branch
   pod 'Branch', '0.19.5'
+  pod 'Amplitude-iOS', '4.1.0'
 
   # Facebook
   # pod 'Bolts', '1.8.4'

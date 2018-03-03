@@ -10,6 +10,9 @@ import Foundation
 
 extension Constants {
     struct Env {
+        struct Analytics {
+            static let amplitudeApiKey = "bea26e6424d6d8ec444edb4fb407451e"
+        }
         struct Chat {
             static let applozicApplicationId = "11730f77a2a9608dba95cd86d60c498d0"
         }

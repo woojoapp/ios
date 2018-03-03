@@ -64,7 +64,8 @@ extension User {
         
         func setSignUp(completion: ((Error?) -> Void)? = nil) {
             let date = Date()
-            ref.child(Constants.User.Activity.properties.firebaseNodes.signUp).setValue(Activity.dateFormatter.string(from: date)) { error, ref in
+            let dateString = Activity.dateFormatter.string(from: date)
+            ref.child(Constants.User.Activity.properties.firebaseNodes.signUp).setValue(dateString) { error, ref in
                 if let error = error {
                     print("Failed to set signUp: \(error.localizedDescription)")
                 } else {
@@ -72,11 +73,13 @@ extension User {
                 }
                 completion?(error)
             }
+            Analytics.setUserProperties(properties: ["sign_up_date": dateString])
         }
         
         func setLastSeen(completion: ((Error?) -> Void)? = nil) {
             let date = Date()
-            ref.child(Constants.User.Activity.properties.firebaseNodes.lastSeen).setValue(Activity.dateFormatter.string(from: date)) { error, ref in
+            let dateString = Activity.dateFormatter.string(from: date)
+            ref.child(Constants.User.Activity.properties.firebaseNodes.lastSeen).setValue(dateString) { error, ref in
                 if let error = error {
                     print("Failed to set lastSeen: \(error.localizedDescription)")
                 } else {
@@ -84,6 +87,7 @@ extension User {
                 }
                 completion?(error)
             }
+            Analytics.setUserProperties(properties: ["last_seen_date": dateString])
         }
         
         func setRepliedToPushNotificationsInvite(completion: ((Error?) -> Void)? = nil) {

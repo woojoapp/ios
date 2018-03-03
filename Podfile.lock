@@ -1,4 +1,5 @@
 PODS:
+  - Amplitude-iOS (4.1.0)
   - Applozic (5.1.0):
     - SDWebImage (~> 4.2.2)
   - Bolts (1.9.0):
@@ -132,6 +133,7 @@ PODS:
   - Whisper (6.0.2)
 
 DEPENDENCIES:
+  - Amplitude-iOS (= 4.1.0)
   - Applozic (= 5.1.0)
   - Branch (= 0.19.5)
   - Crashlytics (~> 3.10.1)
@@ -170,6 +172,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/woojoapp/Koloda.git
 
 SPEC CHECKSUMS:
+  Amplitude-iOS: c923c4a576698083c1cd05e45072c92d41e206bd
   Applozic: 07abce471da09776bda5ecaf9c96bf87998201f4
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Branch: 25312ed2f58a569df58e6560238433c2a9d58e99
@@ -212,6 +215,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   Whisper: 169760fc4bab0abf24d5529f9276f95c25cf1025
 
-PODFILE CHECKSUM: 8e58b100311657a92e9f181d1e47d5c304cfa3b6
+PODFILE CHECKSUM: bce8adfe9e86e8f4849ada1afddcbed900d37c80
 
 COCOAPODS: 1.4.0

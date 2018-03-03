@@ -26,6 +26,16 @@
 		851CDBE61DDEF18A00B887C0 /* UserEventsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851CDBE51DDEF18A00B887C0 /* UserEventsGraphRequest.swift */; };
 		851CDBE81DDEF29900B887C0 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851CDBE71DDEF29900B887C0 /* Place.swift */; };
 		851CDBEA1DDEF2B100B887C0 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851CDBE91DDEF2B100B887C0 /* Location.swift */; };
+		851D1763204AC1F4008E6342 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85DD5EEC1E954C4A008DF346 /* AdSupport.framework */; };
+		851D1764204B1222008E6342 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD5EEA1E951D19008DF346 /* Analytics.swift */; };
+		851D1766204B1226008E6342 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851D1765204B1226008E6342 /* Analytics.swift */; };
+		851D1768204B1229008E6342 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851D1767204B1229008E6342 /* Analytics.swift */; };
+		851D176A204B17CD008E6342 /* CommonAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851D1769204B174F008E6342 /* CommonAnalytics.swift */; };
+		851D176B204B17CD008E6342 /* CommonAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851D1769204B174F008E6342 /* CommonAnalytics.swift */; };
+		851D176C204B17CE008E6342 /* CommonAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851D1769204B174F008E6342 /* CommonAnalytics.swift */; };
+		851D176E204B3E58008E6342 /* Constants+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851D176D204B3E58008E6342 /* Constants+Analytics.swift */; };
+		851D176F204B3E58008E6342 /* Constants+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851D176D204B3E58008E6342 /* Constants+Analytics.swift */; };
+		851D1770204B3E58008E6342 /* Constants+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851D176D204B3E58008E6342 /* Constants+Analytics.swift */; };
 		8526EF601FA60062003B04DF /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85DD5EEC1E954C4A008DF346 /* AdSupport.framework */; };
 		85304512203F58E800EF382B /* EventbriteLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85304511203F58E800EF382B /* EventbriteLoginViewController.swift */; };
 		85304513203F58E800EF382B /* EventbriteLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85304511203F58E800EF382B /* EventbriteLoginViewController.swift */; };
@@ -167,9 +177,7 @@
 		85662C9C1F90BE1300D5701E /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85512B0C1DCB5B020072C1B8 /* Application.swift */; };
 		85662C9D1F90BE1300D5701E /* Notifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85396F2A1E5F516F007EDB18 /* Notifier.swift */; };
 		85662C9E1F90BE1300D5701E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854DDAC01DE43E0E00655EFC /* Constants.swift */; };
-		85662C9F1F90BE1300D5701E /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD5EEA1E951D19008DF346 /* Analytics.swift */; };
 		85662CA01F90BE1300D5701E /* Constants+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD5EE81E951CA3008DF346 /* Constants+App.swift */; };
-		85662CA11F90BE1300D5701E /* Constants+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD5EE61E9517FF008DF346 /* Constants+Analytics.swift */; };
 		85662CA31F90BE2200D5701E /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8941DCBA14C00C18EC3 /* EventsViewController.swift */; };
 		85662CA41F90BE2200D5701E /* AddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ED4E651DD1EC7D00F51857 /* AddEventViewController.swift */; };
 		85662CA51F90BE2200D5701E /* MyEventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ED4E6D1DD229D600F51857 /* MyEventsTableViewController.swift */; };
@@ -203,9 +211,7 @@
 		85662CC31F90BE2200D5701E /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85512B0C1DCB5B020072C1B8 /* Application.swift */; };
 		85662CC41F90BE2200D5701E /* Notifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85396F2A1E5F516F007EDB18 /* Notifier.swift */; };
 		85662CC51F90BE2200D5701E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854DDAC01DE43E0E00655EFC /* Constants.swift */; };
-		85662CC61F90BE2200D5701E /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD5EEA1E951D19008DF346 /* Analytics.swift */; };
 		85662CC71F90BE2200D5701E /* Constants+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD5EE81E951CA3008DF346 /* Constants+App.swift */; };
-		85662CC81F90BE2200D5701E /* Constants+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD5EE61E9517FF008DF346 /* Constants+Analytics.swift */; };
 		85662CCA1F90BE2200D5701E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85512B151DCB5B020072C1B8 /* Assets.xcassets */; };
 		85662CCB1F90BE2200D5701E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85512B1A1DCB5B020072C1B8 /* Info.plist */; };
 		85662CCE1F90BE2300D5701E /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8941DCBA14C00C18EC3 /* EventsViewController.swift */; };
@@ -241,9 +247,7 @@
 		85662CEE1F90BE2300D5701E /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85512B0C1DCB5B020072C1B8 /* Application.swift */; };
 		85662CEF1F90BE2300D5701E /* Notifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85396F2A1E5F516F007EDB18 /* Notifier.swift */; };
 		85662CF01F90BE2300D5701E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854DDAC01DE43E0E00655EFC /* Constants.swift */; };
-		85662CF11F90BE2300D5701E /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD5EEA1E951D19008DF346 /* Analytics.swift */; };
 		85662CF21F90BE2300D5701E /* Constants+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD5EE81E951CA3008DF346 /* Constants+App.swift */; };
-		85662CF31F90BE2300D5701E /* Constants+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD5EE61E9517FF008DF346 /* Constants+Analytics.swift */; };
 		85662CF51F90BE2300D5701E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85512B151DCB5B020072C1B8 /* Assets.xcassets */; };
 		85662CF61F90BE2300D5701E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85512B1A1DCB5B020072C1B8 /* Info.plist */; };
 		85662CF81F90BE2400D5701E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85512B151DCB5B020072C1B8 /* Assets.xcassets */; };
@@ -390,6 +394,10 @@
 		851CDBE51DDEF18A00B887C0 /* UserEventsGraphRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEventsGraphRequest.swift; sourceTree = "<group>"; };
 		851CDBE71DDEF29900B887C0 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		851CDBE91DDEF2B100B887C0 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		851D1765204B1226008E6342 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
+		851D1767204B1229008E6342 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
+		851D1769204B174F008E6342 /* CommonAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonAnalytics.swift; sourceTree = "<group>"; };
+		851D176D204B3E58008E6342 /* Constants+Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Constants+Analytics.swift"; sourceTree = "<group>"; };
 		85304511203F58E800EF382B /* EventbriteLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventbriteLoginViewController.swift; sourceTree = "<group>"; };
 		853045152040161300EF382B /* EventbriteOrderResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventbriteOrderResponse.swift; sourceTree = "<group>"; };
 		853045192040165900EF382B /* EventbriteOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventbriteOrder.swift; sourceTree = "<group>"; };
@@ -482,7 +490,6 @@
 		85DC3D781DFF4A6300116159 /* ProfilePhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		85DC3D7A1E00088F00116159 /* UserAlbumsGraphRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAlbumsGraphRequest.swift; sourceTree = "<group>"; };
 		85DC3D7C1E0008B900116159 /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
-		85DD5EE61E9517FF008DF346 /* Constants+Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Constants+Analytics.swift"; sourceTree = "<group>"; };
 		85DD5EE81E951CA3008DF346 /* Constants+App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Constants+App.swift"; sourceTree = "<group>"; };
 		85DD5EEA1E951D19008DF346 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		85DD5EEC1E954C4A008DF346 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -523,6 +530,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				851D1763204AC1F4008E6342 /* AdSupport.framework in Frameworks */,
 				A14AFB3EBB53A69AEE35D369 /* Pods_Woojo_Staging.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -672,11 +680,11 @@
 				8506A89C1DCC89DF00C18EC3 /* Views */,
 				8506A89D1DCC89F200C18EC3 /* Controllers */,
 				85512B0C1DCB5B020072C1B8 /* Application.swift */,
+				851D1769204B174F008E6342 /* CommonAnalytics.swift */,
+				851D176D204B3E58008E6342 /* Constants+Analytics.swift */,
 				85396F2A1E5F516F007EDB18 /* Notifier.swift */,
 				854DDAC01DE43E0E00655EFC /* Constants.swift */,
-				85DD5EEA1E951D19008DF346 /* Analytics.swift */,
 				85DD5EE81E951CA3008DF346 /* Constants+App.swift */,
-				85DD5EE61E9517FF008DF346 /* Constants+Analytics.swift */,
 				850F7D36202DC3C2005D6733 /* Main.storyboard */,
 				85512B151DCB5B020072C1B8 /* Assets.xcassets */,
 				85512B171DCB5B020072C1B8 /* LaunchScreen.storyboard */,
@@ -690,6 +698,7 @@
 			children = (
 				85382E871F94B87E003909D7 /* GoogleService-Info.plist */,
 				85B36AA31FAE168700A7B599 /* Constants+Env.swift */,
+				851D1765204B1226008E6342 /* Analytics.swift */,
 			);
 			path = Production;
 			sourceTree = "<group>";
@@ -699,6 +708,7 @@
 			children = (
 				85662D0A1F90E35500D5701E /* GoogleService-Info.plist */,
 				85B36AA51FAE170500A7B599 /* Constants+Env.swift */,
+				85DD5EEA1E951D19008DF346 /* Analytics.swift */,
 			);
 			path = Staging;
 			sourceTree = "<group>";
@@ -708,6 +718,7 @@
 			children = (
 				85662D041F90BF7E00D5701E /* GoogleService-Info.plist */,
 				85B36AA71FAE170800A7B599 /* Constants+Env.swift */,
+				851D1767204B1229008E6342 /* Analytics.swift */,
 			);
 			path = Development;
 			sourceTree = "<group>";
@@ -1144,6 +1155,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Woojo Development/Pods-Woojo Development-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Amplitude-iOS/Amplitude_iOS.framework",
 				"${BUILT_PRODUCTS_DIR}/Applozic/Applozic.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/Branch/Branch.framework",
@@ -1175,6 +1187,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Amplitude_iOS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Applozic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Branch.framework",
@@ -1308,6 +1321,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Woojo/Pods-Woojo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Amplitude-iOS/Amplitude_iOS.framework",
 				"${BUILT_PRODUCTS_DIR}/Applozic/Applozic.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/Branch/Branch.framework",
@@ -1339,6 +1353,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Amplitude_iOS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Applozic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Branch.framework",
@@ -1380,6 +1395,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Woojo Staging/Pods-Woojo Staging-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Amplitude-iOS/Amplitude_iOS.framework",
 				"${BUILT_PRODUCTS_DIR}/Applozic/Applozic.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/Branch/Branch.framework",
@@ -1411,6 +1427,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Amplitude_iOS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Applozic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Branch.framework",
@@ -1474,7 +1491,6 @@
 				85662CB11F90BE2200D5701E /* PreferencesViewController.swift in Sources */,
 				85662CBC1F90BE2200D5701E /* LoginViewController.swift in Sources */,
 				854DDAC51DE47DE500655EFC /* User.swift in Sources */,
-				85662CC81F90BE2200D5701E /* Constants+Analytics.swift in Sources */,
 				85575C75201B78CE00D5B625 /* FlightsViewController.swift in Sources */,
 				85662CBA1F90BE2200D5701E /* AboutWebViewController.swift in Sources */,
 				856B0A9E1FA0838F0041C11E /* UserCommonEventTableViewCell.swift in Sources */,
@@ -1496,17 +1512,20 @@
 				853DBC911FBB567100AC8E3C /* EventMatchCollectionViewCell.swift in Sources */,
 				85C18422203ED55100E46AE2 /* EventbriteEventsViewController.swift in Sources */,
 				85662CC01F90BE2200D5701E /* NavigationController.swift in Sources */,
+				851D176A204B17CD008E6342 /* CommonAnalytics.swift in Sources */,
 				85B36AC51FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift in Sources */,
 				85B36ABD1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift in Sources */,
 				854DDABF1DE3654E00655EFC /* MyEventsTableViewCell.swift in Sources */,
 				8556C6331F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */,
 				85662CA31F90BE2200D5701E /* EventsViewController.swift in Sources */,
 				85B36AA41FAE168700A7B599 /* Constants+Env.swift in Sources */,
+				851D1766204B1226008E6342 /* Analytics.swift in Sources */,
 				8506A8A61DCCC85200C18EC3 /* Like.swift in Sources */,
 				85685F741DEC7833009BAEE0 /* SearchEventsGraphRequest.swift in Sources */,
 				858FEE3C1E02A40C00322E8E /* AlbumsTableViewCell.swift in Sources */,
 				851CDBEA1DDEF2B100B887C0 /* Location.swift in Sources */,
 				85662CAE1F90BE2200D5701E /* MessagesViewController.swift in Sources */,
+				851D176E204B3E58008E6342 /* Constants+Analytics.swift in Sources */,
 				85662CB91F90BE2200D5701E /* AboutTableViewController.swift in Sources */,
 				85662CB41F90BE2200D5701E /* BioTableViewCell.swift in Sources */,
 				85B36ACC1FB1CE5200A7B599 /* CommonItem.swift in Sources */,
@@ -1526,7 +1545,6 @@
 				85662CBB1F90BE2200D5701E /* UserDetailsViewController.swift in Sources */,
 				85DC3D7B1E00088F00116159 /* UserAlbumsGraphRequest.swift in Sources */,
 				85B36AB01FB1BEA200A7B599 /* UserFriendsGraphRequest.swift in Sources */,
-				85662CC61F90BE2200D5701E /* Analytics.swift in Sources */,
 				8506A8A21DCCA61600C18EC3 /* Candidate.swift in Sources */,
 				856B0AA21FA084730041C11E /* UserDescriptionTableViewCell.swift in Sources */,
 				8506A8A81DCCCB5E00C18EC3 /* Pass.swift in Sources */,
@@ -1583,7 +1601,6 @@
 				85662C121F90BD6500D5701E /* Preferences.swift in Sources */,
 				853DBC851FBB41C400AC8E3C /* EventDetailsTableViewCell.swift in Sources */,
 				856B0AAA1FA084870041C11E /* UserCommonEventTableViewCell.swift in Sources */,
-				85662CF31F90BE2300D5701E /* Constants+Analytics.swift in Sources */,
 				853DBC891FBB43CF00AC8E3C /* EventDescriptionTableViewCell.swift in Sources */,
 				85662CF01F90BE2300D5701E /* Constants.swift in Sources */,
 				85FB8C2B2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.swift in Sources */,
@@ -1599,17 +1616,20 @@
 				853DBC921FBB567100AC8E3C /* EventMatchCollectionViewCell.swift in Sources */,
 				85C18423203ED55100E46AE2 /* EventbriteEventsViewController.swift in Sources */,
 				85662CE01F90BE2300D5701E /* ProfilePhotoCollectionViewCell.swift in Sources */,
+				851D176B204B17CD008E6342 /* CommonAnalytics.swift in Sources */,
 				85B36AC61FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift in Sources */,
 				85B36ABE1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift in Sources */,
 				85B36AA61FAE170500A7B599 /* Constants+Env.swift in Sources */,
 				85662CE21F90BE2300D5701E /* PhotoCollectionViewController.swift in Sources */,
 				856B0AA41FA084760041C11E /* UserDescriptionTableViewCell.swift in Sources */,
 				85662C0E1F90BD6500D5701E /* Location.swift in Sources */,
+				851D1764204B1222008E6342 /* Analytics.swift in Sources */,
 				85662C091F90BD6500D5701E /* Report.swift in Sources */,
 				8556C6341F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */,
 				85662CE51F90BE2300D5701E /* AboutWebViewController.swift in Sources */,
 				85662CDE1F90BE2300D5701E /* ProfileViewController.swift in Sources */,
 				85662C051F90BD6500D5701E /* Activity.swift in Sources */,
+				851D176F204B3E58008E6342 /* Constants+Analytics.swift in Sources */,
 				85662CF21F90BE2300D5701E /* Constants+App.swift in Sources */,
 				85662C071F90BD6500D5701E /* Candidate.swift in Sources */,
 				85B36ACD1FB1CE5200A7B599 /* CommonItem.swift in Sources */,
@@ -1622,7 +1642,6 @@
 				85662CE61F90BE2300D5701E /* UserDetailsViewController.swift in Sources */,
 				853DBC8D1FBB4A1200AC8E3C /* EventMatchesTableViewCell.swift in Sources */,
 				85304513203F58E800EF382B /* EventbriteLoginViewController.swift in Sources */,
-				85662CF11F90BE2300D5701E /* Analytics.swift in Sources */,
 				85662C1C1F90BD7C00D5701E /* MyEventsTableViewCell.swift in Sources */,
 				85662CD91F90BE2300D5701E /* MessagesViewController.swift in Sources */,
 				85662C0A1F90BD6500D5701E /* Pass.swift in Sources */,
@@ -1686,7 +1705,6 @@
 				85662C451F90BDD000D5701E /* Preferences.swift in Sources */,
 				853DBC861FBB41C400AC8E3C /* EventDetailsTableViewCell.swift in Sources */,
 				856B0AAB1FA084880041C11E /* UserCommonEventTableViewCell.swift in Sources */,
-				85662CA11F90BE1300D5701E /* Constants+Analytics.swift in Sources */,
 				853DBC8A1FBB43CF00AC8E3C /* EventDescriptionTableViewCell.swift in Sources */,
 				85662C9E1F90BE1300D5701E /* Constants.swift in Sources */,
 				85FB8C2C2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.swift in Sources */,
@@ -1702,17 +1720,20 @@
 				853DBC931FBB567100AC8E3C /* EventMatchCollectionViewCell.swift in Sources */,
 				85C18424203ED55100E46AE2 /* EventbriteEventsViewController.swift in Sources */,
 				85662C8E1F90BE1300D5701E /* ProfilePhotoCollectionViewCell.swift in Sources */,
+				851D176C204B17CE008E6342 /* CommonAnalytics.swift in Sources */,
 				85B36AC71FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift in Sources */,
 				85B36ABF1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift in Sources */,
 				85B36AA81FAE170800A7B599 /* Constants+Env.swift in Sources */,
 				85662C901F90BE1300D5701E /* PhotoCollectionViewController.swift in Sources */,
 				856B0AA51FA084770041C11E /* UserDescriptionTableViewCell.swift in Sources */,
 				85662C411F90BDD000D5701E /* Location.swift in Sources */,
+				851D1768204B1229008E6342 /* Analytics.swift in Sources */,
 				85662C3C1F90BDD000D5701E /* Report.swift in Sources */,
 				8556C6351F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */,
 				85662C931F90BE1300D5701E /* AboutWebViewController.swift in Sources */,
 				85662C8C1F90BE1300D5701E /* ProfileViewController.swift in Sources */,
 				85662C381F90BDD000D5701E /* Activity.swift in Sources */,
+				851D1770204B3E58008E6342 /* Constants+Analytics.swift in Sources */,
 				85662CA01F90BE1300D5701E /* Constants+App.swift in Sources */,
 				85662C3A1F90BDD000D5701E /* Candidate.swift in Sources */,
 				85B36ACE1FB1CE5200A7B599 /* CommonItem.swift in Sources */,
@@ -1725,7 +1746,6 @@
 				85662C941F90BE1300D5701E /* UserDetailsViewController.swift in Sources */,
 				853DBC8E1FBB4A1200AC8E3C /* EventMatchesTableViewCell.swift in Sources */,
 				85304514203F58E800EF382B /* EventbriteLoginViewController.swift in Sources */,
-				85662C9F1F90BE1300D5701E /* Analytics.swift in Sources */,
 				85662C4F1F90BDD900D5701E /* MyEventsTableViewCell.swift in Sources */,
 				85662C871F90BE1300D5701E /* MessagesViewController.swift in Sources */,
 				85662C3D1F90BDD000D5701E /* Pass.swift in Sources */,
