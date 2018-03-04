@@ -871,4 +871,39 @@ class CurrentUser: User {
             print("SHARED", activity, complete)
         }
     }
+    
+    enum UnknownRSVPError: Error {
+        case eventNotFound(String)
+        case unknownRawValue(String)
+    }
+    
+    func rsvpStatus(event id: String) throws -> Event.RSVP {
+        if let rsvpStatusRawValue = events.value.first(where: { $0.id == id })?.rsvpStatus {
+            if let rsvpStatus = Event.RSVP(rawValue: rsvpStatusRawValue) {
+                return rsvpStatus
+            }
+            throw UnknownRSVPError.unknownRawValue("Failed to determine RSVP status for raw value \(rsvpStatusRawValue)")
+        }
+        throw UnknownRSVPError.eventNotFound("Failed to determine RSVP status for event \(id)")
+    }
+    
+    func commonality(candidate: Candidate) throws -> Int {
+        return try candidate.commonEventInfos.reduce(0, { $0 + Event.commonality(rsvpStatusA: $1.rsvpStatus, rsvpStatusB: try rsvpStatus(event: $1.id)) })
+    }
+    
+    func commonality(match: Match) throws -> Int {
+        return try match.commonEventInfos.reduce(0, { $0 + Event.commonality(rsvpStatusA: $1.rsvpStatus, rsvpStatusB: try rsvpStatus(event: $1.id)) })
+    }
+    
+    func bothGoing(candidate: Candidate) throws -> Bool {
+        return try candidate.commonEventInfos.reduce(false, { (previousResult, commonEventInfo) -> Bool in
+            return try (previousResult && (try rsvpStatus(event: commonEventInfo.id) == .attending) && commonEventInfo.rsvpStatus == .attending)
+        })
+    }
+    
+    func bothGoing(match: Match) throws -> Bool {
+        return try match.commonEventInfos.reduce(false, { (previousResult, commonEventInfo) -> Bool in
+            return try (previousResult && (try rsvpStatus(event: commonEventInfo.id) == .attending) && commonEventInfo.rsvpStatus == .attending)
+        })
+    }
 }

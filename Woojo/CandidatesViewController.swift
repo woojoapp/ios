@@ -20,6 +20,7 @@ import Whisper
 import SDWebImage
 import UserNotifications
 import Crashlytics
+import Amplitude_iOS
 
 class CandidatesViewController: UIViewController {
     
@@ -36,37 +37,6 @@ class CandidatesViewController: UIViewController {
     var shouldApplyAppearAnimation = true
     var ranOutOfCards = true
     
-    //private let kolodaAlphaValueSemiTransparent: CGFloat = 0.1
-    //let buttonsBackgroundColor = UIColor.black.withAlphaComponent(0.3)
-    
-    /*@IBAction func likePressed(_ sender: DOFavoriteButton) {
-        likeButton.select()
-        set(button: passButton, enabled: false)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            if let uid = User.current.value?.candidates[self.kolodaView.currentCardIndex].uid {
-                let analyticsEventParameters = [Constants.Analytics.Events.CandidateLiked.Parameters.uid: uid,
-                                                Constants.Analytics.Events.CandidateLiked.Parameters.type: "press",
-                                                Constants.Analytics.Events.CandidateLiked.Parameters.screen: String(describing: type(of: self))]
-                Analytics.Log(event: Constants.Analytics.Events.CandidateLiked.name, with: analyticsEventParameters)
-            }
-            self.kolodaView?.swipe(.right)
-        })
-    }
-    
-    @IBAction func passPressed(_ sender: DOFavoriteButton) {
-        passButton.select()
-        set(button: likeButton, enabled: false)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            if let uid = User.current.value?.candidates[self.kolodaView.currentCardIndex].uid {
-                let analyticsEventParameters = [Constants.Analytics.Events.CandidatePassed.Parameters.uid: uid,
-                                                Constants.Analytics.Events.CandidatePassed.Parameters.type: "press",
-                                                Constants.Analytics.Events.CandidatePassed.Parameters.screen: String(describing: type(of: self))]
-                Analytics.Log(event: Constants.Analytics.Events.CandidatePassed.name, with: analyticsEventParameters)
-            }
-            self.kolodaView?.swipe(.left)
-        })
-    }*/
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -81,14 +51,6 @@ class CandidatesViewController: UIViewController {
         let titleImageView = UIImageView(image: #imageLiteral(resourceName: "woojo"))
         titleImageView.contentMode = .scaleAspectFit
         self.navigationItem.titleView = titleImageView
-        
-        /*likeButton.layer.cornerRadius = likeButton.frame.width / 2
-        likeButton.layer.masksToBounds = true
-        set(button: likeButton, enabled: false)
-        
-        passButton.layer.cornerRadius = passButton.frame.width / 2
-        passButton.layer.masksToBounds = true
-        set(button: passButton, enabled: false)*/
         
         self.view.bringSubview(toFront: kolodaView)
     }
@@ -133,23 +95,12 @@ class CandidatesViewController: UIViewController {
     func hideKolodaAndShowLoading() {
         kolodaView.isHidden = true
         loadingContainerView.isHidden = false
-        //set(button: likeButton, enabled: false)
-        //set(button: passButton, enabled: false)
     }
     
     func showKolodaAndHideLoading() {
         kolodaView.isHidden = false
         loadingContainerView.isHidden = true
-        //set(button: likeButton, enabled: true)
-        //set(button: passButton, enabled: true)
-        //likeButton.deselect()
-        //passButton.deselect()
     }
-    
-    /*func set(button: UIButton, enabled: Bool) {
-        button.isEnabled = enabled
-        button.alpha = (enabled) ? 1.0 : 0.3
-    }*/
     
     func showPushNotificationsInvite() {
         let pushNotificationsInvite = UIAlertController(title: NSLocalizedString("Push notifications", comment: ""), message: NSLocalizedString("Would you like to get push notifications when you match or receive messages?\n\nYou can also manage this behavior later from the Settings screen.", comment: ""), preferredStyle: .alert)
@@ -177,57 +128,47 @@ class CandidatesViewController: UIViewController {
 extension CandidatesViewController: KolodaViewDelegate {
     
     func koloda(_ koloda: KolodaView, didSwipeCardAt index: Int, in direction: SwipeResultDirection) {
-        if let uid = User.current.value?.candidates[index].uid {
+        if let currentUser = User.current.value {
+            let candidate = currentUser.candidates[index]
             DispatchQueue.global(qos: .background).async {
+                let identify = AMPIdentify()
+                var parameters: [String: String]?
+                if let commonality = try? currentUser.commonality(candidate: candidate),
+                    let bothGoing = try? currentUser.bothGoing(candidate: candidate) {
+                     parameters = [
+                        "other_id": candidate.uid,
+                        "event_commonality": String(commonality),
+                        "has_both_going": String(bothGoing)
+                    ]
+                }
+                
                 switch direction {
                 case .left:
-                    //User.current.value?.candidates[index].pass()
-                    User.current.value?.pass(candidate: uid)
-                    User.current.value?.remove(candidate: uid)
-                    // - TODO: REMOVE CANDIDATE BASED ON UID ONLY
-                    //if !passButton.isSelected {
-                    //passButton.select()
-                    //set(button: likeButton, enabled: false)
-                    //if let uid = User.current.value?.candidates[index].uid {
-                    let analyticsEventParameters = [Constants.Analytics.Events.CandidatePassed.Parameters.uid: uid,
-                                                    Constants.Analytics.Events.CandidatePassed.Parameters.type: "swipe",
-                                                    Constants.Analytics.Events.CandidatePassed.Parameters.screen: String(describing: type(of: self))]
-                    Analytics.Log(event: Constants.Analytics.Events.CandidatePassed.name, with: analyticsEventParameters)
-                    //}
-                //}
+                    currentUser.pass(candidate: candidate.uid)
+                    currentUser.remove(candidate: candidate.uid)
+                    identify.add("pass_count", value: NSNumber(value: 1))
+                    if parameters != nil {
+                        Analytics.Log(event: "Core_pass", with: parameters!)
+                    }
                 case .right:
-                    //User.current.value?.candidates[index].like()
-                    User.current.value?.like(candidate: uid)
-                    User.current.value?.remove(candidate: uid)
-                    // - TODO: REMOVE CANDIDATE BASED ON UID ONLY
-                    if User.current.value?.activity.repliedToPushNotificationsInvite == nil {
+                    currentUser.like(candidate: candidate.uid)
+                    currentUser.remove(candidate: candidate.uid)
+                    if currentUser.activity.repliedToPushNotificationsInvite == nil {
                         self.showPushNotificationsInvite()
                     }
-                    //if !likeButton.isSelected {
-                    //likeButton.select()
-                    //set(button: passButton, enabled: false)
-                    //if let uid = User.current.value?.candidates[index].uid {
-                    let analyticsEventParameters = [Constants.Analytics.Events.CandidateLiked.Parameters.uid: uid,
-                                                    Constants.Analytics.Events.CandidateLiked.Parameters.type: "swipe",
-                                                    Constants.Analytics.Events.CandidateLiked.Parameters.screen: String(describing: type(of: self))]
-                    Analytics.Log(event: Constants.Analytics.Events.CandidateLiked.name, with: analyticsEventParameters)
-                    //}
-                //}
+                    identify.add("like_count", value: NSNumber(value: 1))
+                    if parameters != nil {
+                        Analytics.Log(event: "Core_like", with: parameters!)
+                    }
                 default: break
                 }
-                /*DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                 self.likeButton.deselect()
-                 self.passButton.deselect()
-                 if !self.ranOutOfCards {
-                 self.set(button: self.likeButton, enabled: true)
-                 self.set(button: self.passButton, enabled: true)
-                 }
-                 })*/
+                
+                Amplitude.instance().identify(identify)
             }
+            currentUser.candidates.remove(at: index)
+            self.kolodaView.removeCardInIndexRange(index..<index, animated: false)
+            self.kolodaView.currentCardIndex = 0
         }
-        User.current.value?.candidates.remove(at: index)
-        self.kolodaView.removeCardInIndexRange(index..<index, animated: false)
-        self.kolodaView.currentCardIndex = 0
     }
     
     func kolodaShouldApplyAppearAnimation(_ koloda: KolodaView) -> Bool {
@@ -236,7 +177,10 @@ extension CandidatesViewController: KolodaViewDelegate {
     
     func kolodaDidRunOutOfCards(_ koloda: KolodaView) {
         ranOutOfCards = true
-        Analytics.Log(event: Constants.Analytics.Events.CandidatesDepleted.name)
+        let identify = AMPIdentify()
+        identify.add("candidates_depleted_count", value: NSNumber(value: 1))
+        Amplitude.instance().identify(identify)
+        Analytics.Log(event: "Core_candidates_depleted")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
             self.hideKolodaAndShowLoading()
         })

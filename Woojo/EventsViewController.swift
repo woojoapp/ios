@@ -83,7 +83,8 @@ class EventsViewController: UITableViewController {
             .subscribe(onNext: { events in
                 self.events = events
                 self.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
-            }).addDisposableTo(disposeBag)
+                Analytics.setUserProperties(properties: ["event_count": String(events.count)])
+            }).disposed(by: disposeBag)
         
         User.current.asObservable()
             .flatMap { user -> Observable<[Event]> in
@@ -96,7 +97,7 @@ class EventsViewController: UITableViewController {
             .subscribe(onNext: { pendingEvents in
                 self.pendingEventsCount = pendingEvents.count
                 self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-            }).addDisposableTo(disposeBag)
+            }).disposed(by: disposeBag)
     }
     
     override func didReceiveMemoryWarning() {
@@ -177,10 +178,9 @@ class EventsViewController: UITableViewController {
         if let cell = self.tableView.cellForRow(at: indexPath) as? EventsTableViewCell, let event = cell.event {
             HUD.show(.labeledProgress(title: NSLocalizedString("Remove Event", comment: ""), subtitle: NSLocalizedString("Removing event...", comment: "")))
             User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
-                let analyticsEventParameters = [Constants.Analytics.Events.EventRemoved.Parameters.name: event.name,
-                                                Constants.Analytics.Events.EventRemoved.Parameters.id: event.id,
-                                                Constants.Analytics.Events.EventRemoved.Parameters.screen: String(describing: type(of: self))]
-                Analytics.Log(event: Constants.Analytics.Events.EventAdded.name, with: analyticsEventParameters)
+                let analyticsEventParameters = ["event_id": event.id,
+                                                "origin": "filter"]
+                Analytics.Log(event: "Events_event_removed", with: analyticsEventParameters)
                 HUD.show(.labeledSuccess(title: NSLocalizedString("Remove Event", comment: ""), subtitle: NSLocalizedString("Event removed!", comment: "")))
                 HUD.hide(afterDelay: 1.0)
             })

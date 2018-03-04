@@ -34,4 +34,10 @@ class CommonAnalytics {
         Amplitude.instance().logEvent(name, withEventProperties: parameters)
     }
     
+    static func addToAmplitudeUserProperty(name: String, value: Int) {
+        let identify = AMPIdentify()
+        identify.add(name, value: NSNumber(value: value))
+        Amplitude.instance().identify(identify)
+    }
+    
 }

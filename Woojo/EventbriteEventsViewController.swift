@@ -46,11 +46,11 @@ class EventbriteEventsViewController: UIViewController, UITableViewDelegate, UIT
             if let tips = user?.tips, tips[self.tipId] != nil {
                 self.tableView.tableHeaderView = nil
             }
-        }).addDisposableTo(disposeBag)
+        }).disposed(by: disposeBag)
         
         User.current.value?.events.asObservable().subscribe(onNext: { _ in
             self.tableView.reloadData()
-        }).addDisposableTo(disposeBag)
+        }).disposed(by: disposeBag)
         
         let imageView = UIImageView(image: #imageLiteral(resourceName: "close"))
         imageView.frame = CGRect(x: dismissTipButton.frame.width/2.0, y: dismissTipButton.frame.height/2.0, width: 10, height: 10)
@@ -153,10 +153,9 @@ class EventbriteEventsViewController: UIViewController, UITableViewDelegate, UIT
                             tableView.reloadRows(at: [indexPath], with: .none)
                             HUD.show(.labeledSuccess(title: NSLocalizedString("Remove Event", comment: ""), subtitle: NSLocalizedString("Event removed!", comment: "")))
                             HUD.hide(afterDelay: 1.0)
-                            let analyticsEventParameters = [Constants.Analytics.Events.EventRemoved.Parameters.name: event.name,
-                                                            Constants.Analytics.Events.EventRemoved.Parameters.id: event.id,
-                                                            Constants.Analytics.Events.EventRemoved.Parameters.screen: String(describing: type(of: self))]
-                            Analytics.Log(event: Constants.Analytics.Events.EventRemoved.name, with: analyticsEventParameters)
+                            let analyticsEventParameters = ["event_id": event.id,
+                                                            "origin": "add_events"]
+                            Analytics.Log(event: "Events_event_removed", with: analyticsEventParameters)
                         })
                     } else {
                         HUD.show(.labeledProgress(title: NSLocalizedString("Add Event", comment: ""), subtitle: NSLocalizedString("Adding event...", comment: "")))
@@ -165,10 +164,10 @@ class EventbriteEventsViewController: UIViewController, UITableViewDelegate, UIT
                             tableView.reloadRows(at: [indexPath], with: .none)
                             HUD.show(.labeledSuccess(title: NSLocalizedString("Add Event", comment: ""), subtitle: NSLocalizedString("Event added!", comment: "")))
                             HUD.hide(afterDelay: 1.0)
-                            let analyticsEventParameters = [Constants.Analytics.Events.EventAdded.Parameters.name: event.name,
-                                                            Constants.Analytics.Events.EventAdded.Parameters.id: event.id,
-                                                            Constants.Analytics.Events.EventAdded.Parameters.screen: String(describing: type(of: self))]
-                            Analytics.Log(event: Constants.Analytics.Events.EventAdded.name, with: analyticsEventParameters)
+                            Analytics.addToAmplitudeUserProperty(name: "eventbrite_event_added_count", value: 1)
+                            let analyticsEventParameters = ["event_id": event.id,
+                                                            "source": "eventbrite"]
+                            Analytics.Log(event: "Events_event_added", with: analyticsEventParameters)
                         })
                     }
                 }
