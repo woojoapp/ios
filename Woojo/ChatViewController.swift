@@ -154,11 +154,11 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
         
         HUD.hide()
         
-        if let uid = User.current.value?.uid,
+        /* if let uid = User.current.value?.uid,
             let analyticsEventParameters = [Constants.Analytics.Events.ChatDisplayed.Parameters.uid: uid,
                                             Constants.Analytics.Events.ChatDisplayed.Parameters.otherId: self.contactIds] as? [String: String] {
             Analytics.Log(event: Constants.Analytics.Events.ChatDisplayed.name, with: analyticsEventParameters)
-        }
+        } */
     }
     
     override func viewWillDisappear(_ animated: Bool) {

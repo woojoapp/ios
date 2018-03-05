@@ -138,7 +138,7 @@ extension CandidatesViewController: KolodaViewDelegate {
                      parameters = [
                         "other_id": candidate.uid,
                         "event_commonality": String(commonality),
-                        "has_both_going": String(bothGoing)
+                        "has_common_going": String(bothGoing)
                     ]
                 }
                 

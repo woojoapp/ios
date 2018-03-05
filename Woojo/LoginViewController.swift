@@ -135,7 +135,17 @@ extension LoginViewController: LoginButtonDelegate {
         activityIndicator.startAnimating()
         switch result {
         case .success(let acceptedPermissions, let declinedPermissions, let accessToken):
+            var permissions: [String: String] = [:]
+            for permission in acceptedPermissions {
+                permissions[permission.name] = "true"
+                Analytics.setUserProperties(properties: ["accepted_\(permission.name)_permission": "true"])
+            }
+            for permission in declinedPermissions {
+                permissions[permission.name] = "false"
+                Analytics.setUserProperties(properties: ["accepted_\(permission.name)_permission": "false"])
+            }
             if declinedPermissions.count > 0 && (declinedPermissions.contains(Permission(name: "user_events")) || declinedPermissions.contains(Permission(name: "user_birthday"))) {
+                Analytics.Log(event: "Account_log_in_missing_permissions", with: permissions)
                 let alert = UIAlertController(title: NSLocalizedString("Missing permissions", comment: ""), message: NSLocalizedString("Woojo needs to know at least your birthday and access your events in order to function properly.", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                 self.present(alert, animated: true, completion: {
@@ -148,15 +158,6 @@ extension LoginViewController: LoginButtonDelegate {
                 Auth.auth().signIn(with: credential) { (user, error) in
                     if let user = user {
                         print("Firebase login success \(user.uid)")
-                        var permissions: [String: String] = [:]
-                        for permission in acceptedPermissions {
-                            permissions[permission.name] = "true"
-                            Analytics.setUserProperties(properties: ["accepted_\(permission.name)_permission": "true"])
-                        }
-                        for permission in declinedPermissions {
-                            permissions[permission.name] = "false"
-                            Analytics.setUserProperties(properties: ["accepted_\(permission.name)_permission": "false"])
-                        }
                         Analytics.Log(event: "Account_log_in", with: permissions)
                         //self.dismiss(animated: true, completion: nil)
                     }

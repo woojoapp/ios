@@ -112,10 +112,9 @@ class MainTabBarController: UITabBarController {
             } else {
                 showImagelessSuccess()
             }
-            let analyticsEventParameters = [Constants.Analytics.Events.EventAdded.Parameters.name: event.name,
-                                            Constants.Analytics.Events.EventAdded.Parameters.id: event.id,
-                                            Constants.Analytics.Events.EventAdded.Parameters.screen: "Branch link"]
-            Analytics.Log(event: Constants.Analytics.Events.EventAdded.name, with: analyticsEventParameters)
+            let analyticsEventParameters = ["event_id": event.id,
+                                            "source": "deeplink"]
+            Analytics.Log(event: "Events_event_added", with: analyticsEventParameters)
         })
     }
 }

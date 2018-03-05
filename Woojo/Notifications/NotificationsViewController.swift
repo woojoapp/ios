@@ -29,7 +29,7 @@ class NotificationsViewController: UITableViewController {
         }
         User.current.value?.getNotificationsState(type: Constants.User.Settings.Notifications.Types.Message) { enabled in
             self.messageNotificationsSwitch.isOn = enabled
-            Analytics.setUserProperties(properties: ["like_notifications_enabled": String(enabled)])
+            Analytics.setUserProperties(properties: ["message_notifications_enabled": String(enabled)])
         }
         User.current.value?.getNotificationsState(type: Constants.User.Settings.Notifications.Types.People) { enabled in
             self.peopleNotificationsSwitch.isOn = enabled
@@ -58,8 +58,8 @@ class NotificationsViewController: UITableViewController {
             Analytics.Log(event: "Preferences_match_notifications", with: ["enabled": String(sender.isOn)])
         case messageNotificationsSwitch:
             User.current.value?.setNotificationsState(type: Constants.User.Settings.Notifications.Types.Message, enabled: sender.isOn, completion: nil)
-            Analytics.setUserProperties(properties: ["like_notifications_enabled": String(sender.isOn)])
-            Analytics.Log(event: "Preferences_like_notifications", with: ["enabled": String(sender.isOn)])
+            Analytics.setUserProperties(properties: ["message_notifications_enabled": String(sender.isOn)])
+            Analytics.Log(event: "Preferences_message_notifications", with: ["enabled": String(sender.isOn)])
         case peopleNotificationsSwitch:
             User.current.value?.setNotificationsState(type: Constants.User.Settings.Notifications.Types.People, enabled: sender.isOn, completion: nil)
             Analytics.setUserProperties(properties: ["people_notifications_enabled": String(sender.isOn)])

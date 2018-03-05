@@ -106,9 +106,9 @@ class PendingEventsTableViewController: UITableViewController {
                             tableView.reloadRows(at: [indexPath], with: .automatic)
                             HUD.show(.labeledSuccess(title: NSLocalizedString("Remove Event", comment: ""), subtitle: NSLocalizedString("Event removed!", comment: "")))
                             HUD.hide(afterDelay: 1.0)
-                            let analyticsEventParameters = [Constants.Analytics.Events.EventRemoved.Parameters.id: event.id,
+                            /* let analyticsEventParameters = [Constants.Analytics.Events.EventRemoved.Parameters.id: event.id,
                                                             Constants.Analytics.Events.EventRemoved.Parameters.screen: String(describing: type(of: self))]
-                            Analytics.Log(event: Constants.Analytics.Events.EventRemoved.name, with: analyticsEventParameters)
+                            Analytics.Log(event: Constants.Analytics.Events.EventRemoved.name, with: analyticsEventParameters) */
                         })
                     } else {
                         HUD.show(.labeledProgress(title: NSLocalizedString("Add Event", comment: ""), subtitle: NSLocalizedString("Adding event...", comment: "")))
@@ -117,9 +117,9 @@ class PendingEventsTableViewController: UITableViewController {
                             tableView.reloadRows(at: [indexPath], with: .automatic)
                             HUD.show(.labeledSuccess(title: NSLocalizedString("Add Event", comment: ""), subtitle: NSLocalizedString("Event added!", comment: "")))
                             HUD.hide(afterDelay: 1.0)
-                            let analyticsEventParameters = [Constants.Analytics.Events.EventAdded.Parameters.id: event.id,
+                            /* let analyticsEventParameters = [Constants.Analytics.Events.EventAdded.Parameters.id: event.id,
                                                             Constants.Analytics.Events.EventAdded.Parameters.screen: String(describing: type(of: self))]
-                            Analytics.Log(event: Constants.Analytics.Events.EventAdded.name, with: analyticsEventParameters)
+                            Analytics.Log(event: Constants.Analytics.Events.EventAdded.name, with: analyticsEventParameters) */
                         })
                     }
                 }

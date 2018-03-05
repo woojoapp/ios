@@ -40,13 +40,12 @@ class AboutTableViewController: UITableViewController {
                     case 0:
                         if let termsURL = Application.remoteConfig.configValue(forKey: Constants.App.RemoteConfig.Keys.termsURL).stringValue {
                             openPage(title: title, url: URL(string: termsURL))
-                            Analytics.Log(event: Constants.Analytics.Events.AboutTermsVisited.name)
+                            // Analytics.Log(event: Constants.Analytics.Events.AboutTermsVisited.name)
                         }
                         break
                     case 1:
                         if let privacyURL = Application.remoteConfig.configValue(forKey: Constants.App.RemoteConfig.Keys.privacyURL).stringValue {
                             openPage(title: title, url: URL(string: privacyURL))
-                            Analytics.Log(event: Constants.Analytics.Events.AboutPrivacyVisited.name)
                         }
                         break
                     case 2:
