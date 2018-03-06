@@ -266,9 +266,9 @@ extension Event {
         case .notReplied:
             commonality = 2
         case .iWasRecommendedOthers:
-            commonality = 1
+            commonality = 0
         case .otherWasRecommendedMine:
-            commonality = 1
+            commonality = 0
         }
         return commonality
     }
