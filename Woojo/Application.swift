@@ -24,6 +24,7 @@ import Branch
 import SDWebImage
 import Crashlytics
 import Amplitude_iOS
+import AdSupport
 
 @UIApplicationMain
 class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
@@ -223,6 +224,9 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     ALChatManager.shared.setup()
                     Crashlytics.sharedInstance().setUserIdentifier(currentUser.uid)
                     Amplitude.instance().setUserId(currentUser.uid)
+                    if ASIdentifierManager.shared().isAdvertisingTrackingEnabled {
+                        Amplitude.instance().optOut = true
+                    }
                     print("AMPLITUDE", Amplitude.instance().getDeviceId(), Amplitude.instance().getSessionId(), Amplitude.instance().userId)
                     self.loginViewController.dismiss(animated: true, completion: nil)
                 }
@@ -313,8 +317,8 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     Notifier.shared.tapOnNotification(notification: notification)
                 }
                 completionHandler?()
-            }).addDisposableTo(self.disposeBag)
-        }).addDisposableTo(self.disposeBag)
+            }).disposed(by: self.disposeBag)
+        }).disposed(by: self.disposeBag)
     }
     
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
