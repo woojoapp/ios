@@ -100,7 +100,7 @@ class MainTabBarController: UITabBarController {
             }
             
             if let pictureURL = event.pictureURL {
-                SDWebImageManager.shared().downloadImage(with: pictureURL, options: [], progress: { (_, _) in }, completed: { (image, error, _, finished, url) in
+                SDWebImageManager.shared().imageDownloader?.downloadImage(with: pictureURL, options: [], progress: { (_, _, _) in }, completed: { (image, _, error, finished) in
                     if let image = image, error == nil, finished == true {
                         HUD.show(.labeledImage(image: image, title: NSLocalizedString("Event added!", comment: ""), subtitle: "\(event.name)"))
                         HUD.hide(afterDelay: 3.0)
@@ -112,10 +112,9 @@ class MainTabBarController: UITabBarController {
             } else {
                 showImagelessSuccess()
             }
-            let analyticsEventParameters = [Constants.Analytics.Events.EventAdded.Parameters.name: event.name,
-                                            Constants.Analytics.Events.EventAdded.Parameters.id: event.id,
-                                            Constants.Analytics.Events.EventAdded.Parameters.screen: "Branch link"]
-            Analytics.Log(event: Constants.Analytics.Events.EventAdded.name, with: analyticsEventParameters)
+            let analyticsEventParameters = ["event_id": event.id,
+                                            "source": "deeplink"]
+            Analytics.Log(event: "Events_event_added", with: analyticsEventParameters)
         })
     }
 }

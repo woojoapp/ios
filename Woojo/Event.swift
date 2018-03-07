@@ -255,6 +255,30 @@ extension Event {
             return Disposables.create()
         }
     }
+    
+    static func interestScale(rsvpStatus: RSVP) -> Int {
+        var commonality = 0
+        switch rsvpStatus {
+        case .attending:
+            commonality = 4
+        case .unsure:
+            commonality = 3
+        case .notReplied:
+            commonality = 2
+        case .iWasRecommendedOthers:
+            commonality = 0
+        case .otherWasRecommendedMine:
+            commonality = 0
+        }
+        return commonality
+    }
+    
+    static func commonality(rsvpStatusA: RSVP?, rsvpStatusB: RSVP?) -> Int {
+        if rsvpStatusA == nil || rsvpStatusB == nil {
+            return 0
+        }
+        return interestScale(rsvpStatus: rsvpStatusA!) + interestScale(rsvpStatus: rsvpStatusB!)
+    }
 
 }
 

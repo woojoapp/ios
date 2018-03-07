@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import DZNEmptyDataSet
 import PKHUD
+import Amplitude_iOS
 
 class MyEventsTableViewController: UITableViewController {
     
@@ -39,11 +40,11 @@ class MyEventsTableViewController: UITableViewController {
             if let tips = user?.tips, tips[self.tipId] != nil {
                 self.tableView.tableHeaderView = nil
             }
-        }).addDisposableTo(disposeBag)
+        }).disposed(by: disposeBag)
         
         User.current.value?.events.asObservable().subscribe(onNext: { _ in
             self.tableView.reloadData()
-        }).addDisposableTo(disposeBag)
+        }).disposed(by: disposeBag)
         
         let imageView = UIImageView(image: #imageLiteral(resourceName: "close"))
         imageView.frame = CGRect(x: dismissTipButton.frame.width/2.0, y: dismissTipButton.frame.height/2.0, width: 10, height: 10)
@@ -113,7 +114,6 @@ class MyEventsTableViewController: UITableViewController {
         if let reachable = isReachable(), reachable {
             let event = self.events[indexPath.row]
             if let isUserEvent = User.current.value?.events.value.contains(where: { $0.id == event.id }) {
-                print(isUserEvent)
                 if let cell = tableView.cellForRow(at: indexPath) as? MyEventsTableViewCell {
                     if isUserEvent {
                         HUD.show(.labeledProgress(title: NSLocalizedString("Remove Event", comment: ""), subtitle: NSLocalizedString("Removing event...", comment: "")))
@@ -122,10 +122,9 @@ class MyEventsTableViewController: UITableViewController {
                             tableView.reloadRows(at: [indexPath], with: .none)
                             HUD.show(.labeledSuccess(title: NSLocalizedString("Remove Event", comment: ""), subtitle: NSLocalizedString("Event removed!", comment: "")))
                             HUD.hide(afterDelay: 1.0)
-                            let analyticsEventParameters = [Constants.Analytics.Events.EventRemoved.Parameters.name: event.name,
-                                                            Constants.Analytics.Events.EventRemoved.Parameters.id: event.id,
-                                                            Constants.Analytics.Events.EventRemoved.Parameters.screen: String(describing: type(of: self))]
-                            Analytics.Log(event: Constants.Analytics.Events.EventRemoved.name, with: analyticsEventParameters)
+                            let analyticsEventParameters = ["event_id": event.id,
+                                                            "origin": "add_events"]
+                            Analytics.Log(event: "Events_event_removed", with: analyticsEventParameters)
                         })
                     } else {
                         HUD.show(.labeledProgress(title: NSLocalizedString("Add Event", comment: ""), subtitle: NSLocalizedString("Adding event...", comment: "")))
@@ -134,10 +133,10 @@ class MyEventsTableViewController: UITableViewController {
                             tableView.reloadRows(at: [indexPath], with: .none)
                             HUD.show(.labeledSuccess(title: NSLocalizedString("Add Event", comment: ""), subtitle: NSLocalizedString("Event added!", comment: "")))
                             HUD.hide(afterDelay: 1.0)
-                            let analyticsEventParameters = [Constants.Analytics.Events.EventAdded.Parameters.name: event.name,
-                                                            Constants.Analytics.Events.EventAdded.Parameters.id: event.id,
-                                                            Constants.Analytics.Events.EventAdded.Parameters.screen: String(describing: type(of: self))]
-                            Analytics.Log(event: Constants.Analytics.Events.EventAdded.name, with: analyticsEventParameters)
+                            Analytics.addToAmplitudeUserProperty(name: "facebook_event_added_count", value: 1)
+                            let analyticsEventParameters = ["event_id": event.id,
+                                                            "source": "facebook"]
+                            Analytics.Log(event: "Events_event_added", with: analyticsEventParameters)
                         })
                     }
                 }

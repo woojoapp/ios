@@ -188,7 +188,7 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
             
             carouselView.currentPageChanged = { (index) -> () in
                 self.setPhotoButtons(index: index)
-                Analytics.Log(event: Constants.Analytics.Events.CandidateDetailsPhotoChanged.name, with: [Constants.Analytics.Events.CandidateDetailsPhotoChanged.Parameters.uid: user.uid])
+                /* Analytics.Log(event: Constants.Analytics.Events.CandidateDetailsPhotoChanged.name, with: [Constants.Analytics.Events.CandidateDetailsPhotoChanged.Parameters.uid: user.uid]) */
             }
         }
         addSubview(view)

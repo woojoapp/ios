@@ -26,7 +26,6 @@ class SettingsViewController: UITableViewController {
         let logoutAlert = UIAlertController(title: NSLocalizedString("Logout", comment: ""), message: NSLocalizedString("Sure you want to logout?", comment: ""), preferredStyle: .alert)
         logoutAlert.addAction(UIAlertAction(title: NSLocalizedString("Logout", comment: ""), style: .default) { _ in
             self.dismiss(animated: true, completion: nil)
-            Analytics.Log(event: Constants.Analytics.Events.LoggedOut.name)
             User.current.value?.logOut()
         })
         logoutAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
@@ -38,7 +37,6 @@ class SettingsViewController: UITableViewController {
         let deleteAccountAlert = UIAlertController(title: NSLocalizedString("Delete Account", comment: ""), message: NSLocalizedString("Sure you want to delete your account?", comment: ""), preferredStyle: .alert)
         deleteAccountAlert.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive) { _ in
             self.dismiss(animated: true, completion: nil)
-            Analytics.Log(event: Constants.Analytics.Events.AccountDeleted.name)
             User.current.value?.deleteAccount()
         })
         deleteAccountAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))

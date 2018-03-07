@@ -14,7 +14,7 @@ extension Constants {
         struct Events {
             // MARK: - Events
             struct EventAdded {
-                static let name = "event_added"
+                static let name = "Events_event_added"
                 struct Parameters {
                     static let name = "name"
                     static let id = "id"
@@ -22,7 +22,7 @@ extension Constants {
                 }
             }
             struct EventRemoved {
-                static let name = "event_removed"
+                static let name = "Events_event_removed"
                 struct Parameters {
                     static let name = "name"
                     static let id = "id"
@@ -30,7 +30,7 @@ extension Constants {
                 }
             }
             struct EventSearched {
-                static let name = "event_searched"
+                static let name = "Events_event_search"
                 struct Parameters {
                     static let name = "name"
                 }

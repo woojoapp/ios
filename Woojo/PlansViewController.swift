@@ -211,9 +211,10 @@ class PlansViewController: UIViewController {
                     HUD.hide(afterDelay: 1.0, completion: { (_) in
                         self.plan = nil
                     })
-                    let analyticsEventParameters = [Constants.Analytics.Events.PlanMade.Parameters.id: event.id,
-                                                    Constants.Analytics.Events.PlanMade.Parameters.screen: String(describing: type(of: self))]
-                    Analytics.Log(event: Constants.Analytics.Events.EventRemoved.name, with: analyticsEventParameters)
+                    Analytics.addToAmplitudeUserProperty(name: "plan_added_count", value: 1)
+                    let analyticsEventParameters = ["event_id": event.id,
+                                                    "source": "plan"]
+                    Analytics.Log(event: "Events_event_added", with: analyticsEventParameters)
                 })
             }
         }

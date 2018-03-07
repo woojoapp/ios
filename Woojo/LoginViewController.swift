@@ -13,6 +13,7 @@ import FacebookLogin
 import RxCocoa
 import RxSwift
 import TTTAttributedLabel
+import Crashlytics
 
 extension UIImage {
     func drawInRectAspectFill(rect: CGRect) {
@@ -122,7 +123,7 @@ class LoginViewController: UIViewController {
         
         activityDriver
             .drive(self.activityIndicator.rx.isAnimating)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -133,16 +134,36 @@ extension LoginViewController: LoginButtonDelegate {
     func loginButtonDidCompleteLogin(_ loginButton: LoginButton, result: LoginResult) {
         activityIndicator.startAnimating()
         switch result {
-        case .success(_, _, let accessToken):
-            print("Facebook login success")
-            let credential = FacebookAuthProvider.credential(withAccessToken: accessToken.authenticationToken)
-            Auth.auth().signIn(with: credential) { (user, error) in
-                if let user = user {
-                    print("Firebase login success \(user.uid)")
-                    //self.dismiss(animated: true, completion: nil)
-                }
-                if let error = error {
-                    print("Firebase login failure \(error.localizedDescription)")
+        case .success(let acceptedPermissions, let declinedPermissions, let accessToken):
+            var permissions: [String: String] = [:]
+            for permission in acceptedPermissions {
+                permissions[permission.name] = "true"
+                Analytics.setUserProperties(properties: ["accepted_\(permission.name)_permission": "true"])
+            }
+            for permission in declinedPermissions {
+                permissions[permission.name] = "false"
+                Analytics.setUserProperties(properties: ["accepted_\(permission.name)_permission": "false"])
+            }
+            if declinedPermissions.count > 0 && (declinedPermissions.contains(Permission(name: "user_events")) || declinedPermissions.contains(Permission(name: "user_birthday"))) {
+                Analytics.Log(event: "Account_log_in_missing_permissions", with: permissions)
+                let alert = UIAlertController(title: NSLocalizedString("Missing permissions", comment: ""), message: NSLocalizedString("Woojo needs to know at least your birthday and access your events in order to function properly.", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: {
+                    LoginManager().logOut()
+                    self.activityIndicator.stopAnimating()
+                })
+            } else {
+                print("Facebook login success")
+                let credential = FacebookAuthProvider.credential(withAccessToken: accessToken.authenticationToken)
+                Auth.auth().signIn(with: credential) { (user, error) in
+                    if let user = user {
+                        print("Firebase login success \(user.uid)")
+                        Analytics.Log(event: "Account_log_in", with: permissions)
+                        //self.dismiss(animated: true, completion: nil)
+                    }
+                    if let error = error {
+                        print("Firebase login failure \(error.localizedDescription)")
+                    }
                 }
             }
         case .failed(let error):

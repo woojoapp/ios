@@ -266,16 +266,6 @@ extension ProfileViewController: UICollectionViewDelegate {
             if cell.photo != nil {
                 let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 let setAsMainButton = UIAlertAction(title: NSLocalizedString("Set as Main Photo", comment: ""), style: .default, handler: { (action) -> Void in
-                    /*HUD.show(.progress)
-                    User.current.value?.profile.deleteFiles(forPhotoAt: indexPath.row) { _ in
-                        User.current.value?.profile.remove(photoAt: indexPath.row) { _ in
-                            
-                            self.photosCollectionView.reloadItems(at: [indexPath])
-                            HUD.show(.success)
-                            HUD.hide(afterDelay: 1.0)
-                            Analytics.Log(event: Constants.Analytics.Events.PhotoRemoved.name)
-                        }
-                    }*/
                     let mainIndexPath = IndexPath(row: 0, section: 0)
                     self.photosCollectionView.moveItem(at: indexPath, to: mainIndexPath)
                     self.collectionView(self.photosCollectionView, moveItemAt: indexPath, to: mainIndexPath)
@@ -284,11 +274,13 @@ extension ProfileViewController: UICollectionViewDelegate {
                     HUD.show(.progress)
                     User.current.value?.profile.deleteFiles(forPhotoAt: indexPath.row) { _ in
                         User.current.value?.profile.remove(photoAt: indexPath.row) { _ in
-                            
                             self.photosCollectionView.reloadItems(at: [indexPath])
                             HUD.show(.success)
                             HUD.hide(afterDelay: 1.0)
-                            Analytics.Log(event: Constants.Analytics.Events.PhotoRemoved.name)
+                            if let photoCount = User.current.value?.profile.photoCount {
+                                Analytics.setUserProperties(properties: ["profile_photo_count": String(photoCount)])
+                                Analytics.Log(event: "Profile_photo_removed", with: ["photo_count": String(photoCount)])
+                            }
                         }
                     }
                 })
@@ -396,6 +388,7 @@ extension ProfileViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         if let photos = User.current.value?.profile.photos.value, let photo = photos[sourceIndexPath.row] {
             User.current.value?.profile.set(photo: photo, at: destinationIndexPath.row)
+            Analytics.Log(event: "Profile_photos_reordered", with: ["photo_count": String(photos.filter({ $0 != nil }).count)])
         }
         for i in 0..<Int(photoCount) {
             if let cell = collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? ProfilePhotoCollectionViewCell {
@@ -406,7 +399,6 @@ extension ProfileViewController: UICollectionViewDataSource {
                 }
             }
         }
-        Analytics.Log(event: Constants.Analytics.Events.PhotosReordered.name)
     }
     
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
@@ -519,7 +511,10 @@ extension ProfileViewController: RSKImageCropViewControllerDelegate {
                         HUD.hide(afterDelay: 1.0)
                     }
                     self.photosCollectionView.reloadItems(at: [IndexPath(row: selectedIndex, section: 0)])
-                    Analytics.Log(event: Constants.Analytics.Events.PhotoAdded.name, with: [Constants.Analytics.Events.PhotoAdded.Parameters.source: "library"])
+                    if let photoCount = User.current.value?.profile.photoCount {
+                        Analytics.setUserProperties(properties: ["profile_photo_count": String(photoCount)])
+                        Analytics.Log(event: "Profile_photo_added", with: ["photo_count": String(photoCount), "source": "library"])
+                    }
                 }
             }
         } else {
@@ -541,7 +536,7 @@ extension ProfileViewController: UITextViewDelegate {
             bioTableViewCell.bioTextView.textColor = UIColor.black
         }
         tableView.footerView(forSection: 0)?.isHidden = false
-        setBioFooter(count: bioTableViewCell.bioTextView.text.characters.count)
+        setBioFooter(count: bioTableViewCell.bioTextView.text.count)
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -550,7 +545,8 @@ extension ProfileViewController: UITextViewDelegate {
             if error != nil {
                 self.bioTableViewCell.bioTextView.text = self.previousBio
             } else {
-                Analytics.Log(event: Constants.Analytics.Events.AboutUpdated.name)
+                Analytics.setUserProperties(properties: ["about_character_count": String(newBio.count)])
+                Analytics.Log(event: "Profile.about_updated", with: ["character_count": String(newBio.count)])
             }
         })
         self.tableView.footerView(forSection: 0)?.isHidden = true
@@ -565,8 +561,8 @@ extension ProfileViewController: UITextViewDelegate {
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
-        let numberOfChars = newText.characters.count
-        return numberOfChars <= 250 || numberOfChars < textView.text.characters.count
+        let numberOfChars = newText.count
+        return numberOfChars <= 250 || numberOfChars < textView.text.count
     }
     
     func textViewDidChange(_ textView: UITextView) {

@@ -113,3 +113,6 @@
 "lastSeenJustNowLabelText" = "Last seen Just Now ";
 "hrsAgo" = "hrs ago";
 "mins" = "mins ago";
+"Missing permissions" = "Missing permissions";
+"Woojo needs to know at least your birthday and access your events in order to function properly." = "Woojo needs to know at least your birthday and access your events in order to function properly.";
+

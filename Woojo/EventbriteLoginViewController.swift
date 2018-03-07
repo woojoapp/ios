@@ -27,6 +27,8 @@ class EventbriteLoginViewController: UIViewController, UIWebViewDelegate {
             let accessToken = String(fragment[range.upperBound...])
             User.current.value?.setEventbriteAccessToken(accessToken: accessToken, completion: { (error) in
                 if error == nil {
+                    Analytics.setUserProperties(properties: ["integrated_eventbrite": "true"])
+                    Analytics.Log(event: "Events_integrated_eventbrite")
                     self.dismiss()
                 }
             })

@@ -22,6 +22,8 @@ import Whisper
 import UserNotifications
 import Branch
 import SDWebImage
+import Crashlytics
+import Amplitude_iOS
 
 @UIApplicationMain
 class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
@@ -141,6 +143,8 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let token = Messaging.messaging().fcmToken
         print("FCM token: \(token ?? "")")
         setupRemoteConfig()
+        Amplitude.instance().useAdvertisingIdForDeviceId()
+        Amplitude.instance().initializeApiKey(Constants.Env.Analytics.amplitudeApiKey)
         
         Whisper.Config.modifyInset = false
         
@@ -217,6 +221,9 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             if let currentUser = CurrentUser() {
                 currentUser.load {
                     ALChatManager.shared.setup()
+                    Crashlytics.sharedInstance().setUserIdentifier(currentUser.uid)
+                    Amplitude.instance().setUserId(currentUser.uid)
+                    print("AMPLITUDE", Amplitude.instance().getDeviceId(), Amplitude.instance().getSessionId(), Amplitude.instance().userId)
                     self.loginViewController.dismiss(animated: true, completion: nil)
                 }
             } else {
@@ -252,6 +259,8 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             Constants.User.Device.properties.firebaseNodes.platform: "iOS",
             Constants.User.Device.properties.firebaseNodes.fcm: Messaging.messaging().fcmToken
         ]
+        Analytics.setUserProperties(properties: ["push_notifications_enabled": "true"])
+        Analytics.Log(event: "Preferences_push_notifications", with: ["enabled": "true"])
         User.current.value?.ref.child(Constants.User.Device.firebaseNode).child(deviceTokenString).setValue(device) { error, ref in
             if (error != nil) {
                 print("Failed to save device push token: \(error)")

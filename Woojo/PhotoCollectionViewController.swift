@@ -101,15 +101,16 @@ class PhotoCollectionViewController: UICollectionViewController {
             let url = image.url {
             SDWebImageManager
                 .shared()
+                .imageDownloader?
                 .downloadImage(with: url,
-                               options: [SDWebImageOptions.cacheMemoryOnly],
-                               progress: { (receivedSize: Int, expectedSize: Int) -> Void in
+                               options: [],
+                               progress: { (receivedSize: Int, expectedSize: Int, _) -> Void in
                                 DispatchQueue.main.async {
                                     cell.progressIndicator.isHidden = false
                                     cell.progressIndicator.setProgress(Float(receivedSize)/Float(expectedSize), animated: true)
                                 }
                 },
-                               completed: { image, _, _, _, _ in
+                               completed: { image, _, _, _ in
                                 if let image = image {
                                     cell.progressIndicator.isHidden = true
                                     /*if !self.photos[indexPath.row].isBigEnough(size: .full) {
@@ -228,7 +229,10 @@ extension PhotoCollectionViewController: RSKImageCropViewControllerDelegate {
                         HUD.hide(afterDelay: 1.0)
                     }
                     self.profileViewController?.photosCollectionView.reloadItems(at: [IndexPath(row: self.photoIndex, section: 0)])
-                    Analytics.Log(event: Constants.Analytics.Events.PhotoAdded.name, with: [Constants.Analytics.Events.PhotoAdded.Parameters.source: "facebook"])
+                    if let photoCount = User.current.value?.profile.photoCount {
+                        Analytics.setUserProperties(properties: ["profile_photo_count": String(photoCount)])
+                        Analytics.Log(event: "Profile_photo_added", with: ["photo_count": String(photoCount), "source": "facebook"])
+                    }
                 }
             //}
         } else {

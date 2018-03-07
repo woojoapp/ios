@@ -18,6 +18,7 @@ import RxSwift
 import RxCocoa
 import Applozic
 import Branch
+import Crashlytics
 
 class CurrentUser: User {
     
@@ -81,6 +82,8 @@ class CurrentUser: User {
         self.stopObservingNotifications()
         self.stopObservingCandidates()
         LoginManager().logOut()
+        Crashlytics.sharedInstance().setUserIdentifier("")
+        Analytics.Log(event: "Account_log_out")
         do {
             try Auth.auth().signOut()
             if (ALUserDefaultsHandler.isLoggedIn()) {
@@ -96,37 +99,12 @@ class CurrentUser: User {
     }
     
     func deleteAccount() {
+        Analytics.Log(event: "Account_delete")
         ref.removeValue()
         self.logOut()
         Auth.auth().currentUser?.delete(completion: nil)
     }
     func load(completion: (() -> Void)? = nil) {
-        
-        func finish() {
-            let group = DispatchGroup()
-            group.enter()
-            self.loadData(completion: {
-                print("Loaded data")
-                group.leave()
-            })
-            group.enter()
-            self.preferences.loadFromFirebase(completion: { _, _ in
-                print("Loaded preferences")
-                group.leave()
-            })
-            group.notify(queue: .main, execute: {
-                self.profile.startObserving()
-                self.profile.startObservingPhotos()
-                self.startObservingEvents()
-                self.startObservingRecommendedEvents()
-                self.startObservingPendingEvents()
-                self.startObservingNotifications()
-                self.startObservingCandidates()
-                self.isLoading.value = false
-                print("User loaded.")
-                completion?()
-            })
-        }
         
         User.current.value = self
         isLoading.value = true
@@ -136,16 +114,44 @@ class CurrentUser: User {
             if self.activity.signUp == nil {
                 self.performSignUpActions { _ in
                     print("Performed signUp actions")
-                    finish()
+                    self.finishLoad(completion: completion)
                 }
             } else {
                 self.profile.loadFromFirebase(completion: { _, _ in
                     print("Loaded profile")
-                    finish()
+                    self.finishLoad(completion: completion)
                 })
             }
         })
 
+    }
+    
+    func finishLoad(completion: (() -> Void)? = nil) {
+        let group = DispatchGroup()
+        group.enter()
+        print("START Loading data")
+        self.loadData(completion: {
+            print("Loaded data")
+            group.leave()
+        })
+        group.enter()
+        print("START Loading preferences")
+        self.preferences.loadFromFirebase(completion: { _, _ in
+            print("Loaded preferences")
+            group.leave()
+        })
+        group.notify(queue: .main, execute: {
+            self.profile.startObserving()
+            self.profile.startObservingPhotos()
+            self.startObservingEvents()
+            self.startObservingRecommendedEvents()
+            // self.startObservingPendingEvents()
+            self.startObservingNotifications()
+            self.startObservingCandidates()
+            self.isLoading.value = false
+            print("User loaded.")
+            completion?()
+        })
     }
     
     func performSignUpActions(completion: ((Error?) -> Void)? = nil) {
@@ -171,6 +177,7 @@ class CurrentUser: User {
                                     let group = DispatchGroup()
                                     group.enter()
                                     self.activity.setSignUp { _ in group.leave() }
+                                    Analytics.Log(event: "Account_sign_up")
                                     group.enter()
                                     self.activity.setLastSeen { _ in group.leave() }
                                     group.notify(queue: .main, execute: {
@@ -186,7 +193,9 @@ class CurrentUser: User {
     }
     
     func addFacebookEvents(completion: (() -> Void)? = nil) {
+        print("GETTING EVENTS FROM FB")
         getEventsFromFacebook { events in
+            print("GOT EVENTS FROM FB", events.count)
             let saveEventsGroup = DispatchGroup()
             for event in events {
                 saveEventsGroup.enter()
@@ -198,6 +207,7 @@ class CurrentUser: User {
                 }
             }
             saveEventsGroup.notify(queue: .main, execute: {
+                print("GOT EVENTS FROM FB - NOTIFYING")
                 completion?()
             })
         }
@@ -222,6 +232,7 @@ class CurrentUser: User {
                 })
             }
             savePageLikesGroup.notify(queue: .main, execute: {
+                Analytics.setUserProperties(properties: ["page_like_count": String(pageLikes.count)])
                 completion?()
             })
         }
@@ -246,6 +257,7 @@ class CurrentUser: User {
                 })
             }
             saveFriendsGroup.notify(queue: .main, execute: {
+                Analytics.setUserProperties(properties: ["friend_count": String(friends.count)])
                 completion?()
             })
         }
@@ -284,6 +296,7 @@ class CurrentUser: User {
     var isObservingCandidates = false
     
     func startObservingCandidates() {
+        print("START observing candidates")
         isObservingCandidates = true
         candidatesRef.observe(.childAdded, with: { snapshot in
             let candidate = Candidate(snapshot: snapshot, for: self)
@@ -321,6 +334,7 @@ class CurrentUser: User {
     }
     
     func startObservingNotifications() {
+        print("START observing notifications")
         //isObservingEvents = true
         notificationsRef.observe(.childAdded, with: { snapshot in
             print("childAdded in notifications", snapshot)
@@ -411,6 +425,7 @@ class CurrentUser: User {
     var isObservingEvents: Bool = false
     
     func startObservingEvents() {
+        print("START observing events")
         isObservingEvents = true
         eventsRef.observe(.childAdded, with: { snapshot in
             print("childAdded in events", snapshot)
@@ -449,6 +464,7 @@ class CurrentUser: User {
     var isObservingRecommendedEvents: Bool = false
     
     func startObservingRecommendedEvents() {
+        print("START observing recommended events")
         isObservingRecommendedEvents = true
         recommendedEventsRef.observe(.value, with: { arraySnapshot in
             print("change in recommended events", arraySnapshot)
@@ -738,6 +754,8 @@ class CurrentUser: User {
                                     if !self.events.value.contains(where: { $0.id == e.id }) { self.append(event: e) }
                                     nameRef.parent!.removeObserver(withHandle: listenerHandleB)
                                     completion?(nil)
+                                } else {
+                                    print("MALFORMED!")
                                 }
                             })
                         }
@@ -852,5 +870,40 @@ class CurrentUser: User {
         buo.showShareSheet(with: lp, andShareText: NSLocalizedString("Try Woojo and match with people going to the same events as you!", comment: ""), from: from) { (activity, complete) in
             print("SHARED", activity, complete)
         }
+    }
+    
+    enum UnknownRSVPError: Error {
+        case eventNotFound(String)
+        case unknownRawValue(String)
+    }
+    
+    func rsvpStatus(event id: String) throws -> Event.RSVP {
+        if let rsvpStatusRawValue = events.value.first(where: { $0.id == id })?.rsvpStatus {
+            if let rsvpStatus = Event.RSVP(rawValue: rsvpStatusRawValue) {
+                return rsvpStatus
+            }
+            throw UnknownRSVPError.unknownRawValue("Failed to determine RSVP status for raw value \(rsvpStatusRawValue)")
+        }
+        throw UnknownRSVPError.eventNotFound("Failed to determine RSVP status for event \(id)")
+    }
+    
+    func commonality(candidate: Candidate) throws -> Int {
+        return try candidate.commonEventInfos.reduce(0, { $0 + Event.commonality(rsvpStatusA: $1.rsvpStatus, rsvpStatusB: try rsvpStatus(event: $1.id)) })
+    }
+    
+    func commonality(match: Match) throws -> Int {
+        return try match.commonEventInfos.reduce(0, { $0 + Event.commonality(rsvpStatusA: $1.rsvpStatus, rsvpStatusB: try rsvpStatus(event: $1.id)) })
+    }
+    
+    func bothGoing(candidate: Candidate) throws -> Bool {
+        return try candidate.commonEventInfos.reduce(false, { (previousResult, commonEventInfo) -> Bool in
+            return try (previousResult && (try rsvpStatus(event: commonEventInfo.id) == .attending) && commonEventInfo.rsvpStatus == .attending)
+        })
+    }
+    
+    func bothGoing(match: Match) throws -> Bool {
+        return try match.commonEventInfos.reduce(false, { (previousResult, commonEventInfo) -> Bool in
+            return try (previousResult && (try rsvpStatus(event: commonEventInfo.id) == .attending) && commonEventInfo.rsvpStatus == .attending)
+        })
     }
 }

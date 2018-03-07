@@ -10,12 +10,10 @@ import UIKit
 import NMRangeSlider
 import RxSwift
 
-class PreferencesViewController: UITableViewController/*, UIPickerViewDelegate, UIPickerViewDataSource*/ {
-    
+class PreferencesViewController: UITableViewController {
     @IBOutlet weak var ageRangeSliderWrapper: UIView!
     @IBOutlet weak var ageRangeMinLabel: UILabel!
     @IBOutlet weak var ageRangeMaxLabel: UILabel!
-    //@IBOutlet weak var genderPicker: UIPickerView!
     @IBOutlet weak var genderSelector: UISegmentedControl!
     
     var ageRange = (min: 20, max: 30)
@@ -31,7 +29,7 @@ class PreferencesViewController: UITableViewController/*, UIPickerViewDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         ageRangeSliderWrapper.addSubview(ageRangeSlider)
-        ageRangeSlider.maximumValue = 100.0
+        ageRangeSlider.maximumValue = 99.0
         ageRangeSlider.minimumValue = 18.0
         ageRangeMinLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17.0, weight: UIFont.Weight.regular)
         ageRangeMaxLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17.0, weight: UIFont.Weight.regular)
@@ -41,9 +39,6 @@ class PreferencesViewController: UITableViewController/*, UIPickerViewDelegate, 
     }
     
     func setupDataSource() {
-        //self.genderPicker.dataSource = self
-        //self.genderPicker.delegate = self
-        
         User.current.asObservable()
             .map{ $0?.preferences.ageRange }
             .subscribe(onNext: { ageRange in
@@ -52,17 +47,16 @@ class PreferencesViewController: UITableViewController/*, UIPickerViewDelegate, 
                 self.ageRangeSlider.lowerValue = Double(self.ageRange.min)
                 self.ageRangeSliderValueChanged(self.ageRangeSlider)
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         User.current.asObservable()
             .map{ $0?.preferences.gender }
             .subscribe(onNext: { gender in
                 if let gender = gender, let index = self.genderSelectorData.index(of: gender) {
-                    //self.genderPicker.selectRow(index, inComponent: 0, animated: true)
                     self.genderSelector.selectedSegmentIndex = index
                 }
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     override func viewDidLayoutSubviews() {
@@ -89,31 +83,16 @@ class PreferencesViewController: UITableViewController/*, UIPickerViewDelegate, 
     @objc func saveAgeRange(_ rangeSlider: RangeSlider) {
         User.current.value?.preferences.ageRange = ageRange
         savePreferences()
-        Analytics.Log(event: Constants.Analytics.Events.PreferencesAgeRangeUpdated.name)
+        Analytics.setUserProperties(properties: ["preferred_age_min": String(ageRange.min)])
+        Analytics.setUserProperties(properties: ["preferred_age_max": String(ageRange.max)])
+        Analytics.Log(event: "Preferences_age_range_updated", with: ["min_age": String(ageRange.min), "max_age": String(ageRange.max)])
     }
     
     @IBAction func saveGender(sender: UISegmentedControl) {
-        User.current.value?.preferences.gender = genderSelectorData[sender.selectedSegmentIndex]
+        let gender = genderSelectorData[sender.selectedSegmentIndex]
+        User.current.value?.preferences.gender = gender
         savePreferences()
-        Analytics.Log(event: Constants.Analytics.Events.PreferencesGenderUpdated.name)
+        Analytics.setUserProperties(properties: ["preferred_gender": gender.rawValue])
+        Analytics.Log(event: "Preferences_gender_updated", with: ["gender": gender.rawValue])
     }
-    
-    /*func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        User.current.value?.preferences.gender = genderPickerData[row]
-        savePreferences()
-        Analytics.Log(event: Constants.Analytics.Events.PreferencesGenderUpdated.name)
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 3
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return genderPickerData[row].rawValue.capitalized
-    }
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }*/
-    
 }
