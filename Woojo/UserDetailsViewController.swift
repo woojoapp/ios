@@ -128,6 +128,8 @@ class UserDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //optionsButton.
+        
         cardView.user = self.user
         cardView.commonEventInfos = self.commonEventInfos
         cardView.initiallyShowDescription = true
