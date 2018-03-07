@@ -359,6 +359,7 @@ class ALChatManager: NSObject {
         ALApplozicSettings.setSendMsgTextColor(UIColor.white)
         ALApplozicSettings.setReceiveMsgTextColor(UIColor.black)
         ALApplozicSettings.setColorForReceiveMessages(UIColor(red:230.0/255, green:230.0/255, blue:230.0/255, alpha:1))
+        ALApplozicSettings.setColorForSendMessages(UIColor(red:0.0/255, green:111.0/255, blue:255.0/255, alpha:1))
         ALApplozicSettings.setFontFace(UIFont.systemFont(ofSize: 14.0).fontName)
         
         //****************** DATE COLOUR : AT THE BOTTOM OF MESSAGE BUBBLE ******************/
