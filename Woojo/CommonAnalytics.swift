@@ -14,7 +14,7 @@ import Amplitude_iOS
 class CommonAnalytics {
     
     class func Log(event name: String, with parameters: [String: String] = [:]) {
-        print("LOGGING", parameters)
+        print("LOGGING", name, parameters)
         logToFirebaseAnalytics(event: name, with: parameters)
         logToAmplitude(event: name, with: parameters)
     }

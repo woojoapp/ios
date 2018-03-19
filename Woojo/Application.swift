@@ -228,7 +228,15 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         Amplitude.instance().optOut = true
                     }
                     print("AMPLITUDE", Amplitude.instance().getDeviceId(), Amplitude.instance().getSessionId(), Amplitude.instance().userId)
-                    self.loginViewController.dismiss(animated: true, completion: nil)
+                    print("ONBOARDINGVIEWCONTROLLER", self.loginViewController.onboardingViewController)
+                    //self.loginViewController.dismissOnboarding()
+                    if let onboardingViewController = self.loginViewController.onboardingViewController {
+                        onboardingViewController.dismiss(animated: true, completion: {
+                            self.loginViewController.dismiss(animated: true, completion: nil)
+                        })
+                    } else {
+                        self.loginViewController.dismiss(animated: true, completion: nil)
+                    }
                 }
             } else {
                 print("No user signed in", user?.uid)

@@ -641,6 +641,7 @@ class CurrentUser: User {
                     }
                     if error == nil && data != nil {
                         do {
+                            print(response)
                             let orderResponse = try JSONDecoder().decode(EventbriteOrderResponse.self, from: data!)
                             DispatchQueue.main.async {
                                 completion(orderResponse.orders.map({ $0.event.toEvent() }))
@@ -742,15 +743,15 @@ class CurrentUser: User {
                     let nameRef = event.ref.child(Constants.Event.properties.firebaseNodes.name)
                     var listenerHandle: UInt = 0
                     listenerHandle = nameRef.observe(.value, with: { snapshot in
-                        print("ADDED CHILD UNDER EVENT", snapshot.key, snapshot.exists())
+                        print("ADDED CHILD UNDER EVENT", event.id, snapshot.key, snapshot.exists())
                         if snapshot.exists() {
                             nameRef.removeObserver(withHandle: listenerHandle)
-                            print("Removed observer")
+                            print("Removed observer", event.id)
                             var listenerHandleB: UInt = 0
                             listenerHandleB = nameRef.parent!.observe(.value, with: { (snapshot) in
-                                print("GOT POTENTIAL EVENT", snapshot)
+                                // print("GOT POTENTIAL EVENT", snapshot)
                                 if let e = Event.from(firebase: snapshot) {
-                                    print("WELL FORMED!", e)
+                                    // print("WELL FORMED!", e)
                                     if !self.events.value.contains(where: { $0.id == e.id }) { self.append(event: e) }
                                     nameRef.parent!.removeObserver(withHandle: listenerHandleB)
                                     completion?(nil)

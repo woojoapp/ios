@@ -21,6 +21,7 @@ import SDWebImage
 import UserNotifications
 import Crashlytics
 import Amplitude_iOS
+import BWWalkthrough
 
 class CandidatesViewController: UIViewController {
     
@@ -31,11 +32,18 @@ class CandidatesViewController: UIViewController {
     @IBOutlet weak var loadingView: RPCircularProgress!
     
     var reachabilityObserver: AnyObject?
-    
     var disposeBag = DisposeBag()
+    var onboardingViewController: OnboardingViewController?
     
     var shouldApplyAppearAnimation = true
     var ranOutOfCards = true
+    
+    let slideNames = [
+        "onboarding_post_ok",
+        "onboarding_post_about",
+        "onboarding_post_photos",
+        "onboarding_post_end"
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,6 +87,30 @@ class CandidatesViewController: UIViewController {
         startMonitoringReachability()
         checkReachability()        
         User.current.value?.activity.setLastSeen()
+        let userDefaults = UserDefaults.standard
+        if !userDefaults.bool(forKey: "POST_LOGIN_ONBOARDING_COMPLETED") {
+            showOnboarding()
+        }
+    }
+    
+    func showOnboarding() {
+        let onboardingStoryboard = UIStoryboard(name: "Onboarding", bundle: nil)
+        if let onboarding = onboardingStoryboard.instantiateViewController(withIdentifier: "Onboarding0") as? OnboardingViewController {
+            onboardingViewController = onboarding
+            let ok = onboardingStoryboard.instantiateViewController(withIdentifier: "Onboarding_post_ok")
+            let about = onboardingStoryboard.instantiateViewController(withIdentifier: "Onboarding_post_about")
+            let photos = onboardingStoryboard.instantiateViewController(withIdentifier: "Onboarding_post_photos")
+            let end = onboardingStoryboard.instantiateViewController(withIdentifier: "Onboarding_post_end") as! OnboardingPostEndViewController
+            end.onboardingViewController = onboardingViewController
+            
+            onboardingViewController?.delegate = self
+            onboardingViewController?.add(viewController:ok)
+            onboardingViewController?.add(viewController:about)
+            onboardingViewController?.add(viewController:photos)
+            onboardingViewController?.add(viewController:end)
+            
+            self.present(onboarding, animated: true, completion: nil)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -338,4 +370,23 @@ extension CandidatesViewController: ReachabilityAware {
         setReachabilityState(reachable: reachable)
     }
     
+}
+
+// MARK: - BWWalkthroughViewControllerDelegate
+
+extension CandidatesViewController: BWWalkthroughViewControllerDelegate {
+    func walkthroughPageDidChange(_ pageNumber: Int) {
+        onboardingViewController?.showCloseButton(show: pageNumber == slideNames.count - 1)
+        let parameters = ["slide_name": slideNames[pageNumber]]
+        Analytics.Log(event: "Onboarding_view_slide", with: parameters)
+    }
+    
+    func walkthroughCloseButtonPressed() {
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(true, forKey: "POST_LOGIN_ONBOARDING_COMPLETED")
+        userDefaults.synchronize()
+        Analytics.setUserProperties(properties: ["post_login_onboarded": "true"])
+        Analytics.Log(event: "Onboarding_post_complete")
+        onboardingViewController?.dismiss(animated: true, completion: nil)
+    }
 }

@@ -14,6 +14,8 @@ import RxCocoa
 import RxSwift
 import TTTAttributedLabel
 import Crashlytics
+import BWWalkthrough
+import Amplitude_iOS
 
 extension UIImage {
     func drawInRectAspectFill(rect: CGRect) {
@@ -43,8 +45,17 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var acceptLabel: TTTAttributedLabel!
     @IBOutlet weak var smallPrintView: UIView!
     
+    var onboardingViewController: OnboardingViewController?
+    
     let termsText = NSLocalizedString("Terms & Conditions", comment: "")
     let privacyText = NSLocalizedString("Privacy Policy", comment: "")
+    
+    let slideNames = [
+        "onboarding_welcome",
+        "onboarding_events",
+        "onboarding_swipe",
+        "onboarding_login"
+    ]
     
     var authListenerHandle: AuthStateDidChangeListenerHandle?
     
@@ -64,6 +75,25 @@ class LoginViewController: UIViewController {
         super.awakeFromNib()
     }
     
+    func showOnboarding() {
+        let onboardingStoryboard = UIStoryboard(name: "Onboarding", bundle: nil)
+        if let onboarding = onboardingStoryboard.instantiateViewController(withIdentifier: "Onboarding0") as? OnboardingViewController {
+            onboardingViewController = onboarding
+            let welcome = onboardingStoryboard.instantiateViewController(withIdentifier: "Onboarding_welcome")
+            let events = onboardingStoryboard.instantiateViewController(withIdentifier: "Onboarding_events")
+            let swipe = onboardingStoryboard.instantiateViewController(withIdentifier: "Onboarding_swipe")
+            let login = onboardingStoryboard.instantiateViewController(withIdentifier: "Onboarding_login")
+            
+            onboardingViewController?.delegate = self
+            onboardingViewController?.add(viewController:welcome)
+            onboardingViewController?.add(viewController:events)
+            onboardingViewController?.add(viewController:swipe)
+            onboardingViewController?.add(viewController:login)
+            
+            self.present(onboarding, animated: true, completion: nil)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -79,7 +109,9 @@ class LoginViewController: UIViewController {
                                                               .custom("user_photos"),
                                                               .custom("user_location"),
                                                               .custom("user_birthday"),
-                                                              .custom("user_likes")]
+                                                              .custom("user_likes"),
+                                                              .custom("user_work_history"),
+                                                              .custom("user_education_history")]
         let loginButton = LoginButton(readPermissions: readPermissions)
         loginButton.delegate = self
         loginButton.center = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
@@ -124,6 +156,14 @@ class LoginViewController: UIViewController {
         activityDriver
             .drive(self.activityIndicator.rx.isAnimating)
             .disposed(by: disposeBag)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let userDefaults = UserDefaults.standard
+        if !userDefaults.bool(forKey: "PRE_LOGIN_ONBOARDING_COMPLETED") {
+            showOnboarding()
+        }
     }
 }
 
@@ -179,6 +219,10 @@ extension LoginViewController: LoginButtonDelegate {
         User.current.value?.logOut()
         activityIndicator.stopAnimating()
     }
+    
+    func dismissOnboarding() {
+        onboardingViewController?.dismiss(animated: true, completion: nil)
+    }
 
 }
 
@@ -208,4 +252,13 @@ extension LoginViewController: TTTAttributedLabelDelegate {
         }
     }
     
+}
+
+// MARK: BWWalkthroughViewControllerDelegate
+
+extension LoginViewController: BWWalkthroughViewControllerDelegate {
+    func walkthroughPageDidChange(_ pageNumber: Int) {
+        let parameters = ["slide_name": slideNames[pageNumber]]
+        Analytics.Log(event: "Onboarding_view_slide", with: parameters)
+    }
 }

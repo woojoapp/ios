@@ -88,6 +88,30 @@
 		856264E51FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856264E11FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib */; };
 		856264E61FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856264E11FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib */; };
 		856264E71FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856264E11FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib */; };
+		85651A9C205FB72400763266 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85651A9B205FB72300763266 /* Onboarding.storyboard */; };
+		85651A9D205FB72400763266 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85651A9B205FB72300763266 /* Onboarding.storyboard */; };
+		85651A9E205FB72400763266 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85651A9B205FB72300763266 /* Onboarding.storyboard */; };
+		85651AA1205FDE6400763266 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AA0205FDE6400763266 /* OnboardingViewController.swift */; };
+		85651AA2205FDE6400763266 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AA0205FDE6400763266 /* OnboardingViewController.swift */; };
+		85651AA3205FDE6400763266 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AA0205FDE6400763266 /* OnboardingViewController.swift */; };
+		85651AA5205FFE5B00763266 /* OnboardingLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AA4205FFE5B00763266 /* OnboardingLoginViewController.swift */; };
+		85651AA6205FFE5B00763266 /* OnboardingLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AA4205FFE5B00763266 /* OnboardingLoginViewController.swift */; };
+		85651AA7205FFE5B00763266 /* OnboardingLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AA4205FFE5B00763266 /* OnboardingLoginViewController.swift */; };
+		85651AA92060351D00763266 /* OnboardingPostOkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AA82060351D00763266 /* OnboardingPostOkViewController.swift */; };
+		85651AAA2060351D00763266 /* OnboardingPostOkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AA82060351D00763266 /* OnboardingPostOkViewController.swift */; };
+		85651AAB2060351D00763266 /* OnboardingPostOkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AA82060351D00763266 /* OnboardingPostOkViewController.swift */; };
+		85651AAD206035DD00763266 /* OnboardingPostBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AAC206035DD00763266 /* OnboardingPostBaseViewController.swift */; };
+		85651AAE206035DD00763266 /* OnboardingPostBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AAC206035DD00763266 /* OnboardingPostBaseViewController.swift */; };
+		85651AAF206035DD00763266 /* OnboardingPostBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AAC206035DD00763266 /* OnboardingPostBaseViewController.swift */; };
+		85651AB120603A5E00763266 /* OnboardingPostAboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AB020603A5E00763266 /* OnboardingPostAboutViewController.swift */; };
+		85651AB220603A5E00763266 /* OnboardingPostAboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AB020603A5E00763266 /* OnboardingPostAboutViewController.swift */; };
+		85651AB320603A5E00763266 /* OnboardingPostAboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AB020603A5E00763266 /* OnboardingPostAboutViewController.swift */; };
+		85651AB520603E2D00763266 /* OnboardingPostPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AB420603E2D00763266 /* OnboardingPostPhotosViewController.swift */; };
+		85651AB620603E2D00763266 /* OnboardingPostPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AB420603E2D00763266 /* OnboardingPostPhotosViewController.swift */; };
+		85651AB720603E2D00763266 /* OnboardingPostPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AB420603E2D00763266 /* OnboardingPostPhotosViewController.swift */; };
+		85651AB920603E5200763266 /* OnboardingPostEndViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AB820603E5200763266 /* OnboardingPostEndViewController.swift */; };
+		85651ABA20603E5200763266 /* OnboardingPostEndViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AB820603E5200763266 /* OnboardingPostEndViewController.swift */; };
+		85651ABB20603E5200763266 /* OnboardingPostEndViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AB820603E5200763266 /* OnboardingPostEndViewController.swift */; };
 		85662C051F90BD6500D5701E /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EB2EE51DE20DAE00F0A55C /* Activity.swift */; };
 		85662C061F90BD6500D5701E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8961DCBB0CC00C18EC3 /* Event.swift */; };
 		85662C071F90BD6500D5701E /* Candidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8A11DCCA61600C18EC3 /* Candidate.swift */; };
@@ -431,6 +455,14 @@
 		85575C7C201BD7BB00D5B625 /* FlightNumberTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightNumberTextField.swift; sourceTree = "<group>"; };
 		856264E01FAC5CA2000AC40E /* ExploreEventsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreEventsTableViewCell.swift; sourceTree = "<group>"; };
 		856264E11FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExploreEventsTableViewCell.xib; sourceTree = "<group>"; };
+		85651A9B205FB72300763266 /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
+		85651AA0205FDE6400763266 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		85651AA4205FFE5B00763266 /* OnboardingLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginViewController.swift; sourceTree = "<group>"; };
+		85651AA82060351D00763266 /* OnboardingPostOkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPostOkViewController.swift; sourceTree = "<group>"; };
+		85651AAC206035DD00763266 /* OnboardingPostBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPostBaseViewController.swift; sourceTree = "<group>"; };
+		85651AB020603A5E00763266 /* OnboardingPostAboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPostAboutViewController.swift; sourceTree = "<group>"; };
+		85651AB420603E2D00763266 /* OnboardingPostPhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPostPhotosViewController.swift; sourceTree = "<group>"; };
+		85651AB820603E5200763266 /* OnboardingPostEndViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPostEndViewController.swift; sourceTree = "<group>"; };
 		85662BEF1F90BCEF00D5701E /* Woojo Staging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Woojo Staging.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		85662C231F90BD9500D5701E /* Woojo Development.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Woojo Development.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		85662CFC1F90BE7500D5701E /* Woojo Development.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Woojo Development.entitlements"; path = "Woojo Development/Woojo Development.entitlements"; sourceTree = "<group>"; };
@@ -572,6 +604,7 @@
 		8506A89D1DCC89F200C18EC3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				85651A9F205FDE1D00763266 /* Onboarding */,
 				85E5D4C71DD720FE003E2376 /* Events */,
 				85E5D4C81DD7211A003E2376 /* Candidates */,
 				85E5D4C61DD720F2003E2376 /* Chats */,
@@ -689,8 +722,23 @@
 				85512B151DCB5B020072C1B8 /* Assets.xcassets */,
 				85512B171DCB5B020072C1B8 /* LaunchScreen.storyboard */,
 				85512B1A1DCB5B020072C1B8 /* Info.plist */,
+				85651A9B205FB72300763266 /* Onboarding.storyboard */,
 			);
 			path = Woojo;
+			sourceTree = "<group>";
+		};
+		85651A9F205FDE1D00763266 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				85651AA0205FDE6400763266 /* OnboardingViewController.swift */,
+				85651AA4205FFE5B00763266 /* OnboardingLoginViewController.swift */,
+				85651AA82060351D00763266 /* OnboardingPostOkViewController.swift */,
+				85651AAC206035DD00763266 /* OnboardingPostBaseViewController.swift */,
+				85651AB020603A5E00763266 /* OnboardingPostAboutViewController.swift */,
+				85651AB420603E2D00763266 /* OnboardingPostPhotosViewController.swift */,
+				85651AB820603E5200763266 /* OnboardingPostEndViewController.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		85662CFF1F90BEF800D5701E /* Production */ = {
@@ -1043,6 +1091,7 @@
 				85685F761DEC7B69009BAEE0 /* SearchEventsResultsTableViewCell.xib in Resources */,
 				856264E51FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib in Resources */,
 				858398D11FBB221A00ECFFE3 /* CandidateOverlayView.xib in Resources */,
+				85651A9C205FB72400763266 /* Onboarding.storyboard in Resources */,
 				858FEE3D1E02A40C00322E8E /* AlbumsTableViewCell.xib in Resources */,
 				85B36AC01FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.xib in Resources */,
 				850F7D46202DD8D3005D6733 /* Localizable.strings in Resources */,
@@ -1071,6 +1120,7 @@
 				856264E61FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib in Resources */,
 				85662D0B1F90E36500D5701E /* GoogleService-Info.plist in Resources */,
 				858398D21FBB221A00ECFFE3 /* CandidateOverlayView.xib in Resources */,
+				85651A9D205FB72400763266 /* Onboarding.storyboard in Resources */,
 				85B36AC11FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.xib in Resources */,
 				85662C1B1F90BD7C00D5701E /* MyEventsTableViewCell.xib in Resources */,
 				850F7D47202DD8D3005D6733 /* Localizable.strings in Resources */,
@@ -1099,6 +1149,7 @@
 				856264E71FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib in Resources */,
 				85662C551F90BDDD00D5701E /* AlbumsTableViewCell.xib in Resources */,
 				858398D31FBB221A00ECFFE3 /* CandidateOverlayView.xib in Resources */,
+				85651A9E205FB72400763266 /* Onboarding.storyboard in Resources */,
 				85B36AC21FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.xib in Resources */,
 				85662C501F90BDD900D5701E /* SearchEventsResultsTableViewCell.xib in Resources */,
 				850F7D48202DD8D3005D6733 /* Localizable.strings in Resources */,
@@ -1157,6 +1208,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Woojo Development/Pods-Woojo Development-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Amplitude-iOS/Amplitude_iOS.framework",
 				"${BUILT_PRODUCTS_DIR}/Applozic/Applozic.framework",
+				"${BUILT_PRODUCTS_DIR}/BWWalkthrough/BWWalkthrough.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/Branch/Branch.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
@@ -1189,6 +1241,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Amplitude_iOS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Applozic.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BWWalkthrough.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Branch.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
@@ -1323,6 +1376,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Woojo/Pods-Woojo-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Amplitude-iOS/Amplitude_iOS.framework",
 				"${BUILT_PRODUCTS_DIR}/Applozic/Applozic.framework",
+				"${BUILT_PRODUCTS_DIR}/BWWalkthrough/BWWalkthrough.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/Branch/Branch.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
@@ -1355,6 +1409,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Amplitude_iOS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Applozic.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BWWalkthrough.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Branch.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
@@ -1397,6 +1452,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Woojo Staging/Pods-Woojo Staging-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Amplitude-iOS/Amplitude_iOS.framework",
 				"${BUILT_PRODUCTS_DIR}/Applozic/Applozic.framework",
+				"${BUILT_PRODUCTS_DIR}/BWWalkthrough/BWWalkthrough.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/Branch/Branch.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
@@ -1429,6 +1485,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Amplitude_iOS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Applozic.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BWWalkthrough.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Branch.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
@@ -1483,6 +1540,7 @@
 				8506A8991DCBB9C000C18EC3 /* EventsTableViewCell.swift in Sources */,
 				85662CB61F90BE2200D5701E /* AlbumsTableViewController.swift in Sources */,
 				85662CC71F90BE2200D5701E /* Constants+App.swift in Sources */,
+				85651AA5205FFE5B00763266 /* OnboardingLoginViewController.swift in Sources */,
 				856264E21FAC5CA2000AC40E /* ExploreEventsTableViewCell.swift in Sources */,
 				85662CA51F90BE2200D5701E /* MyEventsTableViewController.swift in Sources */,
 				85F3CED42007E3B400FAB0FF /* PlansViewController.swift in Sources */,
@@ -1491,6 +1549,7 @@
 				85662CB11F90BE2200D5701E /* PreferencesViewController.swift in Sources */,
 				85662CBC1F90BE2200D5701E /* LoginViewController.swift in Sources */,
 				854DDAC51DE47DE500655EFC /* User.swift in Sources */,
+				85651AB920603E5200763266 /* OnboardingPostEndViewController.swift in Sources */,
 				85575C75201B78CE00D5B625 /* FlightsViewController.swift in Sources */,
 				85662CBA1F90BE2200D5701E /* AboutWebViewController.swift in Sources */,
 				856B0A9E1FA0838F0041C11E /* UserCommonEventTableViewCell.swift in Sources */,
@@ -1508,12 +1567,14 @@
 				85B36AB41FB1BF8A00A7B599 /* Friend.swift in Sources */,
 				85662CAD1F90BE2200D5701E /* ChatViewController.swift in Sources */,
 				85BE1DCB1FBDD7C50091A9D3 /* UserEventGraphRequest.swift in Sources */,
+				85651AA1205FDE6400763266 /* OnboardingViewController.swift in Sources */,
 				85FF1D491FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */,
 				853DBC911FBB567100AC8E3C /* EventMatchCollectionViewCell.swift in Sources */,
 				85C18422203ED55100E46AE2 /* EventbriteEventsViewController.swift in Sources */,
 				85662CC01F90BE2200D5701E /* NavigationController.swift in Sources */,
 				851D176A204B17CD008E6342 /* CommonAnalytics.swift in Sources */,
 				85B36AC51FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift in Sources */,
+				85651AB120603A5E00763266 /* OnboardingPostAboutViewController.swift in Sources */,
 				85B36ABD1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift in Sources */,
 				854DDABF1DE3654E00655EFC /* MyEventsTableViewCell.swift in Sources */,
 				8556C6331F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */,
@@ -1536,11 +1597,13 @@
 				85662CAF1F90BE2200D5701E /* SettingsViewController.swift in Sources */,
 				85662CC31F90BE2200D5701E /* Application.swift in Sources */,
 				85DC3D7D1E0008B900116159 /* Album.swift in Sources */,
+				85651AA92060351D00763266 /* OnboardingPostOkViewController.swift in Sources */,
 				853DBC8C1FBB4A1200AC8E3C /* EventMatchesTableViewCell.swift in Sources */,
 				85304512203F58E800EF382B /* EventbriteLoginViewController.swift in Sources */,
 				85662CAC1F90BE2200D5701E /* ALChatManager.swift in Sources */,
 				85662CC51F90BE2200D5701E /* Constants.swift in Sources */,
 				851CDBE61DDEF18A00B887C0 /* UserEventsGraphRequest.swift in Sources */,
+				85651AB520603E2D00763266 /* OnboardingPostPhotosViewController.swift in Sources */,
 				85662CBF1F90BE2200D5701E /* ShowsSettingsButton.swift in Sources */,
 				85662CBB1F90BE2200D5701E /* UserDetailsViewController.swift in Sources */,
 				85DC3D7B1E00088F00116159 /* UserAlbumsGraphRequest.swift in Sources */,
@@ -1563,6 +1626,7 @@
 				85662CC11F90BE2200D5701E /* UnwindThenShowChatSegue.swift in Sources */,
 				85E5D4CF1DD9FA41003E2376 /* Gender.swift in Sources */,
 				85685F871DEF3310009BAEE0 /* CandidatesDelegate.swift in Sources */,
+				85651AAD206035DD00763266 /* OnboardingPostBaseViewController.swift in Sources */,
 				85662CB31F90BE2200D5701E /* ProfileViewController.swift in Sources */,
 				85662CB21F90BE2200D5701E /* RangeSlider.swift in Sources */,
 				85396F271E5F10EA007EDB18 /* Notification.swift in Sources */,
@@ -1587,6 +1651,7 @@
 				85662CDA1F90BE2300D5701E /* SettingsViewController.swift in Sources */,
 				85662C111F90BD6500D5701E /* User.swift in Sources */,
 				85662C161F90BD7500D5701E /* AlbumPhotosGraphRequest.swift in Sources */,
+				85651AA6205FFE5B00763266 /* OnboardingLoginViewController.swift in Sources */,
 				856264E31FAC5CA2000AC40E /* ExploreEventsTableViewCell.swift in Sources */,
 				85B36AAD1FB1B9FD00A7B599 /* UserPageLikesGraphRequest.swift in Sources */,
 				85F3CED52007E3B400FAB0FF /* PlansViewController.swift in Sources */,
@@ -1595,6 +1660,7 @@
 				85662CE41F90BE2300D5701E /* AboutTableViewController.swift in Sources */,
 				85662CCF1F90BE2300D5701E /* AddEventViewController.swift in Sources */,
 				85B36AAB1FB1B9F900A7B599 /* PageLike.swift in Sources */,
+				85651ABA20603E5200763266 /* OnboardingPostEndViewController.swift in Sources */,
 				85662CEB1F90BE2300D5701E /* NavigationController.swift in Sources */,
 				85575C76201B78CE00D5B625 /* FlightsViewController.swift in Sources */,
 				85662C0D1F90BD6500D5701E /* Place.swift in Sources */,
@@ -1612,12 +1678,14 @@
 				85B36AB51FB1BF8A00A7B599 /* Friend.swift in Sources */,
 				85662CD21F90BE2300D5701E /* ExploreEventsViewController.swift in Sources */,
 				85BE1DCC1FBDD7C50091A9D3 /* UserEventGraphRequest.swift in Sources */,
+				85651AA2205FDE6400763266 /* OnboardingViewController.swift in Sources */,
 				85FF1D4A1FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */,
 				853DBC921FBB567100AC8E3C /* EventMatchCollectionViewCell.swift in Sources */,
 				85C18423203ED55100E46AE2 /* EventbriteEventsViewController.swift in Sources */,
 				85662CE01F90BE2300D5701E /* ProfilePhotoCollectionViewCell.swift in Sources */,
 				851D176B204B17CD008E6342 /* CommonAnalytics.swift in Sources */,
 				85B36AC61FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift in Sources */,
+				85651AB220603A5E00763266 /* OnboardingPostAboutViewController.swift in Sources */,
 				85B36ABE1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift in Sources */,
 				85B36AA61FAE170500A7B599 /* Constants+Env.swift in Sources */,
 				85662CE21F90BE2300D5701E /* PhotoCollectionViewController.swift in Sources */,
@@ -1640,11 +1708,13 @@
 				856B0AB21FA1D2970041C11E /* CommonEventInfo.swift in Sources */,
 				85662CE71F90BE2300D5701E /* LoginViewController.swift in Sources */,
 				85662CE61F90BE2300D5701E /* UserDetailsViewController.swift in Sources */,
+				85651AAA2060351D00763266 /* OnboardingPostOkViewController.swift in Sources */,
 				853DBC8D1FBB4A1200AC8E3C /* EventMatchesTableViewCell.swift in Sources */,
 				85304513203F58E800EF382B /* EventbriteLoginViewController.swift in Sources */,
 				85662C1C1F90BD7C00D5701E /* MyEventsTableViewCell.swift in Sources */,
 				85662CD91F90BE2300D5701E /* MessagesViewController.swift in Sources */,
 				85662C0A1F90BD6500D5701E /* Pass.swift in Sources */,
+				85651AB620603E2D00763266 /* OnboardingPostPhotosViewController.swift in Sources */,
 				85662CE31F90BE2300D5701E /* AlbumPhotoCollectionViewCell.swift in Sources */,
 				85662C141F90BD7500D5701E /* SearchEventsGraphRequest.swift in Sources */,
 				85B36AB11FB1BEA200A7B599 /* UserFriendsGraphRequest.swift in Sources */,
@@ -1667,6 +1737,7 @@
 				85662CDC1F90BE2300D5701E /* PreferencesViewController.swift in Sources */,
 				85662CED1F90BE2300D5701E /* ReachabilityAware.swift in Sources */,
 				85662C061F90BD6500D5701E /* Event.swift in Sources */,
+				85651AAE206035DD00763266 /* OnboardingPostBaseViewController.swift in Sources */,
 				85662CD81F90BE2300D5701E /* ChatViewController.swift in Sources */,
 				85662CDB1F90BE2300D5701E /* ProfilePhotoImageView.swift in Sources */,
 				85662C1E1F90BD7C00D5701E /* SearchEventsResultsTableViewCell.swift in Sources */,
@@ -1691,6 +1762,7 @@
 				85662C881F90BE1300D5701E /* SettingsViewController.swift in Sources */,
 				85662C441F90BDD000D5701E /* User.swift in Sources */,
 				85662C491F90BDD400D5701E /* AlbumPhotosGraphRequest.swift in Sources */,
+				85651AA7205FFE5B00763266 /* OnboardingLoginViewController.swift in Sources */,
 				856264E41FAC5CA2000AC40E /* ExploreEventsTableViewCell.swift in Sources */,
 				85B36AAE1FB1B9FD00A7B599 /* UserPageLikesGraphRequest.swift in Sources */,
 				85F3CED62007E3B400FAB0FF /* PlansViewController.swift in Sources */,
@@ -1699,6 +1771,7 @@
 				85662C921F90BE1300D5701E /* AboutTableViewController.swift in Sources */,
 				85662C7D1F90BE1300D5701E /* AddEventViewController.swift in Sources */,
 				85B36AAC1FB1B9F900A7B599 /* PageLike.swift in Sources */,
+				85651ABB20603E5200763266 /* OnboardingPostEndViewController.swift in Sources */,
 				85662C991F90BE1300D5701E /* NavigationController.swift in Sources */,
 				85575C77201B78CE00D5B625 /* FlightsViewController.swift in Sources */,
 				85662C401F90BDD000D5701E /* Place.swift in Sources */,
@@ -1716,12 +1789,14 @@
 				85B36AB61FB1BF8A00A7B599 /* Friend.swift in Sources */,
 				85662C801F90BE1300D5701E /* ExploreEventsViewController.swift in Sources */,
 				85BE1DCD1FBDD7C50091A9D3 /* UserEventGraphRequest.swift in Sources */,
+				85651AA3205FDE6400763266 /* OnboardingViewController.swift in Sources */,
 				85FF1D4B1FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */,
 				853DBC931FBB567100AC8E3C /* EventMatchCollectionViewCell.swift in Sources */,
 				85C18424203ED55100E46AE2 /* EventbriteEventsViewController.swift in Sources */,
 				85662C8E1F90BE1300D5701E /* ProfilePhotoCollectionViewCell.swift in Sources */,
 				851D176C204B17CE008E6342 /* CommonAnalytics.swift in Sources */,
 				85B36AC71FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift in Sources */,
+				85651AB320603A5E00763266 /* OnboardingPostAboutViewController.swift in Sources */,
 				85B36ABF1FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.swift in Sources */,
 				85B36AA81FAE170800A7B599 /* Constants+Env.swift in Sources */,
 				85662C901F90BE1300D5701E /* PhotoCollectionViewController.swift in Sources */,
@@ -1744,11 +1819,13 @@
 				856B0AB31FA1D2970041C11E /* CommonEventInfo.swift in Sources */,
 				85662C951F90BE1300D5701E /* LoginViewController.swift in Sources */,
 				85662C941F90BE1300D5701E /* UserDetailsViewController.swift in Sources */,
+				85651AAB2060351D00763266 /* OnboardingPostOkViewController.swift in Sources */,
 				853DBC8E1FBB4A1200AC8E3C /* EventMatchesTableViewCell.swift in Sources */,
 				85304514203F58E800EF382B /* EventbriteLoginViewController.swift in Sources */,
 				85662C4F1F90BDD900D5701E /* MyEventsTableViewCell.swift in Sources */,
 				85662C871F90BE1300D5701E /* MessagesViewController.swift in Sources */,
 				85662C3D1F90BDD000D5701E /* Pass.swift in Sources */,
+				85651AB720603E2D00763266 /* OnboardingPostPhotosViewController.swift in Sources */,
 				85662C911F90BE1300D5701E /* AlbumPhotoCollectionViewCell.swift in Sources */,
 				85662C471F90BDD400D5701E /* SearchEventsGraphRequest.swift in Sources */,
 				85B36AB21FB1BEA200A7B599 /* UserFriendsGraphRequest.swift in Sources */,
@@ -1771,6 +1848,7 @@
 				85662C8A1F90BE1300D5701E /* PreferencesViewController.swift in Sources */,
 				85662C9B1F90BE1300D5701E /* ReachabilityAware.swift in Sources */,
 				85662C391F90BDD000D5701E /* Event.swift in Sources */,
+				85651AAF206035DD00763266 /* OnboardingPostBaseViewController.swift in Sources */,
 				85662C861F90BE1300D5701E /* ChatViewController.swift in Sources */,
 				85662C891F90BE1300D5701E /* ProfilePhotoImageView.swift in Sources */,
 				85662C511F90BDD900D5701E /* SearchEventsResultsTableViewCell.swift in Sources */,

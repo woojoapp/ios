@@ -26,6 +26,10 @@ class MainTabBarController: UITabBarController {
         //ALApplozicSettings.setUnreadCountLabelBGColor(UIColor.red)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     func setupDataSource() {
         User.current.asObservable()
             .flatMap { user -> Observable<[CurrentUser.Notification]> in
@@ -51,7 +55,7 @@ class MainTabBarController: UITabBarController {
                     let interactionNotifications = notifications.filter({ $0 is CurrentUser.InteractionNotification })
                     chatsTabBarItem.badgeValue = (interactionNotifications.count > 0) ? String(interactionNotifications.count) : nil
                 }
-            }).addDisposableTo(disposeBag)
+            }).disposed(by: disposeBag)
     }
     
     func showEvents() {
