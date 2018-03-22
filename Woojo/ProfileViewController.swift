@@ -13,13 +13,12 @@ import Applozic
 import PKHUD
 import RSKImageCropper
 
-class ProfileViewController: UITableViewController {
-    
+class ProfileViewController: UITableViewController, PhotoSource {
     @IBOutlet weak var profilePhotoImageView: ProfilePhotoImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var bioTableViewCell: BioTableViewCell!
-    @IBOutlet weak var photosCollectionView: UICollectionView!
+    @IBOutlet var photosCollectionView: UICollectionView!
     @IBOutlet weak var tapGestureRecognizer: UITapGestureRecognizer!
     @IBOutlet weak var longPressGestureRecognizer: UILongPressGestureRecognizer!
     
@@ -86,12 +85,12 @@ class ProfileViewController: UITableViewController {
                 self.profilePhotoImageView.image = #imageLiteral(resourceName: "placeholder_40x40")
             }
         })
-        .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         User.current.asObservable()
             .map{ $0?.profile.displayName }
-            .bindTo(nameLabel.rx.text)
-            .addDisposableTo(disposeBag)
+            .bind(to: nameLabel.rx.text)
+            .disposed(by: disposeBag)
         
         User.current.asObservable()
             .flatMap { user -> Observable<String> in
@@ -110,8 +109,8 @@ class ProfileViewController: UITableViewController {
                     return text
                 }
             }
-            .bindTo(bioTableViewCell.bioTextView.rx.text)
-            .addDisposableTo(disposeBag)
+            .bind(to: bioTableViewCell.bioTextView.rx.text)
+            .disposed(by: disposeBag)
         
         User.current.asObservable()
             .map{
@@ -128,8 +127,8 @@ class ProfileViewController: UITableViewController {
                 }
                 return description
             }
-            .bindTo(descriptionLabel.rx.text)
-            .addDisposableTo(disposeBag)
+            .bind(to: descriptionLabel.rx.text)
+            .disposed(by: disposeBag)
         
         self.longPressGestureRecognizer.addTarget(self, action: #selector(longPress))
     }
@@ -143,7 +142,7 @@ class ProfileViewController: UITableViewController {
             .map{ $0?.count }
             .subscribe(onNext: { count in
                 self.setBioFooter(count: count)
-            }).addDisposableTo(disposeBag)
+            }).disposed(by: disposeBag)
     }
     
     func setBioFooter(count: Int?) {
@@ -157,12 +156,11 @@ class ProfileViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.updateTableViewHeaderViewHeight()
-        self.setBioFooter(count: bioTableViewCell.bioTextView.text.characters.count)
+        self.setBioFooter(count: bioTableViewCell.bioTextView.text.count)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

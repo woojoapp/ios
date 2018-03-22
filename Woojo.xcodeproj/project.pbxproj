@@ -88,9 +88,6 @@
 		856264E51FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856264E11FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib */; };
 		856264E61FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856264E11FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib */; };
 		856264E71FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856264E11FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib */; };
-		85651A9C205FB72400763266 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85651A9B205FB72300763266 /* Onboarding.storyboard */; };
-		85651A9D205FB72400763266 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85651A9B205FB72300763266 /* Onboarding.storyboard */; };
-		85651A9E205FB72400763266 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85651A9B205FB72300763266 /* Onboarding.storyboard */; };
 		85651AA1205FDE6400763266 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AA0205FDE6400763266 /* OnboardingViewController.swift */; };
 		85651AA2205FDE6400763266 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AA0205FDE6400763266 /* OnboardingViewController.swift */; };
 		85651AA3205FDE6400763266 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AA0205FDE6400763266 /* OnboardingViewController.swift */; };
@@ -112,6 +109,9 @@
 		85651AB920603E5200763266 /* OnboardingPostEndViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AB820603E5200763266 /* OnboardingPostEndViewController.swift */; };
 		85651ABA20603E5200763266 /* OnboardingPostEndViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AB820603E5200763266 /* OnboardingPostEndViewController.swift */; };
 		85651ABB20603E5200763266 /* OnboardingPostEndViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651AB820603E5200763266 /* OnboardingPostEndViewController.swift */; };
+		85651ABD2062DDCB00763266 /* PhotoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651ABC2062DDCB00763266 /* PhotoSource.swift */; };
+		85651ABE2062DDCB00763266 /* PhotoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651ABC2062DDCB00763266 /* PhotoSource.swift */; };
+		85651ABF2062DDCB00763266 /* PhotoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651ABC2062DDCB00763266 /* PhotoSource.swift */; };
 		85662C051F90BD6500D5701E /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EB2EE51DE20DAE00F0A55C /* Activity.swift */; };
 		85662C061F90BD6500D5701E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8961DCBB0CC00C18EC3 /* Event.swift */; };
 		85662C071F90BD6500D5701E /* Candidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506A8A11DCCA61600C18EC3 /* Candidate.swift */; };
@@ -385,6 +385,9 @@
 		85FB8C2D2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85FB8C292008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib */; };
 		85FB8C2E2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85FB8C292008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib */; };
 		85FB8C2F2008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85FB8C292008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib */; };
+		85FD07532063D513001618C3 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85FD07572063D513001618C3 /* Onboarding.storyboard */; };
+		85FD07542063D513001618C3 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85FD07572063D513001618C3 /* Onboarding.storyboard */; };
+		85FD07552063D513001618C3 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85FD07572063D513001618C3 /* Onboarding.storyboard */; };
 		85FF1D491FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */; };
 		85FF1D4A1FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */; };
 		85FF1D4B1FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */; };
@@ -455,7 +458,6 @@
 		85575C7C201BD7BB00D5B625 /* FlightNumberTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightNumberTextField.swift; sourceTree = "<group>"; };
 		856264E01FAC5CA2000AC40E /* ExploreEventsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreEventsTableViewCell.swift; sourceTree = "<group>"; };
 		856264E11FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExploreEventsTableViewCell.xib; sourceTree = "<group>"; };
-		85651A9B205FB72300763266 /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		85651AA0205FDE6400763266 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		85651AA4205FFE5B00763266 /* OnboardingLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginViewController.swift; sourceTree = "<group>"; };
 		85651AA82060351D00763266 /* OnboardingPostOkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPostOkViewController.swift; sourceTree = "<group>"; };
@@ -463,6 +465,7 @@
 		85651AB020603A5E00763266 /* OnboardingPostAboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPostAboutViewController.swift; sourceTree = "<group>"; };
 		85651AB420603E2D00763266 /* OnboardingPostPhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPostPhotosViewController.swift; sourceTree = "<group>"; };
 		85651AB820603E5200763266 /* OnboardingPostEndViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPostEndViewController.swift; sourceTree = "<group>"; };
+		85651ABC2062DDCB00763266 /* PhotoSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSource.swift; sourceTree = "<group>"; };
 		85662BEF1F90BCEF00D5701E /* Woojo Staging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Woojo Staging.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		85662C231F90BD9500D5701E /* Woojo Development.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Woojo Development.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		85662CFC1F90BE7500D5701E /* Woojo Development.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Woojo Development.entitlements"; path = "Woojo Development/Woojo Development.entitlements"; sourceTree = "<group>"; };
@@ -541,6 +544,8 @@
 		85FB8C1A2007FABF00863E0F /* Plan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plan.swift; sourceTree = "<group>"; };
 		85FB8C282008FCBC00863E0F /* SearchPlacesResultsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlacesResultsTableViewCell.swift; sourceTree = "<group>"; };
 		85FB8C292008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchPlacesResultsTableViewCell.xib; sourceTree = "<group>"; };
+		85FD07562063D513001618C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
+		85FD075A2063D539001618C3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = fr; path = fr.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
 		85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateOverlayView.swift; sourceTree = "<group>"; };
 		9A2EC49C5603EE727058B9CF /* Pods_Woojo_Development.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Woojo_Development.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5F606FAEF706B6471319465 /* Pods_Woojo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Woojo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -722,7 +727,7 @@
 				85512B151DCB5B020072C1B8 /* Assets.xcassets */,
 				85512B171DCB5B020072C1B8 /* LaunchScreen.storyboard */,
 				85512B1A1DCB5B020072C1B8 /* Info.plist */,
-				85651A9B205FB72300763266 /* Onboarding.storyboard */,
+				85FD07572063D513001618C3 /* Onboarding.storyboard */,
 			);
 			path = Woojo;
 			sourceTree = "<group>";
@@ -827,6 +832,7 @@
 				858FEE361E0025A400322E8E /* AlbumsTableViewController.swift */,
 				858FEE3F1E02ACF400322E8E /* PhotoCollectionViewController.swift */,
 				858FEE431E04250B00322E8E /* AlbumPhotoCollectionViewCell.swift */,
+				85651ABC2062DDCB00763266 /* PhotoSource.swift */,
 			);
 			name = Photos;
 			sourceTree = "<group>";
@@ -1091,7 +1097,7 @@
 				85685F761DEC7B69009BAEE0 /* SearchEventsResultsTableViewCell.xib in Resources */,
 				856264E51FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib in Resources */,
 				858398D11FBB221A00ECFFE3 /* CandidateOverlayView.xib in Resources */,
-				85651A9C205FB72400763266 /* Onboarding.storyboard in Resources */,
+				85FD07532063D513001618C3 /* Onboarding.storyboard in Resources */,
 				858FEE3D1E02A40C00322E8E /* AlbumsTableViewCell.xib in Resources */,
 				85B36AC01FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.xib in Resources */,
 				850F7D46202DD8D3005D6733 /* Localizable.strings in Resources */,
@@ -1120,7 +1126,7 @@
 				856264E61FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib in Resources */,
 				85662D0B1F90E36500D5701E /* GoogleService-Info.plist in Resources */,
 				858398D21FBB221A00ECFFE3 /* CandidateOverlayView.xib in Resources */,
-				85651A9D205FB72400763266 /* Onboarding.storyboard in Resources */,
+				85FD07542063D513001618C3 /* Onboarding.storyboard in Resources */,
 				85B36AC11FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.xib in Resources */,
 				85662C1B1F90BD7C00D5701E /* MyEventsTableViewCell.xib in Resources */,
 				850F7D47202DD8D3005D6733 /* Localizable.strings in Resources */,
@@ -1149,7 +1155,7 @@
 				856264E71FAC5CA2000AC40E /* ExploreEventsTableViewCell.xib in Resources */,
 				85662C551F90BDDD00D5701E /* AlbumsTableViewCell.xib in Resources */,
 				858398D31FBB221A00ECFFE3 /* CandidateOverlayView.xib in Resources */,
-				85651A9E205FB72400763266 /* Onboarding.storyboard in Resources */,
+				85FD07552063D513001618C3 /* Onboarding.storyboard in Resources */,
 				85B36AC21FB1CC9F00A7B599 /* UserCommonItemsTableViewCell.xib in Resources */,
 				85662C501F90BDD900D5701E /* SearchEventsResultsTableViewCell.xib in Resources */,
 				850F7D48202DD8D3005D6733 /* Localizable.strings in Resources */,
@@ -1599,6 +1605,7 @@
 				85DC3D7D1E0008B900116159 /* Album.swift in Sources */,
 				85651AA92060351D00763266 /* OnboardingPostOkViewController.swift in Sources */,
 				853DBC8C1FBB4A1200AC8E3C /* EventMatchesTableViewCell.swift in Sources */,
+				85651ABD2062DDCB00763266 /* PhotoSource.swift in Sources */,
 				85304512203F58E800EF382B /* EventbriteLoginViewController.swift in Sources */,
 				85662CAC1F90BE2200D5701E /* ALChatManager.swift in Sources */,
 				85662CC51F90BE2200D5701E /* Constants.swift in Sources */,
@@ -1710,6 +1717,7 @@
 				85662CE61F90BE2300D5701E /* UserDetailsViewController.swift in Sources */,
 				85651AAA2060351D00763266 /* OnboardingPostOkViewController.swift in Sources */,
 				853DBC8D1FBB4A1200AC8E3C /* EventMatchesTableViewCell.swift in Sources */,
+				85651ABE2062DDCB00763266 /* PhotoSource.swift in Sources */,
 				85304513203F58E800EF382B /* EventbriteLoginViewController.swift in Sources */,
 				85662C1C1F90BD7C00D5701E /* MyEventsTableViewCell.swift in Sources */,
 				85662CD91F90BE2300D5701E /* MessagesViewController.swift in Sources */,
@@ -1821,6 +1829,7 @@
 				85662C941F90BE1300D5701E /* UserDetailsViewController.swift in Sources */,
 				85651AAB2060351D00763266 /* OnboardingPostOkViewController.swift in Sources */,
 				853DBC8E1FBB4A1200AC8E3C /* EventMatchesTableViewCell.swift in Sources */,
+				85651ABF2062DDCB00763266 /* PhotoSource.swift in Sources */,
 				85304514203F58E800EF382B /* EventbriteLoginViewController.swift in Sources */,
 				85662C4F1F90BDD900D5701E /* MyEventsTableViewCell.swift in Sources */,
 				85662C871F90BE1300D5701E /* MessagesViewController.swift in Sources */,
@@ -1893,6 +1902,15 @@
 				85512B181DCB5B020072C1B8 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		85FD07572063D513001618C3 /* Onboarding.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				85FD07562063D513001618C3 /* Base */,
+				85FD075A2063D539001618C3 /* fr */,
+			);
+			name = Onboarding.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

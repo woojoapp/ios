@@ -14,7 +14,7 @@ class AlbumsTableViewController: UITableViewController {
     
     var photoIndex = 0
     var albums: [Album] = []
-    var profileViewController: ProfileViewController?
+    var profileViewController: PhotoSource?
     
     let disposeBag = DisposeBag()
     var reachabilityObserver: AnyObject?
@@ -38,7 +38,7 @@ class AlbumsTableViewController: UITableViewController {
         
         User.current.asObservable().subscribe(onNext: { _ in
             self.loadFacebookAlbums()
-        }).addDisposableTo(disposeBag)
+        }).disposed(by: disposeBag)
     }
     
     @objc func loadFacebookAlbums() {

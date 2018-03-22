@@ -88,9 +88,9 @@ class CandidatesViewController: UIViewController {
         checkReachability()        
         User.current.value?.activity.setLastSeen()
         let userDefaults = UserDefaults.standard
-        if !userDefaults.bool(forKey: "POST_LOGIN_ONBOARDING_COMPLETED") {
+        if User.current.value != nil && !userDefaults.bool(forKey: "POST_LOGIN_ONBOARDING_COMPLETED") {
             showOnboarding()
-        }
+    }
     }
     
     func showOnboarding() {

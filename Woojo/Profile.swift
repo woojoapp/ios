@@ -27,6 +27,7 @@ extension User {
         var gender: Gender?
         var birthday: Date?
         var description: Variable<String> = Variable("")
+        var firstName: Variable<String> = Variable("")
         var city: String?
         var country: String?        
         var user: User
@@ -90,6 +91,7 @@ extension User {
         func loadFrom(firebase snapshot: DataSnapshot) {
             if let value = snapshot.value as? [String:Any] {
                 displayName = value[Constants.User.Profile.properties.firebaseNodes.firstName] as? String
+                firstName.value = value[Constants.User.Profile.properties.firebaseNodes.firstName] as? String ?? ""
                 let photosSnap = snapshot.childSnapshot(forPath: Constants.User.Profile.Photo.firebaseNode)
                 for item in photosSnap.children {
                     if let photoSnap = item as? DataSnapshot, let index = Int(photoSnap.key), let id = photoSnap.value as? String {

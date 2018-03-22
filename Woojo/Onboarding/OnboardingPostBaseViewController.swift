@@ -17,29 +17,32 @@ class OnboardingPostBaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        User.current.asObservable()
+        let userPhotos = User.current.asObservable()
             .flatMap { user -> Observable<[User.Profile.Photo?]> in
                 if let currentUser = user {
                     return currentUser.profile.photos.asObservable()
                 } else {
                     return Variable([nil]).asObservable()
                 }
-            }
-            .map { photos -> UIImage in
-                if let profilePhoto = photos[0], let image = profilePhoto.images[User.Profile.Photo.Size.thumbnail] {
-                    return image
+        }
+        
+        userPhotos.subscribe(onNext: { photos in
+            if let profilePhoto = photos[0] {
+                if let image = profilePhoto.images[User.Profile.Photo.Size.thumbnail] {
+                    self.profileImageView.image = image
                 } else {
-                    return #imageLiteral(resourceName: "placeholder_40x40")
+                    profilePhoto.download(size: .thumbnail) {
+                        self.profileImageView.image = profilePhoto.images[User.Profile.Photo.Size.thumbnail]
+                    }
                 }
+            } else {
+                self.profileImageView.image = #imageLiteral(resourceName: "placeholder_40x40")
             }
-            .subscribe(onNext: { image in
-                self.profileImageView?.contentMode = .scaleAspectFill
-                self.profileImageView.image = image
-            })
-            .disposed(by: disposeBag)
+        }).disposed(by: disposeBag)
     }
     
     override func viewDidLayoutSubviews() {
+        profileImageView.contentMode = .scaleAspectFill
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
         profileImageView.clipsToBounds = true
     }
