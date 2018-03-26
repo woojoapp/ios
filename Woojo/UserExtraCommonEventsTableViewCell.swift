@@ -1,23 +1,26 @@
 //
-//  CandidateCommonEventCellTableViewCell.swift
+//  UserExtraCommonEventsTableViewCell.swift
 //  Woojo
 //
-//  Created by Edouard Goossens on 25/10/2017.
-//  Copyright © 2017 Tasty Electrons. All rights reserved.
+//  Created by Edouard Goossens on 26/03/2018.
+//  Copyright © 2018 Tasty Electrons. All rights reserved.
 //
 
 import UIKit
 
-class UserCommonEventTableViewCell: UITableViewCell {
+class UserExtraCommonEventsTableViewCell: UITableViewCell {
     
+    @IBOutlet var eventExtraNumberLabel: UILabel!
     @IBOutlet var eventTextLabel: UILabel!
-    @IBOutlet var eventImageView: UIImageView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        eventImageView.layer.borderWidth = 1
-        eventImageView.layer.borderColor = UIColor.white.cgColor
+        eventExtraNumberLabel.layer.borderWidth = 1
+        eventExtraNumberLabel.layer.borderColor = UIColor.white.cgColor
+        
+        eventExtraNumberLabel.layer.cornerRadius = 8.0
+        eventExtraNumberLabel.layer.masksToBounds = true
         
         eventTextLabel.layer.shadowColor = UIColor.black.cgColor
         eventTextLabel.layer.shadowRadius = 2.0

@@ -388,6 +388,18 @@
 		85FD07532063D513001618C3 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85FD07572063D513001618C3 /* Onboarding.storyboard */; };
 		85FD07542063D513001618C3 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85FD07572063D513001618C3 /* Onboarding.storyboard */; };
 		85FD07552063D513001618C3 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85FD07572063D513001618C3 /* Onboarding.storyboard */; };
+		85FD075C2068FEF4001618C3 /* NewUserCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FD075B2068FEF4001618C3 /* NewUserCardView.swift */; };
+		85FD075D2068FEF4001618C3 /* NewUserCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FD075B2068FEF4001618C3 /* NewUserCardView.swift */; };
+		85FD075E2068FEF4001618C3 /* NewUserCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FD075B2068FEF4001618C3 /* NewUserCardView.swift */; };
+		85FD07602068FF05001618C3 /* NewUserCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85FD075F2068FF05001618C3 /* NewUserCardView.xib */; };
+		85FD07612068FF05001618C3 /* NewUserCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85FD075F2068FF05001618C3 /* NewUserCardView.xib */; };
+		85FD07622068FF05001618C3 /* NewUserCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85FD075F2068FF05001618C3 /* NewUserCardView.xib */; };
+		85FD076520695BD2001618C3 /* UserExtraCommonEventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FD076320695BD2001618C3 /* UserExtraCommonEventsTableViewCell.swift */; };
+		85FD076620695BD2001618C3 /* UserExtraCommonEventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FD076320695BD2001618C3 /* UserExtraCommonEventsTableViewCell.swift */; };
+		85FD076720695BD2001618C3 /* UserExtraCommonEventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FD076320695BD2001618C3 /* UserExtraCommonEventsTableViewCell.swift */; };
+		85FD076820695BD2001618C3 /* UserExtraCommonEventsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85FD076420695BD2001618C3 /* UserExtraCommonEventsTableViewCell.xib */; };
+		85FD076920695BD2001618C3 /* UserExtraCommonEventsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85FD076420695BD2001618C3 /* UserExtraCommonEventsTableViewCell.xib */; };
+		85FD076A20695BD2001618C3 /* UserExtraCommonEventsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85FD076420695BD2001618C3 /* UserExtraCommonEventsTableViewCell.xib */; };
 		85FF1D491FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */; };
 		85FF1D4A1FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */; };
 		85FF1D4B1FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */; };
@@ -546,6 +558,10 @@
 		85FB8C292008FCBC00863E0F /* SearchPlacesResultsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchPlacesResultsTableViewCell.xib; sourceTree = "<group>"; };
 		85FD07562063D513001618C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
 		85FD075A2063D539001618C3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = fr; path = fr.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
+		85FD075B2068FEF4001618C3 /* NewUserCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserCardView.swift; sourceTree = "<group>"; };
+		85FD075F2068FF05001618C3 /* NewUserCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewUserCardView.xib; sourceTree = "<group>"; };
+		85FD076320695BD2001618C3 /* UserExtraCommonEventsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserExtraCommonEventsTableViewCell.swift; sourceTree = "<group>"; };
+		85FD076420695BD2001618C3 /* UserExtraCommonEventsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserExtraCommonEventsTableViewCell.xib; sourceTree = "<group>"; };
 		85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateOverlayView.swift; sourceTree = "<group>"; };
 		9A2EC49C5603EE727058B9CF /* Pods_Woojo_Development.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Woojo_Development.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5F606FAEF706B6471319465 /* Pods_Woojo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Woojo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -892,6 +908,10 @@
 				85B36AC31FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift */,
 				85B36AC41FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.xib */,
 				856B0AA11FA084730041C11E /* UserDescriptionTableViewCell.xib */,
+				85FD075B2068FEF4001618C3 /* NewUserCardView.swift */,
+				85FD075F2068FF05001618C3 /* NewUserCardView.xib */,
+				85FD076320695BD2001618C3 /* UserExtraCommonEventsTableViewCell.swift */,
+				85FD076420695BD2001618C3 /* UserExtraCommonEventsTableViewCell.xib */,
 			);
 			name = Candidates;
 			sourceTree = "<group>";
@@ -1105,8 +1125,10 @@
 				856B0AA31FA084730041C11E /* UserDescriptionTableViewCell.xib in Resources */,
 				85B36AC81FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.xib in Resources */,
 				854DDABD1DE364D400655EFC /* MyEventsTableViewCell.xib in Resources */,
+				85FD076820695BD2001618C3 /* UserExtraCommonEventsTableViewCell.xib in Resources */,
 				85662CCB1F90BE2200D5701E /* Info.plist in Resources */,
 				85382E881F94B880003909D7 /* GoogleService-Info.plist in Resources */,
+				85FD07602068FF05001618C3 /* NewUserCardView.xib in Resources */,
 				850F7D3B202DCFE8005D6733 /* LoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1134,8 +1156,10 @@
 				85B36AC91FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.xib in Resources */,
 				85662CF51F90BE2300D5701E /* Assets.xcassets in Resources */,
 				85662D081F90BFE800D5701E /* LaunchScreen.storyboard in Resources */,
+				85FD076920695BD2001618C3 /* UserExtraCommonEventsTableViewCell.xib in Resources */,
 				856B0AA61FA0847F0041C11E /* UserDescriptionTableViewCell.xib in Resources */,
 				85662CD51F90BE2300D5701E /* UserCardView.xib in Resources */,
+				85FD07612068FF05001618C3 /* NewUserCardView.xib in Resources */,
 				85662CF61F90BE2300D5701E /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1163,8 +1187,10 @@
 				85B36ACA1FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.xib in Resources */,
 				85662D051F90BF8B00D5701E /* GoogleService-Info.plist in Resources */,
 				85662D091F90BFE900D5701E /* LaunchScreen.storyboard in Resources */,
+				85FD076A20695BD2001618C3 /* UserExtraCommonEventsTableViewCell.xib in Resources */,
 				856B0AA71FA084800041C11E /* UserDescriptionTableViewCell.xib in Resources */,
 				85662C831F90BE1300D5701E /* UserCardView.xib in Resources */,
+				85FD07622068FF05001618C3 /* NewUserCardView.xib in Resources */,
 				85662CF91F90BE2400D5701E /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1548,6 +1574,7 @@
 				85662CC71F90BE2200D5701E /* Constants+App.swift in Sources */,
 				85651AA5205FFE5B00763266 /* OnboardingLoginViewController.swift in Sources */,
 				856264E21FAC5CA2000AC40E /* ExploreEventsTableViewCell.swift in Sources */,
+				85FD076520695BD2001618C3 /* UserExtraCommonEventsTableViewCell.swift in Sources */,
 				85662CA51F90BE2200D5701E /* MyEventsTableViewController.swift in Sources */,
 				85F3CED42007E3B400FAB0FF /* PlansViewController.swift in Sources */,
 				85662CBE1F90BE2200D5701E /* MainTabBarController.swift in Sources */,
@@ -1604,6 +1631,7 @@
 				85662CC31F90BE2200D5701E /* Application.swift in Sources */,
 				85DC3D7D1E0008B900116159 /* Album.swift in Sources */,
 				85651AA92060351D00763266 /* OnboardingPostOkViewController.swift in Sources */,
+				85FD075C2068FEF4001618C3 /* NewUserCardView.swift in Sources */,
 				853DBC8C1FBB4A1200AC8E3C /* EventMatchesTableViewCell.swift in Sources */,
 				85651ABD2062DDCB00763266 /* PhotoSource.swift in Sources */,
 				85304512203F58E800EF382B /* EventbriteLoginViewController.swift in Sources */,
@@ -1660,6 +1688,7 @@
 				85662C161F90BD7500D5701E /* AlbumPhotosGraphRequest.swift in Sources */,
 				85651AA6205FFE5B00763266 /* OnboardingLoginViewController.swift in Sources */,
 				856264E31FAC5CA2000AC40E /* ExploreEventsTableViewCell.swift in Sources */,
+				85FD076620695BD2001618C3 /* UserExtraCommonEventsTableViewCell.swift in Sources */,
 				85B36AAD1FB1B9FD00A7B599 /* UserPageLikesGraphRequest.swift in Sources */,
 				85F3CED52007E3B400FAB0FF /* PlansViewController.swift in Sources */,
 				85662C151F90BD7500D5701E /* UserAlbumsGraphRequest.swift in Sources */,
@@ -1716,6 +1745,7 @@
 				85662CE71F90BE2300D5701E /* LoginViewController.swift in Sources */,
 				85662CE61F90BE2300D5701E /* UserDetailsViewController.swift in Sources */,
 				85651AAA2060351D00763266 /* OnboardingPostOkViewController.swift in Sources */,
+				85FD075D2068FEF4001618C3 /* NewUserCardView.swift in Sources */,
 				853DBC8D1FBB4A1200AC8E3C /* EventMatchesTableViewCell.swift in Sources */,
 				85651ABE2062DDCB00763266 /* PhotoSource.swift in Sources */,
 				85304513203F58E800EF382B /* EventbriteLoginViewController.swift in Sources */,
@@ -1772,6 +1802,7 @@
 				85662C491F90BDD400D5701E /* AlbumPhotosGraphRequest.swift in Sources */,
 				85651AA7205FFE5B00763266 /* OnboardingLoginViewController.swift in Sources */,
 				856264E41FAC5CA2000AC40E /* ExploreEventsTableViewCell.swift in Sources */,
+				85FD076720695BD2001618C3 /* UserExtraCommonEventsTableViewCell.swift in Sources */,
 				85B36AAE1FB1B9FD00A7B599 /* UserPageLikesGraphRequest.swift in Sources */,
 				85F3CED62007E3B400FAB0FF /* PlansViewController.swift in Sources */,
 				85662C481F90BDD400D5701E /* UserAlbumsGraphRequest.swift in Sources */,
@@ -1828,6 +1859,7 @@
 				85662C951F90BE1300D5701E /* LoginViewController.swift in Sources */,
 				85662C941F90BE1300D5701E /* UserDetailsViewController.swift in Sources */,
 				85651AAB2060351D00763266 /* OnboardingPostOkViewController.swift in Sources */,
+				85FD075E2068FEF4001618C3 /* NewUserCardView.swift in Sources */,
 				853DBC8E1FBB4A1200AC8E3C /* EventMatchesTableViewCell.swift in Sources */,
 				85651ABF2062DDCB00763266 /* PhotoSource.swift in Sources */,
 				85304514203F58E800EF382B /* EventbriteLoginViewController.swift in Sources */,

@@ -253,7 +253,7 @@ extension OnboardingPostPhotosViewController: UICollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
-        let availableWidth = view.frame.width - paddingSpace
+        let availableWidth = view.frame.width - paddingSpace - 12
         let widthPerItem = UIKit.floor(availableWidth / itemsPerRow)
         
         return CGSize(width: widthPerItem, height: widthPerItem)

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -16,11 +16,11 @@
             <objects>
                 <viewController storyboardIdentifier="Onboarding0" id="VGk-fS-au3" customClass="OnboardingViewController" customModule="Woojo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xAW-Ga-3J2">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DDh-aq-05w">
-                                <rect key="frame" x="16" y="603" width="48" height="48"/>
+                                <rect key="frame" x="16" y="504" width="48" height="48"/>
                                 <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="DDh-aq-05w" secondAttribute="height" multiplier="1:1" id="XZe-W1-DbW"/>
@@ -32,12 +32,12 @@
                                 </connections>
                             </button>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="BBE-UY-ZdL">
-                                <rect key="frame" x="168" y="608" width="39" height="37"/>
+                                <rect key="frame" x="140.5" y="509" width="39" height="37"/>
                                 <color key="pageIndicatorTintColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="currentPageIndicatorTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </pageControl>
                             <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cbZ-YX-qeG">
-                                <rect key="frame" x="311" y="603" width="48" height="48"/>
+                                <rect key="frame" x="256" y="504" width="48" height="48"/>
                                 <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="1FR-zu-vEr"/>
@@ -49,7 +49,7 @@
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fer-Fn-J8J">
-                                <rect key="frame" x="311" y="603" width="48" height="48"/>
+                                <rect key="frame" x="256" y="504" width="48" height="48"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="fer-Fn-J8J" secondAttribute="height" multiplier="1:1" id="3Jb-eX-yxK"/>
@@ -102,17 +102,17 @@
             <objects>
                 <viewController storyboardIdentifier="Onboarding_welcome" id="qkU-2l-laT" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5pE-oE-trI">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bienvenue !" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PBd-RQ-ZwN">
-                                <rect key="frame" x="16" y="408" width="343" height="29"/>
+                                <rect key="frame" x="16" y="309" width="288" height="29"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="su2-2V-X1g">
-                                <rect key="frame" x="16" y="467" width="343" height="72"/>
+                                <rect key="frame" x="16" y="368" width="288" height="72"/>
                                 <string key="text">Découvre qui va aux mêmes
 événements que toi,
 et fais connaissance!</string>
@@ -121,7 +121,7 @@ et fais connaissance!</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" text="🤗" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dfQ-5Z-HDz">
-                                <rect key="frame" x="0.0" y="70" width="375" height="308"/>
+                                <rect key="frame" x="0.0" y="70" width="320" height="209"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="100"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -152,17 +152,17 @@ et fais connaissance!</string>
             <objects>
                 <viewController storyboardIdentifier="Onboarding_events" id="4vd-J0-nd3" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dgi-Ja-lF1">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sur mesure" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQt-Ea-bhW">
-                                <rect key="frame" x="123.5" y="408" width="128" height="29"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tes événements" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQt-Ea-bhW">
+                                <rect key="frame" x="69" y="309" width="182" height="29"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C0B-JQ-wav">
-                                <rect key="frame" x="16" y="467" width="343" height="72"/>
+                                <rect key="frame" x="16" y="368" width="288" height="72"/>
                                 <string key="text">Rencontre les bonnes
 personnes, sans changer
 ton emploi du temps</string>
@@ -171,7 +171,7 @@ ton emploi du temps</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" text="😃" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QyX-bI-vK0">
-                                <rect key="frame" x="0.0" y="70" width="375" height="308"/>
+                                <rect key="frame" x="0.0" y="70" width="320" height="209"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="100"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -201,17 +201,17 @@ ton emploi du temps</string>
             <objects>
                 <viewController storyboardIdentifier="Onboarding_swipe" id="oYr-Up-fgP" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XAp-oP-MWp">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tout ton univers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CsS-K7-K3q">
-                                <rect key="frame" x="98" y="408" width="179" height="29"/>
+                                <rect key="frame" x="70.5" y="309" width="179" height="29"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="siU-RD-axc">
-                                <rect key="frame" x="16" y="467" width="343" height="72"/>
+                                <rect key="frame" x="16" y="368" width="288" height="72"/>
                                 <string key="text">Networking
 Amis
 Et plus si affinité...</string>
@@ -220,7 +220,7 @@ Et plus si affinité...</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" text="🤠" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kEX-K3-XAK">
-                                <rect key="frame" x="0.0" y="70" width="375" height="308"/>
+                                <rect key="frame" x="0.0" y="70" width="320" height="209"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="112"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -250,22 +250,22 @@ Et plus si affinité...</string>
             <objects>
                 <viewController storyboardIdentifier="Onboarding_login" id="MgI-tY-uiC" customClass="OnboardingLoginViewController" customModule="Woojo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ACN-9p-Mwb">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o50-oJ-ZFb">
-                                <rect key="frame" x="16" y="300.5" width="343" height="144"/>
+                                <rect key="frame" x="16" y="201.5" width="288" height="144"/>
                                 <string key="text">On y va?
 
 Swipe
 Discute
-Rencontre ... vraiment!</string>
+Rencontre</string>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wXy-CM-YPu" customClass="TTTAttributedLabel">
-                                <rect key="frame" x="90.5" y="544.5" width="194.5" height="50.5"/>
+                                <rect key="frame" x="63" y="445.5" width="194.5" height="50.5"/>
                                 <string key="text">En continuant, tu acceptes les
 Conditions générales et
 la Charte de la vie privée</string>
@@ -274,13 +274,13 @@ la Charte de la vie privée</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="😎" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="llk-HL-ZxZ">
-                                <rect key="frame" x="0.0" y="50" width="375" height="240.5"/>
+                                <rect key="frame" x="0.0" y="50" width="320" height="141.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="100"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ghu-2P-Bnj">
-                                <rect key="frame" x="20" y="474.5" width="335" height="50"/>
+                                <rect key="frame" x="20" y="375.5" width="280" height="50"/>
                                 <color key="backgroundColor" red="0.25490196078431371" green="0.36470588235294116" blue="0.68235294117647061" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="0hq-GL-JOX"/>
@@ -294,7 +294,7 @@ la Charte de la vie privée</string>
                                 </connections>
                             </button>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Uc1-cT-TgA">
-                                <rect key="frame" x="177.5" y="489" width="20" height="20"/>
+                                <rect key="frame" x="150" y="390" width="20" height="20"/>
                                 <color key="color" red="0.25490196079999999" green="0.36470588240000001" blue="0.68235294120000001" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                         </subviews>
@@ -332,17 +332,17 @@ la Charte de la vie privée</string>
             <objects>
                 <viewController storyboardIdentifier="Onboarding_post_ok" id="m3P-ed-IQC" customClass="OnboardingPostOkViewController" customModule="Woojo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="g4y-va-Jku">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="C'est partfait !" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JsX-O3-2A3">
-                                <rect key="frame" x="107.5" y="432" width="160" height="29"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="C'est parfait !" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JsX-O3-2A3">
+                                <rect key="frame" x="84.5" y="333" width="151" height="29"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D0u-GO-2e6">
-                                <rect key="frame" x="16" y="491" width="343" height="48"/>
+                                <rect key="frame" x="16" y="392" width="288" height="48"/>
                                 <string key="text">Tu fais maintenant partie
 de la communauté Woojo</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -350,13 +350,13 @@ de la communauté Woojo</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" text="👌" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wcy-V6-hzG">
-                                <rect key="frame" x="0.0" y="264" width="375" height="138"/>
+                                <rect key="frame" x="0.0" y="217" width="320" height="86"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="72"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fcI-Gh-NPs">
-                                <rect key="frame" x="115.5" y="70" width="144" height="144"/>
+                                <rect key="frame" x="111.5" y="70" width="97" height="97"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="fcI-Gh-NPs" secondAttribute="height" multiplier="1:1" id="dFk-Nx-vh2"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="144" id="jxw-bg-7uk"/>
@@ -393,17 +393,17 @@ de la communauté Woojo</string>
             <objects>
                 <viewController storyboardIdentifier="Onboarding_post_about" id="v7c-3J-J3E" customClass="OnboardingPostAboutViewController" customModule="Woojo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sRS-ck-Lk6">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Tu es unique !" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jIi-RY-YS2">
-                                <rect key="frame" x="110.5" y="367" width="154" height="29"/>
+                                <rect key="frame" x="83" y="268" width="154" height="29"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7IB-g7-U7m">
-                                <rect key="frame" x="16" y="491" width="343" height="48"/>
+                                <rect key="frame" x="16" y="392" width="288" height="48"/>
                                 <string key="text">Sachant ça, comment ne
 pas swiper à droite ?</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -411,27 +411,27 @@ pas swiper à droite ?</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="🦄" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tnM-MH-5BO">
-                                <rect key="frame" x="0.0" y="224" width="375" height="113"/>
+                                <rect key="frame" x="0.0" y="152" width="320" height="86"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="72"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1An-bH-Qo4">
-                                <rect key="frame" x="115.5" y="50" width="144" height="144"/>
+                                <rect key="frame" x="124" y="50" width="72" height="72"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="1An-bH-Qo4" secondAttribute="height" multiplier="1:1" id="fUB-Sn-29a"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="144" id="o3e-qJ-I7v"/>
                                 </constraints>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Utn-Hi-u71">
-                                <rect key="frame" x="20" y="416" width="335" height="33"/>
+                                <rect key="frame" x="20" y="317" width="280" height="33"/>
                                 <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kiS-dQ-ufg">
-                                <rect key="frame" x="20" y="454" width="31" height="14.5"/>
+                                <rect key="frame" x="20" y="355" width="31" height="14.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.57251805069999995" green="0.57257062199999997" blue="0.57247418169999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -483,7 +483,7 @@ pas swiper à droite ?</string>
             <objects>
                 <viewController storyboardIdentifier="Onboarding_post_photos" id="Jwh-VL-8hx" customClass="OnboardingPostPhotosViewController" customModule="Woojo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bp6-dH-IqX">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eda-cx-BSt">
@@ -494,7 +494,7 @@ pas swiper à droite ?</string>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Une 📸 vaut 1000 mots" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O53-02-Jdy">
-                                <rect key="frame" x="16" y="298" width="343" height="32"/>
+                                <rect key="frame" x="16" y="298" width="288" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="qWP-yn-qWa"/>
                                 </constraints>
@@ -503,7 +503,7 @@ pas swiper à droite ?</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hsR-6I-1sz">
-                                <rect key="frame" x="0.0" y="359.5" width="375" height="199.5"/>
+                                <rect key="frame" x="6" y="359.5" width="308" height="199.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -524,7 +524,7 @@ pas swiper à droite ?</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ew5-ZG-282">
-                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="70"/>
                                                     <color key="backgroundColor" red="0.93230488580000004" green="0.93230488580000004" blue="0.93230488580000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </imageView>
                                             </subviews>
@@ -547,6 +547,12 @@ pas swiper à droite ?</string>
                                     <outletCollection property="gestureRecognizers" destination="dIU-c0-Khp" appends="YES" id="1MF-4g-QFK"/>
                                 </connections>
                             </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Glisse pour arranger, touche pour des options" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aq5-PS-tYr">
+                                <rect key="frame" x="16" y="567" width="260" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.57251805069999995" green="0.57257062199999997" blue="0.57247418169999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -556,9 +562,11 @@ pas swiper à droite ?</string>
                             <constraint firstItem="O53-02-Jdy" firstAttribute="top" secondItem="eda-cx-BSt" secondAttribute="bottom" constant="30" id="Dns-ZA-MkT"/>
                             <constraint firstItem="hsR-6I-1sz" firstAttribute="top" secondItem="O53-02-Jdy" secondAttribute="bottom" constant="30" id="J47-qc-Jqs"/>
                             <constraint firstItem="O53-02-Jdy" firstAttribute="width" secondItem="bp6-dH-IqX" secondAttribute="width" constant="-32" id="Mbz-Y3-cV3"/>
-                            <constraint firstItem="hsR-6I-1sz" firstAttribute="width" secondItem="bp6-dH-IqX" secondAttribute="width" id="WkN-r7-n28"/>
+                            <constraint firstItem="aq5-PS-tYr" firstAttribute="leading" secondItem="LKQ-94-Lvm" secondAttribute="leading" constant="16" id="Sy5-iQ-yEX"/>
+                            <constraint firstItem="hsR-6I-1sz" firstAttribute="width" secondItem="bp6-dH-IqX" secondAttribute="width" constant="-12" id="WkN-r7-n28"/>
                             <constraint firstItem="LKQ-94-Lvm" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="hsR-6I-1sz" secondAttribute="bottom" constant="108" id="tXX-aX-73O"/>
                             <constraint firstItem="O53-02-Jdy" firstAttribute="centerX" secondItem="LKQ-94-Lvm" secondAttribute="centerX" id="xNg-SX-hbg"/>
+                            <constraint firstItem="aq5-PS-tYr" firstAttribute="top" secondItem="hsR-6I-1sz" secondAttribute="bottom" constant="10" id="zNC-7c-H7U"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="LKQ-94-Lvm"/>
                     </view>
@@ -578,35 +586,35 @@ pas swiper à droite ?</string>
             <objects>
                 <viewController storyboardIdentifier="Onboarding_post_end" id="YQy-uW-3s2" customClass="OnboardingPostEndViewController" customModule="Woojo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OaL-sm-Ch0">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Tout est prêt !" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FQi-iB-uIV">
-                                <rect key="frame" x="110.5" y="223.5" width="154" height="29"/>
+                                <rect key="frame" x="83" y="223.5" width="154" height="29"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yhj-b0-uW4">
-                                <rect key="frame" x="16" y="272.5" width="343" height="219"/>
+                                <rect key="frame" x="16" y="272.5" width="288" height="120"/>
                                 <string key="text">Nous allons te présenter
 aux autres membres
 
-Souviens-toi: le respect fait
-toujours la meilleure impression !</string>
+Souviens-toi: le respect,
+c'est la classe !</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xRh-03-2R0">
-                                <rect key="frame" x="116" y="50" width="143.5" height="143.5"/>
+                                <rect key="frame" x="88.5" y="50" width="143.5" height="143.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="144" id="PgF-6C-7ev"/>
                                     <constraint firstAttribute="width" secondItem="xRh-03-2R0" secondAttribute="height" multiplier="1:1" id="u3d-um-FLP"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m8y-JU-r9P">
-                                <rect key="frame" x="16" y="521" width="343" height="50"/>
+                                <rect key="frame" x="16" y="422" width="288" height="50"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="d3H-qh-cxV"/>

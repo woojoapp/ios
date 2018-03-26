@@ -90,7 +90,7 @@ class CandidatesViewController: UIViewController {
         let userDefaults = UserDefaults.standard
         if User.current.value != nil && !userDefaults.bool(forKey: "POST_LOGIN_ONBOARDING_COMPLETED") {
             showOnboarding()
-    }
+        }
     }
     
     func showOnboarding() {
@@ -264,7 +264,8 @@ extension CandidatesViewController: KolodaViewDataSource {
     
     func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
         print("CandidatesViewController viewForCardAt", index, "count", User.current.value?.candidates.count)
-        let cardView = UserCardView(frame: CGRect.zero)
+        // let cardView = UserCardView(frame: CGRect.zero)
+        let cardView = NewUserCardView(frame: CGRect.zero)
         cardView.setRoundedCornersAndShadow()
         if let count = User.current.value?.candidates.count, count > index {
             cardView.user = User.current.value?.candidates[index]
@@ -278,7 +279,7 @@ extension CandidatesViewController: KolodaViewDataSource {
                 cardView.commonPageLikes = commonPageLikes
             }
         }
-        cardView.candidatesViewController = self
+        // cardView.candidatesViewController = self
         
         cardView.load {
             self.showKolodaAndHideLoading()

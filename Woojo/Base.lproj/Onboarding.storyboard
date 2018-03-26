@@ -113,8 +113,9 @@
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="su2-2V-X1g">
                                 <rect key="frame" x="16" y="368" width="288" height="72"/>
-                                <string key="text">Meet great new people
-without changing your schedule</string>
+                                <string key="text">Discover who's going to
+the same events you are
+and break the ice on Woojo</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -149,13 +150,13 @@ without changing your schedule</string>
         <!--View Controller-->
         <scene sceneID="W5p-7k-z3o">
             <objects>
-                <viewController storyboardIdentifier="Onboarding_events" id="4vd-J0-nd3" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Onboarding_swipe" id="4vd-J0-nd3" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dgi-Ja-lF1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your lifestyle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQt-Ea-bhW">
-                                <rect key="frame" x="87" y="309" width="146" height="29"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your events" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQt-Ea-bhW">
+                                <rect key="frame" x="94" y="309" width="132" height="29"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -163,8 +164,8 @@ without changing your schedule</string>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C0B-JQ-wav">
                                 <rect key="frame" x="16" y="368" width="288" height="72"/>
                                 <string key="text">Meet like-minded people
-at events
-you're already going to.</string>
+without
+changing your schedule </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -193,12 +194,12 @@ you're already going to.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UDS-Wq-tXX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1862" y="303"/>
+            <point key="canvasLocation" x="2773" y="302"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="FEr-Ka-fZW">
             <objects>
-                <viewController storyboardIdentifier="Onboarding_swipe" id="oYr-Up-fgP" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Onboarding_events" id="oYr-Up-fgP" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XAp-oP-MWp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -211,9 +212,9 @@ you're already going to.</string>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="siU-RD-axc">
                                 <rect key="frame" x="16" y="368" width="288" height="72"/>
-                                <string key="text">Make friends
-Network
-Date</string>
+                                <string key="text">Parties
+Networking
+Festivals...</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -242,7 +243,7 @@ Date</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cX0-kj-rD4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2774" y="303"/>
+            <point key="canvasLocation" x="1862" y="302"/>
         </scene>
         <!--Onboarding Login View Controller-->
         <scene sceneID="Fbo-qY-W0b">
@@ -258,7 +259,7 @@ Date</string>
 
 Swipe
 Chat
-Meet ... for real!</string>
+Meet</string>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -484,20 +485,20 @@ they'll only want to swipe right!</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eda-cx-BSt">
-                                <rect key="frame" x="119.5" y="70" width="81.5" height="81.5"/>
+                                <rect key="frame" x="121" y="70" width="79" height="79"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="eda-cx-BSt" secondAttribute="height" multiplier="1:1" id="GQX-fA-d9R"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="144" id="gX6-Fd-meR"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A 📸 is worth 1000 words" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O53-02-Jdy">
-                                <rect key="frame" x="18" y="181.5" width="284" height="29"/>
+                                <rect key="frame" x="18" y="179" width="284" height="29"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hsR-6I-1sz">
-                                <rect key="frame" x="0.0" y="240.5" width="320" height="199.5"/>
+                                <rect key="frame" x="0.0" y="238" width="320" height="199.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -541,6 +542,12 @@ they'll only want to swipe right!</string>
                                     <outletCollection property="gestureRecognizers" destination="dIU-c0-Khp" appends="YES" id="1MF-4g-QFK"/>
                                 </connections>
                             </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drag and drop to order, tap for options" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ps4-YO-04d">
+                                <rect key="frame" x="16" y="453.5" width="288" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.57251805069999995" green="0.57257062199999997" blue="0.57247418169999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -550,7 +557,10 @@ they'll only want to swipe right!</string>
                             <constraint firstItem="O53-02-Jdy" firstAttribute="top" secondItem="eda-cx-BSt" secondAttribute="bottom" constant="30" id="Dns-ZA-MkT"/>
                             <constraint firstItem="hsR-6I-1sz" firstAttribute="top" secondItem="O53-02-Jdy" secondAttribute="bottom" constant="30" id="J47-qc-Jqs"/>
                             <constraint firstItem="hsR-6I-1sz" firstAttribute="width" secondItem="bp6-dH-IqX" secondAttribute="width" id="WkN-r7-n28"/>
-                            <constraint firstItem="LKQ-94-Lvm" firstAttribute="bottom" secondItem="hsR-6I-1sz" secondAttribute="bottom" constant="128" id="tXX-aX-73O"/>
+                            <constraint firstItem="LKQ-94-Lvm" firstAttribute="trailing" secondItem="ps4-YO-04d" secondAttribute="trailing" constant="16" id="c6O-RN-kyz"/>
+                            <constraint firstItem="ps4-YO-04d" firstAttribute="leading" secondItem="LKQ-94-Lvm" secondAttribute="leading" constant="16" id="cd7-pZ-Y5F"/>
+                            <constraint firstItem="LKQ-94-Lvm" firstAttribute="bottom" secondItem="ps4-YO-04d" secondAttribute="bottom" constant="100" id="igf-c5-1bg"/>
+                            <constraint firstItem="ps4-YO-04d" firstAttribute="top" secondItem="hsR-6I-1sz" secondAttribute="bottom" constant="16" id="mwY-ve-3Hj"/>
                             <constraint firstItem="O53-02-Jdy" firstAttribute="centerX" secondItem="LKQ-94-Lvm" secondAttribute="centerX" id="xNg-SX-hbg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="LKQ-94-Lvm"/>
