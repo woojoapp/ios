@@ -25,6 +25,8 @@ class NewUserCardView: UIView {
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var carouselView: ImageSlideshow!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var locationView: UIView!
+    @IBOutlet weak var occupationView: UIView!
     
     @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
     
@@ -68,7 +70,6 @@ class NewUserCardView: UIView {
         tableView.delegate = self
         tableView.dataSource = self
         
-        print("FRAMEHEIGHT", backgroundImageView.frame.height, UIScreen.main.bounds.height)
         if UIScreen.main.bounds.height < 650 {
             maxCommonEventsCount = 1
         }
@@ -81,17 +82,29 @@ class NewUserCardView: UIView {
             nameLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
             nameLabel.layer.masksToBounds = false
             
-            locationLabel.layer.shadowColor = UIColor.black.cgColor
-            locationLabel.layer.shadowRadius = 2.0
-            locationLabel.layer.shadowOpacity = 1.0
-            locationLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
-            locationLabel.layer.masksToBounds = false
+            if let city = user.profile.location?.city {
+                locationLabel.text = user.profile.location?.city
+                locationLabel.layer.shadowColor = UIColor.black.cgColor
+                locationLabel.layer.shadowRadius = 2.0
+                locationLabel.layer.shadowOpacity = 1.0
+                locationLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+                locationLabel.layer.masksToBounds = false
+            } else {
+                locationView.isHidden = true
+                locationView.addConstraint(NSLayoutConstraint(item: locationView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0.0))
+            }
             
-            occupationLabel.layer.shadowColor = UIColor.black.cgColor
-            occupationLabel.layer.shadowRadius = 2.0
-            occupationLabel.layer.shadowOpacity = 1.0
-            occupationLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
-            occupationLabel.layer.masksToBounds = false
+            if !user.profile.occupation.value.isEmpty {
+                occupationLabel.text = user.profile.occupation.value
+                occupationLabel.layer.shadowColor = UIColor.black.cgColor
+                occupationLabel.layer.shadowRadius = 2.0
+                occupationLabel.layer.shadowOpacity = 1.0
+                occupationLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+                occupationLabel.layer.masksToBounds = false
+            } else {
+                occupationView.isHidden = true
+                occupationView.addConstraint(NSLayoutConstraint(item: occupationView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0.0))
+            }
             
             carouselView.layer.borderColor = UIColor.white.cgColor
             carouselView.layer.borderWidth = 2.0

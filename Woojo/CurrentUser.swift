@@ -167,6 +167,7 @@ class CurrentUser: User {
                             print("Page Likes added")
                             self.setFacebookFriends() {
                                 print("Friends added")
+                                self.profile.setDefaultOccupation()
                                 // Make sure all event ids are written before adding preferences
                                 self.preferences.setDefaults()
                                 // This will trigger the candidates proposer through it's preferences change listener

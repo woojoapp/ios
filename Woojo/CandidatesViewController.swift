@@ -270,7 +270,9 @@ extension CandidatesViewController: KolodaViewDataSource {
         if let count = User.current.value?.candidates.count, count > index {
             cardView.user = User.current.value?.candidates[index]
             if let commonEventInfos = User.current.value?.candidates[index].commonEventInfos {
-                cardView.commonEventInfos = commonEventInfos
+                cardView.commonEventInfos = commonEventInfos.sorted(by: {
+                    Event.interestScale(rsvpStatus: $0.rsvpStatus) > Event.interestScale(rsvpStatus: $1.rsvpStatus)
+                })
             }
             if let commonFriends = User.current.value?.candidates[index].commonFriends {
                 cardView.commonFriends = commonFriends

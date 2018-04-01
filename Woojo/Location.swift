@@ -10,7 +10,7 @@ import Foundation
 import FirebaseDatabase
 import Contacts
 
-struct Location {
+struct Location: Codable {
     
     var country: String?
     var city: String?

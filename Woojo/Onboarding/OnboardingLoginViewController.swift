@@ -18,6 +18,9 @@ class OnboardingLoginViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var loginFacebook: UIButton!
     @IBOutlet weak var acceptLabel: TTTAttributedLabel!
+    @IBOutlet weak var message1: UILabel!
+    @IBOutlet weak var message2: UILabel!
+    @IBOutlet weak var message3: UILabel!
     
     let loginManager = LoginManager()
     let termsText = NSLocalizedString("Terms & Conditions", comment: "")
@@ -65,6 +68,21 @@ class OnboardingLoginViewController: UIViewController {
         activityDriver
             .drive(self.activityIndicator.rx.isAnimating)
             .disposed(by: disposeBag)
+        
+        message1.layer.cornerRadius = 5
+        message1.layer.masksToBounds = true
+        message1.layer.borderColor = UIColor(hexString: "#00D9ED").cgColor
+        message1.layer.borderWidth = 2.0
+        
+        message2.layer.cornerRadius = 5
+        message2.layer.masksToBounds = true
+        message2.layer.borderColor = UIColor(hexString: "#FFC200").cgColor
+        message2.layer.borderWidth = 2.0
+        
+        message3.layer.cornerRadius = 5
+        message3.layer.masksToBounds = true
+        message3.layer.borderColor = UIColor(hexString: "#00D9ED").cgColor
+        message3.layer.borderWidth = 2.0
     }
     
     @IBAction func login() {

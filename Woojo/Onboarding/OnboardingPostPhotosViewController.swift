@@ -197,6 +197,12 @@ extension OnboardingPostPhotosViewController: UICollectionViewDataSource {
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        // if kind == UICollectionElementKindSectionFooter {
+            return collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "photoTip", for: indexPath)
+        // }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         let cell = cell as! ProfilePhotoCollectionViewCell
         cell.photo = nil
@@ -216,18 +222,21 @@ extension OnboardingPostPhotosViewController: UICollectionViewDataSource {
         return canMove
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        let size = CGSize(width: photosCollectionView.frame.width, height: 16)
+        print("SIZZE", size)
+        return size
+    }
+    
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         if let photos = User.current.value?.profile.photos.value, let photo = photos[sourceIndexPath.row] {
             User.current.value?.profile.set(photo: photo, at: destinationIndexPath.row, completion: { _ in
                 // collectionView.reloadData()
             })
-            print("MOVINGPHOTO1", photo.id, sourceIndexPath.row, destinationIndexPath.row)
             Analytics.Log(event: "Onboarding_photos_reordered", with: ["photo_count": String(photos.filter({ $0 != nil }).count)])
         }
         for i in 0..<Int(photoCount) {
-            print("MOVINGPHOTO1.5", collectionView.cellForItem(at: IndexPath(row: i, section: 0)), sourceIndexPath.row, destinationIndexPath.row)
             if let cell = collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? ProfilePhotoCollectionViewCell {
-                print("MOVINGPHOTO2", cell.photo?.id, sourceIndexPath.row, destinationIndexPath.row)
                 if let photo = cell.photo {
                     User.current.value?.profile.set(photo: photo, at: i, completion: { _ in
                         // collectionView.reloadData()
@@ -255,7 +264,6 @@ extension OnboardingPostPhotosViewController: UICollectionViewDelegateFlowLayout
         let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
         let availableWidth = view.frame.width - paddingSpace - 12
         let widthPerItem = UIKit.floor(availableWidth / itemsPerRow)
-        
         return CGSize(width: widthPerItem, height: widthPerItem)
     }
     

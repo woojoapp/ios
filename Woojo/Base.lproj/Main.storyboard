@@ -804,7 +804,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="96"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VUF-F4-Her">
-                                            <rect key="frame" x="96" y="22" width="208" height="21"/>
+                                            <rect key="frame" x="96" y="13.5" width="208" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="16" id="iIq-If-eeU"/>
                                             </constraints>
@@ -813,7 +813,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wnp-yw-g7L">
-                                            <rect key="frame" x="96" y="54" width="208" height="21"/>
+                                            <rect key="frame" x="96" y="37.5" width="208" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="16" id="iFi-GV-b4b"/>
                                             </constraints>
@@ -827,18 +827,27 @@
                                                 <constraint firstAttribute="width" secondItem="rRz-P6-dKF" secondAttribute="height" multiplier="1:1" id="iXK-TT-FzL"/>
                                             </constraints>
                                         </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IfE-Ry-7uC">
+                                            <rect key="frame" x="96" y="61.5" width="208" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="rRz-P6-dKF" secondAttribute="bottom" constant="16" id="0Nv-8D-Jwi"/>
+                                        <constraint firstItem="IfE-Ry-7uC" firstAttribute="centerY" secondItem="rRz-P6-dKF" secondAttribute="centerY" constant="24" id="2DX-9U-Qia"/>
                                         <constraint firstItem="wnp-yw-g7L" firstAttribute="leading" secondItem="rRz-P6-dKF" secondAttribute="trailing" constant="16" id="4uR-EL-yJ6"/>
                                         <constraint firstAttribute="trailing" secondItem="VUF-F4-Her" secondAttribute="trailing" constant="16" id="8qs-qL-xqP"/>
                                         <constraint firstAttribute="trailing" secondItem="wnp-yw-g7L" secondAttribute="trailing" constant="16" id="ASY-KG-H33"/>
                                         <constraint firstItem="rRz-P6-dKF" firstAttribute="leading" secondItem="GHJ-iL-r2U" secondAttribute="leading" constant="16" id="IU6-r4-oKy"/>
-                                        <constraint firstItem="VUF-F4-Her" firstAttribute="centerY" secondItem="rRz-P6-dKF" secondAttribute="centerY" constant="-16" id="NVB-ho-MsG"/>
-                                        <constraint firstItem="wnp-yw-g7L" firstAttribute="centerY" secondItem="rRz-P6-dKF" secondAttribute="centerY" constant="16" id="WVP-Ha-1Df"/>
+                                        <constraint firstItem="VUF-F4-Her" firstAttribute="centerY" secondItem="rRz-P6-dKF" secondAttribute="centerY" constant="-24" id="NVB-ho-MsG"/>
+                                        <constraint firstAttribute="trailing" secondItem="IfE-Ry-7uC" secondAttribute="trailing" constant="16" id="Q94-PC-xuD"/>
+                                        <constraint firstItem="wnp-yw-g7L" firstAttribute="centerY" secondItem="rRz-P6-dKF" secondAttribute="centerY" id="WVP-Ha-1Df"/>
                                         <constraint firstItem="rRz-P6-dKF" firstAttribute="centerY" secondItem="GHJ-iL-r2U" secondAttribute="centerY" id="peI-ep-saw"/>
                                         <constraint firstItem="VUF-F4-Her" firstAttribute="leading" secondItem="rRz-P6-dKF" secondAttribute="trailing" constant="16" id="vUu-oW-dAU"/>
+                                        <constraint firstItem="IfE-Ry-7uC" firstAttribute="leading" secondItem="rRz-P6-dKF" secondAttribute="trailing" constant="16" id="yhi-rU-qvA"/>
                                     </constraints>
                                 </view>
                             </subviews>
@@ -945,6 +954,33 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Occupation" id="DLk-cx-4GY">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="200" id="HNp-bF-vq0" customClass="OccupationsTableViewCell" customModule="Woojo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="543" width="320" height="200"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HNp-bF-vq0" id="ZIg-Sn-UrH">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="199.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="04D-FD-Tkf">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="199.5"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </tableView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="04D-FD-Tkf" firstAttribute="top" secondItem="ZIg-Sn-UrH" secondAttribute="top" id="9W1-nN-ixm"/>
+                                                <constraint firstAttribute="trailing" secondItem="04D-FD-Tkf" secondAttribute="trailing" id="Bg6-HC-jIs"/>
+                                                <constraint firstItem="04D-FD-Tkf" firstAttribute="leading" secondItem="ZIg-Sn-UrH" secondAttribute="leading" id="FFT-Mh-ra4"/>
+                                                <constraint firstAttribute="bottom" secondItem="04D-FD-Tkf" secondAttribute="bottom" id="WMa-f7-401"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="tableView" destination="04D-FD-Tkf" id="VFC-o7-JRS"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="9Z9-DO-fmv" id="crk-a9-2ub"/>
@@ -961,9 +997,11 @@
                     </navigationItem>
                     <connections>
                         <outlet property="bioTableViewCell" destination="MXc-RN-sBL" id="LeJ-pM-xow"/>
-                        <outlet property="descriptionLabel" destination="wnp-yw-g7L" id="79K-1a-Tpr"/>
+                        <outlet property="cityLabel" destination="wnp-yw-g7L" id="79K-1a-Tpr"/>
                         <outlet property="longPressGestureRecognizer" destination="HMS-Nd-uLj" id="3Wi-vC-oZm"/>
                         <outlet property="nameLabel" destination="VUF-F4-Her" id="aUL-T3-xLZ"/>
+                        <outlet property="occupationLabel" destination="IfE-Ry-7uC" id="ghO-dc-IsS"/>
+                        <outlet property="occupationsTableViewCell" destination="HNp-bF-vq0" id="EaX-Q0-h0E"/>
                         <outlet property="photosCollectionView" destination="fDi-h3-F9a" id="J6V-Vo-dQd"/>
                         <outlet property="profilePhotoImageView" destination="rRz-P6-dKF" id="6QC-os-8CJ"/>
                         <outlet property="tableHeaderViewWrapper" destination="GHJ-iL-r2U" id="Rdl-JI-3j9"/>
