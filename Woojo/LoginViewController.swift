@@ -41,12 +41,14 @@ extension UIImage {
 class LoginViewController: UIViewController {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var facebookLabel: UILabel!
+    // @IBOutlet weak var facebookLabel: UILabel!
     @IBOutlet weak var acceptLabel: TTTAttributedLabel!
-    @IBOutlet weak var smallPrintView: UIView!
+    @IBOutlet var loginFacebook: UIButton!
+    // @IBOutlet weak var smallPrintView: UIView!
     
     var onboardingViewController: OnboardingViewController?
     
+    let loginManager = LoginManager()
     let termsText = NSLocalizedString("Terms & Conditions", comment: "")
     let privacyText = NSLocalizedString("Privacy Policy", comment: "")
     
@@ -90,20 +92,20 @@ class LoginViewController: UIViewController {
             onboardingViewController?.add(viewController:swipe)
             onboardingViewController?.add(viewController:login)
             
-            self.present(onboarding, animated: true, completion: nil)
+            self.present(onboarding, animated: false, completion: nil)
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        UIGraphicsBeginImageContext(UIScreen.main.bounds.size)
-        #imageLiteral(resourceName: "login_bg").drawInRectAspectFill(rect: UIScreen.main.bounds)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        self.view.backgroundColor = UIColor.init(patternImage: image!)
+        // UIGraphicsBeginImageContext(UIScreen.main.bounds.size)
+        // #imageLiteral(resourceName: "login_bg").drawInRectAspectFill(rect: UIScreen.main.bounds)
+        // let image = UIGraphicsGetImageFromCurrentImageContext()
+        // UIGraphicsEndImageContext()
+        // self.view.backgroundColor = UIColor.init(patternImage: image!)
         
-        let readPermissions: [FacebookCore.ReadPermission] = [.publicProfile,
+        /* let readPermissions: [FacebookCore.ReadPermission] = [.publicProfile,
                                                               .userFriends,
                                                               .custom("user_events"),
                                                               .custom("user_photos"),
@@ -111,24 +113,24 @@ class LoginViewController: UIViewController {
                                                               .custom("user_birthday"),
                                                               .custom("user_likes"),
                                                               .custom("user_work_history"),
-                                                              .custom("user_education_history")]
-        let loginButton = LoginButton(readPermissions: readPermissions)
+                                                              .custom("user_education_history")] */
+        /* let loginButton = LoginButton(readPermissions: readPermissions)
         loginButton.delegate = self
         loginButton.center = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
-        self.view.addSubview(loginButton)
+        self.view.addSubview(loginButton) */
         
         activityIndicator.isHidden = true
         
-        smallPrintView.layer.cornerRadius = 10.0
+        // smallPrintView.layer.cornerRadius = 10.0
         
         acceptLabel.delegate = self
-        acceptLabel.activeLinkAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
-        acceptLabel.linkAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.underlineStyle: 1]
+        acceptLabel.activeLinkAttributes = [NSAttributedStringKey.foregroundColor: UIColor.darkGray]
+        acceptLabel.linkAttributes = [NSAttributedStringKey.foregroundColor: UIColor.darkGray, NSAttributedStringKey.underlineStyle: 1]
+        
+        loginFacebook.layer.cornerRadius = 10
         
         if let acceptString = acceptLabel.text {
-            
             let acceptNSString = NSString(string: acceptString)
-            
             let termsRange = acceptNSString.range(of: termsText)
             if let termsURLString = Application.remoteConfig.configValue(forKey: Constants.App.RemoteConfig.Keys.termsURL).stringValue,
                 let termsURL = URL(string: termsURLString) {
@@ -156,6 +158,12 @@ class LoginViewController: UIViewController {
         activityDriver
             .drive(self.activityIndicator.rx.isAnimating)
             .disposed(by: disposeBag)
+        
+        let userDefaults = UserDefaults.standard
+        if !userDefaults.bool(forKey: "PRE_LOGIN_ONBOARDING_COMPLETED") {
+            loginFacebook.isHidden = true
+            acceptLabel.isHidden = true
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -163,15 +171,94 @@ class LoginViewController: UIViewController {
         let userDefaults = UserDefaults.standard
         if !userDefaults.bool(forKey: "PRE_LOGIN_ONBOARDING_COMPLETED") {
             showOnboarding()
+        } else {
+            acceptLabel.isHidden = false
         }
+    }
+    
+    func setWorking(working: Bool) {
+        loginFacebook.isHidden = working
+        if working {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
+    }
+    
+    @IBAction func login() {
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(true, forKey: "PRE_LOGIN_ONBOARDING_COMPLETED")
+        userDefaults.synchronize()
+        Analytics.setUserProperties(properties: ["pre_login_onboarded": "true"])
+        Analytics.Log(event: "Onboarding_pre_complete")
+        let readPermissions: [FacebookCore.ReadPermission] = [.publicProfile,
+                                                              .userFriends,
+                                                              .custom("user_events"),
+                                                              .custom("user_photos"),
+                                                              .custom("user_location"),
+                                                              .custom("user_birthday"),
+                                                              .custom("user_likes"),
+                                                              .custom("user_work_history"),
+                                                              .custom("user_education_history")]
+        loginManager.logIn(readPermissions: readPermissions, viewController: self) { (loginResult) in
+            self.handleLogin(result: loginResult)
+        }
+    }
+    
+    func handleLogin(result: LoginResult) {
+        setWorking(working: true)
+        switch result {
+        case .success(let acceptedPermissions, let declinedPermissions, let accessToken):
+            var permissions: [String: String] = [:]
+            for permission in acceptedPermissions {
+                permissions[permission.name] = "true"
+                Analytics.setUserProperties(properties: ["accepted_\(permission.name)_permission": "true"])
+            }
+            for permission in declinedPermissions {
+                permissions[permission.name] = "false"
+                Analytics.setUserProperties(properties: ["accepted_\(permission.name)_permission": "false"])
+            }
+            if declinedPermissions.count > 0 && (declinedPermissions.contains(Permission(name: "user_events")) || declinedPermissions.contains(Permission(name: "user_birthday"))) {
+                Analytics.Log(event: "Account_log_in_missing_permissions", with: permissions)
+                let alert = UIAlertController(title: NSLocalizedString("Missing permissions", comment: ""), message: NSLocalizedString("Woojo needs to know at least your birthday and access your events in order to function properly.", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: {
+                    self.loginManager.logOut()
+                    self.setWorking(working: false)
+                })
+            } else {
+                print("Facebook login success here", accessToken.authenticationToken)
+                let credential = FacebookAuthProvider.credential(withAccessToken: accessToken.authenticationToken)
+                Auth.auth().signIn(with: credential) { (user, error) in
+                    if let user = user {
+                        print("Firebase login success \(user.uid)")
+                        Analytics.Log(event: "Account_log_in", with: permissions)
+                    }
+                    if let error = error {
+                        print("Firebase login failure \(error.localizedDescription)")
+                        self.setWorking(working: false)
+                    }
+                }
+            }
+        case .failed(let error):
+            print("Facebook login error: \(error.localizedDescription)")
+            self.setWorking(working: false)
+        case .cancelled:
+            print("Facebook login cancelled.")
+            self.setWorking(working: false)
+        }
+    }
+    
+    func dismissOnboarding() {
+        onboardingViewController?.dismiss(animated: true, completion: nil)
     }
 }
 
 // MARK: - LoginButtonDelegate
 
-extension LoginViewController: LoginButtonDelegate {
+// extension LoginViewController: LoginButtonDelegate {
     
-    func loginButtonDidCompleteLogin(_ loginButton: LoginButton, result: LoginResult) {
+    /* func loginButtonDidCompleteLogin(_ loginButton: LoginButton, result: LoginResult) {
         activityIndicator.startAnimating()
         switch result {
         case .success(let acceptedPermissions, let declinedPermissions, let accessToken):
@@ -215,16 +302,14 @@ extension LoginViewController: LoginButtonDelegate {
         }
     }
     
+
+    
     func loginButtonDidLogOut(_ loginButton: LoginButton) {
         User.current.value?.logOut()
         activityIndicator.stopAnimating()
-    }
-    
-    func dismissOnboarding() {
-        onboardingViewController?.dismiss(animated: true, completion: nil)
-    }
+    }*/
 
-}
+// }
 
 // MARK: - TTTAttributedLabelDelegate
 

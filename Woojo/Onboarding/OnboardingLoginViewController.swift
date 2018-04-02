@@ -106,9 +106,9 @@ class OnboardingLoginViewController: UIViewController {
     }
     
     func handleLogin(result: LoginResult) {
-        loginFacebook?.isHidden = true
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
+        loginFacebook?.isHidden = true
         switch result {
         case .success(let acceptedPermissions, let declinedPermissions, let accessToken):
             var permissions: [String: String] = [:]

@@ -231,12 +231,12 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     print("ONBOARDINGVIEWCONTROLLER", self.loginViewController.onboardingViewController)
                     //self.loginViewController.dismissOnboarding()
                     if let onboardingViewController = self.loginViewController.onboardingViewController {
-                        onboardingViewController.dismiss(animated: true, completion: {
-                            self.loginViewController.dismiss(animated: true, completion: nil)
-                        })
-                    } else {
-                        self.loginViewController.dismiss(animated: true, completion: nil)
+                        print("DISMISSING ONBOARDING")
+                        onboardingViewController.dismiss(animated: true, completion: nil)
                     }
+                    self.loginViewController.dismiss(animated: true, completion: {
+                        self.loginViewController.setWorking(working: false)
+                    })
                 }
             } else {
                 print("No user signed in", user?.uid)

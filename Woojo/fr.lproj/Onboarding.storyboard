@@ -151,13 +151,13 @@ fais connaissance sur Woojo
                             <constraint firstItem="CJu-j7-XKf" firstAttribute="bottom" secondItem="su2-2V-X1g" secondAttribute="bottom" constant="72" id="KEy-OC-Gi9"/>
                             <constraint firstItem="b8c-Mi-1YF" firstAttribute="leading" secondItem="CJu-j7-XKf" secondAttribute="leading" id="NIR-77-YHm"/>
                             <constraint firstItem="CJu-j7-XKf" firstAttribute="trailing" secondItem="b8c-Mi-1YF" secondAttribute="trailing" id="Qkd-8z-sZl"/>
+                            <constraint firstItem="PBd-RQ-ZwN" firstAttribute="top" secondItem="CJu-j7-XKf" secondAttribute="top" constant="48" id="VzP-fj-E7B"/>
                             <constraint firstItem="PBd-RQ-ZwN" firstAttribute="width" secondItem="5pE-oE-trI" secondAttribute="width" constant="-32" id="bsX-fR-Zcz"/>
                             <constraint firstItem="CJu-j7-XKf" firstAttribute="bottom" secondItem="b8c-Mi-1YF" secondAttribute="bottom" id="cCf-DT-K4Z"/>
                             <constraint firstItem="oY0-Rz-Oza" firstAttribute="centerY" secondItem="b8c-Mi-1YF" secondAttribute="centerY" id="kIM-FC-tx4"/>
                             <constraint firstItem="PBd-RQ-ZwN" firstAttribute="centerX" secondItem="b8c-Mi-1YF" secondAttribute="centerX" id="ldu-jS-ID7"/>
                             <constraint firstItem="PBd-RQ-ZwN" firstAttribute="centerX" secondItem="CJu-j7-XKf" secondAttribute="centerX" id="nED-BV-L1b"/>
                             <constraint firstItem="su2-2V-X1g" firstAttribute="centerX" secondItem="CJu-j7-XKf" secondAttribute="centerX" id="tZN-OL-2Uj"/>
-                            <constraint firstItem="b8c-Mi-1YF" firstAttribute="top" secondItem="PBd-RQ-ZwN" secondAttribute="top" constant="-48" id="vPJ-LH-IWO"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="CJu-j7-XKf"/>
                     </view>

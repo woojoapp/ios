@@ -468,8 +468,6 @@
 		850F7D38202DC45E005D6733 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		850F7D39202DC5AA005D6733 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		850F7D3E202DCFE8005D6733 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LoginViewController.xib; sourceTree = "<group>"; };
-		850F7D41202DCFEA005D6733 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LoginViewController.strings; sourceTree = "<group>"; };
-		850F7D43202DCFEC005D6733 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LoginViewController.strings; sourceTree = "<group>"; };
 		850F7D45202DD8D3005D6733 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Woojo/Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		850F7D4A202DD8ED005D6733 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = Woojo/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		851CDBE51DDEF18A00B887C0 /* UserEventsGraphRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEventsGraphRequest.swift; sourceTree = "<group>"; };
@@ -618,6 +616,7 @@
 		85FD07A0206E7E90001618C3 /* Gotham Rounded Book Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham Rounded Book Italic.otf"; sourceTree = "<group>"; };
 		85FD07A4206FEE88001618C3 /* PaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedLabel.swift; sourceTree = "<group>"; };
 		85FD07AA20710702001618C3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = fr; path = fr.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
+		85FD07AD2072B0C0001618C3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/LoginViewController.xib; sourceTree = "<group>"; };
 		85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateOverlayView.swift; sourceTree = "<group>"; };
 		9A2EC49C5603EE727058B9CF /* Pods_Woojo_Development.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Woojo_Development.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5F606FAEF706B6471319465 /* Pods_Woojo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Woojo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2033,8 +2032,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				850F7D3E202DCFE8005D6733 /* Base */,
-				850F7D41202DCFEA005D6733 /* en */,
-				850F7D43202DCFEC005D6733 /* fr */,
+				85FD07AD2072B0C0001618C3 /* fr */,
 			);
 			name = LoginViewController.xib;
 			sourceTree = "<group>";
