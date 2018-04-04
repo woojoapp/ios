@@ -13,15 +13,16 @@ import Applozic
 import PKHUD
 import RSKImageCropper
 
-class ProfileViewController: UITableViewController {
-    
+class ProfileViewController: UITableViewController, PhotoSource {
     @IBOutlet weak var profilePhotoImageView: ProfilePhotoImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var occupationLabel: UILabel!
     @IBOutlet weak var bioTableViewCell: BioTableViewCell!
-    @IBOutlet weak var photosCollectionView: UICollectionView!
+    @IBOutlet var photosCollectionView: UICollectionView!
     @IBOutlet weak var tapGestureRecognizer: UITapGestureRecognizer!
     @IBOutlet weak var longPressGestureRecognizer: UILongPressGestureRecognizer!
+    @IBOutlet weak var occupationsTableViewCell: OccupationsTableViewCell!
     
     let disposeBag = DisposeBag()
     fileprivate let bioTextViewPlaceholderText = NSLocalizedString("Write something about yourself...", comment: "")
@@ -86,12 +87,34 @@ class ProfileViewController: UITableViewController {
                 self.profilePhotoImageView.image = #imageLiteral(resourceName: "placeholder_40x40")
             }
         })
-        .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         User.current.asObservable()
-            .map{ $0?.profile.displayName }
-            .bindTo(nameLabel.rx.text)
-            .addDisposableTo(disposeBag)
+            .map{ $0?.profile.displaySummary }
+            .bind(to: nameLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        User.current.asObservable()
+            .map{ $0?.profile.location?.city }
+            .bind(to: cityLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        User.current.asObservable()
+            .flatMap{ user -> Observable<String> in
+                return user?.profile.occupation.asObservable() ?? Variable<String>("").asObservable()
+            }
+            .subscribe(onNext: { occupation in
+                self.occupationsTableViewCell.selectedOccupation = occupation
+                self.occupationLabel.text = occupation
+            })
+            .disposed(by: disposeBag)
+        
+        User.current.asObservable()
+            .map{ $0?.profile }
+            .subscribe(onNext: { profile in
+                self.occupationsTableViewCell.occupations = profile?.occupations
+            })
+            .disposed(by: disposeBag)
         
         User.current.asObservable()
             .flatMap { user -> Observable<String> in
@@ -110,10 +133,10 @@ class ProfileViewController: UITableViewController {
                     return text
                 }
             }
-            .bindTo(bioTableViewCell.bioTextView.rx.text)
-            .addDisposableTo(disposeBag)
+            .bind(to: bioTableViewCell.bioTextView.rx.text)
+            .disposed(by: disposeBag)
         
-        User.current.asObservable()
+        /* User.current.asObservable()
             .map{
                 var description = ""
                 if let age = $0?.profile.age {
@@ -128,8 +151,8 @@ class ProfileViewController: UITableViewController {
                 }
                 return description
             }
-            .bindTo(descriptionLabel.rx.text)
-            .addDisposableTo(disposeBag)
+            .bind(to: cityLabel.rx.text)
+            .disposed(by: disposeBag) */
         
         self.longPressGestureRecognizer.addTarget(self, action: #selector(longPress))
     }
@@ -143,7 +166,7 @@ class ProfileViewController: UITableViewController {
             .map{ $0?.count }
             .subscribe(onNext: { count in
                 self.setBioFooter(count: count)
-            }).addDisposableTo(disposeBag)
+            }).disposed(by: disposeBag)
     }
     
     func setBioFooter(count: Int?) {
@@ -157,12 +180,11 @@ class ProfileViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.updateTableViewHeaderViewHeight()
-        self.setBioFooter(count: bioTableViewCell.bioTextView.text.characters.count)
+        self.setBioFooter(count: bioTableViewCell.bioTextView.text.count)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -172,6 +194,8 @@ class ProfileViewController: UITableViewController {
             let availableWidth = tableView.frame.width - paddingSpace
             let widthPerItem = availableWidth / itemsPerRow
             return (photoCount / itemsPerRow) * widthPerItem + 3 * onePadding
+        } else if indexPath.section == 2 {
+            return CGFloat(User.current.value?.profile.occupations.count ?? 1) * CGFloat(40.0)
         } else {
             return UITableViewAutomaticDimension
         }

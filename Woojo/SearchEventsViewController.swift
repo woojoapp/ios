@@ -85,10 +85,14 @@ class SearchEventsViewController: UIViewController {
             .drive(resultsTableView.rx.items(cellIdentifier: "searchEventCell", cellType: SearchEventsResultsTableViewCell.self)) { (_, event, cell) in
                 cell.event = event
                 if let isUserEvent = User.current.value?.events.value.contains(where: { $0.id == cell.event?.id }) {
-                    cell.checkView.isHidden = !isUserEvent
+                    if isUserEvent {
+                        cell.checkView.image = #imageLiteral(resourceName: "check")
+                    } else {
+                        cell.checkView.image = #imageLiteral(resourceName: "plus")
+                    }
                 }
             }
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         resultsTableView.rx.itemSelected
             .subscribe(onNext: { indexPath in
@@ -100,18 +104,18 @@ class SearchEventsViewController: UIViewController {
                     if isUserEvent {
                         self.remove(event: event) { error in
                             if error == nil {
-                                cell.checkView.isHidden = true
+                                cell.checkView.image = #imageLiteral(resourceName: "plus")
                             }
                         }
                     } else {
                         self.add(event: event) { error in
                             if error == nil {
-                                cell.checkView.isHidden = false                                
+                                cell.checkView.image = #imageLiteral(resourceName: "check")
                             }
                         }
                     }
                 }
-            }).addDisposableTo(disposeBag)
+            }).disposed(by: disposeBag)
     }
     
     func remove(event: Event, completion: ((Error?) -> Void)? = nil) {

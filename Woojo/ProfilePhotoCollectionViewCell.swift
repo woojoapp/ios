@@ -15,4 +15,7 @@ class ProfilePhotoCollectionViewCell: UICollectionViewCell {
     
     var photo: User.Profile.Photo?
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
 }

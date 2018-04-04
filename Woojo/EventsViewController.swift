@@ -16,7 +16,8 @@ import FacebookCore
 
 class EventsViewController: UITableViewController {
     
-    var events: [Event] = []
+    var events: [String: [Event]] = [:]
+    var months: [String] = []
     var disposeBag = DisposeBag()
     var reachabilityObserver: AnyObject?
     //@IBOutlet weak var longPressGestureRecognizer: UILongPressGestureRecognizer!
@@ -24,6 +25,7 @@ class EventsViewController: UITableViewController {
     @IBOutlet weak var dismissTipButton: UIButton!
     let tipId = "eventFilter"
     var pendingEventsCount = 0
+    var scrolled = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,12 +83,16 @@ class EventsViewController: UITableViewController {
                 }
             }
             .subscribe(onNext: { events in
-                self.events = events
-                self.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+                self.events = events.group(by: { $0.monthString })
+                self.months = Array(self.events.keys).sorted().reversed()
+                self.tableView.reloadData()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                    self.scrollToNow()
+                })
                 Analytics.setUserProperties(properties: ["event_count": String(events.count)])
             }).disposed(by: disposeBag)
         
-        User.current.asObservable()
+        /* User.current.asObservable()
             .flatMap { user -> Observable<[Event]> in
                 if let currentUser = user {
                     return currentUser.pendingEvents.asObservable()
@@ -96,8 +102,9 @@ class EventsViewController: UITableViewController {
             }
             .subscribe(onNext: { pendingEvents in
                 self.pendingEventsCount = pendingEvents.count
-                self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-            }).disposed(by: disposeBag)
+                //self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+                self.tableView.reloadData()
+            }).disposed(by: disposeBag) */
     }
     
     override func didReceiveMemoryWarning() {
@@ -105,12 +112,27 @@ class EventsViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func scrollToNow() {
+        if !self.scrolled {
+            if let month = self.months.reversed().first(where: {
+                if let current = Int($0), let reference = Int(Event.sectionDateFormatter.string(from: Date())) {
+                    return current >= reference
+                }
+                return false
+            }), let index = self.months.index(of: month) {
+                let indexPath = IndexPath(row: 0, section: index)
+                self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
+                self.scrolled = true
+            }
+        }
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return months.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+        /* if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "pendingEventsInfoCell", for: indexPath) as! PendingEventsInfoTableViewCell
             cell.infoLabel.text = "You have \(pendingEventsCount) new event\((pendingEventsCount > 1) ? "s" : "") on Facebook"
             cell.actionLabel.text = "Add \((pendingEventsCount > 1) ? "them" : "it") to discover new people!"
@@ -119,15 +141,15 @@ class EventsViewController: UITableViewController {
             cell.borderView.layer.cornerRadius = 12.0
             cell.borderView.layer.masksToBounds = true
             return cell
-        } else {
+        } else { */
             let cell = tableView.dequeueReusableCell(withIdentifier: "eventCell", for: indexPath) as! EventsTableViewCell
-            cell.event = self.events[indexPath.row]
+            cell.event = self.events[months[indexPath.section]]?[indexPath.row]
             return cell
-        }
+        // }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
+        /* if section == 0 {
             if pendingEventsCount > 0 {
                 return 1
             } else {
@@ -137,30 +159,34 @@ class EventsViewController: UITableViewController {
             return events.count
         } else {
             return 0
+        } */
+        return events[months[section]]?.count ?? 0
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if let monthAsDate = Event.sectionDateFormatter.date(from: months[section]) {
+            return Event.sectionHumanDateFormatter.string(from: monthAsDate).capitalized
         }
+        return nil
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        if indexPath.section == 1 {
-            let deleteAction = UITableViewRowAction(style: .destructive, title: NSLocalizedString("Remove", comment: ""), handler: { action, indexPath in
-                self.removeEvent(at: indexPath)
-            })
-            return [deleteAction]
-        } else {
-            return []
-        }
+        let deleteAction = UITableViewRowAction(style: .destructive, title: NSLocalizedString("Remove", comment: ""), handler: { action, indexPath in
+            self.removeEvent(at: indexPath)
+        })
+        return [deleteAction]
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
+        /* if indexPath.section == 0 {
             
-        } else if indexPath.section == 1 {
+        } else if indexPath.section == 1 { */
             let eventDetailsViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventDetailsViewController") as! EventDetailsViewController
-            eventDetailsViewController.event = events[indexPath.row]
+            eventDetailsViewController.event = events[months[indexPath.section]]?[indexPath.row]
             eventDetailsViewController.event?.loadMatches {
                 self.navigationController?.pushViewController(eventDetailsViewController, animated: true)
             }
-        }
+        // }
     }
     
     @IBAction func dismissTip() {

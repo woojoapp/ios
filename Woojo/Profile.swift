@@ -21,19 +21,23 @@ extension User {
     class Profile {
         
         // MARK: - Properties
-        
         var displayName: String?
         var photoID: String?
         var gender: Gender?
         var birthday: Date?
         var description: Variable<String> = Variable("")
+        var firstName: Variable<String> = Variable("")
         var city: String?
-        var country: String?        
+        var country: String?
+        var location: Location?
+        var work: [Work] = []
+        var education: [Education] = []
+        var occupation: Variable<String> = Variable("")
         var user: User
         var photos: Variable<[Photo?]> = Variable([nil, nil, nil, nil, nil, nil])
         var photoCount: Int {
             get {
-                return photos.value.filter({ $0 != nil }).count ?? 0
+                return photos.value.filter({ $0 != nil }).count
             }
         }
         var age: Int {
@@ -52,6 +56,12 @@ extension User {
                 } else {
                     return "User, \(age)"
                 }
+            }
+        }
+        var occupations: [String] {
+            get {
+                let occupationObjects = education.map{$0.school?.name} + work.map{$0.displayString}
+                return occupationObjects.flatMap{$0}
             }
         }
         
@@ -90,6 +100,7 @@ extension User {
         func loadFrom(firebase snapshot: DataSnapshot) {
             if let value = snapshot.value as? [String:Any] {
                 displayName = value[Constants.User.Profile.properties.firebaseNodes.firstName] as? String
+                firstName.value = value[Constants.User.Profile.properties.firebaseNodes.firstName] as? String ?? ""
                 let photosSnap = snapshot.childSnapshot(forPath: Constants.User.Profile.Photo.firebaseNode)
                 for item in photosSnap.children {
                     if let photoSnap = item as? DataSnapshot, let index = Int(photoSnap.key), let id = photoSnap.value as? String {
@@ -105,8 +116,14 @@ extension User {
                     gender = Gender(rawValue: genderString)
                 }
                 description.value = value[Constants.User.Profile.properties.firebaseNodes.description] as? String ?? ""
-                city = value[Constants.User.Profile.properties.firebaseNodes.city] as? String
-                country = value[Constants.User.Profile.properties.firebaseNodes.country] as? String
+                occupation.value = value["occupation"] as? String ?? ""
+                do {
+                    location = try Location(from: value["location"])
+                    work = try [Work](from: value["work"]) ?? []
+                    education = try [Education](from: value["education"]) ?? []
+                } catch(let error) {
+                    print("Failed to create Profile from Firebase snapshot.", snapshot, error)
+                }
                 if let birthdayString = value[Constants.User.Profile.properties.firebaseNodes.birthday] as? String {
                     if let birthday = birthdayFirebaseFormatter.date(from: birthdayString) {
                         self.birthday = birthday
@@ -120,16 +137,25 @@ extension User {
         }
         
         func loadFrom(graphAPI dict: [String:Any]?) {
-            if let dict = dict {
-                displayName = dict[Constants.User.Profile.properties.graphAPIKeys.firstName] as? String
-                if let genderString = dict[Constants.User.Profile.properties.graphAPIKeys.gender] as? String {
-                    gender = Gender(rawValue: genderString)
+            do {
+                if let dict = dict {
+                    displayName = dict[Constants.User.Profile.properties.graphAPIKeys.firstName] as? String
+                    if let genderString = dict[Constants.User.Profile.properties.graphAPIKeys.gender] as? String {
+                        gender = Gender(rawValue: genderString)
+                    }
+                    if let birthdayString = dict[Constants.User.Profile.properties.graphAPIKeys.birthday] as? String {
+                        birthday = birthdayFacebookFormatter.date(from: birthdayString)
+                    }
+                    if let location = dict["location"] as? [String:Any] {
+                        self.location = try Location(from: location["location"])
+                    }
+                    work = try [Work](from: dict["work"]) ?? []
+                    education = try [Education](from: dict["education"]) ?? []
+                } else {
+                    print("Failed to create Profile from Graph API dictionary.", dict as Any)
                 }
-                if let birthdayString = dict[Constants.User.Profile.properties.graphAPIKeys.birthday] as? String {
-                    birthday = birthdayFacebookFormatter.date(from: birthdayString)
-                }
-            } else {
-                print("Failed to create Profile from Graph API dictionary.", dict as Any)
+            } catch(let error) {
+                print("Failed to create Profile from Graph API dictionary.", dict as Any, error)
             }
         }
         
@@ -188,8 +214,11 @@ extension User {
             if self.description.value != "" {
                 dict[Constants.User.Profile.properties.firebaseNodes.description] = self.description.value
             }
-            dict[Constants.User.Profile.properties.firebaseNodes.city] = self.city
-            dict[Constants.User.Profile.properties.firebaseNodes.country] = self.country
+            //dict[Constants.User.Profile.properties.firebaseNodes.city] = self.city
+            // dict[Constants.User.Profile.properties.firebaseNodes.country] = self.country
+            dict["location"] = location.dictionary
+            dict["work"] = work.array
+            dict["education"] = education.array
             return dict
         }
         
@@ -217,10 +246,29 @@ extension User {
             })
         }
         
+        func setOccupation(occupation: String, completion: ((Error?) -> Void)? = nil) {
+            ref?.child("occupation").setValue(occupation, withCompletionBlock: { error, ref in
+                if let error = error {
+                    print("Failed to save user profile occupation: \(error.localizedDescription)")
+                }
+                completion?(error)
+            })
+        }
+        
+        func setDefaultOccupation() {
+            if work.count > 0 {
+                setOccupation(occupation: work[0].displayString)
+            } else if education.count > 0 {
+                if let school = education[education.count - 1].school?.name {
+                    setOccupation(occupation: school)
+                }
+            }
+        }
+        
         func updateFromFacebook(completion: ((Error?) -> Void)?) {
             User.Profile.GraphRequest(profile: self)?.start { response, result in
                 switch result {
-                case.success(let response):
+                case .success(let response):
                     // Update Firebase with the data loaded from Facebook
                     self.displayName = response.profile?.displayName
                     if let responseAsDictionary = response.profile?.toDictionary() {
@@ -554,7 +602,10 @@ extension User.Profile {
             let fields = [Constants.GraphRequest.UserProfile.fieldID,
                           Constants.User.Profile.properties.graphAPIKeys.firstName,
                           Constants.User.Profile.properties.graphAPIKeys.birthday,
-                          Constants.User.Profile.properties.graphAPIKeys.gender]
+                          Constants.User.Profile.properties.graphAPIKeys.gender,
+                          "location{location}",
+                          "work",
+                          "education"]
             return [Constants.GraphRequest.fields:fields.joined(separator: Constants.GraphRequest.fieldsSeparator)]
         }()
         var httpMethod: GraphRequestHTTPMethod = .GET
@@ -609,5 +660,31 @@ extension User.Profile {
         var httpMethod: GraphRequestHTTPMethod = .GET
         var apiVersion: GraphAPIVersion = .defaultVersion
         
+    }
+    
+    class Work: Codable {
+        var employer: Employer?
+        var position: Position?
+        var displayString: String {
+            get {
+                var positionString = ""
+                if let positionName = position?.name {
+                    positionString = "\(positionName) - "
+                }
+                return "\(positionString)\(employer?.name ?? "")"
+            }
+        }
+        class Employer: Codable {
+            var name: String?
+        }
+        class Position: Codable {
+            var name: String?
+        }
+    }
+    class Education: Codable {
+        var school: School?
+        class School: Codable {
+            var name: String?
+        }
     }
 }

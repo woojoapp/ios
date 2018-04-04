@@ -18,7 +18,7 @@ class PhotoCollectionViewController: UICollectionViewController {
     var album: Album?
     var photos: [Album.Photo] = []
     var rskImageCropper: RSKImageCropViewController = RSKImageCropViewController()
-    var profileViewController: ProfileViewController?
+    var profileViewController: PhotoSource?
     var reachabilityObserver: AnyObject?
     
     //@IBOutlet weak var tipView: UIView!

@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Gotham Rounded Bold.otf">
+            <string>GothamRounded-Bold</string>
+        </array>
+        <array key="Gotham Rounded Book.otf">
+            <string>GothamRounded-Book</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="Woojo" customModuleProvider="target">
             <connections>
-                <outlet property="acceptLabel" destination="bSC-MX-Ub9" id="Gly-af-d2k"/>
-                <outlet property="activityIndicator" destination="htN-mf-bW4" id="znJ-g6-Go8"/>
-                <outlet property="facebookLabel" destination="wMC-mz-9w0" id="BJv-R1-3R7"/>
-                <outlet property="smallPrintView" destination="Ihq-YK-EZg" id="zDZ-i0-fgA"/>
+                <outlet property="acceptLabel" destination="UfH-Y8-XnR" id="fNH-3k-ocC"/>
+                <outlet property="activityIndicator" destination="pWQ-XB-iPZ" id="yUP-5d-Y3o"/>
+                <outlet property="loginFacebook" destination="lQK-zc-g6w" id="76K-sl-VcZ"/>
                 <outlet property="view" destination="Df3-OJ-VSC" id="iqi-Rd-9uo"/>
             </connections>
         </placeholder>
@@ -25,65 +31,77 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_rounded" translatesAutoresizingMaskIntoConstraints="NO" id="MTj-e4-FMX">
-                    <rect key="frame" x="96" y="71" width="128" height="128"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="128" id="bxb-m7-1CB"/>
-                        <constraint firstAttribute="width" constant="128" id="izW-RY-V08"/>
-                    </constraints>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1 - Background" translatesAutoresizingMaskIntoConstraints="NO" id="jBG-lh-5tH">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                 </imageView>
-                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="htN-mf-bW4">
-                    <rect key="frame" x="150" y="235" width="20" height="20"/>
-                </activityIndicatorView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ihq-YK-EZg">
-                    <rect key="frame" x="16" y="449" width="288" height="48"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Woojo doesn't post to Facebook on your behalf" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wMC-mz-9w0">
-                            <rect key="frame" x="0.0" y="5" width="288" height="21"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="21" id="N5d-xj-08J"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By logging in, you agree to Terms &amp; Conditions and Privacy Policy " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bSC-MX-Ub9" customClass="TTTAttributedLabel">
-                            <rect key="frame" x="0.0" y="22" width="288" height="21"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="21" id="tjO-4O-Z2R"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="8"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.2988548801" colorSpace="custom" customColorSpace="sRGB"/>
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1 - Woojo logo" translatesAutoresizingMaskIntoConstraints="NO" id="bIe-C1-kfM">
+                    <rect key="frame" x="81" y="253" width="159" height="61"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome back!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cGh-pc-pF3">
+                    <rect key="frame" x="43" y="68" width="235" height="30"/>
+                    <fontDescription key="fontDescription" name="GothamRounded-Bold" family="Gotham Rounded" pointSize="30"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UfH-Y8-XnR" customClass="TTTAttributedLabel">
+                    <rect key="frame" x="46" y="496" width="228" height="40"/>
                     <constraints>
-                        <constraint firstItem="bSC-MX-Ub9" firstAttribute="centerX" secondItem="Ihq-YK-EZg" secondAttribute="centerX" id="1tn-L5-c87"/>
-                        <constraint firstItem="wMC-mz-9w0" firstAttribute="bottom" secondItem="Ihq-YK-EZg" secondAttribute="centerY" constant="2" id="8Py-ON-28q"/>
-                        <constraint firstItem="wMC-mz-9w0" firstAttribute="width" secondItem="Ihq-YK-EZg" secondAttribute="width" id="PoR-dl-wNC"/>
-                        <constraint firstItem="bSC-MX-Ub9" firstAttribute="width" secondItem="Ihq-YK-EZg" secondAttribute="width" id="QFP-1b-OCi"/>
-                        <constraint firstItem="wMC-mz-9w0" firstAttribute="centerX" secondItem="Ihq-YK-EZg" secondAttribute="centerX" id="YS3-yX-HKC"/>
-                        <constraint firstAttribute="height" constant="48" id="qEf-ka-CXP"/>
-                        <constraint firstItem="bSC-MX-Ub9" firstAttribute="top" secondItem="Ihq-YK-EZg" secondAttribute="centerY" constant="-2" id="tyz-Pc-K9I"/>
-                        <constraint firstAttribute="bottom" secondItem="bSC-MX-Ub9" secondAttribute="bottom" constant="5" id="wqL-MN-wUL"/>
+                        <constraint firstAttribute="height" constant="40" id="3w9-Yq-DGD"/>
                     </constraints>
-                </view>
+                    <string key="text">By continuing, you accept Woojo's
+Terms &amp; Conditions and Privacy Policy</string>
+                    <fontDescription key="fontDescription" name="GothamRounded-Book" family="Gotham Rounded" pointSize="12"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="lineSpacing">
+                            <real key="value" value="15"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lQK-zc-g6w">
+                    <rect key="frame" x="20" y="426" width="280" height="50"/>
+                    <color key="backgroundColor" red="0.25490196079999999" green="0.36470588240000001" blue="0.68235294120000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="Ghm-bm-BPb"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <state key="normal" title="Continue with Facebook">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="login" destination="-1" eventType="touchUpInside" id="YTq-Ci-zGo"/>
+                    </connections>
+                </button>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="pWQ-XB-iPZ">
+                    <rect key="frame" x="150" y="441" width="20" height="20"/>
+                    <color key="color" red="0.25490196079999999" green="0.36470588240000001" blue="0.68235294120000001" alpha="1" colorSpace="calibratedRGB"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="Ihq-YK-EZg" firstAttribute="bottom" secondItem="Df3-OJ-VSC" secondAttribute="centerY" multiplier="1.75" id="FrF-uT-t2D"/>
-                <constraint firstItem="Ihq-YK-EZg" firstAttribute="centerX" secondItem="Df3-OJ-VSC" secondAttribute="centerX" id="RQt-MK-7Jq"/>
-                <constraint firstItem="MTj-e4-FMX" firstAttribute="centerX" secondItem="Df3-OJ-VSC" secondAttribute="centerX" id="RVH-5x-9zw"/>
-                <constraint firstItem="Ihq-YK-EZg" firstAttribute="width" secondItem="Df3-OJ-VSC" secondAttribute="width" multiplier="0.9" id="g5q-J6-7NY"/>
-                <constraint firstItem="MTj-e4-FMX" firstAttribute="top" secondItem="Df3-OJ-VSC" secondAttribute="centerY" multiplier="0.25" id="hdF-YH-DVc"/>
-                <constraint firstItem="htN-mf-bW4" firstAttribute="centerX" secondItem="Df3-OJ-VSC" secondAttribute="centerX" id="zIP-2m-qUL"/>
-                <constraint firstItem="htN-mf-bW4" firstAttribute="top" secondItem="MTj-e4-FMX" secondAttribute="bottom" constant="36" id="zfA-Od-sZM"/>
+                <constraint firstItem="bIe-C1-kfM" firstAttribute="centerX" secondItem="jBG-lh-5tH" secondAttribute="centerX" id="5Qx-mb-bg4"/>
+                <constraint firstItem="UfH-Y8-XnR" firstAttribute="bottom" secondItem="jBG-lh-5tH" secondAttribute="bottom" constant="-32" id="D4m-sc-OSv"/>
+                <constraint firstItem="pWQ-XB-iPZ" firstAttribute="centerX" secondItem="jBG-lh-5tH" secondAttribute="centerX" id="FWy-VQ-B6g"/>
+                <constraint firstItem="UfH-Y8-XnR" firstAttribute="centerX" secondItem="jBG-lh-5tH" secondAttribute="centerX" id="Gkq-3j-f0p"/>
+                <constraint firstItem="UfH-Y8-XnR" firstAttribute="top" secondItem="lQK-zc-g6w" secondAttribute="bottom" constant="20" id="QAm-T0-kNe"/>
+                <constraint firstItem="lQK-zc-g6w" firstAttribute="width" secondItem="jBG-lh-5tH" secondAttribute="width" constant="-40" id="QlS-dS-vTK"/>
+                <constraint firstItem="bIe-C1-kfM" firstAttribute="centerY" secondItem="jBG-lh-5tH" secondAttribute="centerY" id="ZtQ-U0-SVP"/>
+                <constraint firstAttribute="bottom" secondItem="jBG-lh-5tH" secondAttribute="bottom" id="eYr-dX-0mO"/>
+                <constraint firstItem="cGh-pc-pF3" firstAttribute="centerX" secondItem="jBG-lh-5tH" secondAttribute="centerX" id="fTd-8G-7wq"/>
+                <constraint firstItem="jBG-lh-5tH" firstAttribute="top" secondItem="Df3-OJ-VSC" secondAttribute="top" id="h0b-KY-6VE"/>
+                <constraint firstItem="lQK-zc-g6w" firstAttribute="centerX" secondItem="jBG-lh-5tH" secondAttribute="centerX" id="m65-J8-7af"/>
+                <constraint firstItem="C80-7w-E2N" firstAttribute="top" secondItem="cGh-pc-pF3" secondAttribute="top" constant="-48" id="orR-ql-A8o"/>
+                <constraint firstAttribute="trailing" secondItem="jBG-lh-5tH" secondAttribute="trailing" id="uOY-19-nIy"/>
+                <constraint firstItem="UfH-Y8-XnR" firstAttribute="top" secondItem="pWQ-XB-iPZ" secondAttribute="bottom" constant="35" id="yGe-hE-uur"/>
+                <constraint firstItem="jBG-lh-5tH" firstAttribute="leading" secondItem="Df3-OJ-VSC" secondAttribute="leading" id="yj3-jS-Ulm"/>
             </constraints>
+            <viewLayoutGuide key="safeArea" id="C80-7w-E2N"/>
             <point key="canvasLocation" x="-10281" y="-1075"/>
         </view>
     </objects>
     <resources>
-        <image name="icon_rounded" width="512" height="512"/>
+        <image name="1 - Background" width="375" height="667"/>
+        <image name="1 - Woojo logo" width="159" height="61"/>
     </resources>
 </document>

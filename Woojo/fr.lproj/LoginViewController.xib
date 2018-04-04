@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Gotham Rounded Bold.otf">
+            <string>GothamRounded-Bold</string>
+        </array>
+        <array key="Gotham Rounded Book.otf">
+            <string>GothamRounded-Book</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="Woojo" customModuleProvider="target">
+            <connections>
+                <outlet property="acceptLabel" destination="UfH-Y8-XnR" id="fNH-3k-ocC"/>
+                <outlet property="activityIndicator" destination="pWQ-XB-iPZ" id="yUP-5d-Y3o"/>
+                <outlet property="loginFacebook" destination="lQK-zc-g6w" id="76K-sl-VcZ"/>
+                <outlet property="view" destination="Df3-OJ-VSC" id="iqi-Rd-9uo"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Df3-OJ-VSC">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1 - Background" translatesAutoresizingMaskIntoConstraints="NO" id="jBG-lh-5tH">
+                    <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1 - Woojo logo" translatesAutoresizingMaskIntoConstraints="NO" id="bIe-C1-kfM">
+                    <rect key="frame" x="81" y="263" width="159" height="61"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bienvenue !" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cGh-pc-pF3">
+                    <rect key="frame" x="72" y="68" width="177.5" height="30"/>
+                    <fontDescription key="fontDescription" name="GothamRounded-Bold" family="Gotham Rounded" pointSize="30"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UfH-Y8-XnR" customClass="TTTAttributedLabel">
+                    <rect key="frame" x="15" y="496" width="291.5" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="3w9-Yq-DGD"/>
+                    </constraints>
+                    <string key="text">En continuant, tu acceptes les
+Conditions générales et la Charte de la vie privée</string>
+                    <fontDescription key="fontDescription" name="GothamRounded-Book" family="Gotham Rounded" pointSize="12"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="lineSpacing">
+                            <real key="value" value="15"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lQK-zc-g6w">
+                    <rect key="frame" x="20" y="426" width="280" height="50"/>
+                    <color key="backgroundColor" red="0.25490196079999999" green="0.36470588240000001" blue="0.68235294120000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="Ghm-bm-BPb"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <state key="normal" title="Continuer avec Facebook">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="login" destination="-1" eventType="touchUpInside" id="YTq-Ci-zGo"/>
+                    </connections>
+                </button>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="pWQ-XB-iPZ">
+                    <rect key="frame" x="150" y="441" width="20" height="20"/>
+                    <color key="color" red="0.25490196079999999" green="0.36470588240000001" blue="0.68235294120000001" alpha="1" colorSpace="calibratedRGB"/>
+                </activityIndicatorView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="bIe-C1-kfM" firstAttribute="centerX" secondItem="jBG-lh-5tH" secondAttribute="centerX" id="5Qx-mb-bg4"/>
+                <constraint firstItem="HrD-Cn-aYi" firstAttribute="top" secondItem="cGh-pc-pF3" secondAttribute="top" constant="-48" id="Bzc-IA-HTR"/>
+                <constraint firstItem="UfH-Y8-XnR" firstAttribute="bottom" secondItem="jBG-lh-5tH" secondAttribute="bottom" constant="-32" id="D4m-sc-OSv"/>
+                <constraint firstItem="pWQ-XB-iPZ" firstAttribute="centerX" secondItem="jBG-lh-5tH" secondAttribute="centerX" id="FWy-VQ-B6g"/>
+                <constraint firstItem="UfH-Y8-XnR" firstAttribute="centerX" secondItem="jBG-lh-5tH" secondAttribute="centerX" id="Gkq-3j-f0p"/>
+                <constraint firstItem="bIe-C1-kfM" firstAttribute="centerY" secondItem="jBG-lh-5tH" secondAttribute="centerY" id="Jqk-w4-QPb"/>
+                <constraint firstItem="HrD-Cn-aYi" firstAttribute="trailing" secondItem="jBG-lh-5tH" secondAttribute="trailing" id="L7A-kj-zEc"/>
+                <constraint firstItem="UfH-Y8-XnR" firstAttribute="top" secondItem="lQK-zc-g6w" secondAttribute="bottom" constant="20" id="QAm-T0-kNe"/>
+                <constraint firstItem="lQK-zc-g6w" firstAttribute="width" secondItem="jBG-lh-5tH" secondAttribute="width" constant="-40" id="QlS-dS-vTK"/>
+                <constraint firstItem="cGh-pc-pF3" firstAttribute="centerX" secondItem="jBG-lh-5tH" secondAttribute="centerX" id="fTd-8G-7wq"/>
+                <constraint firstItem="lQK-zc-g6w" firstAttribute="centerX" secondItem="jBG-lh-5tH" secondAttribute="centerX" id="m65-J8-7af"/>
+                <constraint firstItem="HrD-Cn-aYi" firstAttribute="bottom" secondItem="jBG-lh-5tH" secondAttribute="bottom" id="qin-6G-IcN"/>
+                <constraint firstItem="jBG-lh-5tH" firstAttribute="top" secondItem="HrD-Cn-aYi" secondAttribute="top" id="sLv-op-cEm"/>
+                <constraint firstItem="jBG-lh-5tH" firstAttribute="leading" secondItem="HrD-Cn-aYi" secondAttribute="leading" id="uHZ-U7-xjE"/>
+                <constraint firstItem="UfH-Y8-XnR" firstAttribute="top" secondItem="pWQ-XB-iPZ" secondAttribute="bottom" constant="35" id="yGe-hE-uur"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="HrD-Cn-aYi"/>
+            <point key="canvasLocation" x="-10281" y="-1075"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="1 - Background" width="375" height="667"/>
+        <image name="1 - Woojo logo" width="159" height="61"/>
+    </resources>
+</document>

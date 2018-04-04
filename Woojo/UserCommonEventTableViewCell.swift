@@ -16,6 +16,14 @@ class UserCommonEventTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        eventImageView.layer.borderWidth = 1
+        eventImageView.layer.borderColor = UIColor.white.cgColor
+        
+        eventTextLabel.layer.shadowColor = UIColor.black.cgColor
+        eventTextLabel.layer.shadowRadius = 2.0
+        eventTextLabel.layer.shadowOpacity = 1.0
+        eventTextLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+        eventTextLabel.layer.masksToBounds = false
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

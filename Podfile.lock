@@ -11,6 +11,7 @@ PODS:
   - Branch (0.19.5):
     - Branch/Core (= 0.19.5)
   - Branch/Core (0.19.5)
+  - BWWalkthrough (2.1.2)
   - Crashlytics (3.10.1):
     - Fabric (~> 1.7.5)
   - DZNEmptyDataSet (1.8.1)
@@ -136,6 +137,7 @@ DEPENDENCIES:
   - Amplitude-iOS (= 4.1.0)
   - Applozic (= 5.1.0)
   - Branch (= 0.19.5)
+  - BWWalkthrough
   - Crashlytics (~> 3.10.1)
   - DZNEmptyDataSet (= 1.8.1)
   - Fabric (~> 1.7.5)
@@ -176,6 +178,7 @@ SPEC CHECKSUMS:
   Applozic: 07abce471da09776bda5ecaf9c96bf87998201f4
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Branch: 25312ed2f58a569df58e6560238433c2a9d58e99
+  BWWalkthrough: 6b18dc688ff6b7168383fee07fe199ccaad7e9f7
   Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   Fabric: ae7146a5f505ea370a1e44820b4b1dc8890e2890
@@ -215,6 +218,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   Whisper: 169760fc4bab0abf24d5529f9276f95c25cf1025
 
-PODFILE CHECKSUM: bce8adfe9e86e8f4849ada1afddcbed900d37c80
+PODFILE CHECKSUM: 742d28484d4bb93a919571e656567971e2313a02
 
 COCOAPODS: 1.4.0

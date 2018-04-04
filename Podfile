@@ -49,6 +49,7 @@ def shared_pods
   # pod 'Whisper', :git=> 'https://github.com/woojoapp/Whisper.git', :tag => 'woojo2.0'
   pod 'Whisper', '6.0.2'
   pod 'TTTAttributedLabel', '2.0.0'
+  pod 'BWWalkthrough', '2.1.2'
 
   # Misc
   pod 'SDWebImage', '4.2.2'
