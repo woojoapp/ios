@@ -442,6 +442,9 @@
 		85FD07A5206FEE88001618C3 /* PaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FD07A4206FEE88001618C3 /* PaddedLabel.swift */; };
 		85FD07A6206FEE88001618C3 /* PaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FD07A4206FEE88001618C3 /* PaddedLabel.swift */; };
 		85FD07A7206FEE88001618C3 /* PaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FD07A4206FEE88001618C3 /* PaddedLabel.swift */; };
+		85FD07AF2073808E001618C3 /* Sequence+group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FD07AE2073808E001618C3 /* Sequence+group.swift */; };
+		85FD07B02073808E001618C3 /* Sequence+group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FD07AE2073808E001618C3 /* Sequence+group.swift */; };
+		85FD07B12073808E001618C3 /* Sequence+group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FD07AE2073808E001618C3 /* Sequence+group.swift */; };
 		85FF1D491FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */; };
 		85FF1D4A1FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */; };
 		85FF1D4B1FB9EA9700B30C85 /* CandidateOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */; };
@@ -617,6 +620,7 @@
 		85FD07A4206FEE88001618C3 /* PaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedLabel.swift; sourceTree = "<group>"; };
 		85FD07AA20710702001618C3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = fr; path = fr.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
 		85FD07AD2072B0C0001618C3 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/LoginViewController.xib; sourceTree = "<group>"; };
+		85FD07AE2073808E001618C3 /* Sequence+group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+group.swift"; sourceTree = "<group>"; };
 		85FF1D481FB9EA9700B30C85 /* CandidateOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateOverlayView.swift; sourceTree = "<group>"; };
 		9A2EC49C5603EE727058B9CF /* Pods_Woojo_Development.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Woojo_Development.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5F606FAEF706B6471319465 /* Pods_Woojo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Woojo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -728,6 +732,7 @@
 				8530451D2040166A00EF382B /* EventbriteEvent.swift */,
 				85FD076B206A5D14001618C3 /* Encodable+Dictionary.swift */,
 				85FD076F206A5D6E001618C3 /* Decodable+Dictionary.swift */,
+				85FD07AE2073808E001618C3 /* Sequence+group.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1723,6 +1728,7 @@
 				85B36AA41FAE168700A7B599 /* Constants+Env.swift in Sources */,
 				85FD076C206A5D14001618C3 /* Encodable+Dictionary.swift in Sources */,
 				851D1766204B1226008E6342 /* Analytics.swift in Sources */,
+				85FD07AF2073808E001618C3 /* Sequence+group.swift in Sources */,
 				8506A8A61DCCC85200C18EC3 /* Like.swift in Sources */,
 				85685F741DEC7833009BAEE0 /* SearchEventsGraphRequest.swift in Sources */,
 				858FEE3C1E02A40C00322E8E /* AlbumsTableViewCell.swift in Sources */,
@@ -1842,6 +1848,7 @@
 				85662C0E1F90BD6500D5701E /* Location.swift in Sources */,
 				85FD076D206A5D14001618C3 /* Encodable+Dictionary.swift in Sources */,
 				851D1764204B1222008E6342 /* Analytics.swift in Sources */,
+				85FD07B02073808E001618C3 /* Sequence+group.swift in Sources */,
 				85662C091F90BD6500D5701E /* Report.swift in Sources */,
 				8556C6341F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */,
 				85662CE51F90BE2300D5701E /* AboutWebViewController.swift in Sources */,
@@ -1961,6 +1968,7 @@
 				85662C411F90BDD000D5701E /* Location.swift in Sources */,
 				85FD076E206A5D14001618C3 /* Encodable+Dictionary.swift in Sources */,
 				851D1768204B1229008E6342 /* Analytics.swift in Sources */,
+				85FD07B12073808E001618C3 /* Sequence+group.swift in Sources */,
 				85662C3C1F90BDD000D5701E /* Report.swift in Sources */,
 				8556C6351F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */,
 				85662C931F90BE1300D5701E /* AboutWebViewController.swift in Sources */,

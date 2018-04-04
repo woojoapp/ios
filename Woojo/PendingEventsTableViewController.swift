@@ -87,7 +87,11 @@ class PendingEventsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "fbEventCell", for: indexPath) as! MyEventsTableViewCell
         cell.event = self.events[indexPath.row]
         if let isUserEvent = User.current.value?.events.value.contains(where: { $0.id == cell.event?.id }) {
-            cell.checkView.isHidden = !isUserEvent
+            if isUserEvent {
+                cell.checkView.image = #imageLiteral(resourceName: "check")
+            } else {
+                cell.checkView.image = #imageLiteral(resourceName: "plus")
+            }
         }
         return cell
     }
@@ -102,7 +106,7 @@ class PendingEventsTableViewController: UITableViewController {
                     if isUserEvent {
                         HUD.show(.labeledProgress(title: NSLocalizedString("Remove Event", comment: ""), subtitle: NSLocalizedString("Removing event...", comment: "")))
                         User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
-                            cell.checkView.isHidden = true
+                            cell.checkView.image = #imageLiteral(resourceName: "plus")
                             tableView.reloadRows(at: [indexPath], with: .automatic)
                             HUD.show(.labeledSuccess(title: NSLocalizedString("Remove Event", comment: ""), subtitle: NSLocalizedString("Event removed!", comment: "")))
                             HUD.hide(afterDelay: 1.0)
@@ -113,7 +117,7 @@ class PendingEventsTableViewController: UITableViewController {
                     } else {
                         HUD.show(.labeledProgress(title: NSLocalizedString("Add Event", comment: ""), subtitle: NSLocalizedString("Adding event...", comment: "")))
                         User.current.value?.add(event: event, completion: { (error: Error?) -> Void in
-                            cell.checkView.isHidden = false
+                            cell.checkView.image = #imageLiteral(resourceName: "check")
                             tableView.reloadRows(at: [indexPath], with: .automatic)
                             HUD.show(.labeledSuccess(title: NSLocalizedString("Add Event", comment: ""), subtitle: NSLocalizedString("Event added!", comment: "")))
                             HUD.hide(afterDelay: 1.0)

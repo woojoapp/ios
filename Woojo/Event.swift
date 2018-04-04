@@ -64,6 +64,18 @@ class Event {
         }
     }
     
+    var monthString: String {
+        get {
+            return Event.sectionDateFormatter.string(from: start)
+        }
+    }
+    
+    var monthHumanString: String {
+        get {
+            return Event.sectionHumanDateFormatter.string(from: start)
+        }
+    }
+    
     init(id: String, name: String, start: Date) {
         self.id = id
         self.name = name
@@ -88,6 +100,24 @@ extension Event {
         //formatter.locale = Locale(identifier: "en_US_POSIX")
         //formatter.timeZone = NSTimeZone.local
         formatter.dateFormat = Constants.Event.humanDateFormat
+        return formatter
+    }()
+    
+    static let sectionDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        //formatter.locale = Locale(identifier: "en_US_POSIX")
+        //formatter.timeZone = NSTimeZone.local
+        formatter.dateFormat = "yyyyMM"
+        return formatter
+    }()
+    
+    static let sectionHumanDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        //formatter.locale = Locale(identifier: "en_US_POSIX")
+        //formatter.timeZone = NSTimeZone.local
+        formatter.dateFormat = "MMMM yyyy"
         return formatter
     }()
     
@@ -279,6 +309,19 @@ extension Event {
         }
         return interestScale(rsvpStatus: rsvpStatusA!) + interestScale(rsvpStatus: rsvpStatusB!)
     }
+    
+    /* static func getMonthCount(events: [Event]) -> Int {
+        var months: [String] = []
+        var lastMonth = ""
+        
+        for event in events {
+            if event.monthString != lastMonth {
+                months.
+                lastMonth = event.monthString
+            }
+        }
+        return monthCount
+    } */
 
 }
 

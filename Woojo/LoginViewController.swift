@@ -86,13 +86,16 @@ class LoginViewController: UIViewController {
             let swipe = onboardingStoryboard.instantiateViewController(withIdentifier: "Onboarding_swipe")
             let login = onboardingStoryboard.instantiateViewController(withIdentifier: "Onboarding_login")
             
-            onboardingViewController?.delegate = self
-            onboardingViewController?.add(viewController:welcome)
-            onboardingViewController?.add(viewController:events)
-            onboardingViewController?.add(viewController:swipe)
-            onboardingViewController?.add(viewController:login)
+            onboarding.delegate = self
+            onboarding.add(viewController:welcome)
+            onboarding.add(viewController:events)
+            onboarding.add(viewController:swipe)
+            onboarding.add(viewController:login)
             
-            self.present(onboarding, animated: false, completion: nil)
+            onboarding.modalPresentationStyle = .custom
+            onboarding.modalTransitionStyle = .crossDissolve
+            
+            self.present(onboarding, animated: true, completion: nil)
         }
     }
     

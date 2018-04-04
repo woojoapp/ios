@@ -15,12 +15,14 @@ import Amplitude_iOS
 
 class MyEventsTableViewController: UITableViewController {
     
-    var events: [Event] = []
+    var events: [String: [Event]] = [:]
+    var months: [String] = []
     let disposeBag = DisposeBag()
     var reachabilityObserver: AnyObject?
     @IBOutlet weak var tipView: UIView!
     @IBOutlet weak var dismissTipButton: UIButton!
     let tipId = "facebookEvents"
+    var scrolled = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,10 +73,29 @@ class MyEventsTableViewController: UITableViewController {
 
     @objc func loadFacebookEvents() {
         User.current.value?.getEventsFromFacebook { events in
-            self.events = events
+            self.events = events.group(by: { $0.monthString })
+            self.months = Array(self.events.keys).sorted().reversed()
             self.tableView.reloadData()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                self.scrollToNow()
+            })
             self.tableView.refreshControl?.endRefreshing()
             self.tableView.backgroundView?.isHidden = self.events.count > 0
+        }
+    }
+    
+    func scrollToNow() {
+        if !self.scrolled {
+            if let month = self.months.reversed().first(where: {
+                if let current = Int($0), let reference = Int(Event.sectionDateFormatter.string(from: Date())) {
+                    return current >= reference
+                }
+                return false
+            }), let index = self.months.index(of: month) {
+                let indexPath = IndexPath(row: 0, section: index)
+                self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
+                self.scrolled = true
+            }
         }
     }
     
@@ -89,21 +110,33 @@ class MyEventsTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         if events.count > 0 {
-            return 1
+            return months.count
         } else {
             return 0
         }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return events.count
+        return events[months[section]]?.count ?? 0
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if let monthAsDate = Event.sectionDateFormatter.date(from: months[section]) {
+            return Event.sectionHumanDateFormatter.string(from: monthAsDate).capitalized
+        }
+        return nil
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "fbEventCell", for: indexPath) as! MyEventsTableViewCell
-        cell.event = self.events[indexPath.row]
+        cell.event = self.events[months[indexPath.section]]?[indexPath.row]
         if let isUserEvent = User.current.value?.events.value.contains(where: { $0.id == cell.event?.id }) {
-            cell.checkView.isHidden = !isUserEvent
+            // cell.checkView.isHidden = !isUserEvent
+            if isUserEvent {
+                cell.checkView.image = #imageLiteral(resourceName: "check")
+            } else {
+                cell.checkView.image = #imageLiteral(resourceName: "plus")
+            }
         }
         return cell
     }
@@ -112,13 +145,13 @@ class MyEventsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let reachable = isReachable(), reachable {
-            let event = self.events[indexPath.row]
-            if let isUserEvent = User.current.value?.events.value.contains(where: { $0.id == event.id }) {
+            if let event = self.events[months[indexPath.section]]?[indexPath.row],
+                let isUserEvent = User.current.value?.events.value.contains(where: { $0.id == event.id }) {
                 if let cell = tableView.cellForRow(at: indexPath) as? MyEventsTableViewCell {
                     if isUserEvent {
                         HUD.show(.labeledProgress(title: NSLocalizedString("Remove Event", comment: ""), subtitle: NSLocalizedString("Removing event...", comment: "")))
                         User.current.value?.remove(event: event, completion: { (error: Error?) -> Void in
-                            cell.checkView.isHidden = true
+                            cell.checkView.image = #imageLiteral(resourceName: "plus")
                             tableView.reloadRows(at: [indexPath], with: .none)
                             HUD.show(.labeledSuccess(title: NSLocalizedString("Remove Event", comment: ""), subtitle: NSLocalizedString("Event removed!", comment: "")))
                             HUD.hide(afterDelay: 1.0)
@@ -129,7 +162,7 @@ class MyEventsTableViewController: UITableViewController {
                     } else {
                         HUD.show(.labeledProgress(title: NSLocalizedString("Add Event", comment: ""), subtitle: NSLocalizedString("Adding event...", comment: "")))
                         User.current.value?.add(event: event, completion: { (error: Error?) -> Void in
-                            cell.checkView.isHidden = false
+                            cell.checkView.image = #imageLiteral(resourceName: "check")
                             tableView.reloadRows(at: [indexPath], with: .none)
                             HUD.show(.labeledSuccess(title: NSLocalizedString("Add Event", comment: ""), subtitle: NSLocalizedString("Event added!", comment: "")))
                             HUD.hide(afterDelay: 1.0)
