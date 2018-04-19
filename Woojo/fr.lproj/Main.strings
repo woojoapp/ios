@@ -260,6 +260,8 @@
 /* Class = "UITableViewSection"; headerTitle = "About"; ObjectID = "jFy-Ej-gbr"; */
 "jFy-Ej-gbr.headerTitle" = "À propos";
 
+"DLk-cx-4GY.headerTitle" = "Activité";
+
 /* Class = "UILabel"; text = "Enabled"; ObjectID = "jOF-Yt-EwC"; */
 "jOF-Yt-EwC.text" = "Activées";
 

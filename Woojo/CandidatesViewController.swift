@@ -224,9 +224,9 @@ extension CandidatesViewController: KolodaViewDelegate {
     }
     
     func koloda(_ koloda: KolodaView, didSelectCardAt index: Int) {
-        /*if let userDetailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserDetailsViewController") as? UserDetailsViewController {
+        if let userDetailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserDetailsViewController") as? UserDetailsViewController {
             if let candidate = User.current.value?.candidates[index] {
-                userDetailsViewController.user = candidate
+                userDetailsViewController.otherUser = candidate
                 userDetailsViewController.candidatesViewController = self
                 self.present(userDetailsViewController, animated: true, completion: nil)
                 if let uid = User.current.value?.candidates[index].uid {
@@ -234,14 +234,14 @@ extension CandidatesViewController: KolodaViewDelegate {
                     Analytics.Log(event: Constants.Analytics.Events.CandidateDetailsDisplayed.name, with: analyticsEventParameters)
                 }
             }
-        }*/
-        if let cardView = kolodaView.viewForCard(at: index) as? UserCardView {
+        }
+        /*if let cardView = kolodaView.viewForCard(at: index) as? UserCardView {
             if cardView.isShowingDescription {
                 cardView.hideDescription()
             } else {
                 cardView.showDescription()
             }
-        }
+        }*/
     }
 
 }
@@ -269,15 +269,15 @@ extension CandidatesViewController: KolodaViewDataSource {
         cardView.setRoundedCornersAndShadow()
         if let count = User.current.value?.candidates.count, count > index {
             cardView.user = User.current.value?.candidates[index]
-            if let commonEventInfos = User.current.value?.candidates[index].commonEventInfos {
+            if let commonEventInfos = User.current.value?.candidates[index].commonInfo.events {
                 cardView.commonEventInfos = commonEventInfos.sorted(by: {
                     Event.interestScale(rsvpStatus: $0.rsvpStatus) > Event.interestScale(rsvpStatus: $1.rsvpStatus)
                 })
             }
-            if let commonFriends = User.current.value?.candidates[index].commonFriends {
+            if let commonFriends = User.current.value?.candidates[index].commonInfo.friends {
                 cardView.commonFriends = commonFriends
             }
-            if let commonPageLikes = User.current.value?.candidates[index].commonPageLikes {
+            if let commonPageLikes = User.current.value?.candidates[index].commonInfo.pageLikes {
                 cardView.commonPageLikes = commonPageLikes
             }
         }

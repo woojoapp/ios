@@ -890,21 +890,21 @@ class CurrentUser: User {
     }
     
     func commonality(candidate: Candidate) throws -> Int {
-        return try candidate.commonEventInfos.reduce(0, { $0 + Event.commonality(rsvpStatusA: $1.rsvpStatus, rsvpStatusB: try rsvpStatus(event: $1.id)) })
+        return try candidate.commonInfo.events.reduce(0, { $0 + Event.commonality(rsvpStatusA: $1.rsvpStatus, rsvpStatusB: try rsvpStatus(event: $1.id)) })
     }
     
     func commonality(match: Match) throws -> Int {
-        return try match.commonEventInfos.reduce(0, { $0 + Event.commonality(rsvpStatusA: $1.rsvpStatus, rsvpStatusB: try rsvpStatus(event: $1.id)) })
+        return try match.commonInfo.events.reduce(0, { $0 + Event.commonality(rsvpStatusA: $1.rsvpStatus, rsvpStatusB: try rsvpStatus(event: $1.id)) })
     }
     
     func bothGoing(candidate: Candidate) throws -> Bool {
-        return try candidate.commonEventInfos.reduce(false, { (previousResult, commonEventInfo) -> Bool in
+        return try candidate.commonInfo.events.reduce(false, { (previousResult, commonEventInfo) -> Bool in
             return try (previousResult && (try rsvpStatus(event: commonEventInfo.id) == .attending) && commonEventInfo.rsvpStatus == .attending)
         })
     }
     
     func bothGoing(match: Match) throws -> Bool {
-        return try match.commonEventInfos.reduce(false, { (previousResult, commonEventInfo) -> Bool in
+        return try match.commonInfo.events.reduce(false, { (previousResult, commonEventInfo) -> Bool in
             return try (previousResult && (try rsvpStatus(event: commonEventInfo.id) == .attending) && commonEventInfo.rsvpStatus == .attending)
         })
     }

@@ -17,11 +17,11 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var optionsButton: UIButton!
     @IBOutlet weak var cardView: UserCardView!
     
-    var user: User?
-    var commonEventInfos: [User.CommonEventInfo] = []
+    var otherUser: OtherUser?
     var candidatesViewController: CandidatesViewController?
     var chatViewController: ChatViewController?
     var reachabilityObserver: AnyObject?
+    var isMatch = false
     
     @IBAction func showOptions() {
         //optionsButton.select()
@@ -36,8 +36,8 @@ class UserDetailsViewController: UIViewController {
                 
                 // Prepare event logging
                 if let currentUser = User.current.value,
-                    let user = self.user {
-                    User.Match.between(user: currentUser, and: user, completion: { (match) in
+                    let otherUser = self.otherUser {
+                    User.Match.between(user: currentUser, and: otherUser, completion: { (match) in
                         if match != nil {
                             // Prepare event logging
                             let identify = AMPIdentify()
@@ -53,7 +53,7 @@ class UserDetailsViewController: UIViewController {
                                 ]
                             }
                             // Unmatch
-                            self.user?.unmatch { error in
+                            self.otherUser?.unmatch { error in
                                 if error != nil {
                                     HUD.show(.labeledError(title: NSLocalizedString("Unmatch", comment: ""), subtitle: NSLocalizedString("Failed to unmatch", comment: "")), onView: self.parent?.view)
                                     HUD.hide(afterDelay: 1.0)
@@ -82,7 +82,7 @@ class UserDetailsViewController: UIViewController {
             let confirmController = UIAlertController(title: NSLocalizedString("Unmatch & report", comment: ""), message: NSLocalizedString("Confirm unmatch and report?", comment: ""), preferredStyle: .alert)
             let confirmAction = UIAlertAction(title: NSLocalizedString("Unmatch & report", comment: ""), style: .destructive, handler: { (_) in
                 HUD.show(.labeledProgress(title: NSLocalizedString("Unmatch & report", comment: ""), subtitle: NSLocalizedString("Unmatching and reporting...", comment: "")), onView: self.parent?.view)
-                self.user?.report(message: nil) { error in
+                self.otherUser?.report(message: nil) { error in
                     if error != nil {
                         HUD.show(.labeledError(title: NSLocalizedString("Unmatch & report", comment: ""), subtitle: NSLocalizedString("Failed to unmatch and report", comment: "")), onView: self.parent?.view)
                         HUD.hide(afterDelay: 1.0)
@@ -90,10 +90,11 @@ class UserDetailsViewController: UIViewController {
                         let identify = AMPIdentify()
                         identify.add("report_count", value: NSNumber(value: 1))
                         Amplitude.instance().identify(identify)
-                        if let uid = self.user?.uid {
+                        if let uid = self.otherUser?.uid {
                             Analytics.Log(event: "Core_report", with: ["other_id": uid])
                         }
-                        HUD.show(.labeledSuccess(title: NSLocalizedString("Unmatch & report", comment: ""), subtitle: NSLocalizedString("Done!", comment: "")), onView: self.parent?.view)
+                        HUD.flash(.labeledSuccess(title: NSLocalizedString("Unmatch & report", comment: ""), subtitle: NSLocalizedString("Done!", comment: "")), onView: self.parent?.view, delay: 2.0, completion: nil)
+                        //HUD.show(.labeledSuccess(title: NSLocalizedString("Unmatch & report", comment: ""), subtitle: NSLocalizedString("Done!", comment: "")), onView: self.parent?.view)
                         self.dismiss(sender: self)
                         self.chatViewController?.conversationDeleted()
                     }
@@ -107,7 +108,9 @@ class UserDetailsViewController: UIViewController {
         })
         let cancelButton = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
         actionSheetController.addAction(closeButton)
-        actionSheetController.addAction(unmatchButton)
+        if isMatch {
+            actionSheetController.addAction(unmatchButton)
+        }
         actionSheetController.addAction(reportButton)
         actionSheetController.addAction(cancelButton)
         actionSheetController.popoverPresentationController?.sourceView = self.view
@@ -130,9 +133,8 @@ class UserDetailsViewController: UIViewController {
         
         //optionsButton.
         
-        cardView.user = self.user
-        cardView.commonEventInfos = self.commonEventInfos
-        cardView.initiallyShowDescription = true
+        cardView.user = self.otherUser
+        // cardView.initiallyShowDescription = true
         cardView.load {
             self.cardView.carouselView.draggingEnabled = true
         }
@@ -144,8 +146,8 @@ class UserDetailsViewController: UIViewController {
         optionsButton.layer.cornerRadius = optionsButton.frame.width / 2
         optionsButton.layer.masksToBounds = true
         
-        if let user = user {
-            if user.uid.range(of: "woojo-") != nil {
+        if let otherUser = otherUser {
+            if otherUser.uid.range(of: "woojo-") != nil {
                 optionsButton.isHidden = true
             }
         }

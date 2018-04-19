@@ -2,17 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Gotham Rounded Book.otf</string>
-		<string>Gotham Rounded Book Italic.otf</string>
-		<string>Gotham Rounded Bold.otf</string>
-		<string>Gotham Rounded Bold Italic.otf</string>
-		<string>Gotham Rounded Light.otf</string>
-		<string>Gotham Rounded Light Italic.otf</string>
-		<string>Gotham Rounded Medium.otf</string>
-		<string>Gotham Rounded Medium Italic.otf</string>
-	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -28,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.2.3</string>
+	<string>2.3.1</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -40,7 +29,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>FacebookAppID</key>
 	<string>1421871194795951</string>
 	<key>FacebookDisplayName</key>
@@ -63,9 +52,20 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>You can send your location in chats</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>You can use your phone&apos;s microphone to chat with other users.</string>
+	<string>You can use your phone's microphone to chat with other users.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>You can use photos from your library in your profile and in chats.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Gotham Rounded Book.otf</string>
+		<string>Gotham Rounded Book Italic.otf</string>
+		<string>Gotham Rounded Bold.otf</string>
+		<string>Gotham Rounded Bold Italic.otf</string>
+		<string>Gotham Rounded Light.otf</string>
+		<string>Gotham Rounded Light Italic.otf</string>
+		<string>Gotham Rounded Medium.otf</string>
+		<string>Gotham Rounded Medium Italic.otf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

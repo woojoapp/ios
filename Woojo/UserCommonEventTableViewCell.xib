@@ -17,38 +17,58 @@
         <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="commonEventCell" rowHeight="72" id="KGk-i7-Jjw" customClass="UserCommonEventTableViewCell" customModule="Woojo" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="358" height="72"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="358" height="71.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SwX-cu-L3p">
-                        <rect key="frame" x="74" y="-8.5" width="276" height="17"/>
+                        <rect key="frame" x="74" y="21.5" width="276" height="17"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tWk-Rk-rPP">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tWk-Rk-rPP">
                         <rect key="frame" x="16" y="5" width="50" height="50"/>
+                        <color key="backgroundColor" red="0.29803921570000003" green="0.32549019610000002" blue="0.35686274509999999" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="tWk-Rk-rPP" secondAttribute="height" multiplier="1:1" id="ALr-Ds-aA4"/>
                             <constraint firstAttribute="height" constant="50" id="bYi-aa-8zk"/>
                         </constraints>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FFi-cQ-W65">
+                        <rect key="frame" x="30.5" y="27.5" width="21" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MAY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v6h-FB-qfS">
+                        <rect key="frame" x="30.5" y="15.5" width="22" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" red="1" green="0.0" blue="0.18667996310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
+                    <constraint firstItem="v6h-FB-qfS" firstAttribute="centerX" secondItem="tWk-Rk-rPP" secondAttribute="centerX" id="16K-Ng-kVa"/>
                     <constraint firstItem="tWk-Rk-rPP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="DYx-tJ-O0Z"/>
                     <constraint firstAttribute="bottom" secondItem="tWk-Rk-rPP" secondAttribute="bottom" constant="5" id="Dg3-Jg-bef"/>
                     <constraint firstAttribute="trailing" secondItem="SwX-cu-L3p" secondAttribute="trailing" constant="8" id="Ezk-bi-b7t"/>
                     <constraint firstItem="tWk-Rk-rPP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="JxH-4A-iJ3"/>
                     <constraint firstItem="SwX-cu-L3p" firstAttribute="leading" secondItem="tWk-Rk-rPP" secondAttribute="trailing" constant="8" id="MJQ-P0-6TU"/>
+                    <constraint firstItem="FFi-cQ-W65" firstAttribute="centerY" secondItem="tWk-Rk-rPP" secondAttribute="centerY" constant="8" id="Sfk-TI-W3c"/>
+                    <constraint firstItem="FFi-cQ-W65" firstAttribute="top" secondItem="v6h-FB-qfS" secondAttribute="bottom" id="Xcf-fn-mXH"/>
+                    <constraint firstItem="FFi-cQ-W65" firstAttribute="centerX" secondItem="tWk-Rk-rPP" secondAttribute="centerX" id="cdk-2f-KlB"/>
                     <constraint firstItem="SwX-cu-L3p" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="nur-Q5-CJ3"/>
+                    <constraint firstItem="tWk-Rk-rPP" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="wLa-Y2-8Ij"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="eventDay" destination="FFi-cQ-W65" id="7nE-ET-ZaL"/>
                 <outlet property="eventImageView" destination="tWk-Rk-rPP" id="tD4-K9-Ach"/>
+                <outlet property="eventMonth" destination="v6h-FB-qfS" id="8xq-hK-cWz"/>
                 <outlet property="eventTextLabel" destination="SwX-cu-L3p" id="qrr-b8-FYX"/>
             </connections>
             <point key="canvasLocation" x="53" y="68"/>

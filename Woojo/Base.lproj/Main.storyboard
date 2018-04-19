@@ -890,10 +890,40 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Occupation" footerTitle="12345 characters left" id="DLk-cx-4GY">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="HNp-bF-vq0" customClass="OccupationsTableViewCell" customModule="Woojo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="275" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HNp-bF-vq0" id="ZIg-Sn-UrH">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Say something about yourself..." translatesAutoresizingMaskIntoConstraints="NO" id="pLz-Xd-Kj3">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="pLz-Xd-Kj3" firstAttribute="leading" secondItem="ZIg-Sn-UrH" secondAttribute="leading" id="AgU-QF-dd0"/>
+                                                <constraint firstAttribute="trailing" secondItem="pLz-Xd-Kj3" secondAttribute="trailing" id="HP0-t7-G1n"/>
+                                                <constraint firstAttribute="bottom" secondItem="pLz-Xd-Kj3" secondAttribute="bottom" id="MRp-yD-BQz"/>
+                                                <constraint firstItem="pLz-Xd-Kj3" firstAttribute="top" secondItem="ZIg-Sn-UrH" secondAttribute="top" id="l9Q-qr-py7"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="textView" destination="pLz-Xd-Kj3" id="jly-Qg-7z4"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="Photos" footerTitle="Drag and drop to order, tap for options" id="QMa-J1-q3l">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="200" id="XpL-RD-r0I">
-                                        <rect key="frame" x="0.0" y="275" width="320" height="200"/>
+                                        <rect key="frame" x="0.0" y="394.5" width="320" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XpL-RD-r0I" id="GAc-Oa-KdJ">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="199.5"/>
@@ -954,33 +984,6 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Occupation" id="DLk-cx-4GY">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="200" id="HNp-bF-vq0" customClass="OccupationsTableViewCell" customModule="Woojo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="543" width="320" height="200"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HNp-bF-vq0" id="ZIg-Sn-UrH">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="199.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="04D-FD-Tkf">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="199.5"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </tableView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="04D-FD-Tkf" firstAttribute="top" secondItem="ZIg-Sn-UrH" secondAttribute="top" id="9W1-nN-ixm"/>
-                                                <constraint firstAttribute="trailing" secondItem="04D-FD-Tkf" secondAttribute="trailing" id="Bg6-HC-jIs"/>
-                                                <constraint firstItem="04D-FD-Tkf" firstAttribute="leading" secondItem="ZIg-Sn-UrH" secondAttribute="leading" id="FFT-Mh-ra4"/>
-                                                <constraint firstAttribute="bottom" secondItem="04D-FD-Tkf" secondAttribute="bottom" id="WMa-f7-401"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="tableView" destination="04D-FD-Tkf" id="VFC-o7-JRS"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="9Z9-DO-fmv" id="crk-a9-2ub"/>
@@ -1012,7 +1015,7 @@
                 <tapGestureRecognizer id="nem-wx-AQS"/>
                 <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="HMS-Nd-uLj"/>
             </objects>
-            <point key="canvasLocation" x="1711" y="2866"/>
+            <point key="canvasLocation" x="1710" y="2865.8450704225352"/>
         </scene>
         <!--Albums-->
         <scene sceneID="gZY-1F-wJA">

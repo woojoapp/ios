@@ -42,6 +42,7 @@ struct UserNotRepliedEventsGraphRequest: GraphRequestProtocol {
                       Constants.Event.properties.graphAPIKeys.place,
                       Constants.Event.properties.graphAPIKeys.attendingCount,
                       Constants.Event.properties.graphAPIKeys.rsvpStatus,
+                      "cover{source}",
                       Constants.GraphRequest.UserEvents.fieldPictureUrl]
         return [Constants.GraphRequest.fields:fields.joined(separator: Constants.GraphRequest.fieldsSeparator),
                 "type": "not_replied",

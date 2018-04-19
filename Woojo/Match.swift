@@ -24,7 +24,8 @@ extension User {
         var by: String
         var on: String
         var created: Date = Date()
-        var commonEventInfos: [CommonEventInfo] = []
+        //var commonEventInfos: [CommonEvent] = []
+        var commonInfo: CommonInfo = CommonInfo()
         var ref: DatabaseReference {
             get {
                 return Database.database().reference().child(Constants.User.Match.firebaseNode).child(by).child(on)
@@ -46,9 +47,19 @@ extension User {
                 self.by = by
                 self.on = on
                 self.created = created
-                for item in snapshot.childSnapshot(forPath: Constants.User.Match.properties.firebaseNodes.events).children {
+                for item in snapshot.childSnapshot(forPath: Constants.User.Candidate.properties.firebaseNodes.events).children {
                     if let commonEventInfoSnap = item as? DataSnapshot {
-                        self.commonEventInfos.append(CommonEventInfo(snapshot: commonEventInfoSnap))
+                        commonInfo.events.append(CommonEvent(snapshot: commonEventInfoSnap))
+                    }
+                }
+                for item in snapshot.childSnapshot(forPath: Constants.User.Candidate.properties.firebaseNodes.friends).children {
+                    if let friendSnap = item as? DataSnapshot {
+                        commonInfo.friends.append(Friend.from(firebase: friendSnap))
+                    }
+                }
+                for item in snapshot.childSnapshot(forPath: Constants.User.Candidate.properties.firebaseNodes.pageLikes).children {
+                    if let pageLikeSnap = item as? DataSnapshot {
+                        commonInfo.pageLikes.append(PageLike.from(firebase: pageLikeSnap))
                     }
                 }
             } else {

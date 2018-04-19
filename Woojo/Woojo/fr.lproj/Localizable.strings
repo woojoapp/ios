@@ -87,7 +87,7 @@
 "Unmatching..." = "En cours...";
 "Failed to unmatch" = "Échec de l'opération";
 "Unmatched!" = "Terminé!";
-"Unmatch & report" = "Dé-matcher et signaler";
+"Unmatch & report" = "Signaler";
 "Confirm unmatch and report?" = "Confirmer?";
 "Unmatching and reporting..." = "En cours...";
 "Failed to unmatch and report" = "Échec de l'opération";
@@ -117,3 +117,5 @@
 "Tell other members why..." = "Explique pourquoi aux autres membres...";
 "Looking good, %@!" = "C'est parfait, %@ !";
 "You're all set, %@!" = "Tout est prêt, %@ !";
+"More common event(s)" = "Autre(s) événement(s)";
+"Job or school..." = "Profession ou école";

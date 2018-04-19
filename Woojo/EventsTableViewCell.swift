@@ -14,6 +14,8 @@ class EventsTableViewCell: UITableViewCell {
     @IBOutlet weak var placeLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var thumbnailView: UIImageView!
+    @IBOutlet weak var monthLabel: UILabel!
+    @IBOutlet weak var dayLabel: UILabel!
     
     var event: Event? {
         didSet {
@@ -54,13 +56,29 @@ class EventsTableViewCell: UITableViewCell {
         thumbnailView.layer.masksToBounds = true
         thumbnailView.contentMode = .scaleAspectFill
         if let pictureURL = event?.pictureURL {
-            thumbnailView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_100x100"))
+            thumbnailView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_40x40"))
+            setDateVisibility(hidden: true)
         } else {
-            thumbnailView.image = #imageLiteral(resourceName: "placeholder_100x100")
+            if let pictureURL = event?.coverURL {
+                thumbnailView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_40x40"))
+                setDateVisibility(hidden: true)
+            } else {
+                if let startDate = event?.start {
+                    thumbnailView.image = nil
+                    monthLabel.text = MyEventsTableViewCell.monthFormatter.string(from: startDate).uppercased()
+                    dayLabel.text = MyEventsTableViewCell.dayFormatter.string(from: startDate)
+                    setDateVisibility(hidden: false)
+                }
+            }
         }
         if let start = event?.start {
             dateLabel?.text = event?.timesString
         }
+    }
+    
+    func setDateVisibility(hidden: Bool) {
+        monthLabel.isHidden = hidden
+        dayLabel.isHidden = hidden
     }
 
 }
