@@ -58,6 +58,8 @@ class CurrentUser: User {
     var preferences: Preferences!
     var candidates: [Candidate] = []
     var events: Variable<[Event]> = Variable([])
+    var sponsoredEvents: Variable<[Event]> = Variable([])
+    var eventbriteEvents: Variable<[Event]> = Variable([])
     var recommendedEvents: Variable<[Event]> = Variable([])
     var pendingEvents: Variable<[Event]> = Variable([])
     var notifications: Variable<[Notification]> = Variable([])
@@ -515,6 +517,49 @@ class CurrentUser: User {
         recommendedEventsRef.removeAllObservers()
         isObservingRecommendedEvents = false
     }
+    
+    // MARK: - Eventbrite events
+    
+    var eventbriteEventsRef: DatabaseReference {
+        get {
+            return ref.child("integrations/eventbrite/events")
+        }
+    }
+    
+    var isObservingEventbriteEvents: Bool = false
+    
+    func startObservingEventbriteEvents() {
+        print("START observing eventbrite events")
+        isObservingEventbriteEvents = true
+        eventbriteEventsRef.observe(.value, with: { arraySnapshot in
+            var newArray: [Event] = []
+            let group = DispatchGroup()
+            for i in 0..<Int(arraySnapshot.childrenCount) {
+                if let snapshot = arraySnapshot.children.allObjects[i] as? DataSnapshot {
+                    group.enter()
+                    Event.get(for: snapshot.key, completion: { (event) in
+                        if let event = event {
+                            newArray.append(event)
+                        }
+                        group.leave()
+                    })
+                }
+            }
+            group.notify(queue: .main, execute: {
+                self.eventbriteEvents.value = newArray
+            })
+        }, withCancel: { error in
+            print("Cancelled observing eventbriteEvents.childAdded: \(error)")
+            self.isObservingEventbriteEvents = false
+        })
+    }
+    
+    func stopObservingEventbriteEvents() {
+        eventbriteEventsRef.removeAllObservers()
+        isObservingEventbriteEvents = false
+    }
+    
+    // MARK: - Pending events
     
     var pendingEventsRef: DatabaseReference {
         get {

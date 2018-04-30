@@ -120,3 +120,10 @@
 "You're all set, %@!" = "You're all set, %@!";
 "More common event(s)" = "More common event(s)";
 "Job or school..." = "Job or school...";
+"Currently unavailable" = "Currently unavailable";
+"Due to temporary changes in Facebook\'s privacy policy, your events are inaccessible at this time.\n\nThis feature will be re-activated when access is restored." = "Due to temporary changes in Facebook\'s privacy policy, your events are inaccessible at this time.\n\nThis feature will be re-activated when access is restored.";
+"You have a ticket" = "You have a ticket";
+"You're going" = "You're going";
+"You're interested" = "You're interested";
+"You're invited" = "You're invited";
+"Recommended for you" = "Recommended for you";

@@ -27,6 +27,8 @@ class Event {
     var rsvpStatus: String = "unsure"
     var type: String?
     var matches: [User] = []
+    var source: Source?
+    var active: Bool = false
     
     var ref: DatabaseReference {
         get {
@@ -332,5 +334,14 @@ extension Event {
         case notReplied = "not_replied"
         case iWasRecommendedOthers = "i_was_recommended_others"
         case otherWasRecommendedMine = "other_was_recommended_mine"
+    }
+}
+
+extension Event {
+    enum Source: String {
+        case facebook
+        case eventbrite
+        case recommended
+        case sponsored
     }
 }
