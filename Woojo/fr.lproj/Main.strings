@@ -6,7 +6,7 @@
 "1XI-hs-iyq.text" = "Choisissez un lieu et une date";
 
 /* Class = "UILabel"; text = "Swipe left to remove one."; ObjectID = "23S-7S-YNd"; */
-"23S-7S-YNd.text" = "Glissez pour en supprimer";
+"23S-7S-YNd.text" = "Pour la description, appuie sur les infos";
 
 /* Class = "UILabel"; text = "Discover great events and people."; ObjectID = "2XR-Bv-E3N"; */
 "2XR-Bv-E3N.text" = "Découvrez les participants";
@@ -183,7 +183,7 @@
 "ZVL-Tm-PqV.text" = "À propos de Woojo";
 
 /* Class = "UILabel"; text = "It filters who you see on the People tab."; ObjectID = "a3a-OY-zoH"; */
-"a3a-OY-zoH.text" = "Il filtre les profils que vous voyez";
+"a3a-OY-zoH.text" = "Tu vois les profils des événements actifs";
 
 /* Class = "UILabel"; text = "New Events"; ObjectID = "aG4-Il-NNE"; */
 "aG4-Il-NNE.text" = "Nouveaux événements";
@@ -192,7 +192,7 @@
 "as0-xJ-h2Q.text" = "Numéro de vol";
 
 /* Class = "UILabel"; text = "This is your Events Filter"; ObjectID = "b2X-bw-F6N"; */
-"b2X-bw-F6N.text" = "Ceci est votre filtre d'événements";
+"b2X-bw-F6N.text" = "C\'est ici que sont tes événements";
 
 /* Class = "UILabel"; text = "Meet at the airport or on the plane!"; ObjectID = "bNu-cd-yVZ"; */
 "bNu-cd-yVZ.text" = "A l'aéroport ou dans l'avion, rencontrez du monde!";
@@ -231,7 +231,7 @@
 "gBD-j4-2aT.text" = "Faites des rencontres en voyage";
 
 /* Class = "UILabel"; text = "Tap + to add any event from Facebook."; ObjectID = "gF4-wT-55L"; */
-"gF4-wT-55L.text" = "Appuyez sur + pour en ajouter";
+"gF4-wT-55L.text" = "Pour activer, appuie sur l'image";
 
 /* Class = "UILabel"; text = "Tell us your plan"; ObjectID = "gH7-Er-6U3"; */
 "gH7-Er-6U3.text" = "Quel est votre plan?";
