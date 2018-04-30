@@ -26,6 +26,7 @@ class ProfileViewController: UITableViewController, PhotoSource {
     
     let disposeBag = DisposeBag()
     fileprivate let bioTextViewPlaceholderText = NSLocalizedString("Write something about yourself...", comment: "")
+    fileprivate let occupationTextViewPlaceholderText = NSLocalizedString("Job or school...", comment: "")
     
     // Photos collection view properties
     fileprivate let photoCount: CGFloat = 6
@@ -34,6 +35,7 @@ class ProfileViewController: UITableViewController, PhotoSource {
     fileprivate let sectionInsets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
     
     fileprivate var previousBio: String?
+    fileprivate var previousOccupation: String?
     var reachabilityObserver: AnyObject?
     
     let imagePickerController = UIImagePickerController()
@@ -49,6 +51,7 @@ class ProfileViewController: UITableViewController, PhotoSource {
         super.viewDidLoad()
         setupDataSources()
         setupBioTextView()
+        setupOccupationTextView()
         imagePickerController.delegate = self
         profilePhotoImageView.contentMode = .scaleAspectFill
     }
@@ -109,12 +112,12 @@ class ProfileViewController: UITableViewController, PhotoSource {
             })
             .disposed(by: disposeBag)
         
-        User.current.asObservable()
+        /*User.current.asObservable()
             .map{ $0?.profile }
             .subscribe(onNext: { profile in
                 self.occupationsTableViewCell.occupations = profile?.occupations
             })
-            .disposed(by: disposeBag)
+            .disposed(by: disposeBag)*/
         
         User.current.asObservable()
             .flatMap { user -> Observable<String> in
@@ -134,6 +137,26 @@ class ProfileViewController: UITableViewController, PhotoSource {
                 }
             }
             .bind(to: bioTableViewCell.bioTextView.rx.text)
+            .disposed(by: disposeBag)
+        
+        User.current.asObservable()
+            .flatMap { user -> Observable<String> in
+                if let currentUser = user {
+                    return currentUser.profile.occupation.asObservable()
+                } else {
+                    return Variable(self.occupationTextViewPlaceholderText).asObservable()
+                }
+            }
+            .map{ text -> String in
+                if(text == "") {
+                    self.occupationsTableViewCell.textView.textColor = UIColor.lightGray
+                    return self.occupationTextViewPlaceholderText
+                } else {
+                    self.occupationsTableViewCell.textView.textColor = UIColor.black
+                    return text
+                }
+            }
+            .bind(to: occupationsTableViewCell.textView.rx.text)
             .disposed(by: disposeBag)
         
         /* User.current.asObservable()
@@ -169,10 +192,26 @@ class ProfileViewController: UITableViewController, PhotoSource {
             }).disposed(by: disposeBag)
     }
     
+    func setupOccupationTextView() {
+        occupationsTableViewCell.textView.delegate = self
+        occupationsTableViewCell.textView.rx.text
+            .map{ $0?.count }
+            .subscribe(onNext: { count in
+                self.setOccupationFooter(count: count)
+            }).disposed(by: disposeBag)
+    }
+    
     func setBioFooter(count: Int?) {
         if let count = count {
             let s = count != 249 ? NSLocalizedString("characters", comment: "") : NSLocalizedString("character", comment: "")
             self.tableView.footerView(forSection: 0)?.textLabel?.text = String(format: NSLocalizedString("%d %@ left", comment: ""), max(250 - count, 0), s)
+        }
+    }
+    
+    func setOccupationFooter(count: Int?) {
+        if let count = count {
+            let s = count != 29 ? NSLocalizedString("characters", comment: "") : NSLocalizedString("character", comment: "")
+            self.tableView.footerView(forSection: 1)?.textLabel?.text = String(format: NSLocalizedString("%d %@ left", comment: ""), max(30 - count, 0), s)
         }
     }
 
@@ -185,17 +224,18 @@ class ProfileViewController: UITableViewController, PhotoSource {
         super.viewDidLayoutSubviews()
         self.updateTableViewHeaderViewHeight()
         self.setBioFooter(count: bioTableViewCell.bioTextView.text.count)
+        self.setOccupationFooter(count: occupationsTableViewCell.textView.text.count)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 1 && indexPath.row == 0 {
+        if indexPath.section == 2 && indexPath.row == 0 {
             let onePadding = sectionInsets.left
             let paddingSpace = onePadding * (itemsPerRow + 1)
             let availableWidth = tableView.frame.width - paddingSpace
             let widthPerItem = availableWidth / itemsPerRow
             return (photoCount / itemsPerRow) * widthPerItem + 3 * onePadding
-        } else if indexPath.section == 2 {
-            return CGFloat(User.current.value?.profile.occupations.count ?? 1) * CGFloat(40.0)
+        /*} else if indexPath.section == 1 {
+            return CGFloat(User.current.value?.profile.occupations.count ?? 1) * CGFloat(40.0)*/
         } else {
             return UITableViewAutomaticDimension
         }
@@ -204,6 +244,8 @@ class ProfileViewController: UITableViewController, PhotoSource {
     override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         if section == 0 {
             view.isHidden = true
+        } else if section == 1 {
+            view.isHidden = true
         } else if let reachable = isReachable(), !reachable, section == 1 {
             view.isHidden = true
         }
@@ -211,6 +253,7 @@ class ProfileViewController: UITableViewController, PhotoSource {
     
     @objc func tap(gesture: UITapGestureRecognizer) {
         bioTableViewCell.bioTextView.resignFirstResponder()
+        occupationsTableViewCell.textView.resignFirstResponder()
     }
     
     @objc func longPress(gesture: UILongPressGestureRecognizer) {
@@ -554,39 +597,75 @@ extension ProfileViewController: RSKImageCropViewControllerDelegate {
 extension ProfileViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        previousBio = textView.text
-        if bioTableViewCell.bioTextView.text == bioTextViewPlaceholderText {
-            bioTableViewCell.bioTextView.text = ""
-            bioTableViewCell.bioTextView.textColor = UIColor.black
+        if textView == bioTableViewCell.bioTextView {
+            previousBio = textView.text
+            if bioTableViewCell.bioTextView.text == bioTextViewPlaceholderText {
+                bioTableViewCell.bioTextView.text = ""
+                bioTableViewCell.bioTextView.textColor = UIColor.black
+            }
+            tableView.footerView(forSection: 0)?.isHidden = false
+            setBioFooter(count: bioTableViewCell.bioTextView.text.count)
+        } else if textView == occupationsTableViewCell.textView {
+            previousOccupation = textView.text
+            if occupationsTableViewCell.textView.text == occupationTextViewPlaceholderText {
+                occupationsTableViewCell.textView.text = ""
+                occupationsTableViewCell.textView.textColor = UIColor.black
+            }
+            tableView.footerView(forSection: 1)?.isHidden = false
+            setOccupationFooter(count: occupationsTableViewCell.textView.text.count)
         }
-        tableView.footerView(forSection: 0)?.isHidden = false
-        setBioFooter(count: bioTableViewCell.bioTextView.text.count)
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        let newBio = bioTableViewCell.bioTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-        User.current.value?.profile.setDescription(description: newBio, completion: { error in
-            if error != nil {
-                self.bioTableViewCell.bioTextView.text = self.previousBio
+        if textView == bioTableViewCell.bioTextView {
+            let newBio = bioTableViewCell.bioTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+            User.current.value?.profile.setDescription(description: newBio, completion: { error in
+                if error != nil {
+                    self.bioTableViewCell.bioTextView.text = self.previousBio
+                } else {
+                    Analytics.setUserProperties(properties: ["about_character_count": String(newBio.count)])
+                    Analytics.Log(event: "Profile.about_updated", with: ["character_count": String(newBio.count)])
+                }
+            })
+            self.tableView.footerView(forSection: 0)?.isHidden = true
+            if bioTableViewCell.bioTextView.text == "" {
+                bioTableViewCell.bioTextView.text = bioTextViewPlaceholderText
+                bioTableViewCell.bioTextView.textColor = UIColor.lightGray
             } else {
-                Analytics.setUserProperties(properties: ["about_character_count": String(newBio.count)])
-                Analytics.Log(event: "Profile.about_updated", with: ["character_count": String(newBio.count)])
+                bioTableViewCell.bioTextView.text = newBio
+                textViewDidChange(bioTableViewCell.bioTextView)
             }
-        })
-        self.tableView.footerView(forSection: 0)?.isHidden = true
-        if bioTableViewCell.bioTextView.text == "" {
-            bioTableViewCell.bioTextView.text = bioTextViewPlaceholderText
-            bioTableViewCell.bioTextView.textColor = UIColor.lightGray
         } else {
-            bioTableViewCell.bioTextView.text = newBio
-            textViewDidChange(bioTableViewCell.bioTextView)
+            let newOccupation = occupationsTableViewCell.textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+            User.current.value?.profile.setOccupation(occupation: newOccupation, completion: { error in
+                if error != nil {
+                    self.occupationsTableViewCell.textView.text = self.previousOccupation
+                } else {
+                    //Analytics.setUserProperties(properties: ["about_character_count": String(newBio.count)])
+                    //Analytics.Log(event: "Profile.about_updated", with: ["character_count": String(newBio.count)])
+                }
+            })
+            self.tableView.footerView(forSection: 1)?.isHidden = true
+            if occupationsTableViewCell.textView.text == "" {
+                occupationsTableViewCell.textView.text = occupationTextViewPlaceholderText
+                occupationsTableViewCell.textView.textColor = UIColor.lightGray
+            } else {
+                occupationsTableViewCell.textView.text = newOccupation
+                textViewDidChange(occupationsTableViewCell.textView)
+            }
         }
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.count
-        return numberOfChars <= 250 || numberOfChars < textView.text.count
+        if textView == bioTableViewCell.bioTextView {
+            return numberOfChars <= 250 || numberOfChars < textView.text.count
+        } else if textView == occupationsTableViewCell.textView {
+            return numberOfChars <= 30 || numberOfChars < textView.text.count
+        } else {
+            return false
+        }
     }
     
     func textViewDidChange(_ textView: UITextView) {

@@ -21,10 +21,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0k-Bc-vLq">
-                        <rect key="frame" x="16" y="15.5" width="52" height="52"/>
+                        <rect key="frame" x="16" y="16.5" width="50" height="50"/>
                         <color key="backgroundColor" red="0.29803921568627451" green="0.32549019607843138" blue="0.35686274509803922" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="52" id="ToZ-Sq-ETf"/>
+                            <constraint firstAttribute="width" constant="50" id="ToZ-Sq-ETf"/>
                             <constraint firstAttribute="width" secondItem="X0k-Bc-vLq" secondAttribute="height" multiplier="1:1" id="fSl-cL-9kN"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
@@ -32,7 +32,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Extra common event" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y5W-BA-Ket">
-                        <rect key="frame" x="76" y="33.5" width="138" height="17"/>
+                        <rect key="frame" x="74" y="33.5" width="138" height="17"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>

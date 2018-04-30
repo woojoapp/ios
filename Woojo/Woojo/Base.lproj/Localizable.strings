@@ -88,10 +88,10 @@
 "Unmatching..." = "Unmatching...";
 "Failed to unmatch" = "Failed to unmatch";
 "Unmatched!" = "Unmatched!";
-"Unmatch & report" = "Unmatch & report";
-"Confirm unmatch and report?" = "Confirm unmatch and report?";
-"Unmatching and reporting..." = "Unmatching and reporting...";
-"Failed to unmatch and report" = "Failed to unmatch and report";
+"Unmatch & report" = "Report";
+"Confirm unmatch and report?" = "Confirm report?";
+"Unmatching and reporting..." = "Reporting...";
+"Failed to unmatch and report" = "Failed to report";
 "Done!" = "Done!";
 "Terms & Conditions" = "Terms & Conditions";
 "Privacy Policy" = "Privacy Policy";
@@ -118,4 +118,12 @@
 "Tell other members why..." = "Tell other members why...";
 "Looking good, %@!" = "Looking good, %@!";
 "You're all set, %@!" = "You're all set, %@!";
-
+"More common event(s)" = "More common event(s)";
+"Job or school..." = "Job or school...";
+"Currently unavailable" = "Currently unavailable";
+"Due to temporary changes in Facebook\'s privacy policy, your events are inaccessible at this time.\n\nThis feature will be re-activated when access is restored." = "Due to temporary changes in Facebook\'s privacy policy, your events are inaccessible at this time.\n\nThis feature will be re-activated when access is restored.";
+"You have a ticket" = "You have a ticket";
+"You're going" = "You're going";
+"You're interested" = "You're interested";
+"You're invited" = "You're invited";
+"Recommended for you" = "Recommended for you";

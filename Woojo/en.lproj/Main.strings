@@ -164,8 +164,8 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "SrP-sr-tSR"; */
 "SrP-sr-tSR.text" = "Label";
 
-/* Class = "UINavigationItem"; title = "Events"; ObjectID = "TCh-MH-JMb"; */
-"TCh-MH-JMb.title" = "Events";
+/* Class = "UINavigationItem"; title = "Events"; ObjectID = "nql-WV-yRn"; */
+"nql-WV-yRn.title" = "Events";
 
 /* Class = "UIButton"; normalTitle = "Share Woojo!"; ObjectID = "U4U-EG-yDK"; */
 "U4U-EG-yDK.normalTitle" = "Share Woojo!";
@@ -278,6 +278,8 @@
 /* Class = "UITableViewSection"; headerTitle = "About"; ObjectID = "jFy-Ej-gbr"; */
 "jFy-Ej-gbr.headerTitle" = "About";
 
+"DLk-cx-4GY.headerTitle" = "Occupation";
+
 /* Class = "UILabel"; text = "Enabled"; ObjectID = "jOF-Yt-EwC"; */
 "jOF-Yt-EwC.text" = "Enabled";
 
@@ -358,3 +360,9 @@
 
 /* Class = "UILabel"; text = "Enter your flight details"; ObjectID = "zL2-CS-kvy"; */
 "zL2-CS-kvy.text" = "Enter your flight details";
+
+"i4I-cG-sEO.text" = "Events";
+
+"Ju2-L5-YbV.headerTitle" = "Event sources";
+
+"kfs-9q-KLB.title" = "Events";

@@ -149,8 +149,8 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "SrP-sr-tSR"; */
 "SrP-sr-tSR.text" = "Label";
 
-/* Class = "UINavigationItem"; title = "Events"; ObjectID = "TCh-MH-JMb"; */
-"TCh-MH-JMb.title" = "Événements";
+/* Class = "UINavigationItem"; title = "Events"; ObjectID = "nql-WV-yRn"; */
+"nql-WV-yRn.title" = "Événements";
 
 /* Class = "UIButton"; normalTitle = "Share Woojo!"; ObjectID = "U4U-EG-yDK"; */
 "U4U-EG-yDK.normalTitle" = "Partager Woojo!";
@@ -260,6 +260,8 @@
 /* Class = "UITableViewSection"; headerTitle = "About"; ObjectID = "jFy-Ej-gbr"; */
 "jFy-Ej-gbr.headerTitle" = "À propos";
 
+"DLk-cx-4GY.headerTitle" = "Activité";
+
 /* Class = "UILabel"; text = "Enabled"; ObjectID = "jOF-Yt-EwC"; */
 "jOF-Yt-EwC.text" = "Activées";
 
@@ -352,3 +354,9 @@
 
 /* Class = "UILabel"; text = "Those in your filter have a green checkmark."; ObjectID = "LtQ-Ix-Uj7"; */
 "LtQ-Ix-Uj7.text" = "Ceux cochés sont déjà dans votre filtre";
+
+"i4I-cG-sEO.text" = "Événements";
+
+"Ju2-L5-YbV.headerTitle" = "Sources d'événements";
+
+"kfs-9q-KLB.title" = "Événements";

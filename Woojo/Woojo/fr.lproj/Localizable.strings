@@ -87,7 +87,7 @@
 "Unmatching..." = "En cours...";
 "Failed to unmatch" = "Échec de l'opération";
 "Unmatched!" = "Terminé!";
-"Unmatch & report" = "Dé-matcher et signaler";
+"Unmatch & report" = "Signaler";
 "Confirm unmatch and report?" = "Confirmer?";
 "Unmatching and reporting..." = "En cours...";
 "Failed to unmatch and report" = "Échec de l'opération";
@@ -117,3 +117,12 @@
 "Tell other members why..." = "Explique pourquoi aux autres membres...";
 "Looking good, %@!" = "C'est parfait, %@ !";
 "You're all set, %@!" = "Tout est prêt, %@ !";
+"More common event(s)" = "Autre(s) événement(s)";
+"Job or school..." = "Profession ou école";
+"Currently unavailable" = "Actuellement indisponible";
+"Due to temporary changes in Facebook\'s privacy policy, your events are inaccessible at this time.\n\nThis feature will be re-activated when access is restored." = "En raison de changements temporaires dans la politique de confidentialité de Facebook, vos événements sont actuellement inaccessibles.\n\nCette fonctionnalité sera réactivée dès que l\'accès sera rétabli.";
+"You have a ticket" = "Tu as un billet";
+"You're going" = "Tu y vas";
+"You're interested" = "Tu es intéressé";
+"You're invited" = "Tu es invité";
+"Recommended for you" = "Recommandé pour toi";

@@ -51,14 +51,14 @@ class AddEventViewController: UIViewController {
                 self.containerViewE.alpha = 0
             })
         } else if sender.selectedSegmentIndex == 3 {
-            UIView.animate(withDuration: 0.5, animations: {
+            /*UIView.animate(withDuration: 0.5, animations: {
                 self.containerViewA.alpha = 0
                 self.containerViewB.alpha = 0
                 self.containerViewC.alpha = 0
                 self.containerViewD.alpha = 1
                 self.containerViewE.alpha = 0
             })
-        } else if sender.selectedSegmentIndex == 4 {
+        } else if sender.selectedSegmentIndex == 4 {*/
             UIView.animate(withDuration: 0.5, animations: {
                 self.containerViewA.alpha = 0
                 self.containerViewB.alpha = 0
@@ -75,8 +75,10 @@ class AddEventViewController: UIViewController {
     
     override func viewDidLoad() {
         self.segmentedControl.type = .images
-        self.segmentedControl.sectionImages = [#imageLiteral(resourceName: "explore_section"), #imageLiteral(resourceName: "facebook_section"),#imageLiteral(resourceName: "eventbrite_section"), #imageLiteral(resourceName: "search_section"), #imageLiteral(resourceName: "plan_section")]
-        self.segmentedControl.sectionSelectedImages = [#imageLiteral(resourceName: "explore_section_selected"), #imageLiteral(resourceName: "facebook_section_selected"),#imageLiteral(resourceName: "eventbrite_section_selected"), #imageLiteral(resourceName: "search_section_selected"), #imageLiteral(resourceName: "plan_section_selected")]
+        //self.segmentedControl.sectionImages = [#imageLiteral(resourceName: "explore_section"), #imageLiteral(resourceName: "facebook_section"),#imageLiteral(resourceName: "eventbrite_section"), #imageLiteral(resourceName: "search_section"), #imageLiteral(resourceName: "plan_section")]
+        //self.segmentedControl.sectionSelectedImages = [#imageLiteral(resourceName: "explore_section_selected"), #imageLiteral(resourceName: "facebook_section_selected"),#imageLiteral(resourceName: "eventbrite_section_selected"), #imageLiteral(resourceName: "search_section_selected"), #imageLiteral(resourceName: "plan_section_selected")]
+        self.segmentedControl.sectionImages = [#imageLiteral(resourceName: "explore_section"), #imageLiteral(resourceName: "facebook_section"),#imageLiteral(resourceName: "eventbrite_section"), #imageLiteral(resourceName: "plan_section")]
+        self.segmentedControl.sectionSelectedImages = [#imageLiteral(resourceName: "explore_section_selected"), #imageLiteral(resourceName: "facebook_section_selected"),#imageLiteral(resourceName: "eventbrite_section_selected"), #imageLiteral(resourceName: "plan_section_selected")]
         self.segmentedControl.selectionIndicatorColor = self.view.tintColor
         self.segmentedControl.selectionStyle = .fullWidthStripe
         self.segmentedControl.selectionIndicatorLocation = .up

@@ -13,13 +13,9 @@ import SDWebImage
 
 extension CurrentUser {
     
-    class Candidate: User {
+    class Candidate: OtherUser {
         
         var user: User
-        //var events: [Event]?
-        var commonEventInfos: [CommonEventInfo] = []
-        var commonFriends: [Friend] = []
-        var commonPageLikes: [PageLike] = []
         
         var candidateRef: DatabaseReference {
             get {
@@ -30,7 +26,7 @@ extension CurrentUser {
         var commonEventsInfoString: String {
             get {
                 var result = ""
-                for commonEventInfo in self.commonEventInfos {
+                for commonEventInfo in self.commonInfo.events {
                     result += "\(commonEventInfo.displayString)\n"
                 }
                 return result
@@ -39,22 +35,22 @@ extension CurrentUser {
         
         init(snapshot: DataSnapshot, for user: User) {
             self.user = user
+            super.init(uid: snapshot.key)
             for item in snapshot.childSnapshot(forPath: Constants.User.Candidate.properties.firebaseNodes.events).children {
                 if let commonEventInfoSnap = item as? DataSnapshot {
-                    self.commonEventInfos.append(CommonEventInfo(snapshot: commonEventInfoSnap))
+                    super.commonInfo.events.append(CommonEvent(snapshot: commonEventInfoSnap))
                 }
             }
             for item in snapshot.childSnapshot(forPath: Constants.User.Candidate.properties.firebaseNodes.friends).children {
                 if let friendSnap = item as? DataSnapshot {
-                    self.commonFriends.append(Friend.from(firebase: friendSnap))
+                    super.commonInfo.friends.append(Friend.from(firebase: friendSnap))
                 }
             }
             for item in snapshot.childSnapshot(forPath: Constants.User.Candidate.properties.firebaseNodes.pageLikes).children {
                 if let pageLikeSnap = item as? DataSnapshot {
-                    self.commonPageLikes.append(PageLike.from(firebase: pageLikeSnap))
+                    super.commonInfo.pageLikes.append(PageLike.from(firebase: pageLikeSnap))
                 }
             }
-            super.init(uid: snapshot.key)
         }
         
         func like(visible: Bool? = nil, message: String? = nil, completion: ((Error?) -> Void)? = nil) {

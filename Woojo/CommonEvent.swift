@@ -10,7 +10,7 @@ import Foundation
 import FirebaseDatabase
 
 extension User {
-    class CommonEventInfo {
+    class CommonEvent {
         var rsvpStatus = Event.RSVP.unsure
         var name = ""
         var id: String

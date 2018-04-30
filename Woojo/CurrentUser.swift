@@ -58,6 +58,8 @@ class CurrentUser: User {
     var preferences: Preferences!
     var candidates: [Candidate] = []
     var events: Variable<[Event]> = Variable([])
+    var sponsoredEvents: Variable<[Event]> = Variable([])
+    var eventbriteEvents: Variable<[Event]> = Variable([])
     var recommendedEvents: Variable<[Event]> = Variable([])
     var pendingEvents: Variable<[Event]> = Variable([])
     var notifications: Variable<[Notification]> = Variable([])
@@ -516,6 +518,49 @@ class CurrentUser: User {
         isObservingRecommendedEvents = false
     }
     
+    // MARK: - Eventbrite events
+    
+    var eventbriteEventsRef: DatabaseReference {
+        get {
+            return ref.child("integrations/eventbrite/events")
+        }
+    }
+    
+    var isObservingEventbriteEvents: Bool = false
+    
+    func startObservingEventbriteEvents() {
+        print("START observing eventbrite events")
+        isObservingEventbriteEvents = true
+        eventbriteEventsRef.observe(.value, with: { arraySnapshot in
+            var newArray: [Event] = []
+            let group = DispatchGroup()
+            for i in 0..<Int(arraySnapshot.childrenCount) {
+                if let snapshot = arraySnapshot.children.allObjects[i] as? DataSnapshot {
+                    group.enter()
+                    Event.get(for: snapshot.key, completion: { (event) in
+                        if let event = event {
+                            newArray.append(event)
+                        }
+                        group.leave()
+                    })
+                }
+            }
+            group.notify(queue: .main, execute: {
+                self.eventbriteEvents.value = newArray
+            })
+        }, withCancel: { error in
+            print("Cancelled observing eventbriteEvents.childAdded: \(error)")
+            self.isObservingEventbriteEvents = false
+        })
+    }
+    
+    func stopObservingEventbriteEvents() {
+        eventbriteEventsRef.removeAllObservers()
+        isObservingEventbriteEvents = false
+    }
+    
+    // MARK: - Pending events
+    
     var pendingEventsRef: DatabaseReference {
         get {
             return ref.child(Constants.User.PendingEvent.firebaseNode)
@@ -890,21 +935,21 @@ class CurrentUser: User {
     }
     
     func commonality(candidate: Candidate) throws -> Int {
-        return try candidate.commonEventInfos.reduce(0, { $0 + Event.commonality(rsvpStatusA: $1.rsvpStatus, rsvpStatusB: try rsvpStatus(event: $1.id)) })
+        return try candidate.commonInfo.events.reduce(0, { $0 + Event.commonality(rsvpStatusA: $1.rsvpStatus, rsvpStatusB: try rsvpStatus(event: $1.id)) })
     }
     
     func commonality(match: Match) throws -> Int {
-        return try match.commonEventInfos.reduce(0, { $0 + Event.commonality(rsvpStatusA: $1.rsvpStatus, rsvpStatusB: try rsvpStatus(event: $1.id)) })
+        return try match.commonInfo.events.reduce(0, { $0 + Event.commonality(rsvpStatusA: $1.rsvpStatus, rsvpStatusB: try rsvpStatus(event: $1.id)) })
     }
     
     func bothGoing(candidate: Candidate) throws -> Bool {
-        return try candidate.commonEventInfos.reduce(false, { (previousResult, commonEventInfo) -> Bool in
+        return try candidate.commonInfo.events.reduce(false, { (previousResult, commonEventInfo) -> Bool in
             return try (previousResult && (try rsvpStatus(event: commonEventInfo.id) == .attending) && commonEventInfo.rsvpStatus == .attending)
         })
     }
     
     func bothGoing(match: Match) throws -> Bool {
-        return try match.commonEventInfos.reduce(false, { (previousResult, commonEventInfo) -> Bool in
+        return try match.commonInfo.events.reduce(false, { (previousResult, commonEventInfo) -> Bool in
             return try (previousResult && (try rsvpStatus(event: commonEventInfo.id) == .attending) && commonEventInfo.rsvpStatus == .attending)
         })
     }

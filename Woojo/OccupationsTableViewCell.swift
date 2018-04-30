@@ -10,15 +10,17 @@ import UIKit
 
 class OccupationsTableViewCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
     
-    @IBOutlet var tableView: UITableView!
+    //@IBOutlet var tableView: UITableView!
+    @IBOutlet var textView: UITextView!
     var occupations: [String]? {
         didSet {
-            tableView.reloadData()
+            //tableView.reloadData()
         }
     }
     var selectedOccupation: String? {
         didSet {
-            tableView.reloadData()
+            //tableView.reloadData()
+            textView.text = oldValue
         }
     }
 
@@ -29,9 +31,9 @@ class OccupationsTableViewCell: UITableViewCell, UITableViewDataSource, UITableV
     }
     
     func setupDataSources() {
-        tableView.register(UINib(nibName: "OccupationTableViewCell", bundle: nil), forCellReuseIdentifier: "occupationCell")
+        /* tableView.register(UINib(nibName: "OccupationTableViewCell", bundle: nil), forCellReuseIdentifier: "occupationCell")
         tableView.dataSource = self
-        tableView.delegate = self
+        tableView.delegate = self */
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

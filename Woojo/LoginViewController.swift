@@ -200,9 +200,7 @@ class LoginViewController: UIViewController {
                                                               .custom("user_photos"),
                                                               .custom("user_location"),
                                                               .custom("user_birthday"),
-                                                              .custom("user_likes"),
-                                                              .custom("user_work_history"),
-                                                              .custom("user_education_history")]
+                                                              .custom("user_likes")]
         loginManager.logIn(readPermissions: readPermissions, viewController: self) { (loginResult) in
             self.handleLogin(result: loginResult)
         }

@@ -12,7 +12,7 @@ import ImageSlideshow
 class NewUserCardView: UIView {
     var view: UIView!
     var user: User?
-    var commonEventInfos: [User.CommonEventInfo] = []
+    var commonEventInfos: [User.CommonEvent] = []
     var commonFriends: [Friend] = []
     var commonPageLikes: [PageLike] = []
     var imageSources: [ImageSource] = []
@@ -224,11 +224,16 @@ extension NewUserCardView: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "commonEventCell", for: indexPath) as! UserCommonEventTableViewCell
             let eventId = commonEventInfos[indexPath.row].id
             Event.get(for: eventId, completion: { (event) in
-                if let event = event,
-                    let pictureURL = event.pictureURL {
-                    cell.eventImageView.layer.cornerRadius = 8.0
-                    cell.eventImageView.layer.masksToBounds = true
-                    cell.eventImageView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_100x100"))
+                if let event = event {
+                    if let pictureURL = event.pictureURL {
+                        cell.eventImageView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_100x100"))
+                        cell.setDateVisibility(hidden: true)
+                    } else if let pictureURL = event.coverURL {
+                        cell.eventImageView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_100x100"))
+                        cell.setDateVisibility(hidden: true)
+                    } else {
+                        cell.setDateVisibility(hidden: false)
+                    }
                 }
             })
             cell.eventTextLabel.text = commonEventInfos[indexPath.row].name
@@ -236,7 +241,7 @@ extension NewUserCardView: UITableViewDataSource {
         } else if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "extraCommonEventsCell", for: indexPath) as! UserExtraCommonEventsTableViewCell
             cell.eventExtraNumberLabel.text = "+\(String(commonEventInfos.count - maxCommonEventsCount))"
-            cell.eventTextLabel.text = "Extra common event"
+            cell.eventTextLabel.text = NSLocalizedString("More common event(s)", comment: "")
             return cell
         }
         return tableView.dequeueReusableCell(withIdentifier: "commonEventCell", for: indexPath)

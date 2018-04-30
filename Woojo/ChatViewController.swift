@@ -251,17 +251,18 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
         if let userDetailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserDetailsViewController") as? UserDetailsViewController {
             //userDetailsViewController.buttonsType = .options
             userDetailsViewController.chatViewController = self
-            let user = User(uid: alContact.userId)
+            let user = OtherUser(uid: alContact.userId)
             user.profile.loadFromFirebase { profile, error in
-                userDetailsViewController.user = user
+                userDetailsViewController.otherUser = user
                 User.current.value?.getMatch(with: user, completion: { (match) in
                     if let match = match {
-                        userDetailsViewController.commonEventInfos = match.commonEventInfos
+                        userDetailsViewController.isMatch = true
+                        userDetailsViewController.otherUser?.commonInfo = match.commonInfo
                         self.present(userDetailsViewController, animated: true, completion: {
                             let closeTapGestureRecognizer = UITapGestureRecognizer(target: userDetailsViewController, action: #selector(userDetailsViewController.dismiss(sender:)))
                             userDetailsViewController.cardView.addGestureRecognizer(closeTapGestureRecognizer)
-                            let toggleTapGestureRecognizer = UITapGestureRecognizer(target: userDetailsViewController.cardView, action: #selector(userDetailsViewController.cardView.toggleDescription))
-                            userDetailsViewController.cardView.carouselView.addGestureRecognizer(toggleTapGestureRecognizer)
+                            // let toggleTapGestureRecognizer = UITapGestureRecognizer(target: userDetailsViewController.cardView, action: #selector(userDetailsViewController.cardView.toggleDescription))
+                            // userDetailsViewController.cardView.carouselView.addGestureRecognizer(toggleTapGestureRecognizer)
                         })
                     }
                 })

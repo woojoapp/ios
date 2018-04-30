@@ -29,7 +29,9 @@ class EventbriteLoginViewController: UIViewController, UIWebViewDelegate {
                 if error == nil {
                     Analytics.setUserProperties(properties: ["integrated_eventbrite": "true"])
                     Analytics.Log(event: "Events_integrated_eventbrite")
-                    self.dismiss()
+                    UserRepository.shared.syncEventbriteEvents(completion: { _ in
+                        self.dismiss()
+                    })
                 }
             })
         }

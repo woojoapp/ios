@@ -12,10 +12,10 @@ import DZNEmptyDataSet
 
 class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
     var view: UIView!
-    var user: User?
-    var commonEventInfos: [User.CommonEventInfo] = []
+    var user: OtherUser?
+    /* var commonEventInfos: [User.CommonEvent] = []
     var commonFriends: [Friend] = []
-    var commonPageLikes: [PageLike] = []
+    var commonPageLikes: [PageLike] = [] */
     var imageSources: [ImageSource] = []
     var initiallyShowDescription = false
     
@@ -24,10 +24,10 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
     //@IBOutlet var imageView: UIImageView!
     @IBOutlet var detailsView: UIView!
     @IBOutlet var eventImageView: UIImageView!
-    @IBOutlet var nameLabel: UILabel!
+    //@IBOutlet var nameLabel: UILabel!
     @IBOutlet var centerNameLabel: UILabel!
-    @IBOutlet var firstCommonEventLabel: UILabel!
-    @IBOutlet var additionalCommonEventsLabel: UILabel!
+    //@IBOutlet var firstCommonEventLabel: UILabel!
+    //@IBOutlet var additionalCommonEventsLabel: UILabel!
     @IBOutlet var carouselView: ImageSlideshow!
     @IBOutlet var nextPhotoButton: UIButton!
     @IBOutlet var previousPhotoButton: UIButton!
@@ -102,29 +102,35 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
         carouselView.draggingEnabled = false
         carouselView.pageControlPosition = .hidden
         carouselView.scrollView.bounces = false
+        carouselView.layer.borderColor = UIColor.white.cgColor
+        carouselView.layer.borderWidth = 2.0
+        carouselView.layer.masksToBounds = true
+        carouselView.layer.cornerRadius = 8.0
         //carouselView.layer.borderWidth = 1.0
         //carouselView.layer.borderColor = .wh
         
         addNextPhotoButton()
         addPreviousPhotoButton()
         
-        nameLabel.textAlignment = .center
-        firstCommonEventLabel.textAlignment = .center
-        additionalCommonEventsLabel.textAlignment = .center
+        // nameLabel.textAlignment = .center
+        // firstCommonEventLabel.textAlignment = .center
+        // additionalCommonEventsLabel.textAlignment = .center
         
-        tableView.register(UINib(nibName: "UserCommonEventTableViewCell", bundle: nil), forCellReuseIdentifier: "commonEventCell")
+        tableView.register(UINib(nibName: "UserDetailsCommonEventTableViewCell", bundle: nil), forCellReuseIdentifier: "detailsCommonEventCell")
         tableView.register(UINib(nibName: "UserDescriptionTableViewCell", bundle: nil), forCellReuseIdentifier: "descriptionCell")
         tableView.register(UINib(nibName: "UserCommonItemsTableViewCell", bundle: nil), forCellReuseIdentifier: "commonItemsCell")
         tableView.delegate = self
         tableView.dataSource = self
         
         if let user = user {
-            nameLabel.text = user.profile.displaySummary
+            // nameLabel.text = user.profile.displaySummary
             centerNameLabel.text = user.profile.displaySummary
-            firstCommonEventLabel.text = commonEventInfos.first?.name
+            // firstCommonEventLabel.text = commonEventInfos.first?.name
             
-            if commonEventInfos.count > 0 {
-                Event.get(for: commonEventInfos[0].id, completion: { (event) in
+            print("EVENTT", user.commonInfo.events.count)
+            
+            if user.commonInfo.events.count > 0 {
+                Event.get(for: user.commonInfo.events[0].id, completion: { (event) in
                     if let event = event,
                         let url = event.coverURL {
                         do {
@@ -139,12 +145,13 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
                     }
                 })
             }
-            if commonEventInfos.count > 1 {
+            
+            /* if commonEventInfos.count > 1 {
                 let eventString = (commonEventInfos.count > 2) ? NSLocalizedString("events", comment: "") : NSLocalizedString("event", comment: "")
                 additionalCommonEventsLabel.text = String(format: NSLocalizedString("+%d more common %@", comment: ""), commonEventInfos.count - 1, eventString)
             } else {
                 additionalCommonEventsLabel.text = ""
-            }
+            } */
             
             func setFirstImageAndDownloadOthers(firstPhoto: User.Profile.Photo) {
                 if let firstImage = firstPhoto.images[.full] {
@@ -166,10 +173,10 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
                     }
                     self.carouselView.setImageInputs(self.imageSources)
                     self.setPhotoButtons(index: 0)
-                    if self.initiallyShowDescription {
+                    /* if self.initiallyShowDescription {
                         self.setDescriptionShownState()
                         self.isShowingDescription = true
-                    }
+                    } */
                     completion?()
                 }
             }
@@ -202,10 +209,11 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
         carouselView.setCurrentPage(carouselView.currentPage + 1, animated: true)
     }
     
-    func setDescriptionShownState() {
+    /* func setDescriptionShownState() {
         let baseUnit = self.view.frame.width / 2.5
         self.carouselView.frame = CGRect(x: self.view.frame.width / 2.0 - baseUnit / 2.0, y: baseUnit / 4.0, width: baseUnit, height: baseUnit)
         self.carouselView.layer.cornerRadius = self.carouselView.frame.width / 2.0
+        self.carouselView.setNeedsLayout()
         self.carouselView.layoutIfNeeded()
         
         self.detailsView.frame = CGRect(x: 0.0, y: 1.25 * baseUnit, width: self.view.frame.width, height: self.detailsView.frame.height)
@@ -221,17 +229,17 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
         self.eventImageView.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height - self.tableView.frame.height)
         
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.8)
-    }
+    } */
     
-    func showDescription() {
+    /* func showDescription() {
         UIView.animate(withDuration: 0.25, animations: {
             self.setDescriptionShownState()
         }, completion: { finished in
             self.isShowingDescription = finished
         })
-    }
+    } */
     
-    func setDecriptionHiddenState() {
+    /* func setDecriptionHiddenState() {
         self.carouselView.frame = self.view.frame
         self.carouselView.layer.cornerRadius = 0
         self.carouselView.layoutIfNeeded()
@@ -249,23 +257,23 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
         self.eventImageView.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height - self.tableView.frame.height)
         
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.0)
-    }
+    } */
     
-    func hideDescription() {
+    /* func hideDescription() {
         UIView.animate(withDuration: 0.25, animations: {
             self.setDecriptionHiddenState()
         }, completion: { finished in
             self.isShowingDescription = !finished
         })
-    }
+    } */
     
-    @objc func toggleDescription() {
+    /* @objc func toggleDescription() {
         if isShowingDescription {
             hideDescription()
         } else {
             showDescription()
         }
-    }
+    } */
     
     func setPhotoButtons(index: Int) {
         if user != nil {
@@ -289,7 +297,7 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if let user = user, let name = user.profile.displayName {
             if section == 0 {
-                if commonEventInfos.count == 0 {
+                if user.commonInfo.events.count == 0 {
                     return nil
                 } else {
                     return NSLocalizedString("Common Events", comment: "")
@@ -301,13 +309,13 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
                     return String(format: NSLocalizedString("About %@", comment: ""), name)
                 }
             } else if section == 2 {
-                if commonFriends.count == 0 {
+                if user.commonInfo.friends.count == 0 {
                     return nil
                 } else {
                     return NSLocalizedString("Mutual Friends", comment: "")
                 }
             } else if section == 3 {
-                if commonPageLikes.count == 0 {
+                if user.commonInfo.pageLikes.count == 0 {
                     return nil
                 } else {
                     return NSLocalizedString("Common Interests", comment: "")
@@ -330,7 +338,7 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let user = user {
             if section == 0 {
-                return commonEventInfos.count
+                return user.commonInfo.events.count
             } else if section == 1 {
                 if user.profile.description.value.count == 0 {
                     return 0
@@ -338,13 +346,13 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
                     return 1
                 }
             } else if section == 2 {
-                if commonFriends.count == 0 {
+                if user.commonInfo.friends.count == 0 {
                     return 0
                 } else {
                     return 1
                 }
             } else if section == 3 {
-                if commonPageLikes.count == 0 {
+                if user.commonInfo.pageLikes.count == 0 {
                     return 0
                 } else {
                     return 1
@@ -367,36 +375,46 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
     }*/
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "commonEventCell", for: indexPath) as! UserCommonEventTableViewCell
-            let eventId = commonEventInfos[indexPath.row].id
-            Event.get(for: eventId, completion: { (event) in
-                if let event = event,
-                    let pictureURL = event.pictureURL {
-                    cell.eventImageView.layer.cornerRadius = 8.0
-                    cell.eventImageView.layer.masksToBounds = true
-                    cell.eventImageView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_100x100"))
-                }
-            })
-            cell.eventTextLabel.text = commonEventInfos[indexPath.row].displayString
-            return cell
-        } else if indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "descriptionCell", for: indexPath)
-            if let user = user {
+        if let user = user {
+            if indexPath.section == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "detailsCommonEventCell", for: indexPath) as! UserDetailsCommonEventTableViewCell
+                let eventId = user.commonInfo.events[indexPath.row].id
+                Event.get(for: eventId, completion: { (event) in
+                    if let event = event {
+                        if let pictureURL = event.pictureURL {
+                            self.setImage(pictureURL: pictureURL, cell: cell)
+                        } else if let pictureURL = event.coverURL {
+                            self.setImage(pictureURL: pictureURL, cell: cell)
+                        } else {
+                            cell.setDateVisibility(hidden: false)
+                        }
+                    }
+                })
+                cell.eventTextLabel.text = user.commonInfo.events[indexPath.row].displayString
+                return cell
+            } else if indexPath.section == 1 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "descriptionCell", for: indexPath)
                 cell.textLabel?.text = user.profile.description.value
+                return cell
+            } else if indexPath.section == 2 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "commonItemsCell", for: indexPath) as! UserCommonItemsTableViewCell
+                cell.items = user.commonInfo.friends
+                cell.collectionView.reloadData()
+                return cell
+            } else if indexPath.section == 3 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "commonItemsCell", for: indexPath) as! UserCommonItemsTableViewCell
+                cell.items = user.commonInfo.pageLikes
+                cell.collectionView.reloadData()
+                return cell
             }
-            return cell
-        } else if indexPath.section == 2 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "commonItemsCell", for: indexPath) as! UserCommonItemsTableViewCell
-            cell.items = commonFriends
-            cell.collectionView.reloadData()
-            return cell
-        } else if indexPath.section == 3 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "commonItemsCell", for: indexPath) as! UserCommonItemsTableViewCell
-            cell.items = commonPageLikes
-            cell.collectionView.reloadData()
-            return cell
         }
         return tableView.dequeueReusableCell(withIdentifier: "commonEventCell", for: indexPath)
+    }
+    
+    private func setImage(pictureURL: URL, cell: UserDetailsCommonEventTableViewCell) {
+        cell.eventImageView.layer.cornerRadius = 8.0
+        cell.eventImageView.layer.masksToBounds = true
+        cell.eventImageView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_100x100"))
+        cell.setDateVisibility(hidden: true)
     }
 }

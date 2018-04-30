@@ -14,8 +14,13 @@ class MyEventsTableViewCell: UITableViewCell {
     @IBOutlet weak var placeLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var thumbnailView: UIImageView!
-    @IBOutlet weak var attendingLabel: UILabel!
+    @IBOutlet weak var sourceLabel: UILabel!
+    @IBOutlet weak var sourceIcon: UIImageView!
     @IBOutlet weak var checkView: UIImageView!
+    @IBOutlet weak var monthLabel: UILabel!
+    @IBOutlet weak var dayLabel: UILabel!
+    @IBOutlet weak var activateArea: UIView!
+    @IBOutlet weak var detailsView: UIView!
     
     var event: Event? {
         didSet {
@@ -23,18 +28,32 @@ class MyEventsTableViewCell: UITableViewCell {
         }
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+    static let monthFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.dateFormat = "MMM"
+        return formatter
+    }()
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
-    }
+    static let dayFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.dateFormat = "dd"
+        return formatter
+    }()
     
     func populate(with event: Event?) {
+        populateDateOrImage(event: event)
         nameLabel.text = event?.name
+        populatePlace(event: event)
+        if let start = event?.start {
+            dateLabel?.text = Event.humanDateFormatter.string(from: start)
+        }
+        sourceLabel.text = getSourceText(event: event)
+        set(active: event?.active ?? false, event: event)
+    }
+    
+    private func populatePlace(event: Event?) {
         var placeString = ""
         if let place = event?.place, let placeName = place.name {
             placeString = placeName
@@ -49,25 +68,87 @@ class MyEventsTableViewCell: UITableViewCell {
         if placeString == "" {
             placeString = NSLocalizedString("Unknown location", comment: "")
         }
+        placeLabel.text = placeString
+    }
+    
+    private func populateDateOrImage(event: Event?) {
         thumbnailView.layer.cornerRadius = 12.0
         thumbnailView.layer.masksToBounds = true
         thumbnailView.contentMode = .scaleAspectFill
-        placeLabel.text = placeString
         if let pictureURL = event?.pictureURL {
-            thumbnailView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_40x40"))
+            setImage(pictureURL: pictureURL, active: event?.active ?? false)
+            setDateVisibility(hidden: true)
         } else {
-            thumbnailView.image = #imageLiteral(resourceName: "placeholder_40x40")
-        }
-        if let start = event?.start {
-            dateLabel?.text = Event.humanDateFormatter.string(from: start)
-        }
-        if let attendingCount = event?.attendingCount {
-            let people: String
-            if attendingCount == 0 { people = "No one" }
-            else if attendingCount == 1 { people = "1 person" }
-            else { people = "\(attendingCount) people" }
-            attendingLabel.text = "\(people) attending"
+            if let pictureURL = event?.coverURL {
+                setImage(pictureURL: pictureURL, active: event?.active ?? false)
+                setDateVisibility(hidden: true)
+            } else {
+                if let startDate = event?.start {
+                    thumbnailView.image = nil
+                    monthLabel.text = MyEventsTableViewCell.monthFormatter.string(from: startDate).uppercased()
+                    dayLabel.text = MyEventsTableViewCell.dayFormatter.string(from: startDate)
+                    setDateVisibility(hidden: false)
+                }
+            }
         }
     }
     
+    private func getSourceIcon(source: Event.Source?) -> UIImage? {
+        if let source = source {
+            switch source {
+            case .eventbrite: return #imageLiteral(resourceName: "Eventbrite icon")
+            case .facebook: return #imageLiteral(resourceName: "Facebook icon")
+            case .recommended: return #imageLiteral(resourceName: "woojo_icon")
+            case .sponsored: return #imageLiteral(resourceName: "woojo_icon")
+            }
+        }
+        return nil
+    }
+    
+    private func getSourceText(event: Event?) -> String? {
+        if let event = event, let source = event.source {
+            switch source {
+            case .eventbrite: return NSLocalizedString("You have a ticket", comment: "")
+            case .facebook:
+                switch event.rsvpStatus {
+                case Event.RSVP.attending.rawValue: return NSLocalizedString("You're going", comment: "")
+                case Event.RSVP.unsure.rawValue: return NSLocalizedString("You're interested", comment: "")
+                case Event.RSVP.notReplied.rawValue: return NSLocalizedString("You're invited", comment: "")
+                default: return NSLocalizedString("You're invited", comment: "")
+                }
+            case .recommended: return NSLocalizedString("Recommended for you", comment: "")
+            case .sponsored: return NSLocalizedString("Recommended for you", comment: "")
+            }
+        }
+        return nil
+    }
+    
+    private func setImage(pictureURL: URL, active: Bool) {
+        thumbnailView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_40x40"), options: [], completed: { (_, _, _, _) in
+            if !active {
+                if let image = self.thumbnailView.image {
+                    self.thumbnailView.image = image.desaturate()
+                }
+            }
+        })
+    }
+    
+    private func set(active: Bool, event: Event?) {
+        if active {
+            checkView.image = #imageLiteral(resourceName: "check")
+            detailsView.alpha = 1.0
+            activateArea.alpha = 1.0
+            sourceIcon.image = getSourceIcon(source: event?.source)
+        } else {
+            checkView.image = #imageLiteral(resourceName: "plus")
+            detailsView.alpha = 0.3
+            activateArea.alpha = 0.3
+            sourceIcon.image = getSourceIcon(source: event?.source)?.desaturate()
+        }
+    }
+    
+    func setDateVisibility(hidden: Bool) {
+        monthLabel.isHidden = hidden
+        dayLabel.isHidden = hidden
+    }
 }
