@@ -94,14 +94,15 @@ class UserRepository {
             else {
                 return Observable.of([])
         }
-        let events = Observable.combineLatest(facebookEvents, eventbriteEvents, recommendedEvents, sponsoredEvents) { $0 + $1 + $2 + $3 }
-        return Observable.combineLatest(events, activeEventsInfo) { evs, dataSnapshot -> [Event] in
+        var events = Observable.combineLatest(facebookEvents, eventbriteEvents, recommendedEvents, sponsoredEvents) { $0 + $1 + $2 + $3 }
+        events = Observable.combineLatest(events, activeEventsInfo) { evs, dataSnapshot -> [Event] in
             for ev in evs {
                 let isActive = dataSnapshot.hasChild(ev.id)
                 ev.active = isActive
             }
             return evs
         }
+        return events
     }
     
     private func getFacebookEvents() -> Observable<[Event]>? {

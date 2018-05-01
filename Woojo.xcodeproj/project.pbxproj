@@ -784,6 +784,14 @@
 			path = Events;
 			sourceTree = "<group>";
 		};
+		851CDFC82098B010000C7A21 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				851CDFBD20963C5F000C7A21 /* UIImage+desaturate.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		8545A5FF1DDCDADC008F3DD2 /* GraphRequests */ = {
 			isa = PBXGroup;
 			children = (
@@ -849,7 +857,7 @@
 				851D176D204B3E58008E6342 /* Constants+Analytics.swift */,
 				85396F2A1E5F516F007EDB18 /* Notifier.swift */,
 				854DDAC01DE43E0E00655EFC /* Constants.swift */,
-				851CDFBD20963C5F000C7A21 /* UIImage+desaturate.swift */,
+				851CDFC82098B010000C7A21 /* Utils */,
 				85DD5EE81E951CA3008DF346 /* Constants+App.swift */,
 				850F7D36202DC3C2005D6733 /* Main.storyboard */,
 				85512B151DCB5B020072C1B8 /* Assets.xcassets */,

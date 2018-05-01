@@ -51,6 +51,9 @@ class EventsViewController: UIViewController {
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(refreshEvents), for: UIControlEvents.valueChanged)
+        
         setupDataSource()
         tableView.tableFooterView = UIView()
         
@@ -60,6 +63,12 @@ class EventsViewController: UIViewController {
         
         setTip()
         disableFacebookIntegration()
+    }
+    
+    @objc private func refreshEvents() {
+        UserRepository.shared.syncEventbriteEvents { _ in
+            self.tableView.refreshControl?.endRefreshing()
+        }
     }
     
     @IBAction func tapped(tapGestureRecognizer: UITapGestureRecognizer) {
@@ -112,7 +121,7 @@ class EventsViewController: UIViewController {
         UserRepository.shared
             .getEvents()
             .subscribe(onNext: { (events) in
-                self.events = events.group(by: { $0.monthString })
+                self.events = events.group(by: { $0.monthString }).mapValues{ $0.sorted(by: { $0.start > $1.start }) }
                 self.months = Array(self.events.keys).sorted().reversed()
                 self.tableView.reloadData()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
