@@ -51,7 +51,6 @@ class CandidateOverlayView: OverlayView {
     }
     
     func load() {
-        //backgroundColor = UIColor(red: 255.0, green: 255.0, blue: 255.0, alpha: 0.2)
         addSubview(view)
     }
     
@@ -61,48 +60,10 @@ class CandidateOverlayView: OverlayView {
             case .left? :
                 view.layer.borderWidth = 5.0
                 view.layer.borderColor = leftShadowColor.cgColor
-                /*rightOverlayImageView.image = nil
-                if let originalLeftImage = UIImage(named: leftImageName),
-                    let originalLeftCGImage = originalLeftImage.cgImage {
-                    let rect = CGRect(origin: .zero, size: originalLeftImage.size)
-                    UIGraphicsBeginImageContext(rect.size)
-                    let context = UIGraphicsGetCurrentContext()
-                    context?.clip(to: rect, mask: originalLeftCGImage)
-                    context?.setFillColor(leftImageColor.cgColor)
-                    context?.fill(rect)
-                    if let coloredImage = UIGraphicsGetImageFromCurrentImageContext(),
-                        let coloredCGImage = coloredImage.cgImage {
-                        UIGraphicsEndImageContext()
-                        let flippedImage = UIImage(cgImage: coloredCGImage, scale: 1.0, orientation: UIImageOrientation.downMirrored)
-                        leftOverlayImageView.image = flippedImage
-                    } else {
-                        UIGraphicsEndImageContext()
-                    }
-                }*/
                 overlayImageView.image = UIImage(named: leftImageName)
             case .right? :
-                //layer.shadowColor = rightShadowColor.cgColor
                 view.layer.borderWidth = 5.0
                 view.layer.borderColor = rightShadowColor.cgColor
-                /*leftOverlayImageView.image = nil
-                //backgroundColor = rightBackgroundColor
-                if let originalRightImage = UIImage(named: rightImageName),
-                    let originalRightCGImage = originalRightImage.cgImage {
-                    let rect = CGRect(origin: .zero, size: originalRightImage.size)
-                    UIGraphicsBeginImageContext(rect.size)
-                    let context = UIGraphicsGetCurrentContext()
-                    context?.clip(to: rect, mask: originalRightCGImage)
-                    context?.setFillColor(rightImageColor.cgColor)
-                    context?.fill(rect)
-                    if let coloredImage = UIGraphicsGetImageFromCurrentImageContext(),
-                        let coloredCGImage = coloredImage.cgImage {
-                        UIGraphicsEndImageContext()
-                        let flippedImage = UIImage(cgImage: coloredCGImage, scale: 1.0, orientation: UIImageOrientation.downMirrored)
-                        rightOverlayImageView.image = flippedImage
-                    } else {
-                        UIGraphicsEndImageContext()
-                    }
-                }*/
                 overlayImageView.image = UIImage(named: rightImageName)
             default:
                 overlayImageView.image = nil

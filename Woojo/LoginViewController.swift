@@ -230,8 +230,7 @@ class LoginViewController: UIViewController {
             } else {
                 print("Facebook login success here", accessToken.authenticationToken)
                 let credential = FacebookAuthProvider.credential(withAccessToken: accessToken.authenticationToken)
-                //Auth.auth().signIn(with: credential) { (user, error) in
-                Auth.auth().signIn(withCustomToken: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJ6ZWVUbnhCRU9STW5ST1d2N0ZqVlJCbXVycmIyIiwiaWF0IjoxNTI1MTgwNTE4LCJleHAiOjE1MjUxODQxMTgsImF1ZCI6Imh0dHBzOi8vaWRlbnRpdHl0b29sa2l0Lmdvb2dsZWFwaXMuY29tL2dvb2dsZS5pZGVudGl0eS5pZGVudGl0eXRvb2xraXQudjEuSWRlbnRpdHlUb29sa2l0IiwiaXNzIjoiZmlyZWJhc2UtYWRtaW5zZGsteWt3bzlAd29vam8tc3RhZ2luZy0xLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwic3ViIjoiZmlyZWJhc2UtYWRtaW5zZGsteWt3bzlAd29vam8tc3RhZ2luZy0xLmlhbS5nc2VydmljZWFjY291bnQuY29tIn0.nlFDItg2jTWb62-0oaaQ-Q3hTpBo99niqnclJ3w9U7cSUgP6T_-6TJZIMuyO9FLA5p3HiEOBdNnyXVE8htGk4jxuZk3i17D2o2btzuK1o0XMboB8NqE5GG8izlIEaz7hr2LNCvkC_jnEkSx1Xsz6P_VED_bf1DOCNwaLpJtXz4mBz2wyvk9CpJQTdimNe74GgA9SHnFvemDOqhV9Mg3wrhDJE1Czq3HD_PVS4m6m7GseOBgvaj-fWvhuCy4KxbUhtzkAIt5sb0AvKjChW9MVt9tPq_AhC8ozGBldUXAe6DTWX4V3u4Jcct1hzlhRx6Xy3BugyMTpU-tqARlr5nwXrA") { (user, error) in
+                Auth.auth().signIn(with: credential) { (user, error) in
                     if let user = user {
                         print("Firebase login success \(user.uid)")
                         Analytics.Log(event: "Account_log_in", with: permissions)

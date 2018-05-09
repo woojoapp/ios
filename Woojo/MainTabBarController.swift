@@ -94,10 +94,10 @@ class MainTabBarController: UITabBarController {
     }
     
     func addWithHUD(event: Event) {
-        HUD.show(.labeledProgress(title: NSLocalizedString("Adding Event...", comment: ""), subtitle: event.name))
+        //HUD.show(.labeledProgress(title: NSLocalizedString("Adding Event...", comment: ""), subtitle: event.name))
         User.current.value?.add(event: event, completion: { (error: Error?) -> Void in
             
-            func showImagelessSuccess() {
+            /*func showImagelessSuccess() {
                 HUD.show(.labeledSuccess(title: NSLocalizedString("Event added!", comment: ""), subtitle: event.name))
                 HUD.hide(afterDelay: 3.0)
                 Application.defferedEvent = nil
@@ -115,7 +115,8 @@ class MainTabBarController: UITabBarController {
                 })
             } else {
                 showImagelessSuccess()
-            }
+            }*/
+            Application.defferedEvent = nil
             let analyticsEventParameters = ["event_id": event.id,
                                             "source": "deeplink"]
             Analytics.Log(event: "Events_event_added", with: analyticsEventParameters)

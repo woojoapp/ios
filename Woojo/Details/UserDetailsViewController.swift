@@ -15,13 +15,67 @@ import Amplitude_iOS
 class UserDetailsViewController: UIViewController {
     
     @IBOutlet weak var optionsButton: UIButton!
-    @IBOutlet weak var cardView: UserCardView!
+    @IBOutlet weak var tableView: UITableView!
     
     var otherUser: OtherUser?
     var candidatesViewController: CandidatesViewController?
     var chatViewController: ChatViewController?
     var reachabilityObserver: AnyObject?
     var isMatch = false
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        tableView.register(UINib(nibName: "UserDetailsCommonEventTableViewCell", bundle: nil), forCellReuseIdentifier: "detailsCommonEventCell")
+        tableView.register(UINib(nibName: "UserDescriptionTableViewCell", bundle: nil), forCellReuseIdentifier: "descriptionCell")
+        tableView.register(UINib(nibName: "UserCommonItemsTableViewCell", bundle: nil), forCellReuseIdentifier: "commonItemsCell")
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        optionsButton.layer.cornerRadius = optionsButton.frame.width / 2
+        optionsButton.layer.masksToBounds = true
+        
+        if let otherUser = otherUser {
+            if otherUser.uid.range(of: "woojo-") != nil {
+                optionsButton.isHidden = true
+            }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        startMonitoringReachability()
+        checkReachability()
+        self.chatViewController?.wireUnmatchObserver()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.chatViewController?.unwireUnmatchObserver()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        stopMonitoringReachability()
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        get {
+            return .lightContent
+        }
+    }
+    
+    @IBAction func dismiss(sender: Any?) {
+        self.dismiss(animated: true)
+    }
+    
+    func didTap(sender: ImageSlideshow) {
+        self.dismiss(sender: self)
+    }
     
     @IBAction func showOptions() {
         //optionsButton.select()
@@ -119,67 +173,123 @@ class UserDetailsViewController: UIViewController {
         }
     }
     
-    func set(button: UIButton, enabled: Bool) {
-        button.isEnabled = enabled
-        button.alpha = (enabled) ? 1.0 : 0.3
-    }
-    
-    @IBAction func dismiss(sender: Any?) {
-        self.dismiss(animated: true)
-    }
+ 
+}
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        //optionsButton.
-        
-        cardView.user = self.otherUser
-        // cardView.initiallyShowDescription = true
-        cardView.load {
-            self.cardView.carouselView.draggingEnabled = true
-        }
+extension UserDetailsViewController : UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 4
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        optionsButton.layer.cornerRadius = optionsButton.frame.width / 2
-        optionsButton.layer.masksToBounds = true
-        
-        if let otherUser = otherUser {
-            if otherUser.uid.range(of: "woojo-") != nil {
-                optionsButton.isHidden = true
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let user = otherUser {
+            if section == 0 {
+                return user.commonInfo.events.count
+            } else if section == 1 {
+                if user.profile.description.value.count == 0 {
+                    return 0
+                } else {
+                    return 1
+                }
+            } else if section == 2 {
+                if user.commonInfo.friends.count == 0 {
+                    return 0
+                } else {
+                    return 1
+                }
+            } else if section == 3 {
+                if user.commonInfo.pageLikes.count == 0 {
+                    return 0
+                } else {
+                    return 1
+                }
             }
         }
+        return 0
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        startMonitoringReachability()
-        checkReachability()
-        self.chatViewController?.wireUnmatchObserver()
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if let user = otherUser, let name = user.profile.displayName {
+            if section == 0 {
+                if user.commonInfo.events.count == 0 {
+                    return nil
+                } else {
+                    return NSLocalizedString("Common Events", comment: "")
+                }
+            } else if section == 1 {
+                if user.profile.description.value.count == 0 {
+                    return nil
+                } else {
+                    return String(format: NSLocalizedString("About %@", comment: ""), name)
+                }
+            } else if section == 2 {
+                if user.commonInfo.friends.count == 0 {
+                    return nil
+                } else {
+                    return NSLocalizedString("Mutual Friends", comment: "")
+                }
+            } else if section == 3 {
+                if user.commonInfo.pageLikes.count == 0 {
+                    return nil
+                } else {
+                    return NSLocalizedString("Common Interests", comment: "")
+                }
+            }
+        }
+        return nil
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.chatViewController?.unwireUnmatchObserver()
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let user = otherUser {
+            if indexPath.section == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "detailsCommonEventCell", for: indexPath) as! UserDetailsCommonEventTableViewCell
+                let eventId = user.commonInfo.events[indexPath.row].id
+                Event.get(for: eventId, completion: { (event) in
+                    if let event = event {
+                        if let pictureURL = event.pictureURL {
+                            self.setImage(pictureURL: pictureURL, cell: cell)
+                        } else if let pictureURL = event.coverURL {
+                            self.setImage(pictureURL: pictureURL, cell: cell)
+                        } else {
+                            cell.setDateVisibility(hidden: false)
+                        }
+                    }
+                })
+                cell.eventTextLabel.text = user.commonInfo.events[indexPath.row].displayString
+                return cell
+            } else if indexPath.section == 1 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "descriptionCell", for: indexPath)
+                cell.textLabel?.text = user.profile.description.value
+                return cell
+            } else if indexPath.section == 2 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "commonItemsCell", for: indexPath) as! UserCommonItemsTableViewCell
+                cell.items = user.commonInfo.friends
+                cell.collectionView.reloadData()
+                return cell
+            } else if indexPath.section == 3 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "commonItemsCell", for: indexPath) as! UserCommonItemsTableViewCell
+                cell.items = user.commonInfo.pageLikes
+                cell.collectionView.reloadData()
+                return cell
+            }
+        }
+        return tableView.dequeueReusableCell(withIdentifier: "commonEventCell", for: indexPath)
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        stopMonitoringReachability()
+    private func setImage(pictureURL: URL, cell: UserDetailsCommonEventTableViewCell) {
+        cell.eventImageView.layer.cornerRadius = 8.0
+        cell.eventImageView.layer.masksToBounds = true
+        cell.eventImageView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_100x100"))
+        cell.setDateVisibility(hidden: true)
     }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        get {
-            return .lightContent
+}
+
+extension UserDetailsViewController : UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let view = view as? UITableViewHeaderFooterView {
+            view.textLabel?.font = .boldSystemFont(ofSize: 13.0)
         }
     }
-    
-    func didTap(sender: ImageSlideshow) {
-        self.dismiss(sender: self)
-    }
- 
 }
 
 // MARK: - ReachabilityAware
@@ -203,6 +313,11 @@ extension UserDetailsViewController: ReachabilityAware {
     
     func reachabilityChanged(reachable: Bool) {
         setReachabilityState(reachable: reachable)
+    }
+    
+    func set(button: UIButton, enabled: Bool) {
+        button.isEnabled = enabled
+        button.alpha = (enabled) ? 1.0 : 0.3
     }
     
 }

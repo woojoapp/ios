@@ -102,20 +102,4 @@ extension Place {
         dict[Constants.Place.properties.firebaseNodes.verificationStatus] = self.verificationStatus?.rawValue
         return dict
     }
-    
-    static func search(query:String) -> Observable<[Place]> {
-        return Observable.create { observer in
-            SearchPlacesGraphRequest(query: query).start { response, result in
-                switch result {
-                case .success(let response):
-                    observer.onNext(response.places)
-                    observer.onCompleted()
-                case .failed(let error):
-                    print("SearchPlacesGraphRequest failed: \(error.localizedDescription)")
-                    observer.onError(error)
-                }
-            }
-            return Disposables.create()
-        }
-    }
 }

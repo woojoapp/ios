@@ -38,15 +38,11 @@ class Event {
     
     var timesString: String {
         get {
-            if type != "plan" {
-                var timesString = Event.humanDateFormatter.string(from: start)
-                if let end = end {
-                    timesString = "\(timesString) - \(Event.humanDateFormatter.string(from: end))"
-                }
-                return timesString
-            } else {
-                return Plan.humanDateFormatter.string(from: start)
+            var timesString = Event.humanDateFormatter.string(from: start)
+            if let end = end {
+                timesString = "\(timesString) - \(Event.humanDateFormatter.string(from: end))"
             }
+            return timesString
         }
     }
     
@@ -269,23 +265,6 @@ extension Event {
         ref.setValue(toDictionary(), withCompletionBlock: { error, ref in
             completion?(error)
         })
-    }
-    
-    static func search(query:String) -> Observable<[Event]> {
-        return Observable.create { observer in
-            SearchEventsGraphRequest(query: query).start { response, result in
-                switch result {
-                case .success(let response):
-                    //print(response)
-                    observer.onNext(response.events)
-                    observer.onCompleted()
-                case .failed(let error):
-                    print("SearchEventsGraphRequest failed: \(error.localizedDescription)")
-                    observer.onError(error)
-                }
-            }
-            return Disposables.create()
-        }
     }
     
     static func interestScale(rsvpStatus: RSVP) -> Int {

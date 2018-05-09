@@ -199,6 +199,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         let eventId = params["event_id"] as? String {
                         Event.get(for: eventId, completion: { (event) in
                             if let event = event {
+                                UserRepository.shared.activateEvent(event: event, completion: { (_, _) in })
                                 Application.defferedEvent = event
                             }
                         })

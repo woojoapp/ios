@@ -209,72 +209,6 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
         carouselView.setCurrentPage(carouselView.currentPage + 1, animated: true)
     }
     
-    /* func setDescriptionShownState() {
-        let baseUnit = self.view.frame.width / 2.5
-        self.carouselView.frame = CGRect(x: self.view.frame.width / 2.0 - baseUnit / 2.0, y: baseUnit / 4.0, width: baseUnit, height: baseUnit)
-        self.carouselView.layer.cornerRadius = self.carouselView.frame.width / 2.0
-        self.carouselView.setNeedsLayout()
-        self.carouselView.layoutIfNeeded()
-        
-        self.detailsView.frame = CGRect(x: 0.0, y: 1.25 * baseUnit, width: self.view.frame.width, height: self.detailsView.frame.height)
-        self.detailsView.backgroundColor = UIColor.black.withAlphaComponent(0.0)
-        
-        self.centerNameLabel.isHidden = false
-        self.nameLabel.isHidden = true
-        self.firstCommonEventLabel.isHidden = true
-        self.additionalCommonEventsLabel.isHidden = true
-        
-        self.tableView.frame = CGRect(x: 0.0, y: self.detailsView.frame.maxY, width: self.view.frame.width, height: self.view.frame.maxY - self.detailsView.frame.maxY)
-        
-        self.eventImageView.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height - self.tableView.frame.height)
-        
-        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.8)
-    } */
-    
-    /* func showDescription() {
-        UIView.animate(withDuration: 0.25, animations: {
-            self.setDescriptionShownState()
-        }, completion: { finished in
-            self.isShowingDescription = finished
-        })
-    } */
-    
-    /* func setDecriptionHiddenState() {
-        self.carouselView.frame = self.view.frame
-        self.carouselView.layer.cornerRadius = 0
-        self.carouselView.layoutIfNeeded()
-        
-        self.detailsView.frame = CGRect(x: 0.0, y: self.view.frame.height - self.detailsView.frame.height, width: self.view.frame.width, height: self.detailsView.frame.height)
-        self.detailsView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
-        
-        self.centerNameLabel.isHidden = true
-        self.nameLabel.isHidden = false
-        self.firstCommonEventLabel.isHidden = false
-        self.additionalCommonEventsLabel.isHidden = false
-        
-        self.tableView.frame = CGRect(x: 0.0, y: self.detailsView.frame.maxY, width: self.view.frame.width, height: self.view.frame.maxY - self.detailsView.frame.maxY)
-        
-        self.eventImageView.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height - self.tableView.frame.height)
-        
-        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.0)
-    } */
-    
-    /* func hideDescription() {
-        UIView.animate(withDuration: 0.25, animations: {
-            self.setDecriptionHiddenState()
-        }, completion: { finished in
-            self.isShowingDescription = !finished
-        })
-    } */
-    
-    /* @objc func toggleDescription() {
-        if isShowingDescription {
-            hideDescription()
-        } else {
-            showDescription()
-        }
-    } */
-    
     func setPhotoButtons(index: Int) {
         if user != nil {
             if index > 0 {
@@ -361,18 +295,6 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
         return 0
     }
-    
-    /*func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return CGFloat(commonEventInfos.count) * 32.0
-        } else if indexPath.section == 1 {
-            return 100.0
-        } else if indexPath.section == 2 {
-            return 80.0
-        } else {
-            return 60.0
-        }
-    }*/
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let user = user {

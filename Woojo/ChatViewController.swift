@@ -260,7 +260,7 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
                         userDetailsViewController.otherUser?.commonInfo = match.commonInfo
                         self.present(userDetailsViewController, animated: true, completion: {
                             let closeTapGestureRecognizer = UITapGestureRecognizer(target: userDetailsViewController, action: #selector(userDetailsViewController.dismiss(sender:)))
-                            userDetailsViewController.cardView.addGestureRecognizer(closeTapGestureRecognizer)
+                            //userDetailsViewController.addGestureRecognizer(closeTapGestureRecognizer)
                             // let toggleTapGestureRecognizer = UITapGestureRecognizer(target: userDetailsViewController.cardView, action: #selector(userDetailsViewController.cardView.toggleDescription))
                             // userDetailsViewController.cardView.carouselView.addGestureRecognizer(toggleTapGestureRecognizer)
                         })
