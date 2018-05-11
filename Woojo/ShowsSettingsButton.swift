@@ -54,12 +54,11 @@ extension ShowsSettingsButton where Self: UIViewController {
                 }
             }
             .subscribe(onNext: { image in
-                if (image !== nil) {
+                if (image != nil) {
                     settingsButton.imageView?.contentMode = .scaleAspectFill
                     settingsButton.setImage(image, for: .normal)
                 }
-            })
-            .addDisposableTo(disposeBag)
+            }).disposed(by: disposeBag)
         
     }
     

@@ -71,8 +71,8 @@ class ALChatManager: NSObject {
             let alUser : ALUser =  ALUser();
             alUser.applicationId = Constants.Env.Chat.applozicApplicationId
             alUser.userId = currentUser.uid
-            alUser.displayName = currentUser.profile.displayName
-            currentUser.profile.photos.value[0]?.generatePhotoDownloadURL(size: .thumbnail) { url, error in
+            alUser.displayName = currentUser.profile?.firstName
+            currentUser.profile?.photos.value[0]?.generatePhotoDownloadURL(size: .thumbnail) { url, error in
                 alUser.imageLink = url?.absoluteString
                 ALUserDefaultsHandler.setUserId(alUser.userId)
                 ALUserDefaultsHandler.setDisplayName(alUser.displayName)

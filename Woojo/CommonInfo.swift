@@ -8,8 +8,15 @@
 
 import Foundation
 
-class CommonInfo {
-    var events: [User.CommonEvent] = []
+class CommonInfo: Codable {
+    var events: [Event] = []
+    var commonEvents: [CommonEvent] = []
     var friends: [Friend] = []
     var pageLikes: [PageLike] = []
+    
+    private enum CodingKeys: String, CodingKey {
+        case friends
+        case commonEvents = "events"
+        case pageLikes = "page-likes"
+    }
 }

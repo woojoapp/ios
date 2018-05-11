@@ -17,8 +17,8 @@ class User: Equatable {
     var uid: String
     var fbAppScopedID: String?
     var fbAccessToken: AccessToken?
-    var profile: Profile!
-    var activity: Activity!
+    var profile: Profile?
+    //var activity: Activity!
     var botUid: String?
     
     static var current: Variable<CurrentUser?> = Variable(nil)
@@ -26,7 +26,7 @@ class User: Equatable {
     init(uid: String) {
         self.uid = uid
         profile = Profile(for: self)
-        activity = Activity(for: self)
+        //activity = Activity(for: self)
     }
     
     var ref: DatabaseReference {
@@ -64,7 +64,7 @@ class User: Equatable {
         }
     }
     
-    func getMatch(with user: User, completion: ((Match?) -> ())? = nil) {
+    func getMatch(with user: OtherUser, completion: ((Match?) -> ())? = nil) {
         Match.between(user: self, and: user, completion: completion)
     }
 

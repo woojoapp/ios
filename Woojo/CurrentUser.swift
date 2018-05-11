@@ -19,6 +19,7 @@ import RxCocoa
 import Applozic
 import Branch
 import Crashlytics
+import CodableFirebase
 
 class CurrentUser: User {
     
@@ -70,7 +71,7 @@ class CurrentUser: User {
     init?() {
         if let uid = Auth.auth().currentUser?.uid {
             super.init(uid: uid)
-            self.preferences = Preferences(gender: .all, ageRange: (min: 18, max: 60))
+            self.preferences = Preferences()
         } else {
             print("Failed to initialize CurrentUser. No UID. Is the user authenticated?")
             return nil
@@ -78,11 +79,9 @@ class CurrentUser: User {
     }
     
     func logOut() {
-        self.profile.stopObserving()
-        self.profile.stopObservingPhotos()
         self.stopObservingEvents()
         self.stopObservingNotifications()
-        self.stopObservingCandidates()
+        //self.stopObservingCandidates()
         LoginManager().logOut()
         Crashlytics.sharedInstance().setUserIdentifier("")
         Analytics.Log(event: "Account_log_out")
@@ -106,12 +105,13 @@ class CurrentUser: User {
         self.logOut()
         Auth.auth().currentUser?.delete(completion: nil)
     }
+
     func load(completion: (() -> Void)? = nil) {
         
         User.current.value = self
         isLoading.value = true
         
-        activity.loadFromFirebase(completion: { _, _ in
+        /* activity.loadFromFirebase(completion: { _, _ in
             print("Loaded activity")
             if self.activity.signUp == nil {
                 self.performSignUpActions { _ in
@@ -124,11 +124,11 @@ class CurrentUser: User {
                     self.finishLoad(completion: completion)
                 })
             }
-        })
+        }) */
 
     }
     
-    func finishLoad(completion: (() -> Void)? = nil) {
+    /* func finishLoad(completion: (() -> Void)? = nil) {
         let group = DispatchGroup()
         group.enter()
         print("START Loading data")
@@ -227,12 +227,14 @@ class CurrentUser: User {
             let savePageLikesGroup = DispatchGroup()
             for pageLike in pageLikes {
                 savePageLikesGroup.enter()
-                self.pageLikesRef.child(pageLike.id).setValue(pageLike.toDictionary(), withCompletionBlock: { (error, ref) in
-                    if let error = error {
-                        print("Failed to set page like for CurrentUser: \(error.localizedDescription)")
-                    }
-                    savePageLikesGroup.leave()
-                })
+                if let pageLikeData = try? FirebaseEncoder().encode(pageLike) {
+                    self.pageLikesRef.child(pageLike.id).setValue(pageLikeData, withCompletionBlock: { (error, ref) in
+                        if let error = error {
+                            print("Failed to set page like for CurrentUser: \(error.localizedDescription)")
+                        }
+                        savePageLikesGroup.leave()
+                    })
+                }
             }
             savePageLikesGroup.notify(queue: .main, execute: {
                 Analytics.setUserProperties(properties: ["page_like_count": String(pageLikes.count)])
@@ -252,21 +254,23 @@ class CurrentUser: User {
             let saveFriendsGroup = DispatchGroup()
             for friend in friends {
                 saveFriendsGroup.enter()
-                self.friendsRef.child(friend.id).setValue(friend.toDictionary(), withCompletionBlock: { (error, ref) in
-                    if let error = error {
-                        print("Failed to set friend for CurrentUser: \(error.localizedDescription)")
-                    }
-                    saveFriendsGroup.leave()
-                })
+                if let friendData = try? FirebaseEncoder().encode(friend) {
+                    self.friendsRef.child(friend.id).setValue(friendData, withCompletionBlock: { (error, ref) in
+                        if let error = error {
+                            print("Failed to set friend for CurrentUser: \(error.localizedDescription)")
+                        }
+                        saveFriendsGroup.leave()
+                    })
+                }
             }
             saveFriendsGroup.notify(queue: .main, execute: {
                 Analytics.setUserProperties(properties: ["friend_count": String(friends.count)])
                 completion?()
             })
         }
-    }
+    } */
     
-    func loadData(completion: (() -> Void)? = nil) {
+    /* func loadData(completion: (() -> Void)? = nil) {
         let loadDataGroup = DispatchGroup()
         loadDataGroup.enter()
         ref.child(Constants.User.Bot.firebaseNode).observeSingleEvent(of: .value, with: { snap in
@@ -285,25 +289,28 @@ class CurrentUser: User {
         loadDataGroup.notify(queue: .main, execute: {
             completion?()
         })
-    }
+    } */
     
     // MARK: - Candidates
     
-    var candidatesRef: DatabaseReference {
+    /*var candidatesRef: DatabaseReference {
         get {
             return ref.child(Constants.User.Candidate.firebaseNode)
         }
     }
     
     var candidatesDelegate: CandidatesDelegate?
-    var isObservingCandidates = false
+    var isObservingCandidates = false */
     
-    func startObservingCandidates() {
+    /* func startObservingCandidates() {
         print("START observing candidates")
         isObservingCandidates = true
         candidatesRef.observe(.childAdded, with: { snapshot in
+            print("CANDIDATE ADDED", snapshot.key)
             let candidate = Candidate(snapshot: snapshot, for: self)
-            candidate.profile.loadFromFirebase(completion: { _, _ in
+            print("CANDIDATE ADDED", candidate)
+            candidate.profile?.loadFromFirebase(completion: { _, _ in
+                print("CANDIDATE ADDED", candidate)
                 self.candidates.append(candidate)
                 self.candidatesDelegate?.didAddCandidate()
             })
@@ -326,11 +333,11 @@ class CurrentUser: User {
     func stopObservingCandidates() {
         candidatesRef.removeAllObservers()
         isObservingCandidates = false
-    }
+    } */
     
     // MARK: - Notifications
     
-    var notificationsRef: DatabaseReference {
+    /* var notificationsRef: DatabaseReference {
         get {
             return ref.child(Constants.User.Notification.firebaseNode)
         }
@@ -401,7 +408,7 @@ class CurrentUser: User {
     func stopObservingNotifications() {
         notificationsRef.removeAllObservers()
         //isObservingEvents = false
-    }
+    } */
     
     /*func listenToNotifications() {
         User.current.asObservable()
@@ -419,7 +426,7 @@ class CurrentUser: User {
     
     // MARK: - Events
     
-    var eventsRef: DatabaseReference {
+    /* var eventsRef: DatabaseReference {
         get {
             return ref.child(Constants.User.Event.firebaseNode)
         }
@@ -717,9 +724,9 @@ class CurrentUser: User {
             .child(Constants.User.Integrations.firebaseNode)
             .child(Constants.User.Integrations.Eventbrite.firebaseNode)
             .child(Constants.User.Integrations.Eventbrite.properties.accessToken)
-    }
+    }*/
     
-    func getPageLikesFromFacebook(completion: @escaping (([PageLike]) -> Void)) {
+    /* func getPageLikesFromFacebook(completion: @escaping (([PageLike]) -> Void)) {
         if AccessToken.current != nil {
             if firebaseAuthUser != nil {
                 let userPageLikesGraphRequest = UserPageLikesGraphRequest()
@@ -757,27 +764,27 @@ class CurrentUser: User {
         } else {
             print("Failed to load user friends from Facebook: No Facebook access token.")
         }
-    }
+    } */
     
-    func remove(event: Event, completion: ((Error?) -> Void)?) {
+    /* func remove(event: Event, completion: ((Error?) -> Void)?) {
         eventsRef.child(event.id).removeValue { error, ref in
             if let error = error {
                 print("Failed to remove user event: \(error.localizedDescription)")
             }
             completion?(error)
         }
-    }
+    } */
     
-    func removeAllPendingEvents(completion: ((Error?) -> Void)?) {
+    /* func removeAllPendingEvents(completion: ((Error?) -> Void)?) {
         pendingEventsRef.removeValue { error, ref in
             if let error = error {
                 print("Failed to remove user pending event: \(error.localizedDescription)")
             }
             completion?(error)
         }
-    }
+    } */
     
-    func add(event: Event, completion: ((Error?) -> Void)?) {
+    /*func add(event: Event, completion: ((Error?) -> Void)?) {
         ref.child(Constants.User.Properties.fbAccessToken).setValue(AccessToken.current?.authenticationToken) { error, ref in
             self.eventsRef.child(event.id).setValue(event.rsvpStatus, withCompletionBlock: { error, ref in
                 if let error = error {
@@ -843,7 +850,7 @@ class CurrentUser: User {
                 self.pendingEvents.value.sort(by: { $0.start > $1.start })
             }
         }
-    }
+    }*/
     
     func getAlbumsFromFacebook(completion: @escaping ([Album]) -> Void) {
         if AccessToken.current != nil {
@@ -864,16 +871,16 @@ class CurrentUser: User {
             print("Failed to load user albums from Facebook: No Facebook access token.")
         }
     }
-    
-    func like(candidate uid: String, visible: Bool? = nil, message: String? = nil, completion: ((Error?) -> Void)? = nil) {
+
+    /*func like(candidate uid: String, visible: Bool? = nil, message: String? = nil, completion: ((Error?) -> Void)? = nil) {
         let like = Like(by: self.uid, on: uid, visible: visible, message: message)
         like.save(completion: completion)
     }
-    
+
     func pass(candidate uid: String, completion: ((Error?) -> Void)? = nil) {
         let pass = Pass(by: self.uid, on: uid)
         pass.save(completion: completion)
-    }
+    } */
     
     func remove(candidate uid: String, completion: ((Error?) -> Void)? = nil) {
         ref.child(Constants.User.Candidate.firebaseNode).child(uid).removeValue { (error, _) in
@@ -881,33 +888,11 @@ class CurrentUser: User {
         }
     }
     
-    func dismissTip(tipId: String, completion: ((Error?) -> Void)? = nil) {
+    /*func dismissTip(tipId: String, completion: ((Error?) -> Void)? = nil) {
         self.ref.child(Constants.User.Tip.firebaseNode).child(tipId).setValue(Event.dateFormatter.string(from: Date())) { (error, _) in
             completion?(error)
         }
-    }
-    
-    func setNotificationsState(type: String, enabled: Bool, completion: ((Error?) -> ())?) {
-        self.ref.child(Constants.User.Settings.firebaseNode)
-                .child(Constants.User.Settings.Notifications.firebaseNode)
-                .child(type)
-                .setValue(enabled) { (error, _) in
-            completion?(error)
-        }
-    }
-    
-    func getNotificationsState(type: String, completion: @escaping ((Bool) -> ())) {
-        self.ref.child(Constants.User.Settings.firebaseNode)
-            .child(Constants.User.Settings.Notifications.firebaseNode)
-            .child(type)
-            .observe(.value, with: { (snapshot) in
-                if let enabled = snapshot.value as? Bool {
-                    completion(enabled)
-                } else {
-                    completion(false)
-                }
-            })
-    }
+    }*/
     
     func share(from: UIViewController?) {
         let buo = BranchUniversalObject(canonicalIdentifier: "app")
@@ -935,21 +920,21 @@ class CurrentUser: User {
     }
     
     func commonality(candidate: Candidate) throws -> Int {
-        return try candidate.commonInfo.events.reduce(0, { $0 + Event.commonality(rsvpStatusA: $1.rsvpStatus, rsvpStatusB: try rsvpStatus(event: $1.id)) })
+        return try candidate.commonInfo.commonEvents.reduce(0, { $0 + Event.commonality(rsvpStatusA: $1.rsvpStatus, rsvpStatusB: try rsvpStatus(event: $1.id)) })
     }
     
     func commonality(match: Match) throws -> Int {
-        return try match.commonInfo.events.reduce(0, { $0 + Event.commonality(rsvpStatusA: $1.rsvpStatus, rsvpStatusB: try rsvpStatus(event: $1.id)) })
+        return try match.commonInfo.commonEvents.reduce(0, { $0 + Event.commonality(rsvpStatusA: $1.rsvpStatus, rsvpStatusB: try rsvpStatus(event: $1.id)) })
     }
     
     func bothGoing(candidate: Candidate) throws -> Bool {
-        return try candidate.commonInfo.events.reduce(false, { (previousResult, commonEventInfo) -> Bool in
+        return try candidate.commonInfo.commonEvents.reduce(false, { (previousResult, commonEventInfo) -> Bool in
             return try (previousResult && (try rsvpStatus(event: commonEventInfo.id) == .attending) && commonEventInfo.rsvpStatus == .attending)
         })
     }
     
     func bothGoing(match: Match) throws -> Bool {
-        return try match.commonInfo.events.reduce(false, { (previousResult, commonEventInfo) -> Bool in
+        return try match.commonInfo.commonEvents.reduce(false, { (previousResult, commonEventInfo) -> Bool in
             return try (previousResult && (try rsvpStatus(event: commonEventInfo.id) == .attending) && commonEventInfo.rsvpStatus == .attending)
         })
     }

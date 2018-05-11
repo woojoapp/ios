@@ -84,14 +84,12 @@ extension OnboardingPostAboutViewController: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         let newBio = bioTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-        User.current.value?.profile.setDescription(description: newBio, completion: { error in
-            if error != nil {
-                self.bioTextView.text = self.previousBio
-            } else {
-                Analytics.setUserProperties(properties: ["about_character_count": String(newBio.count)])
-                Analytics.Log(event: "Onboarding_about_updated", with: ["character_count": String(newBio.count)])
-            }
-        })
+        UserRepository.shared.setDescription(description: newBio)?.then {
+            Analytics.setUserProperties(properties: ["about_character_count": String(newBio.count)])
+            Analytics.Log(event: "Onboarding_about_updated", with: ["character_count": String(newBio.count)])
+        }.catch {
+            self.bioTextView.text = self.previousBio
+        }
         charactersLeftLabel.isHidden = true
         if bioTextView.text == "" {
             bioTextView.text = bioTextViewPlaceholderText

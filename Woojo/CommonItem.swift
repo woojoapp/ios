@@ -9,7 +9,7 @@
 import Foundation
 
 protocol CommonItem {
-    var id: String { get set }
+    var id: String? { get set }
     var name: String? { get set }
     var pictureURL: URL? { get set }
 }

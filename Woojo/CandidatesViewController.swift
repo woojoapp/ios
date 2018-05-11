@@ -269,7 +269,7 @@ extension CandidatesViewController: KolodaViewDataSource {
         cardView.setRoundedCornersAndShadow()
         if let count = User.current.value?.candidates.count, count > index {
             cardView.user = User.current.value?.candidates[index]
-            if let commonEventInfos = User.current.value?.candidates[index].commonInfo.events {
+            if let commonEventInfos = User.current.value?.candidates[index].commonInfo.commonEvents {
                 cardView.commonEventInfos = commonEventInfos.sorted(by: {
                     Event.interestScale(rsvpStatus: $0.rsvpStatus) > Event.interestScale(rsvpStatus: $1.rsvpStatus)
                 })
@@ -316,6 +316,7 @@ extension CandidatesViewController: CandidatesDelegate {
     
     func didAddCandidate() {
         //DispatchQueue.global(qos: .background).async {
+        print("DID ADD CANDIDATE")
             self.kolodaView.reloadData()
         //}
     }

@@ -104,7 +104,7 @@ extension OnboardingPostPhotosViewController: UICollectionViewDelegate {
                 let removeButton = UIAlertAction(title: NSLocalizedString("Remove", comment: ""), style: .destructive, handler: { (action) -> Void in
                     HUD.show(.progress)
                     User.current.value?.profile.deleteFiles(forPhotoAt: indexPath.row) { _ in
-                        User.current.value?.profile.remove(photoAt: indexPath.row) { _ in
+                        UserRepository.shared.removePhotoId(index: indexPath.row) { _ in
                             self.photosCollectionView.reloadItems(at: [indexPath])
                             HUD.show(.success)
                             HUD.hide(afterDelay: 1.0)
@@ -230,21 +230,15 @@ extension OnboardingPostPhotosViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         if let photos = User.current.value?.profile.photos.value, let photo = photos[sourceIndexPath.row] {
-            User.current.value?.profile.set(photo: photo, at: destinationIndexPath.row, completion: { _ in
-                // collectionView.reloadData()
-            })
+            UserRepository.shared.setPhotoId(id: photo, index: destinationIndexPath.row)
             Analytics.Log(event: "Onboarding_photos_reordered", with: ["photo_count": String(photos.filter({ $0 != nil }).count)])
         }
         for i in 0..<Int(photoCount) {
             if let cell = collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? ProfilePhotoCollectionViewCell {
                 if let photo = cell.photo {
-                    User.current.value?.profile.set(photo: photo, at: i, completion: { _ in
-                        // collectionView.reloadData()
-                    })
+                    UserRepository.shared.setPhotoId(id: photo, index: i)
                 } else {
-                    User.current.value?.profile.remove(photoAt: i, completion: { _ in
-                        // collectionView.reloadData()
-                    })
+                    UserRepository.shared.removePhotoId(index: i)
                 }
             }
         }

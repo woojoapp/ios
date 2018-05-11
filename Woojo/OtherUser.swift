@@ -8,6 +8,17 @@
 
 import Foundation
 
-class OtherUser: User {
+class OtherUser {
+    var uid: String
+    var profile: User.Profile?
     var commonInfo: CommonInfo = CommonInfo()
+    
+    init(uid: String) {
+        self.uid = uid
+    }
+    
+    enum Kind {
+        case candidate
+        case match
+    }
 }

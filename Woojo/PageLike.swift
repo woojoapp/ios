@@ -9,16 +9,17 @@
 import Foundation
 import FirebaseDatabase
 
-class PageLike: CommonItem {
-    var id: String
+class PageLike: CommonItem, Codable {
+    var id: String?
     var name: String?
     var pictureURL: URL?
     
-    init(id: String) {
-        self.id = id
+    private enum CodingKeys: String, CodingKey {
+        case id, name
+        case pictureURL = "picture_url"
     }
     
-    static func from(graphAPI dict: [String:Any]?) -> PageLike? {
+    /* static func from(graphAPI dict: [String:Any]?) -> PageLike? {
         if let dict = dict,
             let id = dict[Constants.User.PageLike.properties.graphAPIKeys.id] as? String,
             let name = dict[Constants.User.PageLike.properties.graphAPIKeys.name] as? String {
@@ -53,6 +54,6 @@ class PageLike: CommonItem {
         dict[Constants.User.PageLike.properties.firebaseNodes.name] = self.name
         dict[Constants.User.PageLike.properties.firebaseNodes.pictureURL] = self.pictureURL?.absoluteString
         return dict
-    }
+    } */
 }
 

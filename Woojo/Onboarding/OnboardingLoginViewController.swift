@@ -22,10 +22,10 @@ class OnboardingLoginViewController: UIViewController {
     @IBOutlet weak var message2: UILabel!
     @IBOutlet weak var message3: UILabel!
     
-    let loginManager = LoginManager()
+    //let loginManager = LoginManager()
     let termsText = NSLocalizedString("Terms & Conditions", comment: "")
     let privacyText = NSLocalizedString("Privacy Policy", comment: "")
-    let disposeBag = DisposeBag()
+    //let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +55,7 @@ class OnboardingLoginViewController: UIViewController {
             
         }
         
-        let activityDriver = User.current.asObservable()
+        /* let activityDriver = User.current.asObservable()
             .flatMap { user -> Observable<Bool> in
                 if let currentUser = user {
                     return currentUser.isLoading.asObservable()
@@ -67,7 +67,7 @@ class OnboardingLoginViewController: UIViewController {
         
         activityDriver
             .drive(self.activityIndicator.rx.isAnimating)
-            .disposed(by: disposeBag)
+            .disposed(by: disposeBag) */
         
         message1.layer.cornerRadius = 5
         message1.layer.masksToBounds = true
@@ -91,63 +91,19 @@ class OnboardingLoginViewController: UIViewController {
         userDefaults.synchronize()
         Analytics.setUserProperties(properties: ["pre_login_onboarded": "true"])
         Analytics.Log(event: "Onboarding_pre_complete")
-        let readPermissions: [FacebookCore.ReadPermission] = [.publicProfile,
-                                                              .userFriends,
-                                                              .custom("user_events"),
-                                                              .custom("user_photos"),
-                                                              .custom("user_location"),
-                                                              .custom("user_birthday"),
-                                                              .custom("user_likes")]
-        loginManager.logIn(readPermissions: readPermissions, viewController: self) { (loginResult) in
-            self.handleLogin(result: loginResult)
-        }
-    }
-    
-    func handleLogin(result: LoginResult) {
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         loginFacebook?.isHidden = true
-        switch result {
-        case .success(let acceptedPermissions, let declinedPermissions, let accessToken):
-            var permissions: [String: String] = [:]
-            for permission in acceptedPermissions {
-                permissions[permission.name] = "true"
-                Analytics.setUserProperties(properties: ["accepted_\(permission.name)_permission": "true"])
-            }
-            for permission in declinedPermissions {
-                permissions[permission.name] = "false"
-                Analytics.setUserProperties(properties: ["accepted_\(permission.name)_permission": "false"])
-            }
-            if declinedPermissions.count > 0 && (declinedPermissions.contains(Permission(name: "user_events")) || declinedPermissions.contains(Permission(name: "user_birthday"))) {
-                Analytics.Log(event: "Account_log_in_missing_permissions", with: permissions)
-                let alert = UIAlertController(title: NSLocalizedString("Missing permissions", comment: ""), message: NSLocalizedString("Woojo needs to know at least your birthday and access your events in order to function properly.", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: {
-                    LoginManager().logOut()
-                    self.activityIndicator.stopAnimating()
-                    self.loginFacebook?.isHidden = false
-                })
-            } else {
-                print("Facebook login success")
-                let credential = FacebookAuthProvider.credential(withAccessToken: accessToken.authenticationToken)
-                Auth.auth().signIn(with: credential) { (user, error) in
-                    if let user = user {
-                        print("Firebase login success \(user.uid)")
-                        Analytics.Log(event: "Account_log_in", with: permissions)
-                    }
-                    if let error = error {
-                        print("Firebase login failure \(error.localizedDescription)")
-                    }
+        LoginViewModel.shared.loginWithFacebook(viewController: self).catch { error in
+            self.activityIndicator.stopAnimating()
+            self.loginFacebook?.isHidden = false
+            if error is LoginViewModel.LoginError {
+                switch (error) {
+                case .facebookPermissionsDeclined(let permissions):
+                    Analytics.Log(event: "Account_log_in_missing_permissions", with: permissions)
+                    showDeclinedPermissionsErrorDialog()
                 }
             }
-        case .failed(let error):
-            print("Facebook login error: \(error.localizedDescription)")
-            activityIndicator.stopAnimating()
-            loginFacebook?.isHidden = false
-        case .cancelled:
-            print("Facebook login cancelled.")
-            activityIndicator.stopAnimating()
-            loginFacebook?.isHidden = false
         }
     }
 }

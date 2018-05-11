@@ -307,7 +307,7 @@ extension Event {
 }
 
 extension Event {
-    enum RSVP: String {
+    enum RSVP: String, Codable {
         case attending
         case unsure
         case notReplied = "not_replied"
@@ -317,7 +317,7 @@ extension Event {
 }
 
 extension Event {
-    enum Source: String {
+    enum Source: String, Codable {
         case facebook
         case eventbrite
         case recommended

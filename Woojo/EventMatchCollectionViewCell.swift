@@ -26,7 +26,7 @@ class EventMatchCollectionViewCell: UICollectionViewCell {
     
     func populate(with user: User?) {
         if let user = user {
-            label.text = user.profile.displayName
+            label.text = user.profile.firstName
             imageView.layer.cornerRadius = imageView.frame.width / 2.0
             imageView.layer.masksToBounds = true
             user.profile.photos.value[0]?.download(completion: {

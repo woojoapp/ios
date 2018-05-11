@@ -11,6 +11,7 @@ import UIKit
 import ImageSlideshow
 import PKHUD
 import Amplitude_iOS
+import RxSwift
 
 class UserDetailsViewController: UIViewController {
     
@@ -22,6 +23,7 @@ class UserDetailsViewController: UIViewController {
     var chatViewController: ChatViewController?
     var reachabilityObserver: AnyObject?
     var isMatch = false
+    private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +33,8 @@ class UserDetailsViewController: UIViewController {
         tableView.register(UINib(nibName: "UserCommonItemsTableViewCell", bundle: nil), forCellReuseIdentifier: "commonItemsCell")
         tableView.delegate = self
         tableView.dataSource = self
+        
+        observeOtherUser()
     }
     
     override func viewDidLayoutSubviews() {
@@ -77,6 +81,15 @@ class UserDetailsViewController: UIViewController {
         self.dismiss(sender: self)
     }
     
+    private func observeOtherUser() {
+        UserRepository.shared
+            .getOtherUserCommonInfo(uid: otherUser?.uid, otherUserKind: .candidate)?
+            .subscribe(onNext: { commonInfo in
+                print("COMMM", commonInfo)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     @IBAction func showOptions() {
         //optionsButton.select()
         let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -107,7 +120,7 @@ class UserDetailsViewController: UIViewController {
                                 ]
                             }
                             // Unmatch
-                            self.otherUser?.unmatch { error in
+                            SwipeRepository.shared.removeLike(on: otherUser.uid) { error, _ in
                                 if error != nil {
                                     HUD.show(.labeledError(title: NSLocalizedString("Unmatch", comment: ""), subtitle: NSLocalizedString("Failed to unmatch", comment: "")), onView: self.parent?.view)
                                     HUD.hide(afterDelay: 1.0)
@@ -136,7 +149,7 @@ class UserDetailsViewController: UIViewController {
             let confirmController = UIAlertController(title: NSLocalizedString("Unmatch & report", comment: ""), message: NSLocalizedString("Confirm unmatch and report?", comment: ""), preferredStyle: .alert)
             let confirmAction = UIAlertAction(title: NSLocalizedString("Unmatch & report", comment: ""), style: .destructive, handler: { (_) in
                 HUD.show(.labeledProgress(title: NSLocalizedString("Unmatch & report", comment: ""), subtitle: NSLocalizedString("Unmatching and reporting...", comment: "")), onView: self.parent?.view)
-                self.otherUser?.report(message: nil) { error in
+                /* self.otherUser?.report(message: nil) { error in
                     if error != nil {
                         HUD.show(.labeledError(title: NSLocalizedString("Unmatch & report", comment: ""), subtitle: NSLocalizedString("Failed to unmatch and report", comment: "")), onView: self.parent?.view)
                         HUD.hide(afterDelay: 1.0)
@@ -152,7 +165,7 @@ class UserDetailsViewController: UIViewController {
                         self.dismiss(sender: self)
                         self.chatViewController?.conversationDeleted()
                     }
-                }
+                } */
             })
             let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
             confirmController.addAction(cancelAction)
@@ -186,7 +199,7 @@ extension UserDetailsViewController : UITableViewDataSource {
             if section == 0 {
                 return user.commonInfo.events.count
             } else if section == 1 {
-                if user.profile.description.value.count == 0 {
+                if user.profile?.description.value.count == 0 {
                     return 0
                 } else {
                     return 1
@@ -209,7 +222,7 @@ extension UserDetailsViewController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if let user = otherUser, let name = user.profile.displayName {
+        if let user = otherUser, let name = user.profile?.displayName {
             if section == 0 {
                 if user.commonInfo.events.count == 0 {
                     return nil
@@ -217,7 +230,7 @@ extension UserDetailsViewController : UITableViewDataSource {
                     return NSLocalizedString("Common Events", comment: "")
                 }
             } else if section == 1 {
-                if user.profile.description.value.count == 0 {
+                if user.profile?.description.value.count == 0 {
                     return nil
                 } else {
                     return String(format: NSLocalizedString("About %@", comment: ""), name)
@@ -255,11 +268,11 @@ extension UserDetailsViewController : UITableViewDataSource {
                         }
                     }
                 })
-                cell.eventTextLabel.text = user.commonInfo.events[indexPath.row].displayString
+                cell.eventTextLabel.text = getDisplayString(commonEvent: user.commonInfo.commonEvents[indexPath.row])
                 return cell
             } else if indexPath.section == 1 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "descriptionCell", for: indexPath)
-                cell.textLabel?.text = user.profile.description.value
+                cell.textLabel?.text = user.profile?.description.value
                 return cell
             } else if indexPath.section == 2 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "commonItemsCell", for: indexPath) as! UserCommonItemsTableViewCell
@@ -281,6 +294,23 @@ extension UserDetailsViewController : UITableViewDataSource {
         cell.eventImageView.layer.masksToBounds = true
         cell.eventImageView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_100x100"))
         cell.setDateVisibility(hidden: true)
+    }
+    
+    private func getDisplayString(commonEvent: CommonEvent) -> String {
+        var rsvpString: String
+        switch commonEvent.rsvpStatus {
+        case .attending:
+            rsvpString = String(format: NSLocalizedString("Goes to %@", comment: ""), commonEvent.name!)
+        case .unsure:
+            rsvpString = String(format: NSLocalizedString("Interested in %@", comment: ""), commonEvent.name!)
+        case .notReplied:
+            rsvpString = String(format: NSLocalizedString("Invited to %@", comment: ""), commonEvent.name!)
+        case .iWasRecommendedOthers:
+            rsvpString = String(format: NSLocalizedString("Goes to %@ (recommended for you)", comment: ""), commonEvent.name!)
+        case .otherWasRecommendedMine:
+            rsvpString = String(format: NSLocalizedString("Goes to events similar to %@", comment: ""), commonEvent.name!)
+        }
+        return "\(rsvpString)"
     }
 }
 

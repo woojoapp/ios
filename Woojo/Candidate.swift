@@ -10,6 +10,7 @@ import UIKit
 import FirebaseDatabase
 import FirebaseStorage
 import SDWebImage
+import CodableFirebase
 
 extension CurrentUser {
     
@@ -23,32 +24,25 @@ extension CurrentUser {
             }
         }
         
-        var commonEventsInfoString: String {
-            get {
-                var result = ""
-                for commonEventInfo in self.commonInfo.events {
-                    result += "\(commonEventInfo.displayString)\n"
-                }
-                return result
-            }
-        }
-        
         init(snapshot: DataSnapshot, for user: User) {
             self.user = user
             super.init(uid: snapshot.key)
             for item in snapshot.childSnapshot(forPath: Constants.User.Candidate.properties.firebaseNodes.events).children {
-                if let commonEventInfoSnap = item as? DataSnapshot {
-                    super.commonInfo.events.append(CommonEvent(snapshot: commonEventInfoSnap))
+                if let commonEventInfoSnap = item as? DataSnapshot,
+                    let commonEvent = try? FirebaseDecoder().decode(CommonEvent.self, from: commonEventInfoSnap) {
+                    super.commonInfo.commonEvents.append(commonEvent)
                 }
             }
             for item in snapshot.childSnapshot(forPath: Constants.User.Candidate.properties.firebaseNodes.friends).children {
-                if let friendSnap = item as? DataSnapshot {
-                    super.commonInfo.friends.append(Friend.from(firebase: friendSnap))
+                if let friendSnap = item as? DataSnapshot,
+                    let friend = try? FirebaseDecoder().decode(Friend.self, from: friendSnap){
+                    super.commonInfo.friends.append(friend)
                 }
             }
             for item in snapshot.childSnapshot(forPath: Constants.User.Candidate.properties.firebaseNodes.pageLikes).children {
-                if let pageLikeSnap = item as? DataSnapshot {
-                    super.commonInfo.pageLikes.append(PageLike.from(firebase: pageLikeSnap))
+                if let pageLikeSnap = item as? DataSnapshot,
+                    let pageLike = try? FirebaseDecoder().decode(PageLike.self, from: pageLikeSnap){
+                    super.commonInfo.pageLikes.append(pageLike)
                 }
             }
         }
@@ -65,7 +59,7 @@ extension CurrentUser {
         func pass(completion: ((Error?) -> Void)? = nil) {
             // Pass on the candidate
             User.current.value?.pass(candidate: self.uid) { error in
-                self.profile.removeAllPhotosFromCache()
+                self.profile?.removeAllPhotosFromCache()
                 // Remove it from the list
                 self.remove(completion: completion)
                 //completion?(error)

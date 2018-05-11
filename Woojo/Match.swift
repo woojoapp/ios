@@ -8,6 +8,7 @@
 
 import Foundation
 import FirebaseDatabase
+import CodableFirebase
 
 extension User {
     class Match {
@@ -48,18 +49,21 @@ extension User {
                 self.on = on
                 self.created = created
                 for item in snapshot.childSnapshot(forPath: Constants.User.Candidate.properties.firebaseNodes.events).children {
-                    if let commonEventInfoSnap = item as? DataSnapshot {
-                        commonInfo.events.append(CommonEvent(snapshot: commonEventInfoSnap))
+                    if let commonEventInfoSnap = item as? DataSnapshot,
+                        let commonEventInfo = try? FirebaseDecoder().decode(CommonEvent.self, from: commonEventInfoSnap) {
+                        commonInfo.commonEvents.append(commonEventInfo)
                     }
                 }
                 for item in snapshot.childSnapshot(forPath: Constants.User.Candidate.properties.firebaseNodes.friends).children {
-                    if let friendSnap = item as? DataSnapshot {
-                        commonInfo.friends.append(Friend.from(firebase: friendSnap))
+                    if let friendSnap = item as? DataSnapshot,
+                        let friend = try? FirebaseDecoder().decode(Friend.self, from: friendSnap) {
+                        commonInfo.friends.append(friend)
                     }
                 }
                 for item in snapshot.childSnapshot(forPath: Constants.User.Candidate.properties.firebaseNodes.pageLikes).children {
-                    if let pageLikeSnap = item as? DataSnapshot {
-                        commonInfo.pageLikes.append(PageLike.from(firebase: pageLikeSnap))
+                    if let pageLikeSnap = item as? DataSnapshot,
+                        let pageLike = try? FirebaseDecoder().decode(PageLike.self, from: pageLikeSnap) {
+                        commonInfo.pageLikes.append(pageLike)
                     }
                 }
             } else {
@@ -68,7 +72,7 @@ extension User {
             }
         }
         
-        static func between(user: User, and other: User, completion: ((Match?) -> ())? = nil) {
+        static func between(user: User, and other: OtherUser, completion: ((Match?) -> ())? = nil) {
             Database.database().reference().child(Constants.User.Match.firebaseNode).child(user.uid).child(other.uid).observeSingleEvent(of: .value) { (snapshot) in
                 completion?(Match(firebase: snapshot))
             }

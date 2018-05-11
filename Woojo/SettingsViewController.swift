@@ -84,8 +84,8 @@ class SettingsViewController: UITableViewController {
             .addDisposableTo(disposeBag)
         
         User.current.asObservable()
-            .map{ $0?.profile.displayName }
-            .bindTo(nameLabel.rx.text)
+            .map{ $0?.profile.firstName }
+            .bind(to: nameLabel.rx.text)
             .addDisposableTo(disposeBag)
         
         User.current.asObservable()
@@ -95,10 +95,10 @@ class SettingsViewController: UITableViewController {
                     let ageString = String(describing: age)
                     description = ageString
                 }
-                if let city = $0?.profile.city {
+                if let city = $0?.profile.location?.city {
                     description = "\(description), \(city)"
                 }
-                if let country = $0?.profile.country {
+                if let country = $0?.profile.location?.country {
                     description = "\(description) (\(country))"
                 }
                 return description

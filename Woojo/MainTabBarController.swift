@@ -11,10 +11,12 @@ import RxSwift
 import RxCocoa
 import PKHUD
 import SDWebImage
+import FirebaseAuth
 
 class MainTabBarController: UITabBarController {
     
     let disposeBag = DisposeBag()
+    private var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
 
@@ -23,13 +25,22 @@ class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDataSource()
-        //ALApplozicSettings.setUnreadCountLabelBGColor(UIColor.red)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        authStateDidChangeListenerHandle = Auth.auth().addStateDidChangeListener { auth, user in
+            if user == nil {
+                self.present(LoginViewController(), animated: true, completion: nil)
+            }
+        }
     }
-    
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        Auth.auth().removeStateDidChangeListener(authStateDidChangeListenerHandle!)
+    }
+
     func setupDataSource() {
         User.current.asObservable()
             .flatMap { user -> Observable<[CurrentUser.Notification]> in

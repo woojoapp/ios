@@ -13,7 +13,7 @@ import DZNEmptyDataSet
 class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
     var view: UIView!
     var user: OtherUser?
-    /* var commonEventInfos: [User.CommonEvent] = []
+    /* var commonEventInfos: [CommonEvent] = []
     var commonFriends: [Friend] = []
     var commonPageLikes: [PageLike] = [] */
     var imageSources: [ImageSource] = []
@@ -124,7 +124,7 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
         
         if let user = user {
             // nameLabel.text = user.profile.displaySummary
-            centerNameLabel.text = user.profile.displaySummary
+            centerNameLabel.text = user.profile?.displaySummary
             // firstCommonEventLabel.text = commonEventInfos.first?.name
             
             print("EVENTT", user.commonInfo.events.count)
@@ -159,11 +159,11 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
                     self.carouselView.setImageInputs(self.imageSources)
                     //self.photoActivityIndicator.stopAnimating()
                 }
-                carouselView.pageControl.numberOfPages = user.profile.photos.value.flatMap{ $0 }.count
+                carouselView.pageControl.numberOfPages = user.profile?.photos.value.flatMap{ $0 }.count ?? 0
                 carouselView.pageControl.isHidden = true
                 // Download the others and append
-                user.profile.downloadAllPhotos(size: .full) {
-                    for photo in user.profile.photos.value {
+                user.profile?.downloadAllPhotos(size: .full) {
+                    for photo in user.profile!.photos.value {
                         if let photo = photo, let image = photo.images[.full] {
                             if photo.id == firstPhoto.id { continue }
                             else {
@@ -182,7 +182,7 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
             }
             
             // Set first photo immediately to avoid flicker
-            if let firstPhoto = user.profile.photos.value[0] {
+            if let firstPhoto = user.profile?.photos.value[0] {
                 if firstPhoto.images[.full] != nil {
                     setFirstImageAndDownloadOthers(firstPhoto: firstPhoto)
                 } else {
@@ -229,7 +229,7 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if let user = user, let name = user.profile.displayName {
+        if let user = user, let profile = user.profile, let name = profile.displayName {
             if section == 0 {
                 if user.commonInfo.events.count == 0 {
                     return nil
@@ -237,7 +237,7 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
                     return NSLocalizedString("Common Events", comment: "")
                 }
             } else if section == 1 {
-                if user.profile.description.value.count == 0 {
+                if profile.description.value.count == 0 {
                     return nil
                 } else {
                     return String(format: NSLocalizedString("About %@", comment: ""), name)
@@ -274,7 +274,7 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
             if section == 0 {
                 return user.commonInfo.events.count
             } else if section == 1 {
-                if user.profile.description.value.count == 0 {
+                if user.profile?.description != nil && user.profile?.description!.count == 0 {
                     return 0
                 } else {
                     return 1
@@ -312,11 +312,11 @@ class UserCardView: UIView, UITableViewDelegate, UITableViewDataSource {
                         }
                     }
                 })
-                cell.eventTextLabel.text = user.commonInfo.events[indexPath.row].displayString
+                //cell.eventTextLabel.text = user.commonInfo.events[indexPath.row].displayString
                 return cell
             } else if indexPath.section == 1 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "descriptionCell", for: indexPath)
-                cell.textLabel?.text = user.profile.description.value
+                cell.textLabel?.text = user.profile?.description
                 return cell
             } else if indexPath.section == 2 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "commonItemsCell", for: indexPath) as! UserCommonItemsTableViewCell

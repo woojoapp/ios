@@ -454,15 +454,15 @@ extension ProfileViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         if let photos = User.current.value?.profile.photos.value, let photo = photos[sourceIndexPath.row] {
-            User.current.value?.profile.set(photo: photo, at: destinationIndexPath.row)
+            UserRepository.shared.setPhotoId(id: photo.id, index: destinationIndexPath.row)
             Analytics.Log(event: "Profile_photos_reordered", with: ["photo_count": String(photos.filter({ $0 != nil }).count)])
         }
         for i in 0..<Int(photoCount) {
             if let cell = collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? ProfilePhotoCollectionViewCell {
                 if let photo = cell.photo {
-                    User.current.value?.profile.set(photo: photo, at: i)
+                    UserRepository.shared.setPhotoId(id: photo.id, index: i)
                 } else {
-                    User.current.value?.profile.remove(photoAt: i)
+                    UserRepository.shared.removePhotoId(index: i)
                 }
             }
         }

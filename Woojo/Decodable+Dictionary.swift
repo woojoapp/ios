@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import FirebaseDatabase
+import CodableFirebase
 
 extension Decodable {
     init?(from any: Any?) throws {
@@ -18,6 +20,17 @@ extension Decodable {
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:sszzz"
             decoder.dateDecodingStrategy = .formatted(dateFormatter)
             self = try decoder.decode(Self.self, from: data)
+        }
+    }
+    
+    init?(from dataSnapshot: DataSnapshot?) throws {
+        if dataSnapshot == nil { return nil }
+        else {
+            let decoder = FirebaseDecoder()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:sszzz"
+            decoder.dateDecodingStrategy = .formatted(dateFormatter)
+            self = try decoder.decode(Self.self, from: dataSnapshot?.value as Any)
         }
     }
 }

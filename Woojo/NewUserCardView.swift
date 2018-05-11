@@ -11,8 +11,8 @@ import ImageSlideshow
 
 class NewUserCardView: UIView {
     var view: UIView!
-    var user: User?
-    var commonEventInfos: [User.CommonEvent] = []
+    var user: OtherUser?
+    var commonEventInfos: [CommonEvent] = []
     var commonFriends: [Friend] = []
     var commonPageLikes: [PageLike] = []
     var imageSources: [ImageSource] = []
@@ -75,15 +75,15 @@ class NewUserCardView: UIView {
         }
         
         if let user = user {
-            nameLabel.text = user.profile.displaySummary
+            nameLabel.text = user.profile?.displaySummary
             nameLabel.layer.shadowColor = UIColor.black.cgColor
             nameLabel.layer.shadowRadius = 2.0
             nameLabel.layer.shadowOpacity = 1.0
             nameLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
             nameLabel.layer.masksToBounds = false
             
-            if let city = user.profile.location?.city {
-                locationLabel.text = user.profile.location?.city
+            if let city = user.profile?.location?.city {
+                locationLabel.text = user.profile?.location?.city
                 locationLabel.layer.shadowColor = UIColor.black.cgColor
                 locationLabel.layer.shadowRadius = 2.0
                 locationLabel.layer.shadowOpacity = 1.0
@@ -94,8 +94,8 @@ class NewUserCardView: UIView {
                 locationView.addConstraint(NSLayoutConstraint(item: locationView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0.0))
             }
             
-            if !user.profile.occupation.value.isEmpty {
-                occupationLabel.text = user.profile.occupation.value
+            if user.profile?.occupation != nil && !user.profile!.occupation!.isEmpty {
+                occupationLabel.text = user.profile?.occupation
                 occupationLabel.layer.shadowColor = UIColor.black.cgColor
                 occupationLabel.layer.shadowRadius = 2.0
                 occupationLabel.layer.shadowOpacity = 1.0
@@ -131,11 +131,11 @@ class NewUserCardView: UIView {
                     self.imageSources.append(ImageSource(image: firstImage))
                     self.carouselView.setImageInputs(self.imageSources)
                 }
-                carouselView.pageControl.numberOfPages = user.profile.photos.value.flatMap{ $0 }.count
+                carouselView.pageControl.numberOfPages = user.profile?.photos.value.flatMap{ $0 }.count ?? 0
                 carouselView.pageControl.isHidden = true
                 // Download the others and append
-                user.profile.downloadAllPhotos(size: .full) {
-                    for photo in user.profile.photos.value {
+                user.profile?.downloadAllPhotos(size: .full) {
+                    for photo in user.profile!.photos.value {
                         if let photo = photo, let image = photo.images[.full] {
                             if photo.id == firstPhoto.id { continue }
                             else {
@@ -154,7 +154,7 @@ class NewUserCardView: UIView {
             }
             
             // Set first photo immediately to avoid flicker
-            if let firstPhoto = user.profile.photos.value[0] {
+            if let firstPhoto = user.profile?.photos.value[0] {
                 if firstPhoto.images[.full] != nil {
                     setFirstImageAndDownloadOthers(firstPhoto: firstPhoto)
                 } else {

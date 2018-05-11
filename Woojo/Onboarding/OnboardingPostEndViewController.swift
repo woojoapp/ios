@@ -20,15 +20,9 @@ class OnboardingPostEndViewController: OnboardingPostBaseViewController {
         super.viewDidLoad()
         ctaButton.clipsToBounds = true
         ctaButton.layer.cornerRadius = 10
-        
-        User.current.asObservable()
-            .flatMap { user -> Observable<String> in
-                if let currentUser = user {
-                    return currentUser.profile.firstName.asObservable()
-                } else {
-                    return Variable("").asObservable()
-                }
-            }
+
+        UserRepository.shared.getProfile()?
+            .map{ $0?.firstName ?? "" }
             .map{ String(format: NSLocalizedString("You're all set, %@!", comment: ""), $0) }
             .bind(to: titleLabel.rx.text)
             .disposed(by: disposeBag)

@@ -15,18 +15,12 @@ class OnboardingPostOkViewController: OnboardingPostBaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        User.current.asObservable()
-            .flatMap { user -> Observable<String> in
-                if let currentUser = user {
-                    return currentUser.profile.firstName.asObservable()
-                } else {
-                    return Variable("").asObservable()
-                }
-            }
-            .map{ String(format: NSLocalizedString("Looking good, %@!", comment: ""), $0) }
-            .bind(to: titleLabel.rx.text)
-            .disposed(by: disposeBag)
+
+        UserRepository.shared.getProfile()?
+                .map{ $0?.firstName ?? "" }
+                .map{ String(format: NSLocalizedString("Looking good, %@!", comment: ""), $0) }
+                .bind(to: titleLabel.rx.text)
+                .disposed(by: disposeBag)
     }
 
 }

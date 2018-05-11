@@ -252,7 +252,7 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
             //userDetailsViewController.buttonsType = .options
             userDetailsViewController.chatViewController = self
             let user = OtherUser(uid: alContact.userId)
-            user.profile.loadFromFirebase { profile, error in
+            user.profile?.loadFromFirebase { profile, error in
                 userDetailsViewController.otherUser = user
                 User.current.value?.getMatch(with: user, completion: { (match) in
                     if let match = match {

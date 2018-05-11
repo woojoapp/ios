@@ -9,7 +9,7 @@
 import Foundation
 
 extension User {
-    enum Gender: String {
+    enum Gender: String, Codable {
         case male
         case female
     }

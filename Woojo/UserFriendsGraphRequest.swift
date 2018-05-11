@@ -14,32 +14,41 @@ struct UserFriendsGraphRequest: GraphRequestProtocol {
     struct Response: GraphResponseProtocol {
         
         init(rawResponse: Any?) {
-            self.rawResponse = rawResponse
             if let dict = rawResponse as? [String:Any] {
-                let friends = dict[Constants.GraphRequest.UserFriends.keys.data] as! NSArray
-                for friendData in friends {
-                    if let friend = Friend.from(graphAPI: friendData as? [String:Any]) {
-                        self.friends.append(friend)
-                    }
-                }
+                friends = [GraphAPI.Friend](from: dict["data"])
             }
         }
         
-        var dictionaryValue: [String : Any]? {
-            return rawResponse as? [String : Any]
-        }
-        var rawResponse: Any?
-        var friends: [Friend] = []
+        var friends: [GraphAPI.Friend]?
         
     }
     
-    var graphPath = Constants.GraphRequest.UserFriends.path
+    var graphPath = "/me/friends"
     var parameters: [String: Any]? = {
-        let fields = [Constants.GraphRequest.UserFriends.fields]
-        return [Constants.GraphRequest.fields:fields.joined(separator: Constants.GraphRequest.fieldsSeparator)]
+        return ["fields": "id,first_name,picture.type(normal){url}"]
     }()
     var accessToken: AccessToken? = AccessToken.current
     var httpMethod: GraphRequestHTTPMethod = .GET
     var apiVersion: GraphAPIVersion = .defaultVersion
+    
+    /* private static func deserialize(dict: [String:Any]?) -> Friend? {
+        if let dict = dict,
+            let id = dict[Constants.User.Friend.properties.graphAPIKeys.id] as? String,
+            let name = dict[Constants.User.Friend.properties.graphAPIKeys.name] as? String {
+            let friend = Friend(id: id)
+            if let picture = dict[Constants.User.Friend.properties.graphAPIKeys.picture] as? [String:Any] {
+                if let pictureData = picture[Constants.User.Friend.properties.graphAPIKeys.pictureData] as? [String:Any] {
+                    if let url = pictureData[Constants.User.Friend.properties.graphAPIKeys.pictureDataURL] as? String {
+                        friend.pictureURL = URL(string: url)
+                    }
+                }
+            }
+            friend.name = name
+            return friend
+        } else {
+            print("Failed to create Friend from Graph API dictionary. Nil or missing required data.", dict as Any)
+            return nil
+        }
+    } */
     
 }

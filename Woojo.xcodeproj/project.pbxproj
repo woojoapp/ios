@@ -284,15 +284,12 @@
 		858FEE3C1E02A40C00322E8E /* AlbumsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE3A1E02A40C00322E8E /* AlbumsTableViewCell.swift */; };
 		858FEE3D1E02A40C00322E8E /* AlbumsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 858FEE3B1E02A40C00322E8E /* AlbumsTableViewCell.xib */; };
 		858FEE421E02B5E600322E8E /* AlbumPhotosGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858FEE411E02B5E500322E8E /* AlbumPhotosGraphRequest.swift */; };
-		8594C5C72094C63600405F5A /* DatabaseQuery+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8594C5C62094C63600405F5A /* DatabaseQuery+Rx.swift */; };
 		8594C5CA2094D21D00405F5A /* EventRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8594C5C92094D21D00405F5A /* EventRepository.swift */; };
 		8594C5CC2094D2A600405F5A /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8594C5CB2094D2A600405F5A /* UserRepository.swift */; };
 		8594C5CD2094D2A600405F5A /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8594C5CB2094D2A600405F5A /* UserRepository.swift */; };
 		8594C5CE2094D2A600405F5A /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8594C5CB2094D2A600405F5A /* UserRepository.swift */; };
 		8594C5CF2094D2AB00405F5A /* EventRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8594C5C92094D21D00405F5A /* EventRepository.swift */; };
 		8594C5D02094D2AB00405F5A /* EventRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8594C5C92094D21D00405F5A /* EventRepository.swift */; };
-		8594C5D12094DE5500405F5A /* DatabaseQuery+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8594C5C62094C63600405F5A /* DatabaseQuery+Rx.swift */; };
-		8594C5D22094DE5600405F5A /* DatabaseQuery+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8594C5C62094C63600405F5A /* DatabaseQuery+Rx.swift */; };
 		859900FC201F369C00D63530 /* UserChatBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859900FB201F369C00D63530 /* UserChatBannerView.swift */; };
 		859900FD201F369C00D63530 /* UserChatBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859900FB201F369C00D63530 /* UserChatBannerView.swift */; };
 		859900FE201F369C00D63530 /* UserChatBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859900FB201F369C00D63530 /* UserChatBannerView.swift */; };
@@ -349,6 +346,12 @@
 		85FA35A820A2F2750068BF48 /* CandidateOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85FA35A420A2F2740068BF48 /* CandidateOverlayView.xib */; };
 		85FA35A920A2F2750068BF48 /* CandidateOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85FA35A420A2F2740068BF48 /* CandidateOverlayView.xib */; };
 		85FA35AA20A2F2750068BF48 /* CandidateOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85FA35A420A2F2740068BF48 /* CandidateOverlayView.xib */; };
+		85FA35AC20A3076A0068BF48 /* SwipeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA35AB20A3076A0068BF48 /* SwipeRepository.swift */; };
+		85FA35AD20A3076A0068BF48 /* SwipeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA35AB20A3076A0068BF48 /* SwipeRepository.swift */; };
+		85FA35AE20A3076A0068BF48 /* SwipeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA35AB20A3076A0068BF48 /* SwipeRepository.swift */; };
+		85FA35B020A30A290068BF48 /* DatabaseReference+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA35AF20A30A290068BF48 /* DatabaseReference+Promise.swift */; };
+		85FA35B120A30A290068BF48 /* DatabaseReference+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA35AF20A30A290068BF48 /* DatabaseReference+Promise.swift */; };
+		85FA35B220A30A290068BF48 /* DatabaseReference+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA35AF20A30A290068BF48 /* DatabaseReference+Promise.swift */; };
 		85FD07532063D513001618C3 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85FD07572063D513001618C3 /* Onboarding.storyboard */; };
 		85FD07542063D513001618C3 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85FD07572063D513001618C3 /* Onboarding.storyboard */; };
 		85FD07552063D513001618C3 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85FD07572063D513001618C3 /* Onboarding.storyboard */; };
@@ -411,6 +414,78 @@
 		85FD07B12073808E001618C3 /* Sequence+group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FD07AE2073808E001618C3 /* Sequence+group.swift */; };
 		A14AFB3EBB53A69AEE35D369 /* Pods_Woojo_Staging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23E464082BF74BB81F3867C9 /* Pods_Woojo_Staging.framework */; };
 		D4A39FA7A6A90074E8ADF2B7 /* Pods_Woojo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5F606FAEF706B6471319465 /* Pods_Woojo.framework */; };
+		FE60D012D6F682058929A685 /* UserProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D20271C4AEE25F2D991C /* UserProfileRepository.swift */; };
+		FE60D04EE147B7C1C86A3882 /* EventIdsToEventsConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D8B991391C1F5E7A4A30 /* EventIdsToEventsConversion.swift */; };
+		FE60D06B23757A1F1B279033 /* GraphAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D8B1EAA6631A1267DD55 /* GraphAPI.swift */; };
+		FE60D0CC3DF63D9C247C4136 /* GraphAPI+Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DC36A69842C34EEE237C /* GraphAPI+Album.swift */; };
+		FE60D0D9D464BF59BB809B7F /* EventIdsToEventsConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D8B991391C1F5E7A4A30 /* EventIdsToEventsConversion.swift */; };
+		FE60D10E86BE14AA3C938866 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DEBB32C565A0ED80AFA9 /* LoginViewModel.swift */; };
+		FE60D17428D09B2CB66B9A1F /* GraphAPI+Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DC36A69842C34EEE237C /* GraphAPI+Album.swift */; };
+		FE60D17D0E282B5A7F0D195F /* GraphAPI+PageLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DD38769C8DB5929C6CD2 /* GraphAPI+PageLike.swift */; };
+		FE60D186A7C877D73AF7EBDE /* GraphAPIToWoojoConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DEA8016B2B7B76B1D053 /* GraphAPIToWoojoConverter.swift */; };
+		FE60D1AF5CF314E56C293BE5 /* UserSponsoredEventsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DA761C6BF6E1308CBC17 /* UserSponsoredEventsRepository.swift */; };
+		FE60D1BEEEC2AC12311818A4 /* UserSponsoredEventsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DA761C6BF6E1308CBC17 /* UserSponsoredEventsRepository.swift */; };
+		FE60D1CF66F701A373780C47 /* UserRecommendedEventsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D8857112C672E4539782 /* UserRecommendedEventsRepository.swift */; };
+		FE60D1F2CFC45B1026B77725 /* UserSponsoredEventsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DA761C6BF6E1308CBC17 /* UserSponsoredEventsRepository.swift */; };
+		FE60D21B11D73500B6E34972 /* UserFacebookIntegrationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DE17B9B688237754F0CC /* UserFacebookIntegrationRepository.swift */; };
+		FE60D25CE91376BA4007FACE /* UserNotificationsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D18FA882363587C8D00F /* UserNotificationsRepository.swift */; };
+		FE60D2985A075DA30A7090BE /* UserRecommendedEventsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D8857112C672E4539782 /* UserRecommendedEventsRepository.swift */; };
+		FE60D3014D7AFC804FFE55B3 /* FacebookRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D88E211AE49C5E81D26B /* FacebookRepository.swift */; };
+		FE60D39CECC0D775120E0747 /* GraphAPIToWoojoConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DEA8016B2B7B76B1D053 /* GraphAPIToWoojoConverter.swift */; };
+		FE60D492623919F91F560E1D /* GraphAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D8B1EAA6631A1267DD55 /* GraphAPI.swift */; };
+		FE60D492A23FB5524C27ED23 /* GraphAPI+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D6C0DA0BFDF38F8E5C9C /* GraphAPI+Location.swift */; };
+		FE60D49DDFC2AE17814B6B83 /* GraphAPI+Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D6DF8294BD63B5002D24 /* GraphAPI+Profile.swift */; };
+		FE60D4BBCBE361BDCEE1549D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DEBB32C565A0ED80AFA9 /* LoginViewModel.swift */; };
+		FE60D4DD6DBA3B13C31A1AAA /* UserFacebookIntegrationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DE17B9B688237754F0CC /* UserFacebookIntegrationRepository.swift */; };
+		FE60D4FF9479365946ECB602 /* GraphAPI+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D6C0DA0BFDF38F8E5C9C /* GraphAPI+Location.swift */; };
+		FE60D52DD921DFE02830D655 /* UserEventbriteIntegrationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DABB498664777B769E22 /* UserEventbriteIntegrationRepository.swift */; };
+		FE60D5A10AF530591E74B918 /* GraphAPI+Picture.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DCA81EFF2E646717AD59 /* GraphAPI+Picture.swift */; };
+		FE60D5B8B892CB9E23D2606A /* UserEventbriteIntegrationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DABB498664777B769E22 /* UserEventbriteIntegrationRepository.swift */; };
+		FE60D5DBFCA0467E6FD445A7 /* GraphAPI+Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D6DF8294BD63B5002D24 /* GraphAPI+Profile.swift */; };
+		FE60D5DF667800418681FA36 /* UserCandidatesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DCEE8CF1C3399E853939 /* UserCandidatesRepository.swift */; };
+		FE60D632EB22AF4A57DB0383 /* UserProfileGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DE0E8AFC08F113AD2316 /* UserProfileGraphRequest.swift */; };
+		FE60D6446672345EDC1DF1F3 /* UserProfilePictureGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DEDD0912431A3BAC7275 /* UserProfilePictureGraphRequest.swift */; };
+		FE60D6A5CB146F6466089732 /* UserProfilePictureGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DEDD0912431A3BAC7275 /* UserProfilePictureGraphRequest.swift */; };
+		FE60D7060646223D5C87E93C /* UserProfileGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DE0E8AFC08F113AD2316 /* UserProfileGraphRequest.swift */; };
+		FE60D7491342B8146637485D /* FacebookRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D88E211AE49C5E81D26B /* FacebookRepository.swift */; };
+		FE60D7567CB84487F7A90E9E /* UserCandidatesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DCEE8CF1C3399E853939 /* UserCandidatesRepository.swift */; };
+		FE60D7787D58E69680336AC2 /* UserProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D20271C4AEE25F2D991C /* UserProfileRepository.swift */; };
+		FE60D7A0EBE7B9AC671E2A0F /* GraphAPI+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D6C0DA0BFDF38F8E5C9C /* GraphAPI+Location.swift */; };
+		FE60D7B57498CB6E133B58EF /* UserActiveEventRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D2490246ECC1F576226E /* UserActiveEventRepository.swift */; };
+		FE60D7C4CE24F43F73300B76 /* GraphAPI+Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DC36A69842C34EEE237C /* GraphAPI+Album.swift */; };
+		FE60D7D841ECACB42AD7162C /* GraphAPI+Picture.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DCA81EFF2E646717AD59 /* GraphAPI+Picture.swift */; };
+		FE60D8983588B3311731A2F7 /* UserRecommendedEventsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D8857112C672E4539782 /* UserRecommendedEventsRepository.swift */; };
+		FE60D8EA609A77F33BD79A27 /* GraphAPI+Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D6DF8294BD63B5002D24 /* GraphAPI+Profile.swift */; };
+		FE60D91334EF4CA32CD1A434 /* GraphAPI+Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D0D33C7D04581BB621CD /* GraphAPI+Friend.swift */; };
+		FE60D93062DA4370BCD9A004 /* StorageReference+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DEE68D6D6FDD541E5397 /* StorageReference+Promise.swift */; };
+		FE60D94783403570380D49E3 /* GraphAPI+Picture.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DCA81EFF2E646717AD59 /* GraphAPI+Picture.swift */; };
+		FE60D95D4820539B13B16861 /* UserProfilePictureGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DEDD0912431A3BAC7275 /* UserProfilePictureGraphRequest.swift */; };
+		FE60D963C003A2426A480B20 /* StorageReference+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DEE68D6D6FDD541E5397 /* StorageReference+Promise.swift */; };
+		FE60D964FFC76C357BD7A82E /* DatabaseQuery+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D8443838C9949B848A55 /* DatabaseQuery+Rx.swift */; };
+		FE60D986637B3B136DAA93C7 /* EventsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DF9D0E7A7B16BCA339B8 /* EventsViewModel.swift */; };
+		FE60D98A095A9250BDBDB2B5 /* DatabaseQuery+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D8443838C9949B848A55 /* DatabaseQuery+Rx.swift */; };
+		FE60D9AF679B088DE9786C65 /* UserActiveEventRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D2490246ECC1F576226E /* UserActiveEventRepository.swift */; };
+		FE60D9B10A30B2313AA8BD3A /* UserFacebookIntegrationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DE17B9B688237754F0CC /* UserFacebookIntegrationRepository.swift */; };
+		FE60DA03CFB3FE296C401E5C /* UserNotificationsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D18FA882363587C8D00F /* UserNotificationsRepository.swift */; };
+		FE60DA0C931C96EBC9CDC2AF /* GraphAPI+PageLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DD38769C8DB5929C6CD2 /* GraphAPI+PageLike.swift */; };
+		FE60DA5724C8E5B1197432BA /* EventIdsToEventsConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D8B991391C1F5E7A4A30 /* EventIdsToEventsConversion.swift */; };
+		FE60DB2479358C077A278069 /* GraphAPI+PageLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DD38769C8DB5929C6CD2 /* GraphAPI+PageLike.swift */; };
+		FE60DB601EDEBB3C42D38C73 /* UserNotificationsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D18FA882363587C8D00F /* UserNotificationsRepository.swift */; };
+		FE60DB625E567952A1F80225 /* UserProfileGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DE0E8AFC08F113AD2316 /* UserProfileGraphRequest.swift */; };
+		FE60DC19138DD55B8B6D724C /* EventsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DF9D0E7A7B16BCA339B8 /* EventsViewModel.swift */; };
+		FE60DC33CD5B3291F03C5DF5 /* GraphAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D8B1EAA6631A1267DD55 /* GraphAPI.swift */; };
+		FE60DC83B70B752DD84B2CD4 /* GraphAPI+Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D0D33C7D04581BB621CD /* GraphAPI+Friend.swift */; };
+		FE60DD763A6F4F411567BB8F /* EventsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DF9D0E7A7B16BCA339B8 /* EventsViewModel.swift */; };
+		FE60DD8746CA3B4CDC63C8AC /* UserEventbriteIntegrationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DABB498664777B769E22 /* UserEventbriteIntegrationRepository.swift */; };
+		FE60DE1AA276A4642F5347A5 /* UserCandidatesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DCEE8CF1C3399E853939 /* UserCandidatesRepository.swift */; };
+		FE60DE1F8AE7CB58574E695E /* UserProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D20271C4AEE25F2D991C /* UserProfileRepository.swift */; };
+		FE60DE876B6F9213D9701E66 /* GraphAPIToWoojoConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DEA8016B2B7B76B1D053 /* GraphAPIToWoojoConverter.swift */; };
+		FE60DE90705EFE4DA0EEAD6D /* DatabaseQuery+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D8443838C9949B848A55 /* DatabaseQuery+Rx.swift */; };
+		FE60DEFE70A4E3ACFE04E821 /* StorageReference+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DEE68D6D6FDD541E5397 /* StorageReference+Promise.swift */; };
+		FE60DF05361562E9C44602AE /* UserActiveEventRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D2490246ECC1F576226E /* UserActiveEventRepository.swift */; };
+		FE60DFC89C48EECCA7F8B637 /* FacebookRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D88E211AE49C5E81D26B /* FacebookRepository.swift */; };
+		FE60DFCFBD8D6A0E8556CF9B /* GraphAPI+Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D0D33C7D04581BB621CD /* GraphAPI+Friend.swift */; };
+		FE60DFE4EB4813B6260136B2 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DEBB32C565A0ED80AFA9 /* LoginViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -503,7 +578,6 @@
 		858FEE411E02B5E500322E8E /* AlbumPhotosGraphRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumPhotosGraphRequest.swift; sourceTree = "<group>"; };
 		858FEE431E04250B00322E8E /* AlbumPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		858FEE461E07115400322E8E /* UserDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailsViewController.swift; sourceTree = "<group>"; };
-		8594C5C62094C63600405F5A /* DatabaseQuery+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseQuery+Rx.swift"; sourceTree = "<group>"; };
 		8594C5C92094D21D00405F5A /* EventRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRepository.swift; sourceTree = "<group>"; };
 		8594C5CB2094D2A600405F5A /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		859900FB201F369C00D63530 /* UserChatBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChatBannerView.swift; sourceTree = "<group>"; };
@@ -548,6 +622,8 @@
 		85ED4E631DCFF7F200F51857 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		85FA35A320A2F2740068BF48 /* CandidateOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandidateOverlayView.swift; sourceTree = "<group>"; };
 		85FA35A420A2F2740068BF48 /* CandidateOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CandidateOverlayView.xib; sourceTree = "<group>"; };
+		85FA35AB20A3076A0068BF48 /* SwipeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeRepository.swift; sourceTree = "<group>"; };
+		85FA35AF20A30A290068BF48 /* DatabaseReference+Promise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseReference+Promise.swift"; sourceTree = "<group>"; };
 		85FD07562063D513001618C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
 		85FD075B2068FEF4001618C3 /* NewUserCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserCardView.swift; sourceTree = "<group>"; };
 		85FD075F2068FF05001618C3 /* NewUserCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewUserCardView.xib; sourceTree = "<group>"; };
@@ -574,6 +650,30 @@
 		D5F606FAEF706B6471319465 /* Pods_Woojo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Woojo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA30A4C6D15F53EBF70A92B4 /* Pods-Woojo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Woojo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Woojo/Pods-Woojo.debug.xcconfig"; sourceTree = "<group>"; };
 		DC1702E4FCCB65DE5615E8B3 /* Pods-Woojo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Woojo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Woojo/Pods-Woojo.release.xcconfig"; sourceTree = "<group>"; };
+		FE60D0D33C7D04581BB621CD /* GraphAPI+Friend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GraphAPI+Friend.swift"; sourceTree = "<group>"; };
+		FE60D18FA882363587C8D00F /* UserNotificationsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNotificationsRepository.swift; sourceTree = "<group>"; };
+		FE60D20271C4AEE25F2D991C /* UserProfileRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileRepository.swift; sourceTree = "<group>"; };
+		FE60D2490246ECC1F576226E /* UserActiveEventRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserActiveEventRepository.swift; sourceTree = "<group>"; };
+		FE60D6C0DA0BFDF38F8E5C9C /* GraphAPI+Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GraphAPI+Location.swift"; sourceTree = "<group>"; };
+		FE60D6DF8294BD63B5002D24 /* GraphAPI+Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GraphAPI+Profile.swift"; sourceTree = "<group>"; };
+		FE60D8443838C9949B848A55 /* DatabaseQuery+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DatabaseQuery+Rx.swift"; sourceTree = "<group>"; };
+		FE60D8857112C672E4539782 /* UserRecommendedEventsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRecommendedEventsRepository.swift; sourceTree = "<group>"; };
+		FE60D88E211AE49C5E81D26B /* FacebookRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookRepository.swift; sourceTree = "<group>"; };
+		FE60D8B1EAA6631A1267DD55 /* GraphAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphAPI.swift; sourceTree = "<group>"; };
+		FE60D8B991391C1F5E7A4A30 /* EventIdsToEventsConversion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventIdsToEventsConversion.swift; sourceTree = "<group>"; };
+		FE60DA761C6BF6E1308CBC17 /* UserSponsoredEventsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSponsoredEventsRepository.swift; sourceTree = "<group>"; };
+		FE60DABB498664777B769E22 /* UserEventbriteIntegrationRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEventbriteIntegrationRepository.swift; sourceTree = "<group>"; };
+		FE60DC36A69842C34EEE237C /* GraphAPI+Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GraphAPI+Album.swift"; sourceTree = "<group>"; };
+		FE60DCA81EFF2E646717AD59 /* GraphAPI+Picture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GraphAPI+Picture.swift"; sourceTree = "<group>"; };
+		FE60DCEE8CF1C3399E853939 /* UserCandidatesRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCandidatesRepository.swift; sourceTree = "<group>"; };
+		FE60DD38769C8DB5929C6CD2 /* GraphAPI+PageLike.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GraphAPI+PageLike.swift"; sourceTree = "<group>"; };
+		FE60DE0E8AFC08F113AD2316 /* UserProfileGraphRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileGraphRequest.swift; sourceTree = "<group>"; };
+		FE60DE17B9B688237754F0CC /* UserFacebookIntegrationRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFacebookIntegrationRepository.swift; sourceTree = "<group>"; };
+		FE60DEA8016B2B7B76B1D053 /* GraphAPIToWoojoConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphAPIToWoojoConverter.swift; sourceTree = "<group>"; };
+		FE60DEBB32C565A0ED80AFA9 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		FE60DEDD0912431A3BAC7275 /* UserProfilePictureGraphRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfilePictureGraphRequest.swift; sourceTree = "<group>"; };
+		FE60DEE68D6D6FDD541E5397 /* StorageReference+Promise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StorageReference+Promise.swift"; sourceTree = "<group>"; };
+		FE60DF9D0E7A7B16BCA339B8 /* EventsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -648,9 +748,6 @@
 				85390B66207A124B00EE721F /* CommonInfo.swift */,
 				85B36ACB1FB1CE5100A7B599 /* CommonItem.swift */,
 				85E5D4CC1DD9EFBC003E2376 /* CurrentUser.swift */,
-				8594C5C62094C63600405F5A /* DatabaseQuery+Rx.swift */,
-				85FD076F206A5D6E001618C3 /* Decodable+Dictionary.swift */,
-				85FD076B206A5D14001618C3 /* Encodable+Dictionary.swift */,
 				8506A8961DCBB0CC00C18EC3 /* Event.swift */,
 				8530451D2040166A00EF382B /* EventbriteEvent.swift */,
 				853045192040165900EF382B /* EventbriteOrder.swift */,
@@ -669,8 +766,8 @@
 				85DC3D721DF70A6A00116159 /* Preferences.swift */,
 				85EB2EE31DE20BCF00F0A55C /* Profile.swift */,
 				85EC21321F89822000C9FC7C /* Report.swift */,
-				85FD07AE2073808E001618C3 /* Sequence+group.swift */,
 				854DDAC41DE47DE500655EFC /* User.swift */,
+				FE60D120B32FB07E0400CBE9 /* GraphAPI */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -683,14 +780,6 @@
 			path = Events;
 			sourceTree = "<group>";
 		};
-		851CDFC82098B010000C7A21 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				851CDFBD20963C5F000C7A21 /* UIImage+desaturate.swift */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
 		8545A5FF1DDCDADC008F3DD2 /* GraphRequests */ = {
 			isa = PBXGroup;
 			children = (
@@ -701,6 +790,8 @@
 				85B36AAF1FB1BEA200A7B599 /* UserFriendsGraphRequest.swift */,
 				8556C6321F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift */,
 				85B36AA11FADFE7F00A7B599 /* UserPageLikesGraphRequest.swift */,
+				FE60DE0E8AFC08F113AD2316 /* UserProfileGraphRequest.swift */,
+				FE60DEDD0912431A3BAC7275 /* UserProfilePictureGraphRequest.swift */,
 			);
 			name = GraphRequests;
 			sourceTree = "<group>";
@@ -747,18 +838,20 @@
 				8594C5C82094D18B00405F5A /* Repositories */,
 				8506A89E1DCC89FA00C18EC3 /* Models */,
 				8506A89D1DCC89F200C18EC3 /* Views */,
+				85FA35B320A32DB20068BF48 /* Utils */,
 				85512B0C1DCB5B020072C1B8 /* Application.swift */,
 				851D1769204B174F008E6342 /* CommonAnalytics.swift */,
 				851D176D204B3E58008E6342 /* Constants+Analytics.swift */,
 				85396F2A1E5F516F007EDB18 /* Notifier.swift */,
 				854DDAC01DE43E0E00655EFC /* Constants.swift */,
-				851CDFC82098B010000C7A21 /* Utils */,
 				85DD5EE81E951CA3008DF346 /* Constants+App.swift */,
 				850F7D36202DC3C2005D6733 /* Main.storyboard */,
 				85512B151DCB5B020072C1B8 /* Assets.xcassets */,
 				85512B171DCB5B020072C1B8 /* LaunchScreen.storyboard */,
 				85512B1A1DCB5B020072C1B8 /* Info.plist */,
 				85FD07572063D513001618C3 /* Onboarding.storyboard */,
+				FE60D6B41178932043E3B408 /* ViewModels */,
+				FE60D2F53C863AA19286DE3D /* Services */,
 			);
 			path = Woojo;
 			sourceTree = "<group>";
@@ -849,6 +942,17 @@
 			children = (
 				8594C5C92094D21D00405F5A /* EventRepository.swift */,
 				8594C5CB2094D2A600405F5A /* UserRepository.swift */,
+				85FA35AB20A3076A0068BF48 /* SwipeRepository.swift */,
+				FE60D88E211AE49C5E81D26B /* FacebookRepository.swift */,
+				FE60D20271C4AEE25F2D991C /* UserProfileRepository.swift */,
+				FE60D2490246ECC1F576226E /* UserActiveEventRepository.swift */,
+				FE60DABB498664777B769E22 /* UserEventbriteIntegrationRepository.swift */,
+				FE60DE17B9B688237754F0CC /* UserFacebookIntegrationRepository.swift */,
+				FE60D8857112C672E4539782 /* UserRecommendedEventsRepository.swift */,
+				FE60DA761C6BF6E1308CBC17 /* UserSponsoredEventsRepository.swift */,
+				FE60D8B991391C1F5E7A4A30 /* EventIdsToEventsConversion.swift */,
+				FE60D18FA882363587C8D00F /* UserNotificationsRepository.swift */,
+				FE60DCEE8CF1C3399E853939 /* UserCandidatesRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -948,6 +1052,28 @@
 			path = Details;
 			sourceTree = "<group>";
 		};
+		85FA35B320A32DB20068BF48 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				85FA35B420A32DCE0068BF48 /* Extensions */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		85FA35B420A32DCE0068BF48 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				85FA35AF20A30A290068BF48 /* DatabaseReference+Promise.swift */,
+				85FD076F206A5D6E001618C3 /* Decodable+Dictionary.swift */,
+				85FD076B206A5D14001618C3 /* Encodable+Dictionary.swift */,
+				851CDFBD20963C5F000C7A21 /* UIImage+desaturate.swift */,
+				85FD07AE2073808E001618C3 /* Sequence+group.swift */,
+				FE60DEE68D6D6FDD541E5397 /* StorageReference+Promise.swift */,
+				FE60D8443838C9949B848A55 /* DatabaseQuery+Rx.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		85FD0783206E7E5B001618C3 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -975,6 +1101,37 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FE60D120B32FB07E0400CBE9 /* GraphAPI */ = {
+			isa = PBXGroup;
+			children = (
+				FE60D8B1EAA6631A1267DD55 /* GraphAPI.swift */,
+				FE60D6DF8294BD63B5002D24 /* GraphAPI+Profile.swift */,
+				FE60D6C0DA0BFDF38F8E5C9C /* GraphAPI+Location.swift */,
+				FE60DCA81EFF2E646717AD59 /* GraphAPI+Picture.swift */,
+				FE60DD38769C8DB5929C6CD2 /* GraphAPI+PageLike.swift */,
+				FE60D0D33C7D04581BB621CD /* GraphAPI+Friend.swift */,
+				FE60DC36A69842C34EEE237C /* GraphAPI+Album.swift */,
+			);
+			name = GraphAPI;
+			sourceTree = "<group>";
+		};
+		FE60D2F53C863AA19286DE3D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				FE60DEA8016B2B7B76B1D053 /* GraphAPIToWoojoConverter.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		FE60D6B41178932043E3B408 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				FE60DEBB32C565A0ED80AFA9 /* LoginViewModel.swift */,
+				FE60DF9D0E7A7B16BCA339B8 /* EventsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -987,7 +1144,6 @@
 				85512B061DCB5B020072C1B8 /* Frameworks */,
 				85512B071DCB5B020072C1B8 /* Resources */,
 				B2287BD2131C4AC2AE393CB2 /* [CP] Embed Pods Frameworks */,
-				3763E354D725B59D6D8059D2 /* [CP] Copy Pods Resources */,
 				85A3742A204806ED002EE14F /* ShellScript */,
 			);
 			buildRules = (
@@ -1008,7 +1164,6 @@
 				85662BEC1F90BCEF00D5701E /* Frameworks */,
 				85662BED1F90BCEF00D5701E /* Resources */,
 				C795D03069731D9A30E51F8C /* [CP] Embed Pods Frameworks */,
-				147D641B31DF8CED43453440 /* [CP] Copy Pods Resources */,
 				851D17622049C629008E6342 /* ShellScript */,
 			);
 			buildRules = (
@@ -1029,7 +1184,6 @@
 				85662C201F90BD9500D5701E /* Frameworks */,
 				85662C211F90BD9500D5701E /* Resources */,
 				1C35E94BB891D63EE60D9450 /* [CP] Embed Pods Frameworks */,
-				A8495CE82F961F55A26D57D5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1251,21 +1405,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		147D641B31DF8CED43453440 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Woojo Staging/Pods-Woojo Staging-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		1C35E94BB891D63EE60D9450 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1278,6 +1417,7 @@
 				"${BUILT_PRODUCTS_DIR}/BWWalkthrough/BWWalkthrough.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/Branch/Branch.framework",
+				"${BUILT_PRODUCTS_DIR}/CodableFirebase/CodableFirebase.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
@@ -1292,6 +1432,8 @@
 				"${BUILT_PRODUCTS_DIR}/Koloda/Koloda.framework",
 				"${BUILT_PRODUCTS_DIR}/NMRangeSlider/NMRangeSlider.framework",
 				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesSwift/Promises.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/RPCircularProgress/RPCircularProgress.framework",
 				"${BUILT_PRODUCTS_DIR}/RSKImageCropper/RSKImageCropper.framework",
@@ -1311,6 +1453,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BWWalkthrough.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Branch.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CodableFirebase.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
@@ -1325,6 +1468,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Koloda.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NMRangeSlider.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Promises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RPCircularProgress.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RSKImageCropper.framework",
@@ -1340,21 +1485,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Woojo Development/Pods-Woojo Development-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3763E354D725B59D6D8059D2 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Woojo/Pods-Woojo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		56AD2237892EFC74C7B10F5D /* [CP] Check Pods Manifest.lock */ = {
@@ -1419,21 +1549,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\"";
 		};
-		A8495CE82F961F55A26D57D5 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Woojo Development/Pods-Woojo Development-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		B2287BD2131C4AC2AE393CB2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1446,6 +1561,7 @@
 				"${BUILT_PRODUCTS_DIR}/BWWalkthrough/BWWalkthrough.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/Branch/Branch.framework",
+				"${BUILT_PRODUCTS_DIR}/CodableFirebase/CodableFirebase.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
@@ -1460,6 +1576,8 @@
 				"${BUILT_PRODUCTS_DIR}/Koloda/Koloda.framework",
 				"${BUILT_PRODUCTS_DIR}/NMRangeSlider/NMRangeSlider.framework",
 				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesSwift/Promises.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/RPCircularProgress/RPCircularProgress.framework",
 				"${BUILT_PRODUCTS_DIR}/RSKImageCropper/RSKImageCropper.framework",
@@ -1479,6 +1597,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BWWalkthrough.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Branch.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CodableFirebase.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
@@ -1493,6 +1612,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Koloda.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NMRangeSlider.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Promises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RPCircularProgress.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RSKImageCropper.framework",
@@ -1522,6 +1643,7 @@
 				"${BUILT_PRODUCTS_DIR}/BWWalkthrough/BWWalkthrough.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/Branch/Branch.framework",
+				"${BUILT_PRODUCTS_DIR}/CodableFirebase/CodableFirebase.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
@@ -1536,6 +1658,8 @@
 				"${BUILT_PRODUCTS_DIR}/Koloda/Koloda.framework",
 				"${BUILT_PRODUCTS_DIR}/NMRangeSlider/NMRangeSlider.framework",
 				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesSwift/Promises.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/RPCircularProgress/RPCircularProgress.framework",
 				"${BUILT_PRODUCTS_DIR}/RSKImageCropper/RSKImageCropper.framework",
@@ -1555,6 +1679,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BWWalkthrough.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Branch.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CodableFirebase.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
@@ -1569,6 +1694,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Koloda.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NMRangeSlider.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Promises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RPCircularProgress.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RSKImageCropper.framework",
@@ -1593,6 +1720,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85FA35AC20A3076A0068BF48 /* SwipeRepository.swift in Sources */,
 				85662CB51F90BE2200D5701E /* ProfilePhotoCollectionViewCell.swift in Sources */,
 				85662CB81F90BE2200D5701E /* AlbumPhotoCollectionViewCell.swift in Sources */,
 				85EC21331F89822000C9FC7C /* Report.swift in Sources */,
@@ -1658,8 +1786,8 @@
 				856B0AB11FA1D2970041C11E /* CommonEvent.swift in Sources */,
 				85662CAB1F90BE2200D5701E /* UserCardView.swift in Sources */,
 				85662CAF1F90BE2200D5701E /* SettingsViewController.swift in Sources */,
+				85FA35B020A30A290068BF48 /* DatabaseReference+Promise.swift in Sources */,
 				85662CC31F90BE2200D5701E /* Application.swift in Sources */,
-				8594C5C72094C63600405F5A /* DatabaseQuery+Rx.swift in Sources */,
 				85DC3D7D1E0008B900116159 /* Album.swift in Sources */,
 				85651AA92060351D00763266 /* OnboardingPostOkViewController.swift in Sources */,
 				85FD075C2068FEF4001618C3 /* NewUserCardView.swift in Sources */,
@@ -1696,6 +1824,30 @@
 				85662CB31F90BE2200D5701E /* ProfileViewController.swift in Sources */,
 				85662CB21F90BE2200D5701E /* RangeSlider.swift in Sources */,
 				85396F271E5F10EA007EDB18 /* Notification.swift in Sources */,
+				FE60D3014D7AFC804FFE55B3 /* FacebookRepository.swift in Sources */,
+				FE60D7060646223D5C87E93C /* UserProfileGraphRequest.swift in Sources */,
+				FE60D492623919F91F560E1D /* GraphAPI.swift in Sources */,
+				FE60D5DBFCA0467E6FD445A7 /* GraphAPI+Profile.swift in Sources */,
+				FE60D7A0EBE7B9AC671E2A0F /* GraphAPI+Location.swift in Sources */,
+				FE60D95D4820539B13B16861 /* UserProfilePictureGraphRequest.swift in Sources */,
+				FE60D7D841ECACB42AD7162C /* GraphAPI+Picture.swift in Sources */,
+				FE60D4BBCBE361BDCEE1549D /* LoginViewModel.swift in Sources */,
+				FE60D39CECC0D775120E0747 /* GraphAPIToWoojoConverter.swift in Sources */,
+				FE60DA0C931C96EBC9CDC2AF /* GraphAPI+PageLike.swift in Sources */,
+				FE60DFCFBD8D6A0E8556CF9B /* GraphAPI+Friend.swift in Sources */,
+				FE60D93062DA4370BCD9A004 /* StorageReference+Promise.swift in Sources */,
+				FE60D7787D58E69680336AC2 /* UserProfileRepository.swift in Sources */,
+				FE60D9AF679B088DE9786C65 /* UserActiveEventRepository.swift in Sources */,
+				FE60DD8746CA3B4CDC63C8AC /* UserEventbriteIntegrationRepository.swift in Sources */,
+				FE60D4DD6DBA3B13C31A1AAA /* UserFacebookIntegrationRepository.swift in Sources */,
+				FE60D1CF66F701A373780C47 /* UserRecommendedEventsRepository.swift in Sources */,
+				FE60D1AF5CF314E56C293BE5 /* UserSponsoredEventsRepository.swift in Sources */,
+				FE60DA5724C8E5B1197432BA /* EventIdsToEventsConversion.swift in Sources */,
+				FE60DC19138DD55B8B6D724C /* EventsViewModel.swift in Sources */,
+				FE60DE90705EFE4DA0EEAD6D /* DatabaseQuery+Rx.swift in Sources */,
+				FE60DA03CFB3FE296C401E5C /* UserNotificationsRepository.swift in Sources */,
+				FE60D7C4CE24F43F73300B76 /* GraphAPI+Album.swift in Sources */,
+				FE60D7567CB84487F7A90E9E /* UserCandidatesRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1703,6 +1855,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85FA35AD20A3076A0068BF48 /* SwipeRepository.swift in Sources */,
 				85662C0B1F90BD6500D5701E /* CurrentUser.swift in Sources */,
 				85662C101F90BD6500D5701E /* Profile.swift in Sources */,
 				85662C0C1F90BD6500D5701E /* Gender.swift in Sources */,
@@ -1760,7 +1913,6 @@
 				85662C091F90BD6500D5701E /* Report.swift in Sources */,
 				8556C6341F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */,
 				85662CE51F90BE2300D5701E /* AboutWebViewController.swift in Sources */,
-				8594C5D12094DE5500405F5A /* DatabaseQuery+Rx.swift in Sources */,
 				85662CDE1F90BE2300D5701E /* ProfileViewController.swift in Sources */,
 				85662C051F90BD6500D5701E /* Activity.swift in Sources */,
 				851D176F204B3E58008E6342 /* Constants+Analytics.swift in Sources */,
@@ -1768,6 +1920,7 @@
 				851CDFBF20963D0D000C7A21 /* UIImage+desaturate.swift in Sources */,
 				85662C071F90BD6500D5701E /* Candidate.swift in Sources */,
 				85B36ACD1FB1CE5200A7B599 /* CommonItem.swift in Sources */,
+				85FA35B120A30A290068BF48 /* DatabaseReference+Promise.swift in Sources */,
 				85662C0F1F90BD6500D5701E /* Notification.swift in Sources */,
 				85662CD31F90BE2300D5701E /* CandidatesViewController.swift in Sources */,
 				85662CEF1F90BE2300D5701E /* Notifier.swift in Sources */,
@@ -1806,6 +1959,30 @@
 				85651AAE206035DD00763266 /* OnboardingPostBaseViewController.swift in Sources */,
 				85662CD81F90BE2300D5701E /* ChatViewController.swift in Sources */,
 				85662CDB1F90BE2300D5701E /* ProfilePhotoImageView.swift in Sources */,
+				FE60DFC89C48EECCA7F8B637 /* FacebookRepository.swift in Sources */,
+				FE60DB625E567952A1F80225 /* UserProfileGraphRequest.swift in Sources */,
+				FE60D06B23757A1F1B279033 /* GraphAPI.swift in Sources */,
+				FE60D49DDFC2AE17814B6B83 /* GraphAPI+Profile.swift in Sources */,
+				FE60D4FF9479365946ECB602 /* GraphAPI+Location.swift in Sources */,
+				FE60D6446672345EDC1DF1F3 /* UserProfilePictureGraphRequest.swift in Sources */,
+				FE60D94783403570380D49E3 /* GraphAPI+Picture.swift in Sources */,
+				FE60DFE4EB4813B6260136B2 /* LoginViewModel.swift in Sources */,
+				FE60DE876B6F9213D9701E66 /* GraphAPIToWoojoConverter.swift in Sources */,
+				FE60DB2479358C077A278069 /* GraphAPI+PageLike.swift in Sources */,
+				FE60DC83B70B752DD84B2CD4 /* GraphAPI+Friend.swift in Sources */,
+				FE60DEFE70A4E3ACFE04E821 /* StorageReference+Promise.swift in Sources */,
+				FE60D012D6F682058929A685 /* UserProfileRepository.swift in Sources */,
+				FE60DF05361562E9C44602AE /* UserActiveEventRepository.swift in Sources */,
+				FE60D5B8B892CB9E23D2606A /* UserEventbriteIntegrationRepository.swift in Sources */,
+				FE60D21B11D73500B6E34972 /* UserFacebookIntegrationRepository.swift in Sources */,
+				FE60D2985A075DA30A7090BE /* UserRecommendedEventsRepository.swift in Sources */,
+				FE60D1F2CFC45B1026B77725 /* UserSponsoredEventsRepository.swift in Sources */,
+				FE60D04EE147B7C1C86A3882 /* EventIdsToEventsConversion.swift in Sources */,
+				FE60DD763A6F4F411567BB8F /* EventsViewModel.swift in Sources */,
+				FE60D964FFC76C357BD7A82E /* DatabaseQuery+Rx.swift in Sources */,
+				FE60DB601EDEBB3C42D38C73 /* UserNotificationsRepository.swift in Sources */,
+				FE60D17428D09B2CB66B9A1F /* GraphAPI+Album.swift in Sources */,
+				FE60D5DF667800418681FA36 /* UserCandidatesRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1813,6 +1990,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85FA35AE20A3076A0068BF48 /* SwipeRepository.swift in Sources */,
 				85662C3E1F90BDD000D5701E /* CurrentUser.swift in Sources */,
 				85662C431F90BDD000D5701E /* Profile.swift in Sources */,
 				85662C3F1F90BDD000D5701E /* Gender.swift in Sources */,
@@ -1870,7 +2048,6 @@
 				85662C3C1F90BDD000D5701E /* Report.swift in Sources */,
 				8556C6351F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift in Sources */,
 				85662C931F90BE1300D5701E /* AboutWebViewController.swift in Sources */,
-				8594C5D22094DE5600405F5A /* DatabaseQuery+Rx.swift in Sources */,
 				85662C8C1F90BE1300D5701E /* ProfileViewController.swift in Sources */,
 				85662C381F90BDD000D5701E /* Activity.swift in Sources */,
 				851D1770204B3E58008E6342 /* Constants+Analytics.swift in Sources */,
@@ -1878,6 +2055,7 @@
 				851CDFC020963D0D000C7A21 /* UIImage+desaturate.swift in Sources */,
 				85662C3A1F90BDD000D5701E /* Candidate.swift in Sources */,
 				85B36ACE1FB1CE5200A7B599 /* CommonItem.swift in Sources */,
+				85FA35B220A30A290068BF48 /* DatabaseReference+Promise.swift in Sources */,
 				85662C421F90BDD000D5701E /* Notification.swift in Sources */,
 				85662C811F90BE1300D5701E /* CandidatesViewController.swift in Sources */,
 				85662C9D1F90BE1300D5701E /* Notifier.swift in Sources */,
@@ -1916,6 +2094,30 @@
 				85651AAF206035DD00763266 /* OnboardingPostBaseViewController.swift in Sources */,
 				85662C861F90BE1300D5701E /* ChatViewController.swift in Sources */,
 				85662C891F90BE1300D5701E /* ProfilePhotoImageView.swift in Sources */,
+				FE60D7491342B8146637485D /* FacebookRepository.swift in Sources */,
+				FE60D632EB22AF4A57DB0383 /* UserProfileGraphRequest.swift in Sources */,
+				FE60DC33CD5B3291F03C5DF5 /* GraphAPI.swift in Sources */,
+				FE60D8EA609A77F33BD79A27 /* GraphAPI+Profile.swift in Sources */,
+				FE60D492A23FB5524C27ED23 /* GraphAPI+Location.swift in Sources */,
+				FE60D6A5CB146F6466089732 /* UserProfilePictureGraphRequest.swift in Sources */,
+				FE60D5A10AF530591E74B918 /* GraphAPI+Picture.swift in Sources */,
+				FE60D10E86BE14AA3C938866 /* LoginViewModel.swift in Sources */,
+				FE60D186A7C877D73AF7EBDE /* GraphAPIToWoojoConverter.swift in Sources */,
+				FE60D17D0E282B5A7F0D195F /* GraphAPI+PageLike.swift in Sources */,
+				FE60D91334EF4CA32CD1A434 /* GraphAPI+Friend.swift in Sources */,
+				FE60D963C003A2426A480B20 /* StorageReference+Promise.swift in Sources */,
+				FE60DE1F8AE7CB58574E695E /* UserProfileRepository.swift in Sources */,
+				FE60D7B57498CB6E133B58EF /* UserActiveEventRepository.swift in Sources */,
+				FE60D52DD921DFE02830D655 /* UserEventbriteIntegrationRepository.swift in Sources */,
+				FE60D9B10A30B2313AA8BD3A /* UserFacebookIntegrationRepository.swift in Sources */,
+				FE60D8983588B3311731A2F7 /* UserRecommendedEventsRepository.swift in Sources */,
+				FE60D1BEEEC2AC12311818A4 /* UserSponsoredEventsRepository.swift in Sources */,
+				FE60D0D9D464BF59BB809B7F /* EventIdsToEventsConversion.swift in Sources */,
+				FE60D986637B3B136DAA93C7 /* EventsViewModel.swift in Sources */,
+				FE60D98A095A9250BDBDB2B5 /* DatabaseQuery+Rx.swift in Sources */,
+				FE60D25CE91376BA4007FACE /* UserNotificationsRepository.swift in Sources */,
+				FE60D0CC3DF63D9C247C4136 /* GraphAPI+Album.swift in Sources */,
+				FE60DE1AA276A4642F5347A5 /* UserCandidatesRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

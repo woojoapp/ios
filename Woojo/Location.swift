@@ -11,14 +11,15 @@ import FirebaseDatabase
 import Contacts
 
 struct Location: Codable {
-    
+
+    var id: String?
+    var name: String?
     var country: String?
     var city: String?
     var zip: String?
     var street: String?
     var latitude: Float?
     var longitude: Float?
-    var name: String?
     var addressString: String {
         get {
             let address = CNMutablePostalAddress()

@@ -18,26 +18,29 @@ import FirebaseStorageUI
 
 extension User {
  
-    class Profile {
+    class Profile: Codable {
         
         // MARK: - Properties
-        var displayName: String?
-        var photoID: String?
-        var gender: Gender?
+        var uid: String?
+        var firstName: String?
         var birthday: Date?
-        var description: Variable<String> = Variable("")
-        var firstName: Variable<String> = Variable("")
-        var city: String?
-        var country: String?
+        var gender: Gender?
+        var description: String?
         var location: Location?
-        var work: [Work] = []
-        var education: [Education] = []
-        var occupation: Variable<String> = Variable("")
-        var user: User
+        var occupation: String?
+        var photoIds: [String: String] = [:]
         var photos: Variable<[Photo?]> = Variable([nil, nil, nil, nil, nil, nil])
+        
+        private enum CodingKeys: String, CodingKey {
+            case uid, gender, birthday, description, location, occupation
+            case firstName = "first_name"
+            case photoIds = "photos"
+        }
+        
+        
         var photoCount: Int {
             get {
-                return photos.value.filter({ $0 != nil }).count
+                return photoIds.count
             }
         }
         var age: Int {
@@ -49,24 +52,24 @@ extension User {
                 }
             }
         }
+
         var displaySummary: String {
             get {
-                if let displayName = displayName {
+                if let displayName = firstName {
                     return "\(displayName), \(age)"
                 } else {
                     return "User, \(age)"
                 }
             }
         }
-        var occupations: [String] {
+        
+        /* var occupations: [String] {
             get {
                 let occupationObjects = education.map{$0.school?.name} + work.map{$0.displayString}
                 return occupationObjects.flatMap{$0}
             }
-        }
-        
-        var isObserved = false
-        
+        } */
+
         var birthdayFacebookFormatter: DateFormatter = {
             let birthdayFormatter = DateFormatter()
             birthdayFormatter.dateFormat = "MM/dd/yyyy"
@@ -81,21 +84,23 @@ extension User {
         
         var ref: DatabaseReference? {
             get {
-                return user.ref.child(Constants.User.Profile.firebaseNode)
+                return Database.database().reference().child("users").child(uid!).child("profile")
             }
         }
         
         var storageRef: StorageReference? {
             get {
-                return user.storageRef.child(Constants.User.Profile.firebaseNode)
+                return Storage.storage().reference().child("users").child(uid!).child("profile")
             }
         }
-        
-        init(for user: User) {
-            self.user = user
-        }
-        
+
         // MARK: - Methods
+        
+        /* static func from(dataSnapshot: DataSnapshot) -> Profile {
+            let profile = Profile()
+            profile.loadFrom(firebase: dataSnapshot)
+            return profile
+        }
         
         func loadFrom(firebase snapshot: DataSnapshot) {
             if let value = snapshot.value as? [String:Any] {
@@ -160,7 +165,9 @@ extension User {
         }
         
         func loadFromFirebase(completion: ((Profile?, Error?) -> Void)? = nil) {
+            print("CANDIDATE ADDED ici")
             ref?.observeSingleEvent(of: .value, with: { snapshot in
+                print("CANDIDATE ADDED", snapshot)
                 self.loadFrom(firebase: snapshot)
                 completion?(self, nil)
             }, withCancel: { error in
@@ -263,15 +270,15 @@ extension User {
                     setOccupation(occupation: school)
                 }
             }
-        }
+        } */
         
-        func updateFromFacebook(completion: ((Error?) -> Void)?) {
+        /* func updateFromFacebook(completion: ((Error?) -> Void)?) {
             User.Profile.GraphRequest(profile: self)?.start { response, result in
                 switch result {
                 case .success(let response):
                     // Update Firebase with the data loaded from Facebook
-                    self.displayName = response.profile?.displayName
-                    if let responseAsDictionary = response.profile?.toDictionary() {
+                    self.firstName = response.profile?.firstName
+                    if let responseAsDictionary = response.profile.dictionary {
                         print(responseAsDictionary)
                         self.ref?.updateChildValues(responseAsDictionary) { error, _ in
                             if let error = error {
@@ -329,9 +336,9 @@ extension User {
                     completion?(error)
                 }
             }
-        }
+        } */
         
-        func set(photo: Photo, at index: Int, completion: ((Error?) -> Void)? = nil) {
+        /* func set(photo: Photo, at index: Int, completion: ((Error?) -> Void)? = nil) {
             User.current.value?.profile.photos.value[index] = photo
             ref?.child(Constants.User.Profile.Photo.firebaseNode).child(String(index)).setValue(photo.id, withCompletionBlock: { error, ref in
                 completion?(error)
@@ -342,10 +349,10 @@ extension User {
             self.ref?.child(Constants.User.Profile.Photo.firebaseNode).child(String(index)).removeValue(completionBlock: { error, ref in
                 completion?(error)
             })
-        }
+        } */
         
-        func deleteFiles(forPhotoAt index: Int, completion: ((Error?) -> Void)? = nil) {
-            User.current.value?.profile.photos.value[index] = nil
+        /*func deleteFiles(forPhotoAt index: Int, completion: ((Error?) -> Void)? = nil) {
+            User.current.value?.profile?.photos.value[index] = nil
             ref?.child(Constants.User.Profile.Photo.firebaseNode).child(String(index)).observeSingleEvent(of: .value, with: { snapshot in
                 if let id = snapshot.value as? String {
                     self.storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(id).child(Constants.User.Profile.Photo.properties.full).delete { error in
@@ -361,7 +368,7 @@ extension User {
                     }
                 }
             })
-        }
+        }*/
         
         
     }
@@ -394,12 +401,16 @@ extension User.Profile {
             }
         }
         
-        enum Size: Int {
-            case thumbnail = 200
-            case full = 414
+        enum Size: String {
+            case thumbnail
+            case full
         }
+
+        static let sizes = [Size.thumbnail: 200, Size.full: 414]
+        static let aspectRatio = Float(1.6)
+        static let ppp = 3
         
-        func generatePhotoDownloadURL(size: Size, completion: @escaping (URL?, Error?) -> Void) {
+        /* func generatePhotoDownloadURL(size: Size, completion: @escaping (URL?, Error?) -> Void) {
             let path: String
             switch size {
             case .thumbnail:
@@ -408,7 +419,7 @@ extension User.Profile {
                 path = Constants.User.Profile.Photo.properties.full
             }
             profile.storageRef?.child(Constants.User.Profile.Photo.firebaseNode).child(id).child(path).downloadURL(completion: completion)
-        }
+        } */
         
         func download(size: Size, completion: (() -> Void)? = nil) {
             if let s = refs[size],
@@ -473,7 +484,7 @@ extension User.Profile {
         }
     }
     
-    fileprivate func resize(image: UIImage, targetSize: CGSize) -> UIImage? {
+    /* fileprivate func resize(image: UIImage, targetSize: CGSize) -> UIImage? {
         let size = image.size
         
         let widthRatio  = targetSize.width  / image.size.width
@@ -497,9 +508,9 @@ extension User.Profile {
         UIGraphicsEndImageContext()
         
         return newImage
-    }
+    } */
     
-    func setPhoto(photo: UIImage, id: String, index: Int, completion: ((Photo?, Error?) -> Void)? = nil) {
+    /* func setPhoto(photo: UIImage, id: String, index: Int, completion: ((Photo?, Error?) -> Void)? = nil) {
         // Resize image to the maximum size we'll need
         let group = DispatchGroup()
         group.enter()
@@ -547,71 +558,13 @@ extension User.Profile {
             })
         })
         
-    }
+    } */
     
 }
 
 // MARK: - Graph requests
 
-extension User.Profile {
-    
-    struct GraphRequest: GraphRequestProtocol {
-        
-        struct Response: GraphResponseProtocol {
-            
-            init(rawResponse: Any?) {
-                self.rawResponse = rawResponse
-                if let rawResponse = rawResponse as? [String:Any] {
-                    profile = User.Profile(for: User(uid: "_"))
-                    profile.loadFrom(graphAPI: rawResponse)
-                    fbAppScopedID = rawResponse["id"] as? String
-                }
-            }
-            
-            var rawResponse: Any?
-            var profile: User.Profile!
-            var fbAppScopedID: String?
-            
-        }
-        
-        init?(profile: User.Profile) {
-            if let fbAppScopedID = profile.user.fbAppScopedID {
-                self.fbAppScopedID = fbAppScopedID
-            } else {
-                print("Failed to initialize User.Profile.GraphRequest from profile. Missing FB app scoped ID.", profile)
-                return nil
-            }
-            if let fbAccessToken = profile.user.fbAccessToken {
-                self.accessToken = fbAccessToken
-            } else {
-                print("Failed to initialize User.Profile.GraphRequest from profile. Missing FB access token.", profile)
-                return nil
-            }
-            self.profile = profile
-        }
-        
-        var profile: User.Profile
-        var fbAppScopedID: String
-        var accessToken: AccessToken?
-        var graphPath: String {
-            get {
-                return "/\(fbAppScopedID)"
-            }
-        }
-        var parameters: [String: Any]? = {
-            let fields = [Constants.GraphRequest.UserProfile.fieldID,
-                          Constants.User.Profile.properties.graphAPIKeys.firstName,
-                          Constants.User.Profile.properties.graphAPIKeys.birthday,
-                          Constants.User.Profile.properties.graphAPIKeys.gender,
-                          "location{location}",
-                          "work",
-                          "education"]
-            return [Constants.GraphRequest.fields:fields.joined(separator: Constants.GraphRequest.fieldsSeparator)]
-        }()
-        var httpMethod: GraphRequestHTTPMethod = .GET
-        var apiVersion: GraphAPIVersion = .defaultVersion
-        
-    }
+/* extension User.Profile {
     
     struct PhotoGraphRequest: GraphRequestProtocol {
         
@@ -634,13 +587,13 @@ extension User.Profile {
         }
         
         init?(profile: User.Profile) {
-            if let fbAppScopedID = profile.user.fbAppScopedID {
+            if let fbAppScopedID = profile.user?.fbAppScopedID {
                 self.fbAppScopedID = fbAppScopedID
             } else {
                 print("Failed to initialize User.Profile.PhotoFullGraphRequest from profile. Missing FB app scoped ID.", profile)
                 return nil
             }
-            if let fbAccessToken = profile.user.fbAccessToken {
+            if let fbAccessToken = profile.user?.fbAccessToken {
                 self.fbAccessToken = fbAccessToken
             } else {
                 print("Failed to initialize User.Profile.PhotoFullGraphRequest from profile. Missing FB access token.", profile)
@@ -687,4 +640,4 @@ extension User.Profile {
             var name: String?
         }
     }
-}
+} */

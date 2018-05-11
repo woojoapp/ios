@@ -12,6 +12,8 @@ def shared_pods
   pod 'Firebase/Messaging'      # "
   pod 'FirebaseUI/Storage', '4.5.1'
   # pod 'FirebaseInstanceID', '2.0.0'
+  pod 'CodableFirebase', '0.0.7'
+  pod 'PromisesSwift', '1.1'
   pod 'Fabric', '~> 1.7.5'
   pod 'Crashlytics', '~> 3.10.1'
 
