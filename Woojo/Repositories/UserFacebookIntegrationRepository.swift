@@ -53,8 +53,10 @@ class UserFacebookIntegrationRepository: EventIdsToEventsConversion {
                 .flatMap({ self.transformEventIdsToEvents(dataSnapshot: $0, source: .facebook) { $0.key } })
     }
 
-    func getFacebookAccessToken() -> Observable<DataSnapshot> {
-        return getFacebookAccessTokenReference().rx_observeEvent(event: .value)
+    func getFacebookAccessToken() -> Observable<String?> {
+        return getFacebookAccessTokenReference()
+                .rx_observeEvent(event: .value)
+                .map { $0.value as? String }
     }
 
     func setPageLikes(pageLikes: [PageLike]) -> Promise<Void> {

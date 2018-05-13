@@ -21,7 +21,9 @@ class OnboardingLoginViewController: UIViewController {
     @IBOutlet weak var message1: UILabel!
     @IBOutlet weak var message2: UILabel!
     @IBOutlet weak var message3: UILabel!
-    
+
+    private var loginViewModel = LoginViewModel.shared
+
     //let loginManager = LoginManager()
     let termsText = NSLocalizedString("Terms & Conditions", comment: "")
     let privacyText = NSLocalizedString("Privacy Policy", comment: "")
@@ -94,17 +96,26 @@ class OnboardingLoginViewController: UIViewController {
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         loginFacebook?.isHidden = true
-        LoginViewModel.shared.loginWithFacebook(viewController: self).catch { error in
+        LoginManager.shared.loginWithFacebook(viewController: self).catch { error in
             self.activityIndicator.stopAnimating()
             self.loginFacebook?.isHidden = false
-            if error is LoginViewModel.LoginError {
-                switch (error) {
-                case .facebookPermissionsDeclined(let permissions):
-                    Analytics.Log(event: "Account_log_in_missing_permissions", with: permissions)
-                    showDeclinedPermissionsErrorDialog()
-                }
+            if let loginError = error as? LoginManager.LoginError {
+               if case let .facebookPermissionsDeclined(permissions) = loginError {
+                   Analytics.Log(event: "Account_log_in_missing_permissions", with: permissions)
+                   self.showDeclinedPermissionsErrorDialog()
+               }
             }
         }
+    }
+
+    private func showDeclinedPermissionsErrorDialog() {
+        let alert = UIAlertController(title: NSLocalizedString("Missing permissions", comment: ""), message: NSLocalizedString("Woojo needs to know at least your birthday and access your events in order to function properly.", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: {
+            LoginManager.shared.logOut()
+            self.activityIndicator.stopAnimating()
+            self.loginFacebook?.isHidden = false
+        })
     }
 }
 

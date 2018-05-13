@@ -21,45 +21,42 @@ class OnboardingPostAboutViewController: OnboardingPostBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBioTextView()
-        User.current.asObservable()
-            .flatMap { user -> Observable<String> in                
-                if let currentUser = user {
-                    return currentUser.profile.description.asObservable()
-                } else {
-                    return Variable(self.bioTextViewPlaceholderText).asObservable()
+        bindViewModel()
+    }
+
+    private func bindViewModel() {
+        UserProfileRepository.shared.getProfile()
+                .map{ profile -> String in
+                    if let description = profile?.description {
+                        self.bioTextView.textColor = UIColor.black
+                        return description
+                    } else {
+                        self.bioTextView.textColor = UIColor.lightGray
+                        return self.bioTextViewPlaceholderText
+                    }
                 }
-            }
-            .map{ text -> String in
-                if(text == "") {
-                    self.bioTextView.textColor = UIColor.lightGray
-                    return self.bioTextViewPlaceholderText
-                } else {
-                    self.bioTextView.textColor = UIColor.black
-                    return text
-                }
-            }
-            .bind(to: bioTextView.rx.text)
-            .disposed(by: disposeBag)
+                .bind(to: bioTextView.rx.text)
+                .disposed(by: disposeBag)
     }
     
-    func setupBioTextView() {
+    private func setupBioTextView() {
         bioTextView.delegate = self
         tapGestureRecognizer.addTarget(self, action: #selector(tap))
         tapGestureRecognizer.cancelsTouchesInView = false
         bioTextView.layer.cornerRadius = 5
         bioTextView.clipsToBounds = true
         bioTextView.rx.text
-            .map{ $0?.count }
-            .subscribe(onNext: { count in
-                self.setBioFooter(count: count)
-            }).disposed(by: disposeBag)
+                .map{ $0?.count }
+                .subscribe(onNext: { count in
+                    self.setBioFooter(count: count)
+                }).disposed(by: disposeBag)
     }
     
     @IBAction func tap(gesture: UITapGestureRecognizer) {
         bioTextView.resignFirstResponder()
     }
     
-    func setBioFooter(count: Int?) {
+    private func setBioFooter(count: Int?) {
         if let count = count {
             let s = count != 249 ? NSLocalizedString("characters", comment: "") : NSLocalizedString("character", comment: "")
             charactersLeftLabel.text = String(format: NSLocalizedString("%d %@ left", comment: ""), max(250 - count, 0), s)
@@ -84,10 +81,10 @@ extension OnboardingPostAboutViewController: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         let newBio = bioTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-        UserRepository.shared.setDescription(description: newBio)?.then {
+        UserProfileRepository.shared.setDescription(description: newBio).then {
             Analytics.setUserProperties(properties: ["about_character_count": String(newBio.count)])
             Analytics.Log(event: "Onboarding_about_updated", with: ["character_count": String(newBio.count)])
-        }.catch {
+        }.catch { _ in
             self.bioTextView.text = self.previousBio
         }
         charactersLeftLabel.isHidden = true

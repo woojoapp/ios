@@ -16,7 +16,7 @@ class Activity {
     var signUp: Date?
     var repliedToPushNotificationsInvite: Date?
 
-    func setSignUp(completion: ((Error?) -> Void)? = nil) {
+    /*func setSignUp(completion: ((Error?) -> Void)? = nil) {
         let date = Date()
         let dateString = Activity.dateFormatter.string(from: date)
         ref.child(Constants.User.Activity.properties.firebaseNodes.signUp).setValue(dateString) { error, ref in
@@ -54,6 +54,6 @@ class Activity {
             }
             completion?(error)
         }
-    }
+    }*/
 
 }

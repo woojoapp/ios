@@ -7,17 +7,20 @@
 //
 
 import UIKit
+import FirebaseAuth
 import RxSwift
 import DZNEmptyDataSet
 
 class AlbumsTableViewController: UITableViewController {
     
     var photoIndex = 0
-    var albums: [Album] = []
+    var albums: [GraphAPI.Album] = []
     var profileViewController: PhotoSource?
     
     let disposeBag = DisposeBag()
     var reachabilityObserver: AnyObject?
+    private var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
+    private var albumsViewModel: FacebookAlbumsViewModel = FacebookAlbumsViewModel.shared
     
     @IBAction func dismiss(sender: Any?) {
         self.navigationController?.dismiss(animated: true, completion: nil)
@@ -36,14 +39,12 @@ class AlbumsTableViewController: UITableViewController {
         tableView.emptyDataSetDelegate = self
         tableView.emptyDataSetSource = self
         
-        User.current.asObservable().subscribe(onNext: { _ in
-            self.loadFacebookAlbums()
-        }).disposed(by: disposeBag)
+        loadFacebookAlbums()
     }
     
     @objc func loadFacebookAlbums() {
-        User.current.value?.getAlbumsFromFacebook { albums in
-            self.albums = albums
+        albumsViewModel.getAlbumsFromFacebook().then { albums in
+            self.albums = albums ?? []
             self.tableView.reloadData()
             self.tableView.refreshControl?.endRefreshing()
         }
@@ -51,6 +52,11 @@ class AlbumsTableViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        authStateDidChangeListenerHandle = Auth.auth().addStateDidChangeListener { auth, user in
+            if user == nil {
+                self.present(LoginViewController(), animated: true, completion: nil)
+            }
+        }
         startMonitoringReachability()
         checkReachability()
     }
@@ -58,26 +64,13 @@ class AlbumsTableViewController: UITableViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         stopMonitoringReachability()
+        Auth.auth().removeStateDidChangeListener(authStateDidChangeListenerHandle!)
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        //if albums.count > 0 {
-            return 1
-        /*} else {
-            let messageLabel = UILabel(frame: CGRect.init(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
-            messageLabel.text = "No albums found\nPull to refresh"
-            messageLabel.textColor = UIColor.init(hexString: "AFAFAF")
-            messageLabel.font = UIFont(name: messageLabel.font.fontName, size: 14)
-            messageLabel.numberOfLines = 0
-            messageLabel.textAlignment = .center
-            messageLabel.sizeToFit()
-            
-            self.tableView.backgroundView = messageLabel
-            
-            return 0
-        }*/
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

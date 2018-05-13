@@ -1,5 +1,5 @@
 //
-//  SwipeRepository.swift
+//  UserSwipeRepository.swift
 //  Woojo
 //
 //  Created by Edouard Goossens on 09/05/2018.
@@ -12,11 +12,11 @@ import FirebaseAuth
 import RxSwift
 import Promises
 
-class SwipeRepository {
+class UserSwipeRepository {
     private let firebaseAuth = Auth.auth()
     private let firebaseDatabase = Database.database()
     
-    static var shared = SwipeRepository()
+    static var shared = UserSwipeRepository()
     private init() {}
     
     private func getUid() -> String { return firebaseAuth.currentUser!.uid }

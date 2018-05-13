@@ -7,6 +7,7 @@ import Foundation
 
 class GraphAPIToWoojoConverter {
     static var shared = GraphAPIToWoojoConverter()
+
     private init() {}
 
     func convertProfile(graphApiProfile: GraphAPI.Profile?) -> User.Profile? {

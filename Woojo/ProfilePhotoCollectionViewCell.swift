@@ -6,6 +6,7 @@
 //  Copyright © 2016 Tasty Electrons. All rights reserved.
 //
 
+import FirebaseStorage
 import UIKit
 
 class ProfilePhotoCollectionViewCell: UICollectionViewCell {
@@ -13,7 +14,7 @@ class ProfilePhotoCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var addButton: UIButton!
     
-    var photo: User.Profile.Photo?
+    var photo: StorageReference?
     
     override func awakeFromNib() {
         super.awakeFromNib()

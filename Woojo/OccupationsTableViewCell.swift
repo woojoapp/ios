@@ -54,7 +54,7 @@ class OccupationsTableViewCell: UITableViewCell, UITableViewDataSource, UITableV
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let occupation = occupations?[indexPath.row] {
-            User.current.value?.profile?.setOccupation(occupation: occupation)
+            UserProfileRepository.shared.setOccupation(occupation: occupation)
         }
     }
     

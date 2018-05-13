@@ -197,12 +197,12 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 if let params = params as? [String: AnyObject] {
                     if let action = params["action"] as? String, action == "add_event",
                         let eventId = params["event_id"] as? String {
-                        Event.get(for: eventId, completion: { (event) in
+                        EventRepository.shared.get(eventId: eventId).toPromise().then { event in
                             if let event = event {
-                                UserRepository.shared.activateEvent(event: event, completion: { (_, _) in })
+                                UserActiveEventRepository.shared.activateEvent(event: event).catch { _ in }
                                 Application.defferedEvent = event
                             }
-                        })
+                        }
                     }
                 }
             }
@@ -212,7 +212,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func ensureAuthentication(auth: Auth, user: FirebaseAuth.User?) {
-        if AccessToken.current == nil {
+        /* if AccessToken.current == nil {
             print("AUTH STATE DID CHANGE - AccessToken.current == nil", AccessToken.current, user?.uid)
             if self.window?.rootViewController?.presentedViewController != self.loginViewController {
                 self.window?.makeKeyAndVisible()
@@ -251,7 +251,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     self.window?.rootViewController?.present(self.loginViewController, animated: true, completion: nil)
                 }
             }
-        }
+        } */
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
@@ -267,17 +267,11 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         print("Saving push token", deviceTokenString)
         Messaging.messaging().apnsToken = deviceToken
-        let device = [
-            Constants.User.Device.properties.firebaseNodes.token: deviceTokenString,
-            Constants.User.Device.properties.firebaseNodes.platform: "iOS",
-            Constants.User.Device.properties.firebaseNodes.fcm: Messaging.messaging().fcmToken
-        ]
-        Analytics.setUserProperties(properties: ["push_notifications_enabled": "true"])
-        Analytics.Log(event: "Preferences_push_notifications", with: ["enabled": "true"])
-        User.current.value?.ref.child(Constants.User.Device.firebaseNode).child(deviceTokenString).setValue(device) { error, ref in
-            if (error != nil) {
-                print("Failed to save device push token: \(error)")
-            }
+        if let fcm = Messaging.messaging().fcmToken {
+            let device = Device(fcm: fcm, token: deviceTokenString, platform: .iOS)
+            Analytics.setUserProperties(properties: ["push_notifications_enabled": "true"])
+            Analytics.Log(event: "Preferences_push_notifications", with: ["enabled": "true"])
+            UserRepository.shared.addDevice(device: device).catch { _ in print("Failed to set device") }
         }
     }
     
@@ -313,7 +307,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func handlePushNotificationTap(notificationId: String, completionHandler: (() -> Void)?) {
         HUD.flash(.progress, delay: 10.0) // Show a progress HUD while Firebase synchronises data and retrieves notifications
-        Woojo.User.current.asObservable().takeWhile({ $0 == nil }).subscribe(onCompleted: {
+        /*Woojo.User.current.asObservable().takeWhile({ $0 == nil }).subscribe(onCompleted: {
             Woojo.User.current.value?.notifications.asObservable().takeWhile({ (notifications) -> Bool in
                 return !notifications.contains(where: { $0.id == notificationId })
             }).subscribe(onCompleted: {
@@ -327,7 +321,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
                 completionHandler?()
             }).disposed(by: self.disposeBag)
-        }).disposed(by: self.disposeBag)
+        }).disposed(by: self.disposeBag)*/
     }
     
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
@@ -350,7 +344,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let registerUserClientService = ALRegisterUserClientService()
         registerUserClientService.disconnect()
         
-        User.current.value?.activity.setLastSeen()
+        UserRepository.shared.setLastSeen(date: Date()).catch { _ in }
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "APP_ENTER_IN_BACKGROUND"), object: nil)
     }
@@ -361,8 +355,8 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         registerUserClientService.connect()
         ALPushNotificationService.applicationEntersForeground()
         print("APP_ENTER_IN_FOREGROUND")
-        
-        User.current.value?.activity.setLastSeen()
+
+        UserRepository.shared.setLastSeen(date: Date()).catch { _ in }
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "APP_ENTER_IN_FOREGROUND"), object: nil)
         //UIApplication.shared.applicationIconBadgeNumber = 0

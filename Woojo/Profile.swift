@@ -16,29 +16,40 @@ import Applozic
 import SDWebImage
 import FirebaseStorageUI
 
-extension User {
- 
-    class Profile: Codable {
-        
-        // MARK: - Properties
-        var uid: String?
-        var firstName: String?
-        var birthday: Date?
-        var gender: Gender?
-        var description: String?
-        var location: Location?
-        var occupation: String?
-        var photoIds: [String: String] = [:]
-        var photos: Variable<[Photo?]> = Variable([nil, nil, nil, nil, nil, nil])
-        
-        private enum CodingKeys: String, CodingKey {
-            case uid, gender, birthday, description, location, occupation
-            case firstName = "first_name"
-            case photoIds = "photos"
+/* class Profile: Codable {
+
+    // MARK: - Properties
+    var uid: String?
+    var firstName: String?
+    var birthday: Date?
+    var gender: String?
+    var description: String?
+    var location: Location?
+    var occupation: String?
+    var photoIds: [String: String] = [:]
+
+    //var photos: Variable<[Photo?]> = Variable([nil, nil, nil, nil, nil, nil])
+
+    private enum CodingKeys: String, CodingKey {
+        case uid, gender, birthday, description, location, occupation
+        case firstName = "first_name"
+        case photoIds = "photos"
+    }
+
+    class Photo {
+        enum Size: String {
+            case thumbnail
+            case full
         }
+
+        static let sizes = [Size.thumbnail: 200, Size.full: 414]
+        static let aspectRatio = Float(1.6)
+        static let ppp = 3
+    }
+
+} */
         
-        
-        var photoCount: Int {
+        /* var photoCount: Int {
             get {
                 return photoIds.count
             }
@@ -61,7 +72,7 @@ extension User {
                     return "User, \(age)"
                 }
             }
-        }
+        } */
         
         /* var occupations: [String] {
             get {
@@ -70,7 +81,7 @@ extension User {
             }
         } */
 
-        var birthdayFacebookFormatter: DateFormatter = {
+        /* var birthdayFacebookFormatter: DateFormatter = {
             let birthdayFormatter = DateFormatter()
             birthdayFormatter.dateFormat = "MM/dd/yyyy"
             return birthdayFormatter
@@ -92,7 +103,7 @@ extension User {
             get {
                 return Storage.storage().reference().child("users").child(uid!).child("profile")
             }
-        }
+        } */
 
         // MARK: - Methods
         
@@ -369,28 +380,9 @@ extension User {
                 }
             })
         }*/
-        
-        
-    }
-    
-}
 
-extension User.Profile {
-    
-    class Photo {
-        
-        init?(profile: User.Profile?, index: Int, id: String) {
-            if let profile = profile {
-                self.profile = profile
-                self.index = index
-                self.id = id
-            } else {
-                return nil
-            }
-        }
-        
-        var profile: User.Profile
-        var images: [Size:UIImage] = [:]
+
+    /* class Photo {
         var index: Int
         var id: String
         
@@ -482,7 +474,7 @@ extension User.Profile {
         for photo in photos.value {
             photo?.removeFromCache()
         }
-    }
+    } */
     
     /* fileprivate func resize(image: UIImage, targetSize: CGSize) -> UIImage? {
         let size = image.size
@@ -558,9 +550,9 @@ extension User.Profile {
             })
         })
         
-    } */
+    }
     
-}
+}*/
 
 // MARK: - Graph requests
 

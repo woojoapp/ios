@@ -26,7 +26,7 @@ class UserActiveEventRepository {
     }
 
     private func getCurrentUserDatabaseReference() -> DatabaseReference {
-        return getUserDatabaseReference(uid: uid)
+        return getUserDatabaseReference(uid: getUid())
     }
 
     private func getActiveEventsInfoReference() -> DatabaseReference {
@@ -38,11 +38,11 @@ class UserActiveEventRepository {
                 .rx_observeEvent(event: .value)
     }
 
-    func activateEvent(event: Event, completion: @escaping ((Error?, DatabaseReference) -> Void)) {
-        getActiveEventsInfoReference().child(event.id).setValue(event.rsvpStatus, withCompletionBlock: completion)
+    func activateEvent(event: Event) -> Promise<Void> {
+        return getActiveEventsInfoReference().child(event.id).setValuePromise(value: event.rsvpStatus)
     }
 
-    func deactivateEvent(event: Event, completion: @escaping ((Error?, DatabaseReference) -> Void)) {
-        getActiveEventsInfoReference().child(event.id).removeValue(completionBlock: completion)
+    func deactivateEvent(event: Event) -> Promise<Void> {
+        return getActiveEventsInfoReference().child(event.id).removeValuePromise()
     }
 }

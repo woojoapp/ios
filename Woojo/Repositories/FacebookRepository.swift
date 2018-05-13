@@ -97,11 +97,22 @@ class FacebookRepository {
         }
     }
 
-    func getAlbums() -> Promise<[GraphAPI.Friend]?> {
-        return Promise<[GraphAPI.Friend]?> { fulfill, reject in
-            UserFriendsGraphRequest().start { response, result in
+    func getAlbums() -> Promise<[GraphAPI.Album]?> {
+        return Promise<[GraphAPI.Album]?> { fulfill, reject in
+            UserAlbumsGraphRequest().start { response, result in
                 switch result {
-                case .success(let response): fulfill(response.friends)
+                case .success(let response): fulfill(response.albums)
+                case .failed(let error): reject(error)
+                }
+            }
+        }
+    }
+
+    func getAlbumPhotos(albumId: String) -> Promise<[GraphAPI.Album.Photo]?> {
+        return Promise<[GraphAPI.Album.Photo]?> { fulfill, reject in
+            AlbumPhotosGraphRequest(albumId: albumId).start { response, result in
+                switch result {
+                case .success(let response): fulfill(response.photos)
                 case .failed(let error): reject(error)
                 }
             }

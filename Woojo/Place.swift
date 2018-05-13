@@ -10,15 +10,16 @@ import Foundation
 import FirebaseDatabase
 import RxSwift
 
-struct Place {
+struct Place: Codable {
     
     var id: String?
     var name: String?
     var location: Location?
     var pictureURL: URL?
     var coverURL: URL?
-    var verificationStatus: VerificationStatus?
-    var displayString: String {
+    //var verificationStatus: VerificationStatus?
+
+    /* var displayString: String {
         get {
             var placeString = Constants.Place.defaultDisplayString
             if let placeName = name {
@@ -33,17 +34,17 @@ struct Place {
             }
             return placeString
         }
-    }
+    } */
     
-    enum VerificationStatus: String {
+    /* enum VerificationStatus: String {
         case notVerified = "not_verified"
         case grayVerified = "gray_verified"
         case blueVerified = "blue_verified"
-    }
+    } */
     
 }
 
-extension Place {
+/* extension Place {
     static func from(firebase snapshot: DataSnapshot) -> Place? {
         if let value = snapshot.value as? [String:Any] {
             var place = Place()
@@ -102,4 +103,4 @@ extension Place {
         dict[Constants.Place.properties.firebaseNodes.verificationStatus] = self.verificationStatus?.rawValue
         return dict
     }
-}
+} */

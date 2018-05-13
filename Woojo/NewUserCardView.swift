@@ -11,10 +11,10 @@ import ImageSlideshow
 
 class NewUserCardView: UIView {
     var view: UIView!
-    var user: OtherUser?
-    var commonEventInfos: [CommonEvent] = []
-    var commonFriends: [Friend] = []
-    var commonPageLikes: [PageLike] = []
+    var user: OtherUser!
+    //var commonEventInfos: [CommonEvent] = []
+    //var commonFriends: [Friend] = []
+    //var commonPageLikes: [PageLike] = []
     var imageSources: [ImageSource] = []
     
     var maxCommonEventsCount = 2
@@ -83,7 +83,7 @@ class NewUserCardView: UIView {
             nameLabel.layer.masksToBounds = false
             
             if let city = user.profile?.location?.city {
-                locationLabel.text = user.profile?.location?.city
+                locationLabel.text = city
                 locationLabel.layer.shadowColor = UIColor.black.cgColor
                 locationLabel.layer.shadowRadius = 2.0
                 locationLabel.layer.shadowOpacity = 1.0
@@ -94,8 +94,8 @@ class NewUserCardView: UIView {
                 locationView.addConstraint(NSLayoutConstraint(item: locationView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0.0))
             }
             
-            if user.profile?.occupation != nil && !user.profile!.occupation!.isEmpty {
-                occupationLabel.text = user.profile?.occupation
+            if let occupation = user.profile?.occupation {
+                occupationLabel.text = occupation
                 occupationLabel.layer.shadowColor = UIColor.black.cgColor
                 occupationLabel.layer.shadowRadius = 2.0
                 occupationLabel.layer.shadowOpacity = 1.0
@@ -119,13 +119,17 @@ class NewUserCardView: UIView {
             
             let gradientLayer = CAGradientLayer()
             gradientLayer.frame = backgroundImageView.bounds
-            // gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.9)
-            // gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
             gradientLayer.locations = [0, 0.7]
             gradientLayer.colors = [UIColor.black.withAlphaComponent(0.0).cgColor, UIColor.black.cgColor]
             blurredEffectView.layer.addSublayer(gradientLayer)
+
+            UserProfileRepository.shared.getPhoto(position: 0, size: .full).toPromise().then { storageReference in
+                if let storageReference = storageReference {
+                    self.backgroundImageView.sd_setImage(with: storageReference)
+                }
+            }
             
-            func setFirstImageAndDownloadOthers(firstPhoto: User.Profile.Photo) {
+           /* func setFirstImageAndDownloadOthers(firstPhoto: User.Profile.Photo) {
                 if let firstImage = firstPhoto.images[.full] {
                     self.backgroundImageView.image = firstImage
                     self.imageSources.append(ImageSource(image: firstImage))
@@ -162,7 +166,7 @@ class NewUserCardView: UIView {
                         setFirstImageAndDownloadOthers(firstPhoto: firstPhoto)
                     }
                 }
-            }
+            } */
             /* if commonEventInfos.count > 0 {
                 Event.get(for: commonEventInfos[0].id, completion: { (event) in
                     if let event = event,
@@ -195,7 +199,7 @@ class NewUserCardView: UIView {
 
 extension NewUserCardView: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        if commonEventInfos.count > maxCommonEventsCount {
+        if user.commonInfo.events.count > maxCommonEventsCount {
             return 2
         } else {
             return 1
@@ -204,7 +208,7 @@ extension NewUserCardView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return min(maxCommonEventsCount, commonEventInfos.count)
+            return min(maxCommonEventsCount, user.commonInfo.events.count)
         } else if section == 1 {
             return 1
         }
@@ -222,8 +226,8 @@ extension NewUserCardView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "commonEventCell", for: indexPath) as! UserCommonEventTableViewCell
-            let eventId = commonEventInfos[indexPath.row].id
-            Event.get(for: eventId, completion: { (event) in
+            let eventId = user.commonInfo.events[indexPath.row].id
+            EventRepository.shared.get(eventId: eventId).toPromise().then { event in
                 if let event = event {
                     if let pictureURL = event.pictureURL {
                         cell.eventImageView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_100x100"))
@@ -235,12 +239,12 @@ extension NewUserCardView: UITableViewDataSource {
                         cell.setDateVisibility(hidden: false)
                     }
                 }
-            })
-            cell.eventTextLabel.text = commonEventInfos[indexPath.row].name
+            }
+            cell.eventTextLabel.text = user.commonInfo.events[indexPath.row].name
             return cell
         } else if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "extraCommonEventsCell", for: indexPath) as! UserExtraCommonEventsTableViewCell
-            cell.eventExtraNumberLabel.text = "+\(String(commonEventInfos.count - maxCommonEventsCount))"
+            cell.eventExtraNumberLabel.text = "+\(String(user.commonInfo.events.count - maxCommonEventsCount))"
             cell.eventTextLabel.text = NSLocalizedString("More common event(s)", comment: "")
             return cell
         }

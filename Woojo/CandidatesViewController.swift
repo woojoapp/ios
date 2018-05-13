@@ -26,14 +26,16 @@ import BWWalkthrough
 class CandidatesViewController: UIViewController {
     
     @IBOutlet weak var kolodaView: KolodaView!
-    //@IBOutlet weak var likeButton: DOFavoriteButton!
-    //@IBOutlet weak var passButton: DOFavoriteButton!
     @IBOutlet weak var loadingContainerView: UIView!
     @IBOutlet weak var loadingView: RPCircularProgress!
     
     var reachabilityObserver: AnyObject?
     var disposeBag = DisposeBag()
     var onboardingViewController: OnboardingViewController?
+    private let peopleViewModel = PeopleViewModel.shared
+    private var candidates: [Candidate] = []
+    private var candidateAddedListenerHandle: UInt?
+    private var candidateRemovedListenerHandle: UInt?
     
     var shouldApplyAppearAnimation = true
     var ranOutOfCards = true
@@ -44,14 +46,15 @@ class CandidatesViewController: UIViewController {
         "onboarding_post_photos",
         "onboarding_post_end"
     ]
+    private static let REPLIED_TO_PUSH_NOTIFICATIONS_INVITE = "REPLIED_TO_PUSH_NOTIFICATIONS_INVITE"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        User.current.asObservable()
+        /* User.current.asObservable()
             .subscribe(onNext: { user in
                 user?.candidatesDelegate = self                
-            }).disposed(by: disposeBag)
+            }).disposed(by: disposeBag) */
         
         kolodaView.dataSource = self
         kolodaView.delegate = self
@@ -86,9 +89,8 @@ class CandidatesViewController: UIViewController {
         loadingView.layer.cornerRadius = loadingView.frame.size.width / 2
         startMonitoringReachability()
         checkReachability()        
-        User.current.value?.activity.setLastSeen()
-        let userDefaults = UserDefaults.standard
-        if User.current.value != nil && !userDefaults.bool(forKey: "POST_LOGIN_ONBOARDING_COMPLETED") {
+        UserRepository.shared.setLastSeen(date: Date()).catch { _ in }
+        if !UserDefaults.standard.bool(forKey: "POST_LOGIN_ONBOARDING_COMPLETED") {
             showOnboarding()
         }
     }
@@ -116,41 +118,83 @@ class CandidatesViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         loadingView.layer.cornerRadius = loadingView.frame.size.width / 2
-        CurrentUser.Notification.deleteAll(type: "people")
+        //CurrentUser.Notification.deleteAll(type: "people")
     }
-    
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         stopMonitoringReachability()
     }
+
+    private func startListeningToCandidates() {
+        candidateAddedListenerHandle = peopleViewModel.getCandidatesQuery().observe(.childAdded) { (dataSnapshot: DataSnapshot) -> Void in
+            self.peopleViewModel.getProfile(uid: dataSnapshot.key).then { profile in
+                if let profile = profile,
+                   let commonInfo = CommonInfo(from: dataSnapshot) {
+                    let candidate = Candidate(uid: dataSnapshot.key)
+                    candidate.profile = profile
+                    candidate.commonInfo = commonInfo
+                    if !self.candidates.contains(where: { $0.uid == candidate.uid }) {
+                        self.candidates.append(candidate)
+                        self.kolodaView.reloadData()
+                    }
+                }
+            }
+        }
+        candidateRemovedListenerHandle = peopleViewModel.getCandidatesQuery().observe(.childRemoved) { (dataSnapshot: DataSnapshot) -> Void in
+            if self.candidates.contains(where: { $0.uid == dataSnapshot.key }) {
+                self.resetCards()
+            }
+        }
+    }
+
+    private func stopListeningToCandidates() {
+        if let handle = candidateAddedListenerHandle {
+            peopleViewModel.getCandidatesQuery().removeObserver(withHandle: handle)
+        }
+        if let handle = candidateRemovedListenerHandle {
+            peopleViewModel.getCandidatesQuery().removeObserver(withHandle: handle)
+        }
+    }
+
+    private func resetCards() {
+        stopListeningToCandidates()
+        candidates.removeAll()
+        kolodaView.reloadData()
+        startListeningToCandidates()
+    }
     
-    func hideKolodaAndShowLoading() {
+    private func hideKolodaAndShowLoading() {
         kolodaView.isHidden = true
         loadingContainerView.isHidden = false
     }
     
-    func showKolodaAndHideLoading() {
+    private func showKolodaAndHideLoading() {
         kolodaView.isHidden = false
         loadingContainerView.isHidden = true
     }
     
-    func showPushNotificationsInvite() {
+    private func showPushNotificationsInvite() {
         let pushNotificationsInvite = UIAlertController(title: NSLocalizedString("Push notifications", comment: ""), message: NSLocalizedString("Would you like to get push notifications when you match or receive messages?\n\nYou can also manage this behavior later from the Settings screen.", comment: ""), preferredStyle: .alert)
         pushNotificationsInvite.addAction(UIAlertAction(title: NSLocalizedString("Yes, notify me", comment: ""), style: .default) { _ in
-            Woojo.User.current.value?.activity.setRepliedToPushNotificationsInvite()
+            UserDefaults.standard.set(true, forKey: CandidatesViewController.REPLIED_TO_PUSH_NOTIFICATIONS_INVITE)
             if let application = UIApplication.shared.delegate as? Application {
                 application.requestNotifications()
             }
         })
         pushNotificationsInvite.addAction(UIAlertAction(title: NSLocalizedString("Not now", comment: ""), style: .cancel) { _ in
-            Woojo.User.current.value?.activity.setRepliedToPushNotificationsInvite()
+            UserDefaults.standard.set(true, forKey: CandidatesViewController.REPLIED_TO_PUSH_NOTIFICATIONS_INVITE)
         })
         pushNotificationsInvite.popoverPresentationController?.sourceView = self.view
         present(pushNotificationsInvite, animated: true)
     }
     
     @IBAction func share() {
-        User.current.value?.share(from: self)
+        peopleViewModel.share(from: self)
     }
     
 }
@@ -160,13 +204,12 @@ class CandidatesViewController: UIViewController {
 extension CandidatesViewController: KolodaViewDelegate {
     
     func koloda(_ koloda: KolodaView, didSwipeCardAt index: Int, in direction: SwipeResultDirection) {
-        if let currentUser = User.current.value {
-            let candidate = currentUser.candidates[index]
+            let candidate = candidates[index]
             DispatchQueue.global(qos: .background).async {
                 let identify = AMPIdentify()
                 var parameters: [String: String]?
-                if let commonality = try? currentUser.commonality(candidate: candidate),
-                    let bothGoing = try? currentUser.bothGoing(candidate: candidate) {
+                if let commonality = try? CommonalityCalculator.shared.commonality(otherUser: candidate),
+                    let bothGoing = try? CommonalityCalculator.shared.bothGoing(otherUser: candidate) {
                      parameters = [
                         "other_id": candidate.uid,
                         "event_commonality": String(commonality),
@@ -176,16 +219,16 @@ extension CandidatesViewController: KolodaViewDelegate {
                 
                 switch direction {
                 case .left:
-                    currentUser.pass(candidate: candidate.uid)
-                    currentUser.remove(candidate: candidate.uid)
+                    self.peopleViewModel.pass(uid: candidate.uid).catch { _ in }
+                    self.peopleViewModel.remove(uid: candidate.uid).catch { _ in }
                     identify.add("pass_count", value: NSNumber(value: 1))
                     if parameters != nil {
                         Analytics.Log(event: "Core_pass", with: parameters!)
                     }
                 case .right:
-                    currentUser.like(candidate: candidate.uid)
-                    currentUser.remove(candidate: candidate.uid)
-                    if currentUser.activity.repliedToPushNotificationsInvite == nil {
+                    self.peopleViewModel.like(uid: candidate.uid).catch { _ in }
+                    self.peopleViewModel.remove(uid: candidate.uid).catch { _ in }
+                    if !UserDefaults.standard.bool(forKey: CandidatesViewController.REPLIED_TO_PUSH_NOTIFICATIONS_INVITE) {
                         self.showPushNotificationsInvite()
                     }
                     identify.add("like_count", value: NSNumber(value: 1))
@@ -197,10 +240,9 @@ extension CandidatesViewController: KolodaViewDelegate {
                 
                 Amplitude.instance().identify(identify)
             }
-            currentUser.candidates.remove(at: index)
+            candidates.remove(at: index)
             self.kolodaView.removeCardInIndexRange(index..<index, animated: false)
             self.kolodaView.currentCardIndex = 0
-        }
     }
     
     func kolodaShouldApplyAppearAnimation(_ koloda: KolodaView) -> Bool {
@@ -225,23 +267,12 @@ extension CandidatesViewController: KolodaViewDelegate {
     
     func koloda(_ koloda: KolodaView, didSelectCardAt index: Int) {
         if let userDetailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserDetailsViewController") as? UserDetailsViewController {
-            if let candidate = User.current.value?.candidates[index] {
-                userDetailsViewController.otherUser = candidate
-                userDetailsViewController.candidatesViewController = self
-                self.present(userDetailsViewController, animated: true, completion: nil)
-                if let uid = User.current.value?.candidates[index].uid {
-                    let analyticsEventParameters = [Constants.Analytics.Events.CandidateDetailsDisplayed.Parameters.uid: uid]
-                    Analytics.Log(event: Constants.Analytics.Events.CandidateDetailsDisplayed.name, with: analyticsEventParameters)
-                }
-            }
+            userDetailsViewController.otherUser = candidates[index]
+            userDetailsViewController.candidatesViewController = self
+            self.present(userDetailsViewController, animated: true, completion: nil)
+            let analyticsEventParameters = [Constants.Analytics.Events.CandidateDetailsDisplayed.Parameters.uid: candidates[index].uid]
+            Analytics.Log(event: Constants.Analytics.Events.CandidateDetailsDisplayed.name, with: analyticsEventParameters)
         }
-        /*if let cardView = kolodaView.viewForCard(at: index) as? UserCardView {
-            if cardView.isShowingDescription {
-                cardView.hideDescription()
-            } else {
-                cardView.showDescription()
-            }
-        }*/
     }
 
 }
@@ -251,7 +282,7 @@ extension CandidatesViewController: KolodaViewDelegate {
 extension CandidatesViewController: KolodaViewDataSource {
     
     func kolodaNumberOfCards(_ koloda:KolodaView) -> Int {
-        return User.current.value?.candidates.count ?? 0
+        return candidates.count ?? 0
     }
     
     func kolodaSpeedThatCardShouldDrag(_ koloda: KolodaView) -> Koloda.DragSpeed {
@@ -263,23 +294,17 @@ extension CandidatesViewController: KolodaViewDataSource {
     }
     
     func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
-        print("CandidatesViewController viewForCardAt", index, "count", User.current.value?.candidates.count)
+        print("CandidatesViewController viewForCardAt", index, "count", candidates.count)
         // let cardView = UserCardView(frame: CGRect.zero)
         let cardView = NewUserCardView(frame: CGRect.zero)
         cardView.setRoundedCornersAndShadow()
-        if let count = User.current.value?.candidates.count, count > index {
-            cardView.user = User.current.value?.candidates[index]
-            if let commonEventInfos = User.current.value?.candidates[index].commonInfo.commonEvents {
-                cardView.commonEventInfos = commonEventInfos.sorted(by: {
-                    Event.interestScale(rsvpStatus: $0.rsvpStatus) > Event.interestScale(rsvpStatus: $1.rsvpStatus)
-                })
-            }
-            if let commonFriends = User.current.value?.candidates[index].commonInfo.friends {
-                cardView.commonFriends = commonFriends
-            }
-            if let commonPageLikes = User.current.value?.candidates[index].commonInfo.pageLikes {
-                cardView.commonPageLikes = commonPageLikes
-            }
+        if candidates.count > index {
+            cardView.user = candidates[index]
+            /* cardView.commonEventInfos = candidates[index].commonInfo.commonEvents.sorted(by: {
+                CommonalityCalculator.shared.interestScale(rsvpStatus: $0.rsvpStatus) > CommonalityCalculator.shared.interestScale(rsvpStatus: $1.rsvpStatus)
+            })
+            cardView.commonFriends = candidates[index].commonInfo.friends
+            cardView.commonPageLikes = candidates[index].commonInfo.pageLikes */
         }
         // cardView.candidatesViewController = self
         
@@ -312,7 +337,7 @@ extension CandidatesViewController: ShowsSettingsButton {
 
 // MARK: - CandidatesDelegate
 
-extension CandidatesViewController: CandidatesDelegate {
+/* extension CandidatesViewController: CandidatesDelegate {
     
     func didAddCandidate() {
         //DispatchQueue.global(qos: .background).async {
@@ -343,7 +368,7 @@ extension CandidatesViewController: CandidatesDelegate {
         }*/
     }
     
-}
+} */
 
 // MARK: - ReachabilityAware
 

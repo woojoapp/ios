@@ -9,9 +9,10 @@
 import UIKit
 import FacebookLogin
 import FirebaseAuth
+import FirebaseStorageUI
 import RxSwift
 
-class SettingsViewController: UITableViewController {
+class SettingsViewController: UITableViewController, AuthStateAware {
     
     @IBOutlet weak var logoutButton: UIButton!
     @IBOutlet weak var deleteAccountButton: UIButton!    
@@ -21,12 +22,14 @@ class SettingsViewController: UITableViewController {
     
     let disposeBag = DisposeBag()
     var reachabilityObserver: AnyObject?
-    
+    private let settingsViewModel = SettingsViewModel.shared
+    var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
+
     @IBAction func logout(sender: UIButton) {
         let logoutAlert = UIAlertController(title: NSLocalizedString("Logout", comment: ""), message: NSLocalizedString("Sure you want to logout?", comment: ""), preferredStyle: .alert)
         logoutAlert.addAction(UIAlertAction(title: NSLocalizedString("Logout", comment: ""), style: .default) { _ in
             self.dismiss(animated: true, completion: nil)
-            User.current.value?.logOut()
+            self.settingsViewModel.logOut()
         })
         logoutAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
         logoutAlert.popoverPresentationController?.sourceView = self.view
@@ -37,7 +40,7 @@ class SettingsViewController: UITableViewController {
         let deleteAccountAlert = UIAlertController(title: NSLocalizedString("Delete Account", comment: ""), message: NSLocalizedString("Sure you want to delete your account?", comment: ""), preferredStyle: .alert)
         deleteAccountAlert.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive) { _ in
             self.dismiss(animated: true, completion: nil)
-            User.current.value?.deleteAccount()
+            self.settingsViewModel.deleteAccount()
         })
         deleteAccountAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
         deleteAccountAlert.popoverPresentationController?.sourceView = self.view
@@ -50,11 +53,12 @@ class SettingsViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupDataSource()
+        bindViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        startListeningForAuthStateChange()
         startMonitoringReachability()
         checkReachability()        
     }
@@ -62,49 +66,24 @@ class SettingsViewController: UITableViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         stopMonitoringReachability()
+        stopListeningForAuthStateChange()
     }
     
-    func setupDataSource() {
-        User.current.asObservable()
-            .flatMap { user -> Observable<[User.Profile.Photo?]> in
-                if let currentUser = user {
-                    return currentUser.profile.photos.asObservable()
-                } else {
-                    return Variable([nil]).asObservable()
+    func bindViewModel() {
+        settingsViewModel.getFullMainUserProfilePicture()
+            .subscribe(onNext: { storageReference in
+                if let storageReference = storageReference {
+                    self.profilePhotoImageView.sd_setImage(with: storageReference)
                 }
-            }
-            .map { photos -> UIImage in
-                if let profilePhoto = photos[0], let image = profilePhoto.images[User.Profile.Photo.Size.full] {
-                    return image
-                } else {
-                    return #imageLiteral(resourceName: "placeholder_40x40")
-                }
-            }
-            .bindTo(profilePhotoImageView.rx.image)
-            .addDisposableTo(disposeBag)
+             }).disposed(by: disposeBag)
+
+        settingsViewModel.getUserFirstName()
+                .bind(to: nameLabel.rx.text)
+                .disposed(by: disposeBag)
         
-        User.current.asObservable()
-            .map{ $0?.profile.firstName }
-            .bind(to: nameLabel.rx.text)
-            .addDisposableTo(disposeBag)
-        
-        User.current.asObservable()
-            .map{
-                var description = ""
-                if let age = $0?.profile.age {
-                    let ageString = String(describing: age)
-                    description = ageString
-                }
-                if let city = $0?.profile.location?.city {
-                    description = "\(description), \(city)"
-                }
-                if let country = $0?.profile.location?.country {
-                    description = "\(description) (\(country))"
-                }
-                return description
-            }
-            .bindTo(descriptionLabel.rx.text)
-            .addDisposableTo(disposeBag)
+        settingsViewModel.getUserShortDescription()
+                .bind(to: descriptionLabel.rx.text)
+                .disposed(by: disposeBag)
     }
     
     override func viewDidLayoutSubviews() {
@@ -139,16 +118,8 @@ class SettingsViewController: UITableViewController {
     
     @IBAction
     func share() {
-        User.current.value?.share(from: self)        
+        settingsViewModel.share(from: self)
     }
-    
-    /*override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
-        cell?.selectionStyle = .none
-        /*cell?.backgroundColor = .white
-        cell?.contentView.backgroundColor = .white
-        cell?.accessoryView?.backgroundColor = .white*/
-    }*/
 
 }
 

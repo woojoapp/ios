@@ -13,14 +13,17 @@ import PKHUD
 import Amplitude_iOS
 import RxSwift
 
-class UserDetailsViewController: UIViewController {
+class UserDetailsViewController<T: OtherUser>: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var optionsButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
+    var otherUserId: String!
+    var otherUserType: T.Type!
     var otherUser: OtherUser?
     var candidatesViewController: CandidatesViewController?
     var chatViewController: ChatViewController?
+    private var peopleViewModel = PeopleViewModel.shared
     var reachabilityObserver: AnyObject?
     var isMatch = false
     private let disposeBag = DisposeBag()
@@ -43,10 +46,8 @@ class UserDetailsViewController: UIViewController {
         optionsButton.layer.cornerRadius = optionsButton.frame.width / 2
         optionsButton.layer.masksToBounds = true
         
-        if let otherUser = otherUser {
-            if otherUser.uid.range(of: "woojo-") != nil {
-                optionsButton.isHidden = true
-            }
+        if otherUserId.range(of: "woojo-") != nil {
+            optionsButton.isHidden = true
         }
     }
     
@@ -82,12 +83,15 @@ class UserDetailsViewController: UIViewController {
     }
     
     private func observeOtherUser() {
-        UserRepository.shared
-            .getOtherUserCommonInfo(uid: otherUser?.uid, otherUserKind: .candidate)?
-            .subscribe(onNext: { commonInfo in
-                print("COMMM", commonInfo)
-            })
-            .disposed(by: disposeBag)
+        peopleViewModel.getOtherUser(uid: otherUserId, otherUserType: otherUserType)
+                .subscribe(onNext: { otherUser in
+                    if let otherUser = otherUser {
+                        self.otherUser = otherUser
+                        self.tableView.reloadData()
+                    }
+                }, onError: { error in
+
+                }).disposed(by: disposeBag)
     }
     
     @IBAction func showOptions() {
@@ -102,40 +106,37 @@ class UserDetailsViewController: UIViewController {
                 HUD.show(.labeledProgress(title: NSLocalizedString("Unmatch", comment: ""), subtitle: NSLocalizedString("Unmatching...", comment: "")), onView: self.parent?.view)
                 
                 // Prepare event logging
-                if let currentUser = User.current.value,
-                    let otherUser = self.otherUser {
-                    User.Match.between(user: currentUser, and: otherUser, completion: { (match) in
+                if let otherUser = self.otherUser {
+                    self.peopleViewModel.getOtherUser(uid: otherUser.uid, otherUserType: Match.self).toPromise().then { match in
                         if match != nil {
                             // Prepare event logging
                             let identify = AMPIdentify()
                             identify.add("unmatch_count", value: NSNumber(value: 1))
                             Amplitude.instance().identify(identify)
                             var parameters: [String: String]?
-                            if let commonality = try? currentUser.commonality(match: match!),
-                                let bothGoing = try? currentUser.bothGoing(match: match!) {
+                            if let commonality = try? CommonalityCalculator.shared.commonality(otherUser: match!),
+                                let bothGoing = try? CommonalityCalculator.shared.bothGoing(otherUser: match!) {
                                 parameters = [
-                                    "other_id": match!.on,
+                                    "other_id": otherUser.uid,
                                     "event_commonality": String(commonality),
                                     "has_both_going": String(bothGoing)
                                 ]
                             }
                             // Unmatch
-                            SwipeRepository.shared.removeLike(on: otherUser.uid) { error, _ in
-                                if error != nil {
-                                    HUD.show(.labeledError(title: NSLocalizedString("Unmatch", comment: ""), subtitle: NSLocalizedString("Failed to unmatch", comment: "")), onView: self.parent?.view)
-                                    HUD.hide(afterDelay: 1.0)
-                                } else {
-                                    if parameters != nil {
-                                        Analytics.Log(event: "Core_unmatch", with: parameters!)
-                                    }
-                                    HUD.show(.labeledSuccess(title: NSLocalizedString("Unmatch", comment: ""), subtitle: NSLocalizedString("Unmatched!", comment: "")), onView: self.parent?.view)
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-                                        self.dismiss(sender: self)
-                                    })
+                            UserSwipeRepository.shared.removeLike(on: otherUser.uid).then {
+                                if parameters != nil {
+                                    Analytics.Log(event: "Core_unmatch", with: parameters!)
                                 }
+                                HUD.show(.labeledSuccess(title: NSLocalizedString("Unmatch", comment: ""), subtitle: NSLocalizedString("Unmatched!", comment: "")), onView: self.parent?.view)
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                                    self.dismiss(sender: self)
+                                })
+                            }.catch { error in
+                                HUD.show(.labeledError(title: NSLocalizedString("Unmatch", comment: ""), subtitle: NSLocalizedString("Failed to unmatch", comment: "")), onView: self.parent?.view)
+                                HUD.hide(afterDelay: 1.0)
                             }
                         }
-                    })
+                    }
                 }
                 // Don't forget to remove images from cache
             })
@@ -185,11 +186,7 @@ class UserDetailsViewController: UIViewController {
             //self.optionsButton.deselect()
         }
     }
-    
- 
-}
 
-extension UserDetailsViewController : UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
@@ -199,7 +196,7 @@ extension UserDetailsViewController : UITableViewDataSource {
             if section == 0 {
                 return user.commonInfo.events.count
             } else if section == 1 {
-                if user.profile?.description.value.count == 0 {
+                if user.profile?.description != nil {
                     return 0
                 } else {
                     return 1
@@ -222,7 +219,7 @@ extension UserDetailsViewController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if let user = otherUser, let name = user.profile?.displayName {
+        if let user = otherUser, let name = user.profile?.firstName {
             if section == 0 {
                 if user.commonInfo.events.count == 0 {
                     return nil
@@ -230,7 +227,7 @@ extension UserDetailsViewController : UITableViewDataSource {
                     return NSLocalizedString("Common Events", comment: "")
                 }
             } else if section == 1 {
-                if user.profile?.description.value.count == 0 {
+                if user.profile?.description != nil {
                     return nil
                 } else {
                     return String(format: NSLocalizedString("About %@", comment: ""), name)
@@ -257,7 +254,7 @@ extension UserDetailsViewController : UITableViewDataSource {
             if indexPath.section == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "detailsCommonEventCell", for: indexPath) as! UserDetailsCommonEventTableViewCell
                 let eventId = user.commonInfo.events[indexPath.row].id
-                Event.get(for: eventId, completion: { (event) in
+                EventRepository.shared.get(eventId: eventId).toPromise().then { event in
                     if let event = event {
                         if let pictureURL = event.pictureURL {
                             self.setImage(pictureURL: pictureURL, cell: cell)
@@ -267,12 +264,12 @@ extension UserDetailsViewController : UITableViewDataSource {
                             cell.setDateVisibility(hidden: false)
                         }
                     }
-                })
+                }
                 cell.eventTextLabel.text = getDisplayString(commonEvent: user.commonInfo.commonEvents[indexPath.row])
                 return cell
             } else if indexPath.section == 1 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "descriptionCell", for: indexPath)
-                cell.textLabel?.text = user.profile?.description.value
+                cell.textLabel?.text = user.profile?.description
                 return cell
             } else if indexPath.section == 2 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "commonItemsCell", for: indexPath) as! UserCommonItemsTableViewCell
@@ -312,9 +309,7 @@ extension UserDetailsViewController : UITableViewDataSource {
         }
         return "\(rsvpString)"
     }
-}
 
-extension UserDetailsViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let view = view as? UITableViewHeaderFooterView {
             view.textLabel?.font = .boldSystemFont(ofSize: 13.0)

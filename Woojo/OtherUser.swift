@@ -6,17 +6,21 @@
 //  Copyright © 2018 Tasty Electrons. All rights reserved.
 //
 
-import Foundation
+import FirebaseDatabase
 
-class OtherUser {
-    var uid: String
-    var profile: User.Profile?
+class OtherUser: User {
     var commonInfo: CommonInfo = CommonInfo()
-    
-    init(uid: String) {
-        self.uid = uid
+
+    /* init?(from dataSnapshot: DataSnapshot?) throws {
+        super.init?(from: dataSnapshot)
     }
-    
+
+    init(uid: String, profile: User.Profile, commonInfo: CommonInfo) {
+        super.init(uid: uid)
+        self.profile = profile
+        self.commonInfo = commonInfo
+    } */
+
     enum Kind {
         case candidate
         case match

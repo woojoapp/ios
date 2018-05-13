@@ -21,7 +21,7 @@ class OnboardingPostEndViewController: OnboardingPostBaseViewController {
         ctaButton.clipsToBounds = true
         ctaButton.layer.cornerRadius = 10
 
-        UserRepository.shared.getProfile()?
+        UserProfileRepository.shared.getProfile()
             .map{ $0?.firstName ?? "" }
             .map{ String(format: NSLocalizedString("You're all set, %@!", comment: ""), $0) }
             .bind(to: titleLabel.rx.text)

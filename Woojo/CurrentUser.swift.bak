@@ -22,8 +22,7 @@ import Crashlytics
 import CodableFirebase
 
 class CurrentUser: User {
-    
-    override var uid: String {
+    /*override var uid: String {
         get {
             return Auth.auth().currentUser!.uid
         }
@@ -48,7 +47,7 @@ class CurrentUser: User {
         set {
             super.fbAccessToken = newValue
         }
-    }
+    } */
     
     var firebaseAuthUser: FirebaseAuth.User? {
         get {
@@ -78,9 +77,9 @@ class CurrentUser: User {
         }
     }
     
-    func logOut() {
-        self.stopObservingEvents()
-        self.stopObservingNotifications()
+    /* func logOut() {
+        //self.stopObservingEvents()
+        //self.stopObservingNotifications()
         //self.stopObservingCandidates()
         LoginManager().logOut()
         Crashlytics.sharedInstance().setUserIdentifier("")
@@ -98,20 +97,20 @@ class CurrentUser: User {
         }
         User.current.value = nil
     }
-    
+
     func deleteAccount() {
         Analytics.Log(event: "Account_delete")
         ref.removeValue()
         self.logOut()
         Auth.auth().currentUser?.delete(completion: nil)
-    }
+    } */
 
-    func load(completion: (() -> Void)? = nil) {
+    /* func load(completion: (() -> Void)? = nil) {
         
         User.current.value = self
         isLoading.value = true
         
-        /* activity.loadFromFirebase(completion: { _, _ in
+        activity.loadFromFirebase(completion: { _, _ in
             print("Loaded activity")
             if self.activity.signUp == nil {
                 self.performSignUpActions { _ in
@@ -124,9 +123,9 @@ class CurrentUser: User {
                     self.finishLoad(completion: completion)
                 })
             }
-        }) */
+        })
 
-    }
+    } */
     
     /* func finishLoad(completion: (() -> Void)? = nil) {
         let group = DispatchGroup()
@@ -852,7 +851,7 @@ class CurrentUser: User {
         }
     }*/
     
-    func getAlbumsFromFacebook(completion: @escaping ([Album]) -> Void) {
+    /* func getAlbumsFromFacebook(completion: @escaping ([Album]) -> Void) {
         if AccessToken.current != nil {
             if firebaseAuthUser != nil {
                 let userAlbumsGraphRequest = UserAlbumsGraphRequest()
@@ -870,7 +869,7 @@ class CurrentUser: User {
         } else {
             print("Failed to load user albums from Facebook: No Facebook access token.")
         }
-    }
+    } */
 
     /*func like(candidate uid: String, visible: Bool? = nil, message: String? = nil, completion: ((Error?) -> Void)? = nil) {
         let like = Like(by: self.uid, on: uid, visible: visible, message: message)
@@ -882,11 +881,11 @@ class CurrentUser: User {
         pass.save(completion: completion)
     } */
     
-    func remove(candidate uid: String, completion: ((Error?) -> Void)? = nil) {
+    /* func remove(candidate uid: String, completion: ((Error?) -> Void)? = nil) {
         ref.child(Constants.User.Candidate.firebaseNode).child(uid).removeValue { (error, _) in
             completion?(error)
         }
-    }
+    } */
     
     /*func dismissTip(tipId: String, completion: ((Error?) -> Void)? = nil) {
         self.ref.child(Constants.User.Tip.firebaseNode).child(tipId).setValue(Event.dateFormatter.string(from: Date())) { (error, _) in
@@ -894,17 +893,7 @@ class CurrentUser: User {
         }
     }*/
     
-    func share(from: UIViewController?) {
-        let buo = BranchUniversalObject(canonicalIdentifier: "app")
-        let lp = BranchLinkProperties()
-        lp.channel = "inapp"
-        lp.feature = "sharing"
-        buo.showShareSheet(with: lp, andShareText: NSLocalizedString("Try Woojo and match with people going to the same events as you!", comment: ""), from: from) { (activity, complete) in
-            print("SHARED", activity, complete)
-        }
-    }
-    
-    enum UnknownRSVPError: Error {
+    /* enum UnknownRSVPError: Error {
         case eventNotFound(String)
         case unknownRawValue(String)
     }
@@ -937,5 +926,5 @@ class CurrentUser: User {
         return try match.commonInfo.commonEvents.reduce(false, { (previousResult, commonEventInfo) -> Bool in
             return try (previousResult && (try rsvpStatus(event: commonEventInfo.id) == .attending) && commonEventInfo.rsvpStatus == .attending)
         })
-    }
+    } */
 }

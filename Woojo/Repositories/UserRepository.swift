@@ -55,8 +55,21 @@ class UserRepository {
         }
     }
 
+    func addDevice(device: Device) -> Promise<Void> {
+        if device.token.isNullOrEmpty()  { return Promise(UserRepositoryError.deviceTokenNullOrEmpty) }
+        return getCurrentUserDatabaseReference().child("devices").child(device.token!).setValuePromise(value: device.dictionary)
+    }
+
     func getBotUid() -> Promise<String?> {
         return getCurrentUserDatabaseReference().child("bot/uid").getDataSnapshot().then { dataSnapshot in return Promise(dataSnapshot.value as? String) }
+    }
+
+    func removeCurrentUser() -> Promise<Void> {
+        return getCurrentUserDatabaseReference().removeValuePromise()
+    }
+
+    enum UserRepositoryError: Error {
+        case deviceTokenNullOrEmpty
     }
     
 }

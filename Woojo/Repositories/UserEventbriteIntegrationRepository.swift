@@ -51,41 +51,33 @@ class UserEventbriteIntegrationRepository: EventIdsToEventsConversion {
                 .flatMap({ self.transformEventIdsToEvents(dataSnapshot: $0, source: .eventbrite) { $0.key } })
     }
 
-    func getEventbriteAccessToken() -> Observable<DataSnapshot> {
-        return getEventbriteAccessTokenReference().rx_observeEvent(event: .value)
+    func getEventbriteAccessToken() -> Observable<String?> {
+        return getEventbriteAccessTokenReference()
+                .rx_observeEvent(event: .value)
+                .map { $0.value as? String }
     }
 
-    func syncEventbriteEvents(completion: @escaping ((Error?) -> Void)) {
-        getEventbriteAccessTokenReference().observeSingleEvent(of: .value, with: { (snapshot) in
-            if let accessToken = snapshot.value as? String {
-                let url = "\(Constants.User.Integrations.Eventbrite.baseUrl)/users/me/orders?token=\(accessToken)&expand=event,event.venue,event.logo&time_filter=all"
-                let request = NSMutableURLRequest(url: URL(string: url)!)
-                request.httpMethod = "GET"
-                let requestAPI = URLSession.shared.dataTask(with: request as URLRequest) {data, response, error in
-                    if (error != nil) {
-                        completion(error)
-                    }
-                    if let httpStatus = response as? HTTPURLResponse , httpStatus.statusCode != 200 {
-                        print("Error response: \(String(describing: response))")
-                    }
-                    if error == nil && data != nil {
-                        do {
-                            let orderResponse = try JSONDecoder().decode(EventbriteOrderResponse.self, from: data!)
-                            DispatchQueue.main.async {
-                                let dict = orderResponse.orders.reduce(into: [String: Bool](), { $0["eventbrite_\($1.event.id)"] = true })
-                                self.writeEventbriteEventIds(eventIds: dict) { error, _ in completion(error) }
-                            }
-                        } catch {
-                            completion(error)
-                        }
-                    }
+    func syncEventbriteEvents() -> Promise<Void> {
+        return getEventbriteAccessToken().toPromise().then { accessToken in
+            if let accessToken = accessToken {
+                return EventbriteRepository.shared.getEvents(accessToken: accessToken).then { events in
+                    let eventIds = events.reduce(into: [String: Bool](), { $0["eventbrite_\($1.id)"] = true })
+                    return self.writeEventbriteEventIds(eventIds: eventIds)
                 }
-                requestAPI.resume()
+            } else {
+                return Promise(EventbriteIntegrationError.syncNoAccessToken)
             }
-        })
+        }
     }
 
-    private func writeEventbriteEventIds(eventIds: [String: Bool], completion: @escaping (Error?, DatabaseReference) -> Void) {
-        getEventbriteEventIdsReference().setValue(eventIds, withCompletionBlock: completion)
+    private func writeEventbriteEventIds(eventIds: [String: Bool]) -> Promise<Void> {
+        return getEventbriteEventIdsReference().setValuePromise(value: eventIds)
+    }
+
+    enum EventbriteIntegrationError: Error {
+        case syncNoAccessToken
+        case syncRequestFailed(error: Error)
+        case syncHttpError(response: HTTPURLResponse)
+        case syncJsonDecodeError(error: Error)
     }
 }

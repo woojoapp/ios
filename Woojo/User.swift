@@ -12,62 +12,61 @@ import FirebaseStorage
 import FacebookCore
 import RxSwift
 
-class User: Equatable {
-    
+class User: Equatable, Codable {
     var uid: String
-    var fbAppScopedID: String?
-    var fbAccessToken: AccessToken?
     var profile: Profile?
-    //var activity: Activity!
-    var botUid: String?
-    
-    static var current: Variable<CurrentUser?> = Variable(nil)
-    
+
     init(uid: String) {
         self.uid = uid
-        profile = Profile(for: self)
-        //activity = Activity(for: self)
-    }
-    
-    var ref: DatabaseReference {
-        get {
-            return Database.database().reference().child(Constants.User.firebaseNode).child(uid)
-        }
-    }
-    
-    var storageRef: StorageReference {
-        get {
-            return Storage.storage().reference().child(Constants.User.firebaseNode).child(uid)
-        }
-    }
-    
-    var matchesRef: DatabaseReference {
-        get {
-            return Database.database().reference().child(Constants.User.Match.firebaseNode).child(uid)
-        }
-    }
-    
-    func unmatch(completion: ((Error?) -> Void)?) {
-        if let currentUid = User.current.value?.uid {
-            Database.database().reference().child(Constants.User.Like.firebaseNode).child(currentUid).child(uid).removeValue { error, _ in
-                completion?(error)
-            }
-        }
-    }
-    
-    func report(message: String? = nil, completion: ((Error?) -> Void)?) {
-        if let by = User.current.value?.uid {
-            let report = Report(by: by, on: uid, message: message)
-            report.save { error in
-                completion?(error)
-            }
-        }
-    }
-    
-    func getMatch(with user: OtherUser, completion: ((Match?) -> ())? = nil) {
-        Match.between(user: self, and: user, completion: completion)
     }
 
+    class Profile: Codable {
+        var uid: String?
+        var firstName: String?
+        var birthday: String?
+        var gender: String?
+        var description: String?
+        var location: Location?
+        var occupation: String?
+        var photoIds: [String: String] = [:]
+
+        private enum CodingKeys: String, CodingKey {
+            case uid, gender, birthday, description, location, occupation
+            case firstName = "first_name"
+            case photoIds = "photos"
+        }
+
+        func getBirthDate() -> Date? {
+            guard let birthday = birthday else { return nil }
+            let shortFormat = DateFormatter()
+            shortFormat.dateFormat = "MM/dd/yyyy"
+            let longFormat = DateFormatter()
+            longFormat.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZ"
+            for format in [shortFormat, longFormat] {
+                if let birthDate = format.date(from: birthday) {
+                    return birthDate
+                }
+            }
+            return nil
+        }
+
+        func getAge() -> Int? {
+            guard let birthDate = getBirthDate() else { return nil }
+            return Calendar.current.dateComponents([Calendar.Component.year], from: birthDate, to: Date()).year
+        }
+
+        class Photo {
+            enum Size: String {
+                case thumbnail
+                case full
+            }
+
+            static let sizes = [Size.thumbnail: 200, Size.full: 414]
+            static let aspectRatio = Float(1.6)
+            static let ppp = 3
+        }
+
+    }
 }
 
 func == (left: User, right: User) -> Bool {

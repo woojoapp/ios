@@ -16,7 +16,7 @@ class OnboardingPostOkViewController: OnboardingPostBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        UserRepository.shared.getProfile()?
+        UserProfileRepository.shared.getProfile()
                 .map{ $0?.firstName ?? "" }
                 .map{ String(format: NSLocalizedString("Looking good, %@!", comment: ""), $0) }
                 .bind(to: titleLabel.rx.text)

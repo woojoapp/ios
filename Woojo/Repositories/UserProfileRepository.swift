@@ -63,7 +63,43 @@ class UserProfileRepository {
         return getCurrentUserDatabaseReference().child("profile/description").setValuePromise(value: description)
     }
 
-    func setPhoto(data: Data, position: Int) -> Promise<Void> {
+    func getPhotoStorageReference(pictureId: String, size: User.Profile.Photo.Size) -> StorageReference {
+        return getCurrentUserStorageReference()
+                .child("profile/photos")
+                .child(pictureId)
+                .child(size.rawValue)
+    }
+
+    func getPhoto(position: Int, size: User.Profile.Photo.Size) -> Observable<StorageReference?> {
+        return getProfileReference(uid: getUid())
+                .child("photos")
+                .child(String(position))
+                .rx_observeEvent(event: .value)
+                .map { $0.value as? String }
+                .map { pictureId in
+                    if let pictureId = pictureId {
+                        return self.getPhotoStorageReference(pictureId: pictureId, size: size)
+                    }
+                    return nil
+                }
+    }
+
+    func getPhotos(size: User.Profile.Photo.Size) -> Observable<[Int: StorageReference]> {
+        return getProfileReference(uid: getUid())
+                .child("photos")
+                .rx_observeEvent(event: .value).map { dataSnapshot in
+                    var photos = [Int: StorageReference]()
+                    while let childSnapshot = dataSnapshot.children.nextObject() as? DataSnapshot {
+                        if let position = Int(childSnapshot.key),
+                           let pictureId = childSnapshot.value as? String {
+                            photos[position] = self.getPhotoStorageReference(pictureId: pictureId, size: size)
+                        }
+                    }
+                    return photos
+                }
+    }
+
+    func setPhoto(data: Data, position: Int) -> Promise<String> {
         return uploadPicture(data: data, size: .full).then { generatedPictureId -> Promise<String> in
             if let squareThumbnailSide = User.Profile.Photo.sizes[.thumbnail] {
                 let targetSize = CGSize(width: squareThumbnailSide, height: squareThumbnailSide)
@@ -73,9 +109,20 @@ class UserProfileRepository {
                 return Promise(UserProfileRepositoryError.pictureResizeFailed)
             }
             return Promise(UserProfileRepositoryError.pictureResizeFailed)
-        }.then { generatedPictureId -> Promise<Void> in
-            return self.setPhotoId(id: generatedPictureId, position: position)
+        }.then { generatedPictureId -> Promise<String> in
+            return self.setPhotoId(id: generatedPictureId, position: position).then { _ in return generatedPictureId }
         }
+    }
+
+    func setPhotoId(position: Int, pictureId: String) -> Promise<Void> {
+        return getCurrentUserDatabaseReference().child("profile/photos").child(String(position)).setValuePromise(value: pictureId)
+    }
+
+    func setPhotoIds(photoIds: [Int: String]) -> Promise<Void> {
+        let dictionary = photoIds.reduce(into: [String: String]()) { (result: inout [String: String], tuple: (key: Int, value: String)) in
+            result[String(tuple.key)] = tuple.value
+        }
+        return getCurrentUserDatabaseReference().child("profile/photos").setValuePromise(value: dictionary)
     }
 
     private func resizePicture(data: Data, targetSize: CGSize) -> Data? {
@@ -106,15 +153,13 @@ class UserProfileRepository {
     }
 
     private func setPhotoId(id: String, position: Int) -> Promise<Void> {
-        return getCurrentUserDatabaseReference()?.child("profile/photos").child(String(position)).setValuePromise(value: id)
+        return getCurrentUserDatabaseReference().child("profile/photos").child(String(position)).setValuePromise(value: id)
     }
 
     private func uploadPicture(data: Data, size: User.Profile.Photo.Size, pictureId: String = UUID().uuidString) -> Promise<String> {
-        return getCurrentUserStorageReference()
-                .child("profile/photos")
-                .child(pictureId)
-                .child(size.rawValue)
-                .putDataPromise(uploadData: data).then { _ in return pictureId }
+        return getPhotoStorageReference(pictureId: pictureId, size: size)
+                .putDataPromise(uploadData: data)
+                .then { _ in return pictureId }
     }
 
     func removePhoto(position: Int) -> Promise<Void> {
@@ -135,6 +180,10 @@ class UserProfileRepository {
                 return Promise(UserProfileRepositoryError.noPhotoIdAtGivenPosition)
             }
         }
+    }
+
+    func setOccupation(occupation: String) -> Promise<Void> {
+        return getCurrentUserDatabaseReference().child("profile/occupation").setValuePromise(value: occupation)
     }
 
     enum UserProfileRepositoryError: Error {

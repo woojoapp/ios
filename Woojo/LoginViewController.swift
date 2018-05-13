@@ -24,7 +24,6 @@ class LoginViewController: UIViewController {
     @IBOutlet var loginFacebook: UIButton!
     
     var onboardingViewController: OnboardingViewController?
-    private let loginManager = LoginManager()
     private var loginView: UIView?
     private let termsText = NSLocalizedString("Terms & Conditions", comment: "")
     private let privacyText = NSLocalizedString("Privacy Policy", comment: "")
@@ -99,20 +98,6 @@ class LoginViewController: UIViewController {
             
         }
         
-        /* let activityDriver = User.current.asObservable()
-            .flatMap { user -> Observable<Bool> in
-                if let currentUser = user {
-                    return currentUser.isLoading.asObservable()
-                } else {
-                    return Variable(false).asObservable()
-                }
-            }
-            .asDriver(onErrorJustReturn: false)
-        
-        activityDriver
-            .drive(self.activityIndicator.rx.isAnimating)
-            .disposed(by: disposeBag) */
-        
         let userDefaults = UserDefaults.standard
         if !userDefaults.bool(forKey: "PRE_LOGIN_ONBOARDING_COMPLETED") {
             loginFacebook.isHidden = true
@@ -145,18 +130,16 @@ class LoginViewController: UIViewController {
         Analytics.setUserProperties(properties: ["pre_login_onboarded": "true"])
         Analytics.Log(event: "Onboarding_pre_complete")
         setWorking(working: true)
-        LoginViewModel.shared.loginWithFacebook(viewController: self).then {
-
-        }.catch { error in
-            self.setWorking(working: false)
-            if error is LoginViewModel.LoginError {
-                switch (error) {
-                    case .facebookPermissionsDeclined(let permissions):
-                        Analytics.Log(event: "Account_log_in_missing_permissions", with: permissions)
-                        showDeclinedPermissionsErrorDialog()
+        LoginViewModel.shared.loginWithFacebook(viewController: self)
+                .catch { error in
+                    self.setWorking(working: false)
+                    if let loginError = error as? LoginManager.LoginError {
+                        if case let .facebookPermissionsDeclined(permissions) = loginError {
+                                Analytics.Log(event: "Account_log_in_missing_permissions", with: permissions)
+                                self.showDeclinedPermissionsErrorDialog()
+                        }
+                    }
                 }
-            }
-        }
     }
 
     private func showDeclinedPermissionsErrorDialog() {
@@ -164,44 +147,6 @@ class LoginViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         self.present(alert, animated: true)
     }
-    
-    /* func handleLogin(result: LoginResult) {
-        setWorking(working: true)
-        switch result {
-        case .success(let acceptedPermissions, let declinedPermissions, let accessToken):
-            var permissions: [String: String] = [:]
-            for permission in acceptedPermissions {
-                permissions[permission.name] = "true"
-                Analytics.setUserProperties(properties: ["accepted_\(permission.name)_permission": "true"])
-            }
-            for permission in declinedPermissions {
-                permissions[permission.name] = "false"
-                Analytics.setUserProperties(properties: ["accepted_\(permission.name)_permission": "false"])
-            }
-            if declinedPermissions.count > 0 && (declinedPermissions.contains(Permission(name: "user_events")) || declinedPermissions.contains(Permission(name: "user_birthday"))) {
-
-            } else {
-                print("Facebook login success here", accessToken.authenticationToken)
-                let credential = FacebookAuthProvider.credential(withAccessToken: accessToken.authenticationToken)
-                Auth.auth().signIn(with: credential) { (user, error) in
-                    if let user = user {
-                        print("Firebase login success \(user.uid)")
-                        Analytics.Log(event: "Account_log_in", with: permissions)
-                    }
-                    if let error = error {
-                        print("Firebase login failure \(error.localizedDescription)")
-                        self.setWorking(working: false)
-                    }
-                }
-            }
-        case .failed(let error):
-            print("Facebook login error: \(error.localizedDescription)")
-            self.setWorking(working: false)
-        case .cancelled:
-            print("Facebook login cancelled.")
-            self.setWorking(working: false)
-        }
-    } */
     
     func dismissOnboarding() {
         onboardingViewController?.dismiss(animated: true, completion: nil)

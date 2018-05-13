@@ -15,11 +15,12 @@ import DZNEmptyDataSet
 class PhotoCollectionViewController: UICollectionViewController {
     
     var photoIndex = 0
-    var album: Album?
-    var photos: [Album.Photo] = []
+    var album: GraphAPI.Album?
+    var photos: [GraphAPI.Album.Photo] = []
     var rskImageCropper: RSKImageCropViewController = RSKImageCropViewController()
     var profileViewController: PhotoSource?
     var reachabilityObserver: AnyObject?
+    private let facebookAlbumPhotosViewModel = FacebookAlbumPhotosViewModel.shared
     
     //@IBOutlet weak var tipView: UIView!
     //@IBOutlet weak var dismissTipButton: UIButton!
@@ -67,10 +68,13 @@ class PhotoCollectionViewController: UICollectionViewController {
     }
     
     @objc func loadAlbumPhotos() {
-        album?.getPhotos { photos in
-            self.photos = photos.filter{ $0.isBigEnough(size: .full) }
-            self.collectionView?.reloadData()
-            self.collectionView?.refreshControl?.endRefreshing()
+        if let albumId = album?.id {
+            facebookAlbumPhotosViewModel.getPhotos(albumId: albumId).then { photos in
+                self.photos = photos ?? []
+                self.collectionView?.reloadData()
+            }.always {
+                self.collectionView?.refreshControl?.endRefreshing()
+            }
         }
     }
 
@@ -97,8 +101,8 @@ class PhotoCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! AlbumPhotoCollectionViewCell
         //cell.imageView.image = nil
-        if let image = photos[indexPath.row].getSmallestBigEnoughImage(size: .thumbnail),
-            let url = image.url {
+        if let image = facebookAlbumPhotosViewModel.getSmallestBigEnoughImage(photos[indexPath.row], size: .thumbnail),
+           let url = image {
             SDWebImageManager
                 .shared()
                 .imageDownloader?

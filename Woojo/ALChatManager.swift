@@ -67,26 +67,28 @@ class ALChatManager: NSObject {
      }*/
     
     func setup() {
-        if let currentUser = User.current.value {
+        UserProfileRepository.shared.getProfile().toPromise().then { profile in
             let alUser : ALUser =  ALUser();
             alUser.applicationId = Constants.Env.Chat.applozicApplicationId
-            alUser.userId = currentUser.uid
-            alUser.displayName = currentUser.profile?.firstName
-            currentUser.profile?.photos.value[0]?.generatePhotoDownloadURL(size: .thumbnail) { url, error in
-                alUser.imageLink = url?.absoluteString
-                ALUserDefaultsHandler.setUserId(alUser.userId)
-                ALUserDefaultsHandler.setDisplayName(alUser.displayName)
-                ALUserDefaultsHandler.setApplicationKey(alUser.applicationId)
-                ALUserDefaultsHandler.setUserAuthenticationTypeId(Int16(APPLOZIC.rawValue))
-                ALUserDefaultsHandler.setProfileImageLink(alUser.imageLink)
-                
-                self.registerUser(alUser) { (response, error) in
-                    if let error = error {
-                        print("Failed to register Applozic user \(error)")
-                    } else {
-                        ALUserDefaultsHandler.setUserKeyString(response.userKey)
-                        ALUserDefaultsHandler.setDeviceKeyString(response.deviceKey)
-                        print("Successful Applozic user registration \(response.message), \(response.userKey), \(response.deviceKey)")
+            alUser.userId = profile?.uid
+            alUser.displayName = profile?.firstName
+            if let pictureId = profile?.photoIds["0"] {
+                UserProfileRepository.shared.getPhotoStorageReference(pictureId: pictureId, size: .thumbnail).downloadURL { url, error in
+                    alUser.imageLink = url?.absoluteString
+                    ALUserDefaultsHandler.setUserId(alUser.userId)
+                    ALUserDefaultsHandler.setDisplayName(alUser.displayName)
+                    ALUserDefaultsHandler.setApplicationKey(alUser.applicationId)
+                    ALUserDefaultsHandler.setUserAuthenticationTypeId(Int16(APPLOZIC.rawValue))
+                    ALUserDefaultsHandler.setProfileImageLink(alUser.imageLink)
+
+                    self.registerUser(alUser) { (response, error) in
+                        if let error = error {
+                            print("Failed to register Applozic user \(error)")
+                        } else {
+                            ALUserDefaultsHandler.setUserKeyString(response.userKey)
+                            ALUserDefaultsHandler.setDeviceKeyString(response.deviceKey)
+                            print("Successful Applozic user registration \(response.message), \(response.userKey), \(response.deviceKey)")
+                        }
                     }
                 }
             }

@@ -10,10 +10,12 @@ import UIKit
 import RxSwift
 import RxCocoa
 import Applozic
+import FirebaseAuth
+import FirebaseStorage
 import PKHUD
 import RSKImageCropper
 
-class ProfileViewController: UITableViewController, PhotoSource {
+class ProfileViewController: UITableViewController, PhotoSource, AuthStateAware {
     @IBOutlet weak var profilePhotoImageView: ProfilePhotoImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
@@ -37,11 +39,14 @@ class ProfileViewController: UITableViewController, PhotoSource {
     fileprivate var previousBio: String?
     fileprivate var previousOccupation: String?
     var reachabilityObserver: AnyObject?
-    
+    var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle? = nil
     let imagePickerController = UIImagePickerController()
     var rskImageCropper: RSKImageCropViewController = RSKImageCropViewController()
     
     var cellBeingMoved: UICollectionViewCell?
+
+    private var profileViewModel = ProfileViewModel.shared
+    private var photos = [Int: StorageReference]()
     
     @IBAction func dismiss(sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
@@ -49,7 +54,7 @@ class ProfileViewController: UITableViewController, PhotoSource {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupDataSources()
+        bindViewModel()
         setupBioTextView()
         setupOccupationTextView()
         imagePickerController.delegate = self
@@ -67,8 +72,8 @@ class ProfileViewController: UITableViewController, PhotoSource {
         stopMonitoringReachability()
     }
     
-    func setupDataSources() {        
-        let userPhotos = User.current.asObservable()
+    func bindViewModel() {
+        /* let userPhotos = User.current.asObservable()
             .flatMap { user -> Observable<[User.Profile.Photo?]> in
                 if let currentUser = user {
                     return currentUser.profile.photos.asObservable()
@@ -90,92 +95,58 @@ class ProfileViewController: UITableViewController, PhotoSource {
                 self.profilePhotoImageView.image = #imageLiteral(resourceName: "placeholder_40x40")
             }
         })
-            .disposed(by: disposeBag)
-        
-        User.current.asObservable()
-            .map{ $0?.profile.displaySummary }
+            .disposed(by: disposeBag) */
+
+        profileViewModel.getPhotos(size: .thumbnail)
+        .subscribe(onNext: { photos in
+            if let main = photos[0] {
+                self.profilePhotoImageView.sd_setImage(with: main)
+            }
+            self.photos = photos
+            self.photosCollectionView.reloadData()
+        }).disposed(by: disposeBag)
+
+        profileViewModel.getNameAge()
             .bind(to: nameLabel.rx.text)
             .disposed(by: disposeBag)
-        
-        User.current.asObservable()
-            .map{ $0?.profile.location?.city }
+
+        profileViewModel.getCity()
             .bind(to: cityLabel.rx.text)
             .disposed(by: disposeBag)
-        
-        User.current.asObservable()
-            .flatMap{ user -> Observable<String> in
-                return user?.profile.occupation.asObservable() ?? Variable<String>("").asObservable()
-            }
+
+        profileViewModel.getOccupation()
             .subscribe(onNext: { occupation in
                 self.occupationsTableViewCell.selectedOccupation = occupation
                 self.occupationLabel.text = occupation
             })
             .disposed(by: disposeBag)
-        
-        /*User.current.asObservable()
-            .map{ $0?.profile }
-            .subscribe(onNext: { profile in
-                self.occupationsTableViewCell.occupations = profile?.occupations
-            })
-            .disposed(by: disposeBag)*/
-        
-        User.current.asObservable()
-            .flatMap { user -> Observable<String> in
-                if let currentUser = user {
-                    return currentUser.profile.description.asObservable()
-                } else {
-                    return Variable(self.bioTextViewPlaceholderText).asObservable()
+
+        profileViewModel.getDescription()
+                .map{ description -> String in
+                    if description.isNullOrEmpty() {
+                        self.bioTableViewCell.bioTextView.textColor = UIColor.lightGray
+                        return self.bioTextViewPlaceholderText
+                    } else {
+                        self.bioTableViewCell.bioTextView.textColor = UIColor.black
+                        return description!
+                    }
                 }
-            }
-            .map{ text -> String in
-                if(text == "") {
-                    self.bioTableViewCell.bioTextView.textColor = UIColor.lightGray
-                    return self.bioTextViewPlaceholderText
-                } else {
-                    self.bioTableViewCell.bioTextView.textColor = UIColor.black
-                    return text
-                }
-            }
-            .bind(to: bioTableViewCell.bioTextView.rx.text)
-            .disposed(by: disposeBag)
-        
-        User.current.asObservable()
-            .flatMap { user -> Observable<String> in
-                if let currentUser = user {
-                    return currentUser.profile.occupation.asObservable()
-                } else {
-                    return Variable(self.occupationTextViewPlaceholderText).asObservable()
-                }
-            }
-            .map{ text -> String in
-                if(text == "") {
+                .bind(to: bioTableViewCell.bioTextView.rx.text)
+                .disposed(by: disposeBag)
+
+
+        profileViewModel.getOccupation()
+            .map{ occupation -> String in
+                if occupation.isNullOrEmpty() {
                     self.occupationsTableViewCell.textView.textColor = UIColor.lightGray
                     return self.occupationTextViewPlaceholderText
                 } else {
                     self.occupationsTableViewCell.textView.textColor = UIColor.black
-                    return text
+                    return occupation!
                 }
             }
             .bind(to: occupationsTableViewCell.textView.rx.text)
             .disposed(by: disposeBag)
-        
-        /* User.current.asObservable()
-            .map{
-                var description = ""
-                if let age = $0?.profile.age {
-                    let ageString = String(describing: age)
-                    description = ageString
-                }
-                if let city = $0?.profile.city {
-                    description = "\(description), \(city)"
-                }
-                if let country = $0?.profile.country {
-                    description = "\(description) (\(country))"
-                }
-                return description
-            }
-            .bind(to: cityLabel.rx.text)
-            .disposed(by: disposeBag) */
         
         self.longPressGestureRecognizer.addTarget(self, action: #selector(longPress))
     }
@@ -339,16 +310,12 @@ extension ProfileViewController: UICollectionViewDelegate {
                 })
                 let removeButton = UIAlertAction(title: NSLocalizedString("Remove", comment: ""), style: .destructive, handler: { (action) -> Void in
                     HUD.show(.progress)
-                    User.current.value?.profile.deleteFiles(forPhotoAt: indexPath.row) { _ in
-                        User.current.value?.profile.remove(photoAt: indexPath.row) { _ in
-                            self.photosCollectionView.reloadItems(at: [indexPath])
-                            HUD.show(.success)
-                            HUD.hide(afterDelay: 1.0)
-                            if let photoCount = User.current.value?.profile.photoCount {
-                                Analytics.setUserProperties(properties: ["profile_photo_count": String(photoCount)])
-                                Analytics.Log(event: "Profile_photo_removed", with: ["photo_count": String(photoCount)])
-                            }
-                        }
+                    self.profileViewModel.removePhoto(position: indexPath.row).then {
+                        self.photosCollectionView.reloadItems(at: [indexPath])
+                        HUD.show(.success)
+                        HUD.hide(afterDelay: 1.0)
+                        Analytics.setUserProperties(properties: ["profile_photo_count": String(self.photos.count)])
+                        Analytics.Log(event: "Profile_photo_removed", with: ["photo_count": String(self.photos.count)])
                     }
                 })
                 let cancelButton = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
@@ -414,13 +381,10 @@ extension ProfileViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ProfilePhotoCollectionViewCell
-        if let photos = User.current.value?.profile.photos.value, let photo = photos[indexPath.row] {
+        if let photo = photos[indexPath.row] {
             cell.photo = photo
+            cell.imageView.sd_setImage(with: photo)
             cell.imageView.contentMode = .scaleAspectFill
-            cell.imageView.image = photo.images[User.Profile.Photo.Size.thumbnail]
-            cell.photo?.download(size: .thumbnail) {
-                cell.imageView.image = photo.images[User.Profile.Photo.Size.thumbnail]
-            }
         } else {
             cell.photo = nil
             cell.imageView.contentMode = .bottomRight
@@ -453,21 +417,22 @@ extension ProfileViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        if let photos = User.current.value?.profile.photos.value, let photo = photos[sourceIndexPath.row] {
-            UserRepository.shared.setPhotoId(id: photo.id, index: destinationIndexPath.row)
-            Analytics.Log(event: "Profile_photos_reordered", with: ["photo_count": String(photos.filter({ $0 != nil }).count)])
+        if let photo = photos[sourceIndexPath.row] {
+            profileViewModel.setPhoto(position: destinationIndexPath.row, photo: photo).then {
+                Analytics.Log(event: "Profile_photos_reordered", with: ["photo_count": String(self.photos.count)])
+            }
         }
         for i in 0..<Int(photoCount) {
             if let cell = collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? ProfilePhotoCollectionViewCell {
                 if let photo = cell.photo {
-                    UserRepository.shared.setPhotoId(id: photo.id, index: i)
+                    profileViewModel.setPhoto(position: i, photo: photo).catch { _ in }
                 } else {
-                    UserRepository.shared.removePhotoId(index: i)
+                    profileViewModel.removePhoto(position: i).catch { _ in }
                 }
             }
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return indexPath.row != 0
     }
@@ -567,21 +532,18 @@ extension ProfileViewController: RSKImageCropViewControllerDelegate {
     func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect) {
         if let reachable = isReachable(), reachable {
             HUD.show(.progress)
-            if let selectedIndex = photosCollectionView.indexPathsForSelectedItems?[0].row {
-                User.current.value?.profile.setPhoto(photo: croppedImage, id: UUID().uuidString, index: selectedIndex) { photo, error in
-                    if error != nil {
-                        HUD.show(.labeledError(title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Failed to add photo", comment: "")))
-                        HUD.hide(afterDelay: 1.0)
-                    } else {
-                        self.navigationController?.dismiss(animated: true, completion: nil)
-                        HUD.show(.labeledSuccess(title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("Photo added!", comment: "")))
-                        HUD.hide(afterDelay: 1.0)
-                    }
+            if let selectedIndex = photosCollectionView.indexPathsForSelectedItems?[0].row,
+               let data = UIImagePNGRepresentation(croppedImage) {
+                profileViewModel.setPhoto(position: selectedIndex, data: data).then { generatedPictureId in
+                    self.navigationController?.dismiss(animated: true, completion: nil)
+                    HUD.show(.labeledSuccess(title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("Photo added!", comment: "")))
+                    HUD.hide(afterDelay: 1.0)
                     self.photosCollectionView.reloadItems(at: [IndexPath(row: selectedIndex, section: 0)])
-                    if let photoCount = User.current.value?.profile.photoCount {
-                        Analytics.setUserProperties(properties: ["profile_photo_count": String(photoCount)])
-                        Analytics.Log(event: "Profile_photo_added", with: ["photo_count": String(photoCount), "source": "library"])
-                    }
+                    Analytics.setUserProperties(properties: ["profile_photo_count": String(self.photos.count)])
+                    Analytics.Log(event: "Profile_photo_added", with: ["photo_count": String(self.photos.count), "source": "library"])
+                }.catch { _ in
+                    HUD.show(.labeledError(title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Failed to add photo", comment: "")))
+                    HUD.hide(afterDelay: 1.0)
                 }
             }
         } else {
@@ -619,14 +581,12 @@ extension ProfileViewController: UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView == bioTableViewCell.bioTextView {
             let newBio = bioTableViewCell.bioTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-            User.current.value?.profile.setDescription(description: newBio, completion: { error in
-                if error != nil {
+            profileViewModel.setDescription(description: newBio).then {
+                Analytics.setUserProperties(properties: ["about_character_count": String(newBio.count)])
+                Analytics.Log(event: "Profile.about_updated", with: ["character_count": String(newBio.count)])
+            }.catch { _ in
                     self.bioTableViewCell.bioTextView.text = self.previousBio
-                } else {
-                    Analytics.setUserProperties(properties: ["about_character_count": String(newBio.count)])
-                    Analytics.Log(event: "Profile.about_updated", with: ["character_count": String(newBio.count)])
-                }
-            })
+            }
             self.tableView.footerView(forSection: 0)?.isHidden = true
             if bioTableViewCell.bioTextView.text == "" {
                 bioTableViewCell.bioTextView.text = bioTextViewPlaceholderText
@@ -637,14 +597,9 @@ extension ProfileViewController: UITextViewDelegate {
             }
         } else {
             let newOccupation = occupationsTableViewCell.textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-            User.current.value?.profile.setOccupation(occupation: newOccupation, completion: { error in
-                if error != nil {
-                    self.occupationsTableViewCell.textView.text = self.previousOccupation
-                } else {
-                    //Analytics.setUserProperties(properties: ["about_character_count": String(newBio.count)])
-                    //Analytics.Log(event: "Profile.about_updated", with: ["character_count": String(newBio.count)])
-                }
-            })
+            profileViewModel.setOccupation(occupation: newOccupation).catch { _ in
+                self.occupationsTableViewCell.textView.text = self.previousOccupation
+            }
             self.tableView.footerView(forSection: 1)?.isHidden = true
             if occupationsTableViewCell.textView.text == "" {
                 occupationsTableViewCell.textView.text = occupationTextViewPlaceholderText

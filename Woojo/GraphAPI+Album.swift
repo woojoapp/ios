@@ -11,5 +11,16 @@ extension GraphAPI {
         var name: String?
         var count: Int?
         var picture: GraphAPI.Picture?
+
+        struct Photo: Codable {
+            var id: String?
+            var images: [Image]
+
+            struct Image: Codable {
+                var width: Int?
+                var height: Int?
+                var source: String?
+            }
+        }
     }
 }

@@ -229,7 +229,7 @@ extension Event {
         return dict
     }
     
-    func loadMatches(completion: (() -> ())? = nil) {
+    /* func loadMatches(completion: (() -> ())? = nil) {
         User.current.value?.matchesRef.queryOrdered(byChild: "\(Constants.User.Match.properties.firebaseNodes.events)/\(id)").queryStarting(atValue: 0).observeSingleEvent(of: .value, with: { (snapshot) in
             let matchesGroup = DispatchGroup()
             self.matches = []
@@ -251,9 +251,9 @@ extension Event {
                 completion?()
             })
         })
-    }
+    } */
     
-    static func get(for id: String, completion: ((Event?) -> Void)? = nil) {
+    /* static func get(for id: String, completion: ((Event?) -> Void)? = nil) {
         let ref = Database.database().reference().child(Constants.Event.firebaseNode).child(id)
         ref.observeSingleEvent(of: .value, with: { snapshot in
             //print("GOT SNAPSHOT", snapshot)
@@ -265,31 +265,7 @@ extension Event {
         ref.setValue(toDictionary(), withCompletionBlock: { error, ref in
             completion?(error)
         })
-    }
-    
-    static func interestScale(rsvpStatus: RSVP) -> Int {
-        var commonality = 0
-        switch rsvpStatus {
-        case .attending:
-            commonality = 4
-        case .unsure:
-            commonality = 3
-        case .notReplied:
-            commonality = 2
-        case .iWasRecommendedOthers:
-            commonality = 0
-        case .otherWasRecommendedMine:
-            commonality = 0
-        }
-        return commonality
-    }
-    
-    static func commonality(rsvpStatusA: RSVP?, rsvpStatusB: RSVP?) -> Int {
-        if rsvpStatusA == nil || rsvpStatusB == nil {
-            return 0
-        }
-        return interestScale(rsvpStatus: rsvpStatusA!) + interestScale(rsvpStatus: rsvpStatusB!)
-    }
+    } */
     
     /* static func getMonthCount(events: [Event]) -> Int {
         var months: [String] = []

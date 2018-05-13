@@ -30,6 +30,7 @@ class EventsViewController: UIViewController {
     @IBOutlet weak var facebookIntegrationImageView: UIImageView!
     @IBOutlet weak var eventbriteIntegrationImageView: UIImageView!
     //private let tipId = "eventFilter"
+    private let eventsViewModel = EventsViewModel.shared
     private var scrolled = false
     private var events: [String: [Event]] = [:]
     private var months: [String] = []
@@ -54,7 +55,7 @@ class EventsViewController: UIViewController {
         tableView.refreshControl = UIRefreshControl()
         tableView.refreshControl?.addTarget(self, action: #selector(refreshEvents), for: UIControlEvents.valueChanged)
         
-        setupDataSource()
+        bindViewModel()
         tableView.tableFooterView = UIView()
         
         let imageView = UIImageView(image: #imageLiteral(resourceName: "close"))
@@ -66,7 +67,7 @@ class EventsViewController: UIViewController {
     }
     
     @objc private func refreshEvents() {
-        UserRepository.shared.syncEventbriteEvents { _ in
+        eventsViewModel.syncEventbriteEvents().always {
             self.tableView.refreshControl?.endRefreshing()
         }
     }
@@ -80,9 +81,9 @@ class EventsViewController: UIViewController {
                 if let event = getEvent(indexPath: indexPath) {
                     if cell.activateArea.frame.contains(point) {
                         if event.active {
-                            UserRepository.shared.deactivateEvent(event: event, completion: { error, _ in })
+                            eventsViewModel.deactivateEvent(event: event).catch { _ in }
                         } else {
-                            UserRepository.shared.activateEvent(event: event, completion: { error, _ in })
+                            eventsViewModel.activateEvent(event: event).catch { _ in }
                         }
                     } else {
                         showDetails(event: event)
@@ -117,8 +118,8 @@ class EventsViewController: UIViewController {
         stopMonitoringReachability()
     }
     
-    func setupDataSource() {
-        UserRepository.shared
+    func bindViewModel() {
+        eventsViewModel
             .getEvents()
             .subscribe(onNext: { (events) in
                 self.events = events.group(by: { $0.monthString }).mapValues{ $0.sorted(by: { $0.start > $1.start }) }
@@ -131,22 +132,22 @@ class EventsViewController: UIViewController {
             }, onError: { (error) in
                 print("Failed to observe events", error)
             }).disposed(by: disposeBag)
-        
-        UserRepository.shared
-            .getEventbriteAccessToken()?
+
+        eventsViewModel
+            .isEventbriteIntegrated()
             .map{
                 let integrateEventbriteLater = UserDefaults.standard.bool(forKey: EventsViewController.INTEGRATE_EVENTBRITE_LATER)
-                return $0.exists() || integrateEventbriteLater
+                return $0 || integrateEventbriteLater
             }
             .asDriver(onErrorJustReturn: false)
             .drive(eventbriteIntegrationView.rx.isHidden)
             .disposed(by: disposeBag)
-        
-        UserRepository.shared
-            .getFacebookAccessToken()?
+
+        eventsViewModel
+            .isFacebookIntegrated()
             .map{
                 let integrateFacebookLater = UserDefaults.standard.bool(forKey: EventsViewController.INTEGRATE_FACEBOOK_LATER)
-                return $0.exists() || integrateFacebookLater
+                return $0 || integrateFacebookLater
             }
             .asDriver(onErrorJustReturn: false)
             .drive(facebookIntegrationView.rx.isHidden)
