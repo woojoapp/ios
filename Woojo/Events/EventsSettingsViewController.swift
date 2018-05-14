@@ -16,6 +16,7 @@ class EventsSettingsViewController: UITableViewController {
     @IBOutlet weak var facebookIntegrationContentView: UIView!
     @IBOutlet weak var facebookIntegrationIconImageView: UIImageView!
     private let disposeBag = DisposeBag()
+    private var eventsSettingsViewModel = EventsSettingsViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,16 +29,14 @@ class EventsSettingsViewController: UITableViewController {
     }
     
     private func setupDataSource() {
-        UserRepository.shared
-            .getEventbriteAccessToken()?
-            .map{ $0.exists() }
+        eventsSettingsViewModel
+            .isEventbriteIntegrated()
             .asDriver(onErrorJustReturn: false)
             .drive(eventbriteIntegrationSwitch.rx.isOn)
             .disposed(by: disposeBag)
         
-        UserRepository.shared
-            .getFacebookAccessToken()?
-            .map{ $0.exists() }
+        eventsSettingsViewModel
+            .isFacebookIntegrated()
             .asDriver(onErrorJustReturn: false)
             .drive(facebookIntegrationSwitch.rx.isOn)
             .disposed(by: disposeBag)
@@ -70,7 +69,7 @@ class EventsSettingsViewController: UITableViewController {
             let eventbriteLoginViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventbriteLoginNavigationViewController") as! UINavigationController
             self.present(eventbriteLoginViewController, animated: true, completion: nil)
         } else {
-            UserRepository.shared.removeEventbriteIntegration(completionBlock: {_, _ in })
+            eventsSettingsViewModel.removeEventbriteIntegration().catch { _ in }
         }
     }
     

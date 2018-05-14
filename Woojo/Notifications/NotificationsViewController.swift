@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class NotificationsViewController: UITableViewController {
     
@@ -15,29 +16,43 @@ class NotificationsViewController: UITableViewController {
     @IBOutlet weak var messageNotificationsSwitch: UISwitch!
     @IBOutlet weak var peopleNotificationsSwitch: UISwitch!
     @IBOutlet weak var eventsNotificationsSwitch: UISwitch!
+    private let disposeBag = DisposeBag()
+    private let notificationsSettingsViewModel = NotificationsSettingsViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindViewModel()
+    }
+    
+    private func bindViewModel() {
+        notificationsSettingsViewModel
+            .getNotificationsState(type: "match")
+            .asDriver(onErrorJustReturn: false)
+            .drive(matchNotificationsSwitch.rx.isOn)
+            .disposed(by: disposeBag)
+        
+        notificationsSettingsViewModel
+            .getNotificationsState(type: "message")
+            .asDriver(onErrorJustReturn: false)
+            .drive(messageNotificationsSwitch.rx.isOn)
+            .disposed(by: disposeBag)
+        
+        notificationsSettingsViewModel
+            .getNotificationsState(type: "people")
+            .asDriver(onErrorJustReturn: false)
+            .drive(peopleNotificationsSwitch.rx.isOn)
+            .disposed(by: disposeBag)
+        
+        notificationsSettingsViewModel
+            .getNotificationsState(type: "events")
+            .asDriver(onErrorJustReturn: false)
+            .drive(eventsNotificationsSwitch.rx.isOn)
+            .disposed(by: disposeBag)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.pushNotificationsSwitch.isOn = UIApplication.shared.isRegisteredForRemoteNotifications
-        User.current.value?.getNotificationsState(type: Constants.User.Settings.Notifications.Types.Match) { enabled in
-            self.matchNotificationsSwitch.isOn = enabled
-            Analytics.setUserProperties(properties: ["match_notifications_enabled": String(enabled)])
-        }
-        User.current.value?.getNotificationsState(type: Constants.User.Settings.Notifications.Types.Message) { enabled in
-            self.messageNotificationsSwitch.isOn = enabled
-            Analytics.setUserProperties(properties: ["message_notifications_enabled": String(enabled)])
-        }
-        User.current.value?.getNotificationsState(type: Constants.User.Settings.Notifications.Types.People) { enabled in
-            self.peopleNotificationsSwitch.isOn = enabled
-            Analytics.setUserProperties(properties: ["people_notifications_enabled": String(enabled)])
-        }
-        User.current.value?.getNotificationsState(type: Constants.User.Settings.Notifications.Types.Events) { enabled in
-            self.eventsNotificationsSwitch.isOn = enabled
-        }
     }
     
     @IBAction func switchNotifications(sender: UISwitch) {
@@ -53,19 +68,13 @@ class NotificationsViewController: UITableViewController {
                 Analytics.Log(event: "Preferences_push_notifications", with: ["enabled": "false"])
             }
         case matchNotificationsSwitch:
-            User.current.value?.setNotificationsState(type: Constants.User.Settings.Notifications.Types.Match, enabled: sender.isOn, completion: nil)
-            Analytics.setUserProperties(properties: ["match_notifications_enabled": String(sender.isOn)])
-            Analytics.Log(event: "Preferences_match_notifications", with: ["enabled": String(sender.isOn)])
+            notificationsSettingsViewModel.setNotificationsState(type: "match", enabled: sender.isOn).catch { _ in }
         case messageNotificationsSwitch:
-            User.current.value?.setNotificationsState(type: Constants.User.Settings.Notifications.Types.Message, enabled: sender.isOn, completion: nil)
-            Analytics.setUserProperties(properties: ["message_notifications_enabled": String(sender.isOn)])
-            Analytics.Log(event: "Preferences_message_notifications", with: ["enabled": String(sender.isOn)])
+            notificationsSettingsViewModel.setNotificationsState(type: "message", enabled: sender.isOn).catch { _ in }
         case peopleNotificationsSwitch:
-            User.current.value?.setNotificationsState(type: Constants.User.Settings.Notifications.Types.People, enabled: sender.isOn, completion: nil)
-            Analytics.setUserProperties(properties: ["people_notifications_enabled": String(sender.isOn)])
-            Analytics.Log(event: "Preferences_people_notifications", with: ["enabled": String(sender.isOn)])
+            notificationsSettingsViewModel.setNotificationsState(type: "people", enabled: sender.isOn).catch { _ in }
         case eventsNotificationsSwitch:
-            User.current.value?.setNotificationsState(type: Constants.User.Settings.Notifications.Types.Events, enabled: sender.isOn, completion: nil)
+            notificationsSettingsViewModel.setNotificationsState(type: "events", enabled: sender.isOn).catch { _ in }
         default: ()
         }
     }

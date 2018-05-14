@@ -10,12 +10,11 @@ import Foundation
 import FacebookCore
 
 struct AlbumPhotosGraphRequest: GraphRequestProtocol {
-    
     struct Response: GraphResponseProtocol {
         
         init(rawResponse: Any?) {
             if let dict = rawResponse as? [String: Any] {
-                photos = try [GraphAPI.Album.Photo](from: dict["data"])
+                photos = try? [GraphAPI.Album.Photo](from: dict["data"]) ?? []
             }
         }
 
@@ -29,7 +28,7 @@ struct AlbumPhotosGraphRequest: GraphRequestProtocol {
             return "\(albumId)/photos"
         }
     }
-    var parameters = ["fields": "id,images"]
+    var parameters: [String : Any]? = ["fields": "id,images"]
     var accessToken = AccessToken.current
     var httpMethod: GraphRequestHTTPMethod = .GET
     var apiVersion: GraphAPIVersion = .defaultVersion

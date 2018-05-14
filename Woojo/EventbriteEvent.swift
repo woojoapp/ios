@@ -19,13 +19,19 @@ class EventbriteEvent: Codable {
     var logo: Logo
     
     func toEvent() -> Event {
-        let event = Event(id: "eventbrite_\(id)", name: name.text, start: Event.dateFormatter.date(from: start.local)!)
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        let event = Event()
+        event.id = "eventbrite_\(id)"
+        event.name = name.text
+        event.start = formatter.date(from: start.local)
         event.description = description.text
         event.place = venue.toPlace()
-        event.pictureURL = URL(string: logo.url)
-        event.coverURL = URL(string: logo.original.url)
+        event.pictureURL = logo.url
+        event.coverURL = logo.original.url
         event.rsvpStatus = Event.RSVP.attending.rawValue
-        event.end = Event.dateFormatter.date(from: end.local)
+        event.end = formatter.date(from: end.local)
         event.attendingCount = capacity
         return event
     }

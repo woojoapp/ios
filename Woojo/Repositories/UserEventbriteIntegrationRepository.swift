@@ -40,9 +40,15 @@ class UserEventbriteIntegrationRepository: EventIdsToEventsConversion {
     private func getEventbriteEventIdsReference() -> DatabaseReference {
         return getEventbriteIntegrationReference().child("events")
     }
+    
+    func isEventbriteIntegrated() -> Observable<Bool> {
+        return getEventbriteAccessTokenReference()
+            .rx_observeEvent(event: .value)
+            .map { $0.exists() }
+    }
 
-    func removeEventbriteIntegration(completionBlock: @escaping (Error?, DatabaseReference) -> Void) {
-        getEventbriteIntegrationReference().removeValue(completionBlock: completionBlock)
+    func removeEventbriteIntegration() -> Promise<Void> {
+        return getEventbriteIntegrationReference().removeValuePromise()
     }
 
     func getEventbriteEvents() -> Observable<[Event]> {
@@ -54,13 +60,21 @@ class UserEventbriteIntegrationRepository: EventIdsToEventsConversion {
     func getEventbriteAccessToken() -> Observable<String?> {
         return getEventbriteAccessTokenReference()
                 .rx_observeEvent(event: .value)
-                .map { $0.value as? String }
+                .map {
+                    print("EVVENT", $0)
+                    return $0.value as? String
+                }
+    }
+    
+    func setEventbriteAccessToken(accessToken: String) -> Promise<Void> {
+        return getEventbriteAccessTokenReference().setValuePromise(value: accessToken)
     }
 
     func syncEventbriteEvents() -> Promise<Void> {
         return getEventbriteAccessToken().toPromise().then { accessToken in
             if let accessToken = accessToken {
                 return EventbriteRepository.shared.getEvents(accessToken: accessToken).then { events in
+                    print("EVVENT", events)
                     let eventIds = events.reduce(into: [String: Bool](), { $0["eventbrite_\($1.id)"] = true })
                     return self.writeEventbriteEventIds(eventIds: eventIds)
                 }

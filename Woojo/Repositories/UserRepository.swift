@@ -18,9 +18,14 @@ class UserRepository {
     private let firebaseAuth = Auth.auth()
     private let firebaseDatabase = Database.database()
     private let firebaseStorage = Storage.storage()
+    private let dateFormatter: DateFormatter
     
     static let shared = UserRepository()
-    private init() {}
+    private init() {
+        self.dateFormatter = DateFormatter()
+        self.dateFormatter.calendar = Calendar(identifier: .iso8601)
+        self.dateFormatter.dateFormat = Constants.Event.dateFormat
+    }
 
     private func getUid() -> String { return firebaseAuth.currentUser!.uid }
 
@@ -35,18 +40,21 @@ class UserRepository {
         return getUserDatabaseReference(uid: getUid())
     }
     
-    // MARK: - User details
+    func getPreferences() -> Observable<Preferences?> {
+        return getCurrentUserDatabaseReference().child("preferences")
+            .rx_observeEvent(event: .value).map { Preferences(from: $0) }
+    }
     
     func setPreferences(preferences: Preferences) -> Promise<Void> {
         return getCurrentUserDatabaseReference().child("preferences").setValuePromise(value: preferences.dictionary)
     }
 
     func setSignUp(date: Date) -> Promise<Void> {
-        return getCurrentUserDatabaseReference().child("activity/sign_up").setValuePromise(value: date)
+        return getCurrentUserDatabaseReference().child("activity/sign_up").setValuePromise(value: dateFormatter.string(from: date))
     }
 
     func setLastSeen(date: Date) -> Promise<Void> {
-        return getCurrentUserDatabaseReference().child("activity/last_seen").setValuePromise(value: date)
+        return getCurrentUserDatabaseReference().child("activity/last_seen").setValuePromise(value: dateFormatter.string(from: date))
     }
 
     func isUserSignedUp() -> Promise<Bool> {

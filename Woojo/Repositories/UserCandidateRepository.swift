@@ -32,9 +32,22 @@ class UserCandidateRepository {
     }
 
     func getCandidate(uid: String) -> Observable<OtherUser?> {
+        return Observable.combineLatest(getCommonInfo(uid: uid), UserProfileRepository.shared.getProfile(uid: uid)) { commonInfo, profile -> OtherUser in
+            let candidate = Candidate(uid: uid)
+            if let commonInfo = commonInfo {
+                candidate.commonInfo = commonInfo
+            }
+            if let profile = profile {
+                candidate.profile = profile
+            }
+            return candidate
+        }
+    }
+    
+    private func getCommonInfo(uid: String) -> Observable<CommonInfo?> {
         return getCurrentUserDatabaseReference().child("candidates").child(uid)
-                .rx_observeEvent(event: .value)
-                .map { try Candidate(from: $0) }
+            .rx_observeEvent(event: .value)
+            .map { CommonInfo(from: $0) }
     }
 
     func getCandidatesQuery() -> DatabaseQuery {
@@ -58,7 +71,7 @@ class UserCandidateRepository {
         }
         if let otherUserReference = otherUserReference {
             let otherUserDataSnapshot = otherUserReference.rx_observeEvent(event: .value)
-            let otherUser = otherUserDataSnapshot.map { try CommonInfo(from: $0) }
+            let otherUser = otherUserDataSnapshot.map { CommonInfo(from: $0) }
             return otherUser
         }
         return Observable.of(nil)

@@ -27,7 +27,7 @@ class UserRecommendedEventsRepository: EventIdsToEventsConversion {
     }
 
     private func getCurrentUserDatabaseReference() -> DatabaseReference {
-        return getUserDatabaseReference(uid: uid)
+        return getUserDatabaseReference(uid: getUid())
     }
 
     private func getRecommendedEventIdsReference() -> DatabaseReference {

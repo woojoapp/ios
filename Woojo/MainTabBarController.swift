@@ -42,28 +42,18 @@ class MainTabBarController: UITabBarController {
     }
 
     func setupDataSource() {
-        User.current.asObservable()
-            .flatMap { user -> Observable<[CurrentUser.Notification]> in
-                if let currentUser = user {
-                    if let deferredEvent = Application.defferedEvent {
-                        self.addWithHUD(event: deferredEvent)
-                    }
-                    return currentUser.notifications.asObservable()
-                } else {
-                    return Variable([]).asObservable()
-                }
-            }
+        UserNotificationRepository.shared.getNotifications()
             .subscribe(onNext: { notifications in
                 if let eventsTabBarItem = self.tabBar.items?[0] {
-                    let eventsNotifications = notifications.filter({ $0 is CurrentUser.EventsNotification })
+                    let eventsNotifications = notifications.filter({ $0 is EventsNotification })
                     eventsTabBarItem.badgeValue = (eventsNotifications.count > 0) ? "" : nil
                 }
                 if let peopleTabBarItem = self.tabBar.items?[1] {
-                    let peopleNotifications = notifications.filter({ $0 is CurrentUser.PeopleNotification })
+                    let peopleNotifications = notifications.filter({ $0 is PeopleNotification })
                     peopleTabBarItem.badgeValue = (peopleNotifications.count > 0) ? "" : nil
                 }
                 if let chatsTabBarItem = self.tabBar.items?[2] {
-                    let interactionNotifications = notifications.filter({ $0 is CurrentUser.InteractionNotification })
+                    let interactionNotifications = notifications.filter({ $0 is InteractionNotification })
                     chatsTabBarItem.badgeValue = (interactionNotifications.count > 0) ? String(interactionNotifications.count) : nil
                 }
             }).disposed(by: disposeBag)
@@ -104,33 +94,32 @@ class MainTabBarController: UITabBarController {
         }
     }
     
-    func addWithHUD(event: Event) {
+    func addWithHUD(eventId: String) {
         //HUD.show(.labeledProgress(title: NSLocalizedString("Adding Event...", comment: ""), subtitle: event.name))
-        User.current.value?.add(event: event, completion: { (error: Error?) -> Void in
+        UserActiveEventRepository.shared.activateEvent(eventId: eventId).catch { _ in }
             
-            /*func showImagelessSuccess() {
-                HUD.show(.labeledSuccess(title: NSLocalizedString("Event added!", comment: ""), subtitle: event.name))
-                HUD.hide(afterDelay: 3.0)
-                Application.defferedEvent = nil
-            }
-            
-            if let pictureURL = event.pictureURL {
-                SDWebImageManager.shared().imageDownloader?.downloadImage(with: pictureURL, options: [], progress: { (_, _, _) in }, completed: { (image, _, error, finished) in
-                    if let image = image, error == nil, finished == true {
-                        HUD.show(.labeledImage(image: image, title: NSLocalizedString("Event added!", comment: ""), subtitle: "\(event.name)"))
-                        HUD.hide(afterDelay: 3.0)
-                        Application.defferedEvent = nil
-                    } else {
-                        showImagelessSuccess()
-                    }
-                })
-            } else {
-                showImagelessSuccess()
-            }*/
+        /*func showImagelessSuccess() {
+            HUD.show(.labeledSuccess(title: NSLocalizedString("Event added!", comment: ""), subtitle: event.name))
+            HUD.hide(afterDelay: 3.0)
             Application.defferedEvent = nil
-            let analyticsEventParameters = ["event_id": event.id,
-                                            "source": "deeplink"]
-            Analytics.Log(event: "Events_event_added", with: analyticsEventParameters)
-        })
+        }
+        
+        if let pictureURL = event.pictureURL {
+            SDWebImageManager.shared().imageDownloader?.downloadImage(with: pictureURL, options: [], progress: { (_, _, _) in }, completed: { (image, _, error, finished) in
+                if let image = image, error == nil, finished == true {
+                    HUD.show(.labeledImage(image: image, title: NSLocalizedString("Event added!", comment: ""), subtitle: "\(event.name)"))
+                    HUD.hide(afterDelay: 3.0)
+                    Application.defferedEvent = nil
+                } else {
+                    showImagelessSuccess()
+                }
+            })
+        } else {
+            showImagelessSuccess()
+        }*/
+        Application.defferedEvent = nil
+        let analyticsEventParameters = ["event_id": eventId,
+                                        "source": "deeplink"]
+        Analytics.Log(event: "Events_event_added", with: analyticsEventParameters)
     }
 }

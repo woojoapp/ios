@@ -24,11 +24,10 @@ class EventbriteRepository {
                 }
                 if error == nil && data != nil {
                     do {
-                        let orderResponse = try EventbriteOrderResponse(from: data!)
+                        print("EVVENTBRITE", data, response)
+                        let orderResponse = EventbriteOrderResponse(from: data!)
                         //let dict = orderResponse.orders.reduce(into: [String: Bool](), { $0["eventbrite_\($1.event.id)"] = true })
                         fulfill(orderResponse?.orders.map { $0.event } ?? [])
-                    } catch {
-                        reject(EventbriteError.jsonDecodeError(error: error))
                     }
                 }
             }

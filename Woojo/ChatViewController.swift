@@ -150,7 +150,7 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
             loadEarlierActionTopConstraint.constant = UIApplication.shared.statusBarFrame.height + navigationController.navigationBar.frame.height
         }
         
-        CurrentUser.Notification.deleteAll(otherId: self.contactIds)
+        UserNotificationRepository.shared.deleteAll(otherId: self.contactIds).catch { _ in }
         
         HUD.hide()
         
@@ -174,27 +174,21 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
     
     @objc func newMessage() {
         scrollTableViewToBottom(withAnimation: true)
-        CurrentUser.Notification.deleteAll(otherId: self.contactIds)
+        UserNotificationRepository.shared.deleteAll(otherId: self.contactIds).catch { _ in }
     }
     
     func wireUnmatchObserver() {
-        Woojo.User.current.asObservable()
-        .subscribe(onNext: { user in
-            if let handle = self.unmatchObserverHandle {
-                user?.matchesRef.removeObserver(withHandle: handle)
+        self.unmatchObserverHandle = UserMatchRepository.shared.getMatchesReference().observe(.childRemoved, with: { (snap) in
+            print("UNMATCH DETECTED", snap.key, self.contactIds)
+            if snap.key == self.contactIds {
+                self.conversationDeleted()
             }
-            self.unmatchObserverHandle = user?.matchesRef.observe(.childRemoved, with: { (snap) in
-                print("UNMATCH DETECTED", snap.key, self.contactIds)
-                if snap.key == self.contactIds {
-                    self.conversationDeleted()
-                }
-            })
-        }).addDisposableTo(disposeBag)
+        })
     }
     
     func unwireUnmatchObserver() {
         if let handle = self.unmatchObserverHandle {
-            Woojo.User.current.value?.matchesRef.removeObserver(withHandle: handle)
+            UserMatchRepository.shared.getMatchesReference().removeObserver(withHandle: handle)
         }
     }
     
@@ -251,22 +245,14 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
         if let userDetailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserDetailsViewController") as? UserDetailsViewController {
             //userDetailsViewController.buttonsType = .options
             userDetailsViewController.chatViewController = self
-            let user = OtherUser(uid: alContact.userId)
-            user.profile?.loadFromFirebase { profile, error in
-                userDetailsViewController.otherUser = user
-                User.current.value?.getMatch(with: user, completion: { (match) in
-                    if let match = match {
-                        userDetailsViewController.isMatch = true
-                        userDetailsViewController.otherUser?.commonInfo = match.commonInfo
-                        self.present(userDetailsViewController, animated: true, completion: {
-                            let closeTapGestureRecognizer = UITapGestureRecognizer(target: userDetailsViewController, action: #selector(userDetailsViewController.dismiss(sender:)))
-                            //userDetailsViewController.addGestureRecognizer(closeTapGestureRecognizer)
-                            // let toggleTapGestureRecognizer = UITapGestureRecognizer(target: userDetailsViewController.cardView, action: #selector(userDetailsViewController.cardView.toggleDescription))
-                            // userDetailsViewController.cardView.carouselView.addGestureRecognizer(toggleTapGestureRecognizer)
-                        })
-                    }
-                })
-            }
+            userDetailsViewController.otherUserId = self.contactIds
+            userDetailsViewController.otherUserType = Match.self
+            self.present(userDetailsViewController, animated: true) //, completion: {
+                //let closeTapGestureRecognizer = UITapGestureRecognizer(target: userDetailsViewController, action: #selector(userDetailsViewController.dismiss(sender:)))
+                //userDetailsViewController.addGestureRecognizer(closeTapGestureRecognizer)
+                // let toggleTapGestureRecognizer = UITapGestureRecognizer(target: userDetailsViewController.cardView, action: #selector(userDetailsViewController.cardView.toggleDescription))
+                // userDetailsViewController.cardView.carouselView.addGestureRecognizer(toggleTapGestureRecognizer)
+            //})
         }
     }
     

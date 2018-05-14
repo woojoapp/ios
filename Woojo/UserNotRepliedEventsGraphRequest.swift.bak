@@ -9,7 +9,7 @@
 import Foundation
 import FacebookCore
 
-struct UserNotRepliedEventsGraphRequest: GraphRequestProtocol {
+/* struct UserNotRepliedEventsGraphRequest: GraphRequestProtocol {
     
     struct Response: GraphResponseProtocol {
         
@@ -33,8 +33,10 @@ struct UserNotRepliedEventsGraphRequest: GraphRequestProtocol {
         
     }
     
+    var type: String?
     var graphPath = Constants.GraphRequest.UserEvents.path
     var parameters: [String: Any]? = {
+        let parameters = [String: String]()
         let fields = [Constants.Event.properties.graphAPIKeys.id,
                       Constants.Event.properties.graphAPIKeys.name,
                       Constants.Event.properties.graphAPIKeys.start,
@@ -44,6 +46,7 @@ struct UserNotRepliedEventsGraphRequest: GraphRequestProtocol {
                       Constants.Event.properties.graphAPIKeys.rsvpStatus,
                       "cover{source}",
                       Constants.GraphRequest.UserEvents.fieldPictureUrl]
+        parameters["fields"] =
         return [Constants.GraphRequest.fields:fields.joined(separator: Constants.GraphRequest.fieldsSeparator),
                 "type": "not_replied",
                 "since": Event.dateFormatter.string(from: Calendar.current.date(byAdding: .month, value: -1, to: Date())!)]
@@ -52,6 +55,5 @@ struct UserNotRepliedEventsGraphRequest: GraphRequestProtocol {
     var httpMethod: GraphRequestHTTPMethod = .GET
     var apiVersion: GraphAPIVersion = .defaultVersion
     
-}
-
-
+    init(type: String? = nil)
+} */

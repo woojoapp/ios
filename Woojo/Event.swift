@@ -11,32 +11,51 @@ import FirebaseDatabase
 import RxSwift
 import RxCocoa
 
-class Event {
-    
-    var id: String
-    var name: String
-    var start: Date
+class Event: Codable {
+    var id: String?
+    var name: String?
+    var start: Date?
     var end: Date?
     var place: Place?
-    var pictureURL: URL?
-    var coverURL: URL?
+    var pictureURL: String?
+    var coverURL: String?
     var description: String?
     var attendingCount: Int?
     var interestedCount: Int?
     var noReplyCount: Int?
-    var rsvpStatus: String = "unsure"
     var type: String?
-    var matches: [User] = []
-    var source: Source?
+    
+    private enum CodingKeys: String, CodingKey {
+        case id, name, place, type, description
+        case start = "start_time"
+        case end = "end_time"
+        case pictureURL = "picture_url"
+        case coverURL = "cover_url"
+        case attendingCount = "attending_count"
+        case interestedCount = "interested_count"
+        case noReplyCount = "noreply_count"
+    }
+
+    var rsvpStatus: String = "unsure"
+    var source: Source = .recommended
     var active: Bool = false
     
-    var ref: DatabaseReference {
-        get {
-            return Database.database().reference().child(Constants.Event.firebaseNode).child(id)
-        }
+    enum RSVP: String, Codable {
+        case attending
+        case unsure
+        case notReplied = "not_replied"
+        case iWasRecommendedOthers = "i_was_recommended_others"
+        case otherWasRecommendedMine = "other_was_recommended_mine"
     }
     
-    var timesString: String {
+    enum Source: String, Codable {
+        case facebook
+        case eventbrite
+        case recommended
+        case sponsored
+    }
+    
+    /* var timesString: String {
         get {
             var timesString = Event.humanDateFormatter.string(from: start)
             if let end = end {
@@ -72,17 +91,10 @@ class Event {
         get {
             return Event.sectionHumanDateFormatter.string(from: start)
         }
-    }
-    
-    init(id: String, name: String, start: Date) {
-        self.id = id
-        self.name = name
-        self.start = start
-    }
-    
+    } */
 }
 
-extension Event {
+/* extension Event {
     static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .iso8601)
@@ -119,7 +131,7 @@ extension Event {
         return formatter
     }()
     
-    static func from(firebase snapshot: DataSnapshot) -> Event? {
+    /* static func from(firebase snapshot: DataSnapshot) -> Event? {
         if let value = snapshot.value as? [String:Any],
             let id = value[Constants.Event.properties.firebaseNodes.id] as? String,
             let name = value[Constants.Event.properties.firebaseNodes.name] as? String,
@@ -229,7 +241,7 @@ extension Event {
         return dict
     }
     
-    /* func loadMatches(completion: (() -> ())? = nil) {
+    func loadMatches(completion: (() -> ())? = nil) {
         User.current.value?.matchesRef.queryOrdered(byChild: "\(Constants.User.Match.properties.firebaseNodes.events)/\(id)").queryStarting(atValue: 0).observeSingleEvent(of: .value, with: { (snapshot) in
             let matchesGroup = DispatchGroup()
             self.matches = []
@@ -280,23 +292,4 @@ extension Event {
         return monthCount
     } */
 
-}
-
-extension Event {
-    enum RSVP: String, Codable {
-        case attending
-        case unsure
-        case notReplied = "not_replied"
-        case iWasRecommendedOthers = "i_was_recommended_others"
-        case otherWasRecommendedMine = "other_was_recommended_mine"
-    }
-}
-
-extension Event {
-    enum Source: String, Codable {
-        case facebook
-        case eventbrite
-        case recommended
-        case sponsored
-    }
-}
+} */

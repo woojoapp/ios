@@ -14,42 +14,53 @@ struct UserEventsGraphRequest: GraphRequestProtocol {
    struct Response: GraphResponseProtocol {
         
         init(rawResponse: Any?) {
-            self.rawResponse = rawResponse
             if let dict = rawResponse as? [String:Any] {
-                let events = dict[Constants.GraphRequest.UserEvents.keys.data] as! NSArray
-                for eventData in events {
-                    if let event = Event.from(graphAPI: eventData as? [String:Any]) {
-                        self.events.append(event)
-                    }
-                }
+                events = [GraphAPI.Event](from: dict["data"])
             }
         }
-        
-        var dictionaryValue: [String : Any]? {
-            return rawResponse as? [String : Any]
-        }
-        var rawResponse: Any?
-        var events: [Event] = []
+    
+        var events: [GraphAPI.Event]?
         
     }
     
-    var graphPath = Constants.GraphRequest.UserEvents.path
-    var parameters: [String: Any]? = {
-        let fields = [Constants.Event.properties.graphAPIKeys.id,
-                      Constants.Event.properties.graphAPIKeys.name,
-                      Constants.Event.properties.graphAPIKeys.start,
-                      Constants.Event.properties.graphAPIKeys.end,
-                      Constants.Event.properties.graphAPIKeys.place,
-                      Constants.Event.properties.graphAPIKeys.attendingCount,
-                      Constants.Event.properties.graphAPIKeys.rsvpStatus,
-                      "cover{source}",
-                      Constants.GraphRequest.UserEvents.fieldPictureUrl]
-        return [Constants.GraphRequest.fields:fields.joined(separator: Constants.GraphRequest.fieldsSeparator),
-                "since": Event.dateFormatter.string(from: Calendar.current.date(byAdding: .month, value: -1, to: Date())!)]
+    static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        return formatter
     }()
-    var accessToken: AccessToken? = AccessToken.current
+    
+    var type: String?
+    var graphPath = Constants.GraphRequest.UserEvents.path
+    var parameters: [String: Any]? {
+        get {
+            var parameters = [String: String]()
+            let fields = ["id",
+                          "name",
+                          "place",
+                          "start_time",
+                          "end_time",
+                          "picture.type(normal){url}",
+                          "cover{source}",
+                          "attending_count",
+                          "interested_count",
+                          "noreply_count",
+                          "description",
+                          "type"]
+            parameters["fields"] = fields.joined(separator: ",")
+            if let type = type {
+                parameters["type"] = type
+            }
+            parameters["since"] = UserEventsGraphRequest.dateFormatter.string(from: Calendar.current.date(byAdding: .month, value: -1, to: Date())!)
+            return parameters
+        }
+    }
+    var accessToken = AccessToken.current
     var httpMethod: GraphRequestHTTPMethod = .GET
     var apiVersion: GraphAPIVersion = .defaultVersion
     
+    init(type: String? = nil) {
+        self.type = type
+    }
 }
 

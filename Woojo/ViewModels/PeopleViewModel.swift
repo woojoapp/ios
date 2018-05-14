@@ -23,9 +23,9 @@ class PeopleViewModel {
     func getOtherUser<T: OtherUser>(uid: String, otherUserType: T.Type) -> Observable<OtherUser?> {
         switch (otherUserType) {
         case is Candidate.Type:
-            return UserCandidateRepository.shared.getCandidate(uid: uid)
+            return getCandidate(uid: uid)
         case is Match.Type:
-            return UserMatchRepository.shared.getMatch(uid: uid)
+            return getMatch(uid: uid)
         default:
             return Observable.of(nil)
         }

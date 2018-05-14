@@ -49,9 +49,8 @@ class AboutTableViewController: UITableViewController {
                         }
                         break
                     case 2:
-                        if let botUid = User.current.value?.botUid,
-                            let applicationDelegate = UIApplication.shared.delegate as? Application {
-                            applicationDelegate.navigateToChat(otherUid: botUid)
+                        if let applicationDelegate = UIApplication.shared.delegate as? Application {
+                            applicationDelegate.navigateToChat(otherUid: "woojo-female")
                         }
                     default:
                         return

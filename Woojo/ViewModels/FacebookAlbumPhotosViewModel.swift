@@ -11,6 +11,10 @@ class FacebookAlbumPhotosViewModel {
 
     private init() {}
 
+    func setPhoto(position: Int, data: Data) -> Promise<String> {
+        return UserProfileRepository.shared.setPhoto(data: data, position: position)
+    }
+
     func getPhotos(albumId: String) -> Promise<[GraphAPI.Album.Photo]?> {
         return FacebookRepository.shared.getAlbumPhotos(albumId: albumId)
     }
@@ -30,7 +34,7 @@ class FacebookAlbumPhotosViewModel {
         return false
     }
 
-    func getSmallestBigEnoughImage(photo: GraphAPI.Album.Photo, size: User.Profile.Photo.Size) -> Image? {
+    func getSmallestBigEnoughImage(photo: GraphAPI.Album.Photo, size: User.Profile.Photo.Size) -> GraphAPI.Album.Photo.Image? {
         let biggerImages = photo.images.filter{ self.isBiggerThan(image: $0, size: size) }
         if biggerImages.count == 0 {
             print("Couldn't find an image big enough to fit format")

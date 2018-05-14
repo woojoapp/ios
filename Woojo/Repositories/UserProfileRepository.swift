@@ -48,7 +48,7 @@ class UserProfileRepository {
     func getProfile(uid: String?) -> Observable<User.Profile?> {
         return getProfileReference(uid: getUid())
                 .rx_observeEvent(event: .value)
-                .map{ try User.Profile(from: $0) }
+                .map{ User.Profile(from: $0) }
     }
 
     func getProfile() -> Observable<User.Profile?> {
@@ -82,6 +82,25 @@ class UserProfileRepository {
                     }
                     return nil
                 }
+    }
+    
+    func getPhotoAsImage(position: Int, size: User.Profile.Photo.Size) -> Observable<UIImage?> {
+        return getPhoto(position: position, size: size).flatMap { photo -> Observable<UIImage?> in
+            if let photo = photo {
+                return Observable.create { observer -> Disposable in
+                    UIImageView().sd_setImage(with: photo, placeholderImage: nil, completion: { image, error, _, _ in
+                        if let error = error {
+                            observer.on(.error(error))
+                        } else {
+                            observer.on(.next(image))
+                            observer.on(.completed)
+                        }
+                    })
+                    return Disposables.create()
+                }
+            }
+            return Observable.just(nil)
+        }
     }
 
     func getPhotos(size: User.Profile.Photo.Size) -> Observable<[Int: StorageReference]> {

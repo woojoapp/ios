@@ -15,7 +15,7 @@ struct UserAlbumsGraphRequest: GraphRequestProtocol {
         
         init(rawResponse: Any?) {
             if let dict = rawResponse as? [String: Any] {
-                albums = try [GraphAPI.Album](from: dict["data"])
+                albums = try? [GraphAPI.Album](from: dict["data"]) ?? []
             }
         }
 
@@ -23,7 +23,7 @@ struct UserAlbumsGraphRequest: GraphRequestProtocol {
     }
     
     var graphPath = "/me/albums"
-    var parameters = ["fields": "id,name,count,picture.type(small){url}"]
+    var parameters: [String: Any]? = ["fields": "id,name,count,picture.type(small){url}"]
     var accessToken = AccessToken.current
     var httpMethod: GraphRequestHTTPMethod = .GET
     var apiVersion: GraphAPIVersion = .defaultVersion

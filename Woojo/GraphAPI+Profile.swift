@@ -9,7 +9,7 @@ extension GraphAPI {
     struct Profile: Codable {
         var id: String?
         var firstName: String?
-        var birthday: Date?
+        var birthday: String?
         var location: GraphAPI.Location?
     }
 }

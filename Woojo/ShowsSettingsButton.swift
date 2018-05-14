@@ -34,30 +34,15 @@ extension ShowsSettingsButton where Self: UIViewController {
         settingsButton.layer.cornerRadius = settingsButton.frame.width / 2
         settingsButton.layer.masksToBounds = true
         
+        settingsButton.imageView?.contentMode = .scaleAspectFill
+        
         settingsItem.customView = settingsButton
         
         self.navigationItem.setRightBarButton(settingsItem, animated: true)
         
-        User.current.asObservable()
-            .flatMap { user -> Observable<[User.Profile.Photo?]> in
-                if let currentUser = user {
-                    return currentUser.profile.photos.asObservable()
-                } else {
-                    return Variable([nil]).asObservable()
-                }
-            }
-            .map { photos -> UIImage in
-                if let profilePhoto = photos[0], let image = profilePhoto.images[User.Profile.Photo.Size.thumbnail] {
-                    return image
-                } else {
-                    return #imageLiteral(resourceName: "placeholder_40x40")
-                }
-            }
+        UserProfileRepository.shared.getPhotoAsImage(position: 0, size: .thumbnail)
             .subscribe(onNext: { image in
-                if (image != nil) {
-                    settingsButton.imageView?.contentMode = .scaleAspectFill
-                    settingsButton.setImage(image, for: .normal)
-                }
+                if let image = image { settingsButton.setImage(image, for: .normal) }
             }).disposed(by: disposeBag)
         
     }

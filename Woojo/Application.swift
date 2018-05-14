@@ -198,8 +198,8 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     if let action = params["action"] as? String, action == "add_event",
                         let eventId = params["event_id"] as? String {
                         EventRepository.shared.get(eventId: eventId).toPromise().then { event in
-                            if let event = event {
-                                UserActiveEventRepository.shared.activateEvent(event: event).catch { _ in }
+                            if let eventId = event?.id {
+                                UserActiveEventRepository.shared.activateEvent(eventId: eventId).catch { _ in }
                                 Application.defferedEvent = event
                             }
                         }
@@ -207,6 +207,10 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
             }
         })
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.rootViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController")
+        self.window?.makeKeyAndVisible()
         
         return true
     }

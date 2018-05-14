@@ -14,7 +14,7 @@ extension GraphAPI {
             var width: Int?
             var height: Int?
             var url: String?
-            var data: Foundation.Data?
+            var data: Foundation.Data? = nil
 
             private enum CodingKeys: String, CodingKey {
                 case width, height, url

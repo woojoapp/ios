@@ -15,7 +15,7 @@ struct UserPageLikesGraphRequest: GraphRequestProtocol {
         
         init(rawResponse: Any?) {
             if let dict = rawResponse as? [String: Any] {
-                pageLikes = try [GraphAPI.PageLike](from: dict["data"])
+                pageLikes = try? [GraphAPI.PageLike](from: dict["data"]) ?? []
             }
         }
         

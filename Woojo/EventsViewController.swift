@@ -39,6 +39,33 @@ class EventsViewController: UIViewController {
     private static let HIDE_EVENTS_TIP = "HIDE_EVENTS_TIP"
     private static let INTEGRATE_EVENTBRITE_LATER = "INTEGRATE_EVENTBRITE_LATER"
     private static let INTEGRATE_FACEBOOK_LATER = "INTEGRATE_FACEBOOK_LATER"
+    private static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.dateFormat = Constants.Event.dateFormat
+        return formatter
+    }()
+    
+    private static let humanDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.dateFormat = Constants.Event.humanDateFormat
+        return formatter
+    }()
+    
+    private static let sectionDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.dateFormat = "yyyyMM"
+        return formatter
+    }()
+    
+    private static let sectionHumanDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.dateFormat = "MMMM yyyy"
+        return formatter
+    }()
     
     
     override func viewDidLoad() {
@@ -78,12 +105,12 @@ class EventsViewController: UIViewController {
                 let indexPath = tableView.indexPathForRow(at: tapGestureRecognizer.location(in: tableView)),
                 let cell = tableView.cellForRow(at: indexPath) as? MyEventsTableViewCell {
                 let point = tapGestureRecognizer.location(in: cell)
-                if let event = getEvent(indexPath: indexPath) {
+                if let event = getEvent(indexPath: indexPath), let eventId = event.id {
                     if cell.activateArea.frame.contains(point) {
                         if event.active {
-                            eventsViewModel.deactivateEvent(event: event).catch { _ in }
+                            eventsViewModel.deactivateEvent(eventId: eventId).catch { _ in }
                         } else {
-                            eventsViewModel.activateEvent(event: event).catch { _ in }
+                            eventsViewModel.activateEvent(eventId: eventId).catch { _ in }
                         }
                     } else {
                         showDetails(event: event)
@@ -105,12 +132,12 @@ class EventsViewController: UIViewController {
         super.viewWillAppear(animated)
         startMonitoringReachability()
         checkReachability()
-        User.current.value?.activity.setLastSeen()
+        UserRepository.shared.setLastSeen(date: Date()).catch { _ in }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        CurrentUser.Notification.deleteAll(type: "events")
+        UserNotificationRepository.shared.deleteAll(type: "events").catch { _ in }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -122,7 +149,8 @@ class EventsViewController: UIViewController {
         eventsViewModel
             .getEvents()
             .subscribe(onNext: { (events) in
-                self.events = events.group(by: { $0.monthString }).mapValues{ $0.sorted(by: { $0.start > $1.start }) }
+                print("EVVENTS", events)
+                self.events = events.group(by: { EventsViewController.sectionDateFormatter.string(from: $0.start!) }).mapValues{ $0.sorted(by: { $0.start! > $1.start! }) }
                 self.months = Array(self.events.keys).sorted().reversed()
                 self.tableView.reloadData()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
@@ -154,9 +182,21 @@ class EventsViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
+    /*private func getMonthString(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.dateFormat = "yyyyMM"
+        return formatter.string(from: date)
+    }*/
+    
     private func disableFacebookIntegration() {
         facebookIntegrationActiveArea.alpha = 0.3
         facebookIntegrationImageView.image = #imageLiteral(resourceName: "Facebook icon").desaturate()
+    }
+    
+    @IBAction func integrateEventbrite() {
+        let eventbriteLoginViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventbriteLoginNavigationViewController") as! UINavigationController
+        self.present(eventbriteLoginViewController, animated: true, completion: nil)
     }
     
     @IBAction func displayFacebookAlert() {
@@ -178,7 +218,7 @@ class EventsViewController: UIViewController {
     private func scrollToNow() {
         if !self.scrolled {
             if let month = self.months.reversed().first(where: {
-                if let current = Int($0), let reference = Int(Event.sectionDateFormatter.string(from: Date())) {
+                if let current = Int($0), let reference = Int(EventsViewController.sectionDateFormatter.string(from: Date())) {
                     return current >= reference
                 }
                 return false
@@ -197,9 +237,7 @@ class EventsViewController: UIViewController {
     private func showDetails(event: Event) {
         let eventDetailsViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventDetailsViewController") as! EventDetailsViewController
         eventDetailsViewController.event = event
-        eventDetailsViewController.event?.loadMatches {
-            self.navigationController?.pushViewController(eventDetailsViewController, animated: true)
-        }
+        navigationController?.pushViewController(eventDetailsViewController, animated: true)
     }
     
     @IBAction func dismissTip() {
@@ -228,8 +266,8 @@ extension EventsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if let monthAsDate = Event.sectionDateFormatter.date(from: months[section]) {
-            return Event.sectionHumanDateFormatter.string(from: monthAsDate).capitalized
+        if let monthAsDate = EventsViewController.sectionDateFormatter.date(from: months[section]) {
+            return EventsViewController.sectionHumanDateFormatter.string(from: monthAsDate).capitalized
         }
         return nil
     }

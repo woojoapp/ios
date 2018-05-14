@@ -38,11 +38,16 @@ class UserActiveEventRepository {
                 .rx_observeEvent(event: .value)
     }
 
-    func activateEvent(event: Event) -> Promise<Void> {
-        return getActiveEventsInfoReference().child(event.id).setValuePromise(value: event.rsvpStatus)
+    func activateEvent(eventId: String, rsvpStatus: String? = "unsure") -> Promise<Void> {
+        return getActiveEventsInfoReference().child(eventId).setValuePromise(value: rsvpStatus)
     }
 
-    func deactivateEvent(event: Event) -> Promise<Void> {
-        return getActiveEventsInfoReference().child(event.id).removeValuePromise()
+    func deactivateEvent(eventId: String) -> Promise<Void> {
+        
+        return getActiveEventsInfoReference().child(eventId).removeValuePromise()
+    }
+    
+    enum UserActiveEventRepositoryError: Error {
+        case eventIdMissing
     }
 }

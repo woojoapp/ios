@@ -57,7 +57,7 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIG
         
         reloadData()
         
-        User.current.value?.activity.setLastSeen()
+        UserRepository.shared.setLastSeen(date: Date())
     }
     
     @objc func enteredForeground() {

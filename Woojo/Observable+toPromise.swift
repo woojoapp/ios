@@ -9,7 +9,7 @@ import Promises
 extension Observable {
     func toPromise() -> Promise<Element> {
         return Promise<Element> { fulfill, reject in
-            _ = self.asSingle().subscribe(onSuccess: {
+            _ = self.take(1).asSingle().subscribe(onSuccess: {
                 fulfill($0)
             }, onError: {
                 reject($0)

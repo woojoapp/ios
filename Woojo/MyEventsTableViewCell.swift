@@ -42,12 +42,19 @@ class MyEventsTableViewCell: UITableViewCell {
         return formatter
     }()
     
+    static let humanDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.dateFormat = "dd MMM yyyy, HH:mm"
+        return formatter
+    }()
+    
     func populate(with event: Event?) {
         populateDateOrImage(event: event)
         nameLabel.text = event?.name
         populatePlace(event: event)
         if let start = event?.start {
-            dateLabel?.text = Event.humanDateFormatter.string(from: start)
+            dateLabel?.text = MyEventsTableViewCell.humanDateFormatter.string(from: start)
         }
         sourceLabel.text = getSourceText(event: event)
         set(active: event?.active ?? false, event: event)
@@ -75,11 +82,13 @@ class MyEventsTableViewCell: UITableViewCell {
         thumbnailView.layer.cornerRadius = 12.0
         thumbnailView.layer.masksToBounds = true
         thumbnailView.contentMode = .scaleAspectFill
-        if let pictureURL = event?.pictureURL {
+        if let urlString = event?.pictureURL,
+            let pictureURL = URL(string: urlString) {
             setImage(pictureURL: pictureURL, active: event?.active ?? false)
             setDateVisibility(hidden: true)
         } else {
-            if let pictureURL = event?.coverURL {
+            if let urlString = event?.coverURL,
+                let pictureURL = URL(string: urlString) {
                 setImage(pictureURL: pictureURL, active: event?.active ?? false)
                 setDateVisibility(hidden: true)
             } else {
@@ -106,8 +115,8 @@ class MyEventsTableViewCell: UITableViewCell {
     }
     
     private func getSourceText(event: Event?) -> String? {
-        if let event = event, let source = event.source {
-            switch source {
+        if let event = event {
+            switch event.source {
             case .eventbrite: return NSLocalizedString("You have a ticket", comment: "")
             case .facebook:
                 switch event.rsvpStatus {

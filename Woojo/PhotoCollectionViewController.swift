@@ -101,8 +101,9 @@ class PhotoCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! AlbumPhotoCollectionViewCell
         //cell.imageView.image = nil
-        if let image = facebookAlbumPhotosViewModel.getSmallestBigEnoughImage(photos[indexPath.row], size: .thumbnail),
-           let url = image {
+        if let image = facebookAlbumPhotosViewModel.getSmallestBigEnoughImage(photo: photos[indexPath.row], size: .thumbnail),
+           let urlString = image.source,
+           let url = URL(string: urlString) {
             SDWebImageManager
                 .shared()
                 .imageDownloader?
@@ -134,7 +135,9 @@ class PhotoCollectionViewController: UICollectionViewController {
         /*if !photos[indexPath.row].isBigEnough(size: .full) {
             return
         }*/
-        if let image = photos[indexPath.row].getBiggestImage(), let url = image.url {
+        if let image = facebookAlbumPhotosViewModel.getBiggestImage(photo: photos[indexPath.row]),
+           let urlString = image.source,
+           let url = URL(string: urlString) {
             do {
                 let data = try Data(contentsOf: url)
                 let uiImage = UIImage(data: data)
@@ -222,23 +225,19 @@ extension PhotoCollectionViewController: RSKImageCropViewControllerDelegate {
     func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect) {
         if let reachable = isReachable(), reachable {
             HUD.show(.progress)
-            //if let selectedIndex = collectionView?.indexPathsForSelectedItems?[0].row/*, let id = photos[selectedIndex].id*/ {
-                User.current.value?.profile.setPhoto(photo: croppedImage, id: UUID().uuidString, index: self.photoIndex) { photo, error in
-                    if error != nil {
-                        HUD.show(.labeledError(title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Failed to add photo", comment: "")))
-                        HUD.hide(afterDelay: 1.0)
-                    } else {
-                        self.navigationController?.dismiss(animated: true, completion: nil)
-                        HUD.show(.labeledSuccess(title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("Photo added!", comment: "")))
-                        HUD.hide(afterDelay: 1.0)
-                    }
+            if let data = UIImagePNGRepresentation(croppedImage) {
+                self.facebookAlbumPhotosViewModel.setPhoto(position: self.photoIndex, data: data).then { _ in
+                    self.navigationController?.dismiss(animated: true, completion: nil)
+                    HUD.show(.labeledSuccess(title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("Photo added!", comment: "")))
+                    HUD.hide(afterDelay: 1.0)
                     self.profileViewController?.photosCollectionView.reloadItems(at: [IndexPath(row: self.photoIndex, section: 0)])
-                    if let photoCount = User.current.value?.profile.photoCount {
-                        Analytics.setUserProperties(properties: ["profile_photo_count": String(photoCount)])
-                        Analytics.Log(event: "Profile_photo_added", with: ["photo_count": String(photoCount), "source": "facebook"])
-                    }
+                    Analytics.setUserProperties(properties: ["profile_photo_count": String(self.photos.count)])
+                    Analytics.Log(event: "Profile_photo_added", with: ["photo_count": String(self.photos.count), "source": "facebook"])
+                }.catch { _ in
+                    HUD.show(.labeledError(title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Failed to add photo", comment: "")))
+                    HUD.hide(afterDelay: 1.0)
                 }
-            //}
+            }
         } else {
             HUD.show(.labeledError(title: NSLocalizedString("No internet", comment: ""), subtitle: nil))
             HUD.hide(afterDelay: 2.0)

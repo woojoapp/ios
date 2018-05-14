@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -22,7 +22,7 @@
         <!--Main Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController id="49e-Tb-3d3" customClass="MainTabBarController" customModule="Woojo" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="MainTabBarController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="49e-Tb-3d3" customClass="MainTabBarController" customModule="Woojo" customModuleProvider="target" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
@@ -1513,6 +1513,9 @@
                                                         <state key="normal" title="Add from Eventbrite">
                                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="integrateEventbrite" destination="EyR-xO-zec" eventType="touchUpInside" id="yOl-s5-9Zw"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1624,46 +1627,6 @@
                 <exit id="9xh-L3-PVP" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="772" y="0.0"/>
-        </scene>
-        <!--Eventbrite-->
-        <scene sceneID="400-l4-b4K">
-            <objects>
-                <viewController id="wrw-bx-Evc" customClass="EventbriteLoginViewController" customModule="Woojo" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="IOo-5K-pYR"/>
-                        <viewControllerLayoutGuide type="bottom" id="HDc-I6-okc"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ml2-wj-H3k">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ghv-Xx-bjQ">
-                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </webView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="HDc-I6-okc" firstAttribute="top" secondItem="ghv-Xx-bjQ" secondAttribute="bottom" id="0Zg-rg-guc"/>
-                            <constraint firstItem="ghv-Xx-bjQ" firstAttribute="leading" secondItem="ml2-wj-H3k" secondAttribute="leading" id="TsF-Eq-og2"/>
-                            <constraint firstItem="ghv-Xx-bjQ" firstAttribute="top" secondItem="IOo-5K-pYR" secondAttribute="bottom" id="TvC-9S-OCQ"/>
-                            <constraint firstAttribute="trailing" secondItem="ghv-Xx-bjQ" secondAttribute="trailing" id="i0y-xu-rkg"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Eventbrite" id="iND-9b-RqH">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="yN8-Ho-cI5">
-                            <connections>
-                                <action selector="dismiss" destination="wrw-bx-Evc" id="iHN-i5-lNo"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="webView" destination="ghv-Xx-bjQ" id="Vnz-8i-H3t"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5e7-KW-fT0" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="7448" y="-991"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="48P-cC-AQe">
@@ -2426,6 +2389,64 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vcb-6i-04H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1211" y="2866"/>
+        </scene>
+        <!--Eventbrite-->
+        <scene sceneID="fdv-PN-7Gj">
+            <objects>
+                <viewController id="GEb-KM-mkP" customClass="EventbriteLoginViewController" customModule="Woojo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vwo-yv-kiT"/>
+                        <viewControllerLayoutGuide type="bottom" id="EXh-7k-9cv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="4eU-Ma-Zw9">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oWK-lT-Te2">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="oWK-lT-Te2" firstAttribute="top" secondItem="vwo-yv-kiT" secondAttribute="bottom" id="83C-fD-j2V"/>
+                            <constraint firstItem="EXh-7k-9cv" firstAttribute="top" secondItem="oWK-lT-Te2" secondAttribute="bottom" id="S9Q-6r-dyg"/>
+                            <constraint firstItem="oWK-lT-Te2" firstAttribute="leading" secondItem="4eU-Ma-Zw9" secondAttribute="leading" id="pE3-Q0-mVg"/>
+                            <constraint firstAttribute="trailing" secondItem="oWK-lT-Te2" secondAttribute="trailing" id="yrn-f4-LK7"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Eventbrite" id="44A-Mq-AjC">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="uw1-YO-8Rt">
+                            <connections>
+                                <action selector="dismiss" destination="GEb-KM-mkP" id="xQb-P7-1nP"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="webView" destination="oWK-lT-Te2" id="s3G-2z-iqP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1x3-g1-Oix" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3846" y="846"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="NlH-VQ-VGJ">
+            <objects>
+                <navigationController storyboardIdentifier="EventbriteLoginNavigationViewController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="izZ-0Z-uLX" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Quk-BD-D6l">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="GEb-KM-mkP" kind="relationship" relationship="rootViewController" id="asu-tk-gpi"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZhA-R2-KuT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3846" y="-246"/>
         </scene>
     </scenes>
     <resources>

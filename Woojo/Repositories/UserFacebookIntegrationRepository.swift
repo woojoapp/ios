@@ -18,7 +18,7 @@ class UserFacebookIntegrationRepository: EventIdsToEventsConversion {
     static let shared = UserFacebookIntegrationRepository()
     private init() {}
 
-    private func getUid() -> String? { return firebaseAuth.currentUser!.uid }
+    private func getUid() -> String { return firebaseAuth.currentUser!.uid }
 
     private func getUserDatabaseReference(uid: String) -> DatabaseReference {
         return firebaseDatabase
@@ -28,7 +28,7 @@ class UserFacebookIntegrationRepository: EventIdsToEventsConversion {
     }
 
     private func getCurrentUserDatabaseReference() -> DatabaseReference {
-        return getUserDatabaseReference(uid: uid)
+        return getUserDatabaseReference(uid: getUid())
     }
 
     private func getFacebookIntegrationReference() -> DatabaseReference {
@@ -45,6 +45,12 @@ class UserFacebookIntegrationRepository: EventIdsToEventsConversion {
 
     func removeFacebookIntegration(completion: @escaping (Error?, DatabaseReference) -> Void) {
         getFacebookIntegrationReference().removeValue(completionBlock: completion)
+    }
+    
+    func isFacebookIntegrated() -> Observable<Bool> {
+        return getFacebookAccessTokenReference()
+            .rx_observeEvent(event: .value)
+            .map { $0.exists() }
     }
 
     func getFacebookEvents() -> Observable<[Event]> {

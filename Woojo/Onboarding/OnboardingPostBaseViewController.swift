@@ -17,26 +17,9 @@ class OnboardingPostBaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let userPhotos = User.current.asObservable()
-            .flatMap { user -> Observable<[User.Profile.Photo?]> in
-                if let currentUser = user {
-                    return currentUser.profile.photos.asObservable()
-                } else {
-                    return Variable([nil]).asObservable()
-                }
-        }
-        
-        userPhotos.subscribe(onNext: { photos in
-            if let profilePhoto = photos[0] {
-                if let image = profilePhoto.images[User.Profile.Photo.Size.thumbnail] {
-                    self.profileImageView.image = image
-                } else {
-                    profilePhoto.download(size: .thumbnail) {
-                        self.profileImageView.image = profilePhoto.images[User.Profile.Photo.Size.thumbnail]
-                    }
-                }
-            } else {
-                self.profileImageView.image = #imageLiteral(resourceName: "placeholder_40x40")
+        UserProfileRepository.shared.getPhoto(position: 0, size: .full).subscribe(onNext: { photo in
+            if let photo = photo {
+                self.profileImageView.sd_setImage(with: photo)
             }
         }).disposed(by: disposeBag)
     }

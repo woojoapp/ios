@@ -75,7 +75,14 @@ class NewUserCardView: UIView {
         }
         
         if let user = user {
-            nameLabel.text = user.profile?.displaySummary
+            var components = [String]()
+            if let firstName = user.profile?.firstName {
+                components.append(firstName)
+            }
+            if let age = user.profile?.getAge() {
+                components.append(String(age))
+            }
+            nameLabel.text = components.joined(separator: ", ")
             nameLabel.layer.shadowColor = UIColor.black.cgColor
             nameLabel.layer.shadowRadius = 2.0
             nameLabel.layer.shadowOpacity = 1.0
@@ -226,17 +233,20 @@ extension NewUserCardView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "commonEventCell", for: indexPath) as! UserCommonEventTableViewCell
-            let eventId = user.commonInfo.events[indexPath.row].id
-            EventRepository.shared.get(eventId: eventId).toPromise().then { event in
-                if let event = event {
-                    if let pictureURL = event.pictureURL {
-                        cell.eventImageView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_100x100"))
-                        cell.setDateVisibility(hidden: true)
-                    } else if let pictureURL = event.coverURL {
-                        cell.eventImageView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_100x100"))
-                        cell.setDateVisibility(hidden: true)
-                    } else {
-                        cell.setDateVisibility(hidden: false)
+            if let eventId = user.commonInfo.events[indexPath.row].id {
+                EventRepository.shared.get(eventId: eventId).toPromise().then { event in
+                    if let event = event {
+                        if let urlString = event.pictureURL,
+                            let url = URL(string: urlString) {
+                            cell.eventImageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "placeholder_100x100"))
+                            cell.setDateVisibility(hidden: true)
+                        } else if let urlString = event.coverURL,
+                            let pictureURL = URL(string: urlString) {
+                            cell.eventImageView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_100x100"))
+                            cell.setDateVisibility(hidden: true)
+                        } else {
+                            cell.setDateVisibility(hidden: false)
+                        }
                     }
                 }
             }

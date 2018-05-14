@@ -253,15 +253,18 @@ class UserDetailsViewController<T: OtherUser>: UIViewController, UITableViewData
         if let user = otherUser {
             if indexPath.section == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "detailsCommonEventCell", for: indexPath) as! UserDetailsCommonEventTableViewCell
-                let eventId = user.commonInfo.events[indexPath.row].id
-                EventRepository.shared.get(eventId: eventId).toPromise().then { event in
-                    if let event = event {
-                        if let pictureURL = event.pictureURL {
-                            self.setImage(pictureURL: pictureURL, cell: cell)
-                        } else if let pictureURL = event.coverURL {
-                            self.setImage(pictureURL: pictureURL, cell: cell)
-                        } else {
-                            cell.setDateVisibility(hidden: false)
+                if let eventId = user.commonInfo.events[indexPath.row].id {
+                    EventRepository.shared.get(eventId: eventId).toPromise().then { event in
+                        if let event = event {
+                            if let urlString = event.pictureURL,
+                                let pictureURL = URL(string: urlString) {
+                                self.setImage(pictureURL: pictureURL, cell: cell)
+                            } else if let urlString = event.coverURL,
+                                let pictureURL = URL(string: urlString) {
+                                self.setImage(pictureURL: pictureURL, cell: cell)
+                            } else {
+                                cell.setDateVisibility(hidden: false)
+                            }
                         }
                     }
                 }

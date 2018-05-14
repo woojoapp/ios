@@ -17,7 +17,7 @@ extension EventIdsToEventsConversion {
         let arrayOfObservables = dataSnapshot.children.reduce(into: [Observable<Event?>](), { (observables, childSnapshot) in
             if let childSnapshot = childSnapshot as? DataSnapshot,
                let eventId = getEventIdFromDataSnapshot(childSnapshot) {
-                let event = EventRepository.shared.get(eventId: eventId).startWith(nil).map({ e -> Event? in
+                let event = EventRepository.shared.get(eventId: eventId).map({ e -> Event? in
                     e?.source = source
                     return e
                 })

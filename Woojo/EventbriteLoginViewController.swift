@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Promises
 
 class EventbriteLoginViewController: UIViewController, UIWebViewDelegate {
     
@@ -25,15 +26,13 @@ class EventbriteLoginViewController: UIViewController, UIWebViewDelegate {
             let fragment = url.fragment,
             let range = fragment.range(of: "access_token="){
             let accessToken = String(fragment[range.upperBound...])
-            User.current.value?.setEventbriteAccessToken(accessToken: accessToken, completion: { (error) in
-                if error == nil {
-                    Analytics.setUserProperties(properties: ["integrated_eventbrite": "true"])
-                    Analytics.Log(event: "Events_integrated_eventbrite")
-                    UserRepository.shared.syncEventbriteEvents(completion: { _ in
-                        self.dismiss()
-                    })
-                }
-            })
+            UserEventbriteIntegrationRepository.shared.setEventbriteAccessToken(accessToken: accessToken).then { _ -> Promise<Void> in
+                Analytics.setUserProperties(properties: ["integrated_eventbrite": "true"])
+                Analytics.Log(event: "Events_integrated_eventbrite")
+                return UserEventbriteIntegrationRepository.shared.syncEventbriteEvents()
+            }.then {
+                self.dismiss()
+            }
         }
     }
 

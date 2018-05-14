@@ -17,11 +17,15 @@ class EventsViewModel {
         let recommendedEvents = UserRecommendedEventsRepository.shared.getRecommendedEvents().startWith([])
         let sponsoredEvents = UserSponsoredEventsRepository.shared.getSponsoredEvents().startWith([])
         let activeEventsInfo = UserActiveEventRepository.shared.getActiveEventsInfo()
-        var events = Observable.combineLatest(facebookEvents, eventbriteEvents, recommendedEvents, sponsoredEvents) { $0 + $1 + $2 + $3 }
+        var events = Observable.combineLatest(facebookEvents, eventbriteEvents, recommendedEvents, sponsoredEvents) { fb, ev, re, sp -> [Event] in
+            print("EVVENTS", fb, ev, re, sp)
+            return fb + ev + re + sp
+        }
         events = Observable.combineLatest(events, activeEventsInfo) { evs, dataSnapshot -> [Event] in
             for ev in evs {
-                let isActive = dataSnapshot.hasChild(ev.id)
-                ev.active = isActive
+                if let eventId = ev.id {
+                    ev.active = dataSnapshot.hasChild(eventId)
+                }
             }
             return evs
         }
@@ -45,11 +49,11 @@ class EventsViewModel {
                 .syncEventbriteEvents()
     }
 
-    func activateEvent(event: Event) -> Promise<Void> {
-        return UserActiveEventRepository.shared.activateEvent(event: event)
+    func activateEvent(eventId: String) -> Promise<Void> {
+        return UserActiveEventRepository.shared.activateEvent(eventId: eventId)
     }
 
-    func deactivateEvent(event: Event) -> Promise<Void> {
-        return UserActiveEventRepository.shared.deactivateEvent(event: event)
+    func deactivateEvent(eventId: String) -> Promise<Void> {
+        return UserActiveEventRepository.shared.deactivateEvent(eventId: eventId)
     }
 }

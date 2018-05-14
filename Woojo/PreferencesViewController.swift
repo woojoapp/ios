@@ -16,11 +16,11 @@ class PreferencesViewController: UITableViewController {
     @IBOutlet weak var ageRangeMaxLabel: UILabel!
     @IBOutlet weak var genderSelector: UISegmentedControl!
     
-    var ageRange = (min: 20, max: 30)
-    var genderSelectorData = [CurrentUser.Preferences.Gender.female, CurrentUser.Preferences.Gender.male, CurrentUser.Preferences.Gender.all]
-    
     let ageRangeSlider = RangeSlider(frame: CGRect.zero)
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
+    private let preferencesViewModel = PreferencesViewModel()
+    private var ageRange = Preferences.AgeRange(min: 18, max: 99)
+    private var genderSelectorData = [Preferences.Gender.female, Preferences.Gender.male, Preferences.Gender.all]
     
     @IBAction func dismiss(sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
@@ -35,22 +35,20 @@ class PreferencesViewController: UITableViewController {
         ageRangeMaxLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17.0, weight: UIFont.Weight.regular)
         ageRangeSlider.addTarget(self, action: #selector(ageRangeSliderValueChanged(_:)), for: .valueChanged)
         ageRangeSlider.addTarget(self, action: #selector(saveAgeRange(_:)), for: .editingDidEnd)
-        setupDataSource()
+        bindViewModel()
     }
     
-    func setupDataSource() {
-        User.current.asObservable()
-            .map{ $0?.preferences.ageRange }
+    func bindViewModel() {
+        preferencesViewModel.getAgeRange()
             .subscribe(onNext: { ageRange in
-                self.ageRange = ageRange ?? (min: 20, max: 30)
+                self.ageRange = ageRange ?? Preferences.AgeRange(min: 18, max: 99)
                 self.ageRangeSlider.upperValue = Double(self.ageRange.max)
                 self.ageRangeSlider.lowerValue = Double(self.ageRange.min)
                 self.ageRangeSliderValueChanged(self.ageRangeSlider)
             })
             .disposed(by: disposeBag)
         
-        User.current.asObservable()
-            .map{ $0?.preferences.gender }
+        preferencesViewModel.getGender()
             .subscribe(onNext: { gender in
                 if let gender = gender, let index = self.genderSelectorData.index(of: gender) {
                     self.genderSelector.selectedSegmentIndex = index
@@ -73,15 +71,12 @@ class PreferencesViewController: UITableViewController {
     }
     
     func savePreferences() {
-        User.current.value?.preferences.save { error in
-            if let error = error {
-                print("Failed to save preferences \(error.localizedDescription)")
-            }
-        }
+        let gender = genderSelectorData[genderSelector.selectedSegmentIndex]
+        let preferences = Preferences(gender: gender, ageRange: ageRange)
+        preferencesViewModel.setPreferences(preferences: preferences).catch { _ in }
     }
     
     @objc func saveAgeRange(_ rangeSlider: RangeSlider) {
-        User.current.value?.preferences.ageRange = ageRange
         savePreferences()
         Analytics.setUserProperties(properties: ["preferred_age_min": String(ageRange.min)])
         Analytics.setUserProperties(properties: ["preferred_age_max": String(ageRange.max)])
@@ -89,9 +84,8 @@ class PreferencesViewController: UITableViewController {
     }
     
     @IBAction func saveGender(sender: UISegmentedControl) {
-        let gender = genderSelectorData[sender.selectedSegmentIndex]
-        User.current.value?.preferences.gender = gender
         savePreferences()
+        let gender = genderSelectorData[genderSelector.selectedSegmentIndex]
         Analytics.setUserProperties(properties: ["preferred_gender": gender.rawValue])
         Analytics.Log(event: "Preferences_gender_updated", with: ["gender": gender.rawValue])
     }

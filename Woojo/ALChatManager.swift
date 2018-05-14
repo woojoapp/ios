@@ -153,7 +153,7 @@ class ALChatManager: NSObject {
         })
     }
     
-    func newMessageReceived(notification: Notification) {
+    func newMessageReceived(notification: Foundation.Notification) {
         // Push notification to firebase
         if let messageArray = notification.object as? NSMutableArray {
             for message in messageArray {
@@ -166,8 +166,12 @@ class ALChatManager: NSObject {
                         category == "HIDDEN" {
                         continue
                     }
-                    let messageNotification = CurrentUser.MessageNotification(id: UUID().uuidString, created: Date(), otherId: message.contactIds, excerpt: excerpt)
-                    messageNotification.save()
+                    let messageNotification = MessageNotification()
+                    messageNotification.id = UUID().uuidString
+                    messageNotification.created = Date()
+                    messageNotification.otherId = message.contactIds
+                    messageNotification.excerpt = excerpt
+                    UserNotificationRepository.shared.setNotification(notification: messageNotification)
                 }
             }
         }

@@ -20,6 +20,35 @@ class UserMatchRepository {
     private func getUid() -> String { return firebaseAuth.currentUser!.uid }
 
     func getMatch(uid: String) -> Observable<OtherUser?> {
-
+        return Observable.combineLatest(getCommonInfo(uid: uid), UserProfileRepository.shared.getProfile(uid: uid)) { commonInfo, profile -> OtherUser in
+            let candidate = Match(uid: uid)
+            if let commonInfo = commonInfo {
+                candidate.commonInfo = commonInfo
+            }
+            if let profile = profile {
+                candidate.profile = profile
+            }
+            return candidate
+        }
+    }
+    
+    private func getCommonInfo(uid: String) -> Observable<CommonInfo?> {
+        return firebaseDatabase.reference().child("matches").child(getUid()).child(uid)
+            .rx_observeEvent(event: .value)
+            .map { CommonInfo(from: $0) }
+    }
+    
+    func getMatchesReference() -> DatabaseReference {
+        return firebaseDatabase.reference()
+            .child("matches")
+            .child(getUid())
+    }
+    
+    func getEventMatchesQuery(eventId: String) -> DatabaseQuery {
+        return firebaseDatabase.reference()
+            .child("matches")
+            .child(getUid())
+            .queryOrdered(byChild: "events/\(eventId)")
+            .queryStarting(atValue: 0.0)
     }
 }

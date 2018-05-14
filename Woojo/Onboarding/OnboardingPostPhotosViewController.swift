@@ -6,6 +6,7 @@
 //  Copyright © 2018 Tasty Electrons. All rights reserved.
 //
 
+import FirebaseStorage
 import UIKit
 import RSKImageCropper
 import PKHUD
@@ -17,10 +18,12 @@ class OnboardingPostPhotosViewController: OnboardingPostBaseViewController, Phot
     @IBOutlet weak var longPressGestureRecognizer: UILongPressGestureRecognizer!
     
     // Photos collection view properties
-    fileprivate let photoCount: CGFloat = 6
-    fileprivate let reuseIdentifier = "OnboardingPhotoCell"
-    fileprivate let itemsPerRow: CGFloat = 3
-    fileprivate let sectionInsets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
+    private let photoCount: CGFloat = 6
+    private let reuseIdentifier = "OnboardingPhotoCell"
+    private let itemsPerRow: CGFloat = 3
+    private let sectionInsets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
+    private let profileViewModel = ProfileViewModel.shared
+    private var photos = [Int: StorageReference]()
     
     let imagePickerController = UIImagePickerController()
     var rskImageCropper: RSKImageCropViewController = RSKImageCropViewController()
@@ -35,19 +38,10 @@ class OnboardingPostPhotosViewController: OnboardingPostBaseViewController, Phot
         self.longPressGestureRecognizer.addTarget(self, action: #selector(longPress))
         photosCollectionView.delegate = self
         photosCollectionView.dataSource = self
-        User.current
-            .asObservable()
-            .flatMap { user -> Observable<[User.Profile.Photo?]> in
-                if let currentUser = user {
-                    return currentUser.profile.photos.asObservable()
-                } else {
-                    return Variable([nil]).asObservable()
-                }
-            }.subscribe(onNext: { photos in
-                if photos[0] != nil && !self.reloadedOnce {
-                    self.photosCollectionView.reloadData()
-                    self.reloadedOnce = true
-                }
+        profileViewModel.getPhotos(size: .thumbnail)
+            .subscribe(onNext: { photos in
+                self.photos = photos
+                self.photosCollectionView.reloadData()
             }).disposed(by: disposeBag)
     }
     
@@ -103,16 +97,12 @@ extension OnboardingPostPhotosViewController: UICollectionViewDelegate {
                 })
                 let removeButton = UIAlertAction(title: NSLocalizedString("Remove", comment: ""), style: .destructive, handler: { (action) -> Void in
                     HUD.show(.progress)
-                    User.current.value?.profile.deleteFiles(forPhotoAt: indexPath.row) { _ in
-                        UserRepository.shared.removePhotoId(index: indexPath.row) { _ in
-                            self.photosCollectionView.reloadItems(at: [indexPath])
-                            HUD.show(.success)
-                            HUD.hide(afterDelay: 1.0)
-                            if let photoCount = User.current.value?.profile.photoCount {
-                                Analytics.setUserProperties(properties: ["profile_photo_count": String(photoCount)])
-                                Analytics.Log(event: "Onboarding_photo_removed", with: ["photo_count": String(photoCount)])
-                            }
-                        }
+                    UserProfileRepository.shared.removePhoto(position: indexPath.row).then {
+                        self.photosCollectionView.reloadItems(at: [indexPath])
+                        HUD.show(.success)
+                        HUD.hide(afterDelay: 1.0)
+                        Analytics.setUserProperties(properties: ["profile_photo_count": String(self.photos.count)])
+                        Analytics.Log(event: "Onboarding_photo_removed", with: ["photo_count": String(self.photos.count)])
                     }
                 })
                 let cancelButton = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
@@ -179,13 +169,10 @@ extension OnboardingPostPhotosViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ProfilePhotoCollectionViewCell
-        if let photos = User.current.value?.profile.photos.value, let photo = photos[indexPath.row] {
+        if let photo = photos[indexPath.row] {
             cell.photo = photo
             cell.imageView.contentMode = .scaleAspectFill
-            cell.imageView.image = photo.images[User.Profile.Photo.Size.thumbnail]
-            cell.photo?.download(size: .thumbnail) {
-                cell.imageView.image = photo.images[User.Profile.Photo.Size.thumbnail]
-            }
+            cell.imageView.sd_setImage(with: photo)
         } else {
             cell.photo = nil
             cell.imageView.contentMode = .bottomRight
@@ -229,16 +216,17 @@ extension OnboardingPostPhotosViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        if let photos = User.current.value?.profile.photos.value, let photo = photos[sourceIndexPath.row] {
-            UserRepository.shared.setPhotoId(id: photo, index: destinationIndexPath.row)
-            Analytics.Log(event: "Onboarding_photos_reordered", with: ["photo_count": String(photos.filter({ $0 != nil }).count)])
+        if let photo = photos[sourceIndexPath.row] {
+            profileViewModel.setPhoto(position: destinationIndexPath.row, photo: photo).then {
+                Analytics.Log(event: "Onboarding_photos_reordered", with: ["photo_count": String(self.photos.count)])
+            }
         }
         for i in 0..<Int(photoCount) {
             if let cell = collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? ProfilePhotoCollectionViewCell {
                 if let photo = cell.photo {
-                    UserRepository.shared.setPhotoId(id: photo, index: i)
+                    profileViewModel.setPhoto(position: i, photo: photo).catch { _ in }
                 } else {
-                    UserRepository.shared.removePhotoId(index: i)
+                    profileViewModel.removePhoto(position: i).catch { _ in }
                 }
             }
         }
@@ -333,22 +321,19 @@ extension OnboardingPostPhotosViewController: RSKImageCropViewControllerDelegate
     func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect) {
         HUD.show(.progress)
         // if let selectedIndex = photosCollectionView.indexPathsForSelectedItems?[0].row {
-        if let selectedIndex = selectedIndex {
-            User.current.value?.profile.setPhoto(photo: croppedImage, id: UUID().uuidString, index: selectedIndex) { photo, error in
-                if error != nil {
-                    HUD.show(.labeledError(title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Failed to add photo", comment: "")))
-                    HUD.hide(afterDelay: 1.0)
-                } else {
-                    self.navigationController?.dismiss(animated: true, completion: nil)
-                    HUD.show(.labeledSuccess(title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("Photo added!", comment: "")))
-                    HUD.hide(afterDelay: 1.0)
-                }
+        if let selectedIndex = selectedIndex,
+            let data = UIImagePNGRepresentation(croppedImage) {
+            profileViewModel.setPhoto(position: selectedIndex, data: data).then { generatedPictureId in
+                self.navigationController?.dismiss(animated: true, completion: nil)
+                HUD.show(.labeledSuccess(title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("Photo added!", comment: "")))
+                HUD.hide(afterDelay: 1.0)
                 self.photosCollectionView.reloadItems(at: [IndexPath(row: selectedIndex, section: 0)])
-                if let photoCount = User.current.value?.profile.photoCount {
-                    Analytics.setUserProperties(properties: ["profile_photo_count": String(photoCount)])
-                    Analytics.Log(event: "Onboarding_photo_added", with: ["photo_count": String(photoCount), "source": "library"])
-                }
+                Analytics.setUserProperties(properties: ["profile_photo_count": String(self.photos.count)])
+                Analytics.Log(event: "Onboarding_photo_added", with: ["photo_count": String(self.photos.count), "source": "library"])
                 _ = self.presentedViewController?.dismiss(animated: true, completion: nil)
+            }.catch { _ in
+                HUD.show(.labeledError(title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Failed to add photo", comment: "")))
+                HUD.hide(afterDelay: 1.0)
             }
         }
     }

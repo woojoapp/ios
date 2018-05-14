@@ -29,8 +29,8 @@ class LoginManager {
         }
     }
 
-    private func setProfilePictureFromFacebook() -> Promise<Void> {
-        return FacebookRepository.shared.getProfilePicture(width: 3000, height: 3000).then { picture -> Promise<Void> in
+    private func setProfilePictureFromFacebook() -> Promise<String> {
+        return FacebookRepository.shared.getProfilePicture(width: 3000, height: 3000).then { picture -> Promise<String> in
             if let data = picture.data?.data {
                 return UserProfileRepository.shared.setPhoto(data: data, position: 0)
             }
