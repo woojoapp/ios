@@ -56,6 +56,8 @@ class MainTabBarController: UITabBarController {
                     let interactionNotifications = notifications.filter({ $0 is InteractionNotification })
                     chatsTabBarItem.badgeValue = (interactionNotifications.count > 0) ? String(interactionNotifications.count) : nil
                 }
+            }, onError: { _ in
+                
             }).disposed(by: disposeBag)
     }
     

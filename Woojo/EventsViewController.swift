@@ -149,7 +149,7 @@ class EventsViewController: UIViewController {
         eventsViewModel
             .getEvents()
             .subscribe(onNext: { (events) in
-                print("EVVENTS", events)
+                print("NNEW EVVENTS", events)
                 self.events = events.group(by: { EventsViewController.sectionDateFormatter.string(from: $0.start!) }).mapValues{ $0.sorted(by: { $0.start! > $1.start! }) }
                 self.months = Array(self.events.keys).sorted().reversed()
                 self.tableView.reloadData()
@@ -158,17 +158,28 @@ class EventsViewController: UIViewController {
                 })
                 Analytics.setUserProperties(properties: ["event_count": String(events.count)])
             }, onError: { (error) in
-                print("Failed to observe events", error)
+                if let err = error as? ListenerCancelledError {
+                    if case let .listenerCancelled(url) = err {
+                        print("NNEW Failed to observe events", url)
+                    }
+                }
             }).disposed(by: disposeBag)
 
         eventsViewModel
             .isEventbriteIntegrated()
-            .map{
+            .map { isIntegrated -> Bool in
                 let integrateEventbriteLater = UserDefaults.standard.bool(forKey: EventsViewController.INTEGRATE_EVENTBRITE_LATER)
-                return $0 || integrateEventbriteLater
+                return isIntegrated || integrateEventbriteLater
             }
             .asDriver(onErrorJustReturn: false)
             .drive(eventbriteIntegrationView.rx.isHidden)
+            /*.subscribe(onNext: { isIntegrated in
+                print("NNEW INTEGRATED ONNEXT", isIntegrated)
+                self.eventbriteIntegrationView.isHidden = isIntegrated
+            }, onError: { error in
+                print("NNEW INTEGRATED ONERROR", error)
+                self.eventbriteIntegrationView.isHidden = false
+            })*/
             .disposed(by: disposeBag)
 
         eventsViewModel

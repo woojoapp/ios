@@ -43,6 +43,8 @@ extension ShowsSettingsButton where Self: UIViewController {
         UserProfileRepository.shared.getPhotoAsImage(position: 0, size: .thumbnail)
             .subscribe(onNext: { image in
                 if let image = image { settingsButton.setImage(image, for: .normal) }
+            }, onError: { _ in
+                
             }).disposed(by: disposeBag)
         
     }

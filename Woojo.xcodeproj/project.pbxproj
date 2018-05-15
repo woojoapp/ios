@@ -349,6 +349,15 @@
 		85FA35B020A30A290068BF48 /* DatabaseReference+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA35AF20A30A290068BF48 /* DatabaseReference+Promise.swift */; };
 		85FA35B120A30A290068BF48 /* DatabaseReference+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA35AF20A30A290068BF48 /* DatabaseReference+Promise.swift */; };
 		85FA35B220A30A290068BF48 /* DatabaseReference+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA35AF20A30A290068BF48 /* DatabaseReference+Promise.swift */; };
+		85FA828C20AAFA33004EE48B /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA828B20AAFA33004EE48B /* AuthManager.swift */; };
+		85FA828D20AAFA33004EE48B /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA828B20AAFA33004EE48B /* AuthManager.swift */; };
+		85FA828E20AAFA33004EE48B /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA828B20AAFA33004EE48B /* AuthManager.swift */; };
+		85FA829020AB0822004EE48B /* BaseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA828F20AB0822004EE48B /* BaseRepository.swift */; };
+		85FA829120AB0822004EE48B /* BaseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA828F20AB0822004EE48B /* BaseRepository.swift */; };
+		85FA829220AB0822004EE48B /* BaseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA828F20AB0822004EE48B /* BaseRepository.swift */; };
+		85FA829420AB32A5004EE48B /* GraphAPI+ProfilePicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA829320AB32A5004EE48B /* GraphAPI+ProfilePicture.swift */; };
+		85FA829520AB32A5004EE48B /* GraphAPI+ProfilePicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA829320AB32A5004EE48B /* GraphAPI+ProfilePicture.swift */; };
+		85FA829620AB32A5004EE48B /* GraphAPI+ProfilePicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA829320AB32A5004EE48B /* GraphAPI+ProfilePicture.swift */; };
 		85FD07532063D513001618C3 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85FD07572063D513001618C3 /* Onboarding.storyboard */; };
 		85FD07542063D513001618C3 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85FD07572063D513001618C3 /* Onboarding.storyboard */; };
 		85FD07552063D513001618C3 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85FD07572063D513001618C3 /* Onboarding.storyboard */; };
@@ -417,7 +426,7 @@
 		FE60D06B23757A1F1B279033 /* GraphAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D8B1EAA6631A1267DD55 /* GraphAPI.swift */; };
 		FE60D07A0AEF73615629DDE7 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DCDA2ABFA7782538F4F5 /* String.swift */; };
 		FE60D08AC3095F13FFE5B518 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D53B21FA76DA0905FC2F /* ProfileViewModel.swift */; };
-		FE60D0A026D101C72BD4D140 /* Observable+toPromise.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D84DFF80188CD650F9B0 /* Observable+toPromise.swift */; };
+		FE60D0A026D101C72BD4D140 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D84DFF80188CD650F9B0 /* Observable.swift */; };
 		FE60D0B3B387EF3E1E245350 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DD5FC157902ABC37D9DD /* LoginManager.swift */; };
 		FE60D0B9F7334EB394CD3F83 /* ShareService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DD7F18F3770747D603E9 /* ShareService.swift */; };
 		FE60D0CC3DF63D9C247C4136 /* GraphAPI+Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DC36A69842C34EEE237C /* GraphAPI+Album.swift */; };
@@ -457,7 +466,7 @@
 		FE60D545F6CC0EF6930FFA13 /* PeopleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DE8328250198F04EB89E /* PeopleViewModel.swift */; };
 		FE60D54F015ABE9099190D9F /* EventbriteOrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D5189DA4BAD723AA9FE2 /* EventbriteOrderResponse.swift */; };
 		FE60D581C9856BB729288D3D /* FacebookAlbumsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DCFA8D65D28AF561098E /* FacebookAlbumsViewModel.swift */; };
-		FE60D5955F897BEB73A29817 /* Observable+toPromise.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D84DFF80188CD650F9B0 /* Observable+toPromise.swift */; };
+		FE60D5955F897BEB73A29817 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D84DFF80188CD650F9B0 /* Observable.swift */; };
 		FE60D5A10AF530591E74B918 /* GraphAPI+Picture.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DCA81EFF2E646717AD59 /* GraphAPI+Picture.swift */; };
 		FE60D5ADF09DCE21C9BA2CEC /* FacebookAlbumsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DCFA8D65D28AF561098E /* FacebookAlbumsViewModel.swift */; };
 		FE60D5AF5E0447A8A8F95482 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DCDA2ABFA7782538F4F5 /* String.swift */; };
@@ -527,7 +536,7 @@
 		FE60DD8746CA3B4CDC63C8AC /* UserEventbriteIntegrationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DABB498664777B769E22 /* UserEventbriteIntegrationRepository.swift */; };
 		FE60DE1AA276A4642F5347A5 /* UserCandidateRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DCEE8CF1C3399E853939 /* UserCandidateRepository.swift */; };
 		FE60DE1F8AE7CB58574E695E /* UserProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D20271C4AEE25F2D991C /* UserProfileRepository.swift */; };
-		FE60DE3A8DB2252E3728B6E0 /* Observable+toPromise.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D84DFF80188CD650F9B0 /* Observable+toPromise.swift */; };
+		FE60DE3A8DB2252E3728B6E0 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D84DFF80188CD650F9B0 /* Observable.swift */; };
 		FE60DE6CE8058D70863F8275 /* FacebookAlbumPhotosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D27C3B522606C6BB35B4 /* FacebookAlbumPhotosViewModel.swift */; };
 		FE60DE710AE22367D0C8E7D6 /* MatchesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D214D3AFCD27CF6693B8 /* MatchesViewModel.swift */; };
 		FE60DE876B6F9213D9701E66 /* GraphAPIToWoojoConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DEA8016B2B7B76B1D053 /* GraphAPIToWoojoConverter.swift */; };
@@ -683,6 +692,9 @@
 		85FA35A420A2F2740068BF48 /* CandidateOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CandidateOverlayView.xib; sourceTree = "<group>"; };
 		85FA35AB20A3076A0068BF48 /* UserSwipeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSwipeRepository.swift; sourceTree = "<group>"; };
 		85FA35AF20A30A290068BF48 /* DatabaseReference+Promise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseReference+Promise.swift"; sourceTree = "<group>"; };
+		85FA828B20AAFA33004EE48B /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		85FA828F20AB0822004EE48B /* BaseRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRepository.swift; sourceTree = "<group>"; };
+		85FA829320AB32A5004EE48B /* GraphAPI+ProfilePicture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GraphAPI+ProfilePicture.swift"; sourceTree = "<group>"; };
 		85FD07562063D513001618C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
 		85FD075B2068FEF4001618C3 /* NewUserCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserCardView.swift; sourceTree = "<group>"; };
 		85FD075F2068FF05001618C3 /* NewUserCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewUserCardView.xib; sourceTree = "<group>"; };
@@ -724,7 +736,7 @@
 		FE60D6C0DA0BFDF38F8E5C9C /* GraphAPI+Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GraphAPI+Location.swift"; sourceTree = "<group>"; };
 		FE60D6DF8294BD63B5002D24 /* GraphAPI+Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GraphAPI+Profile.swift"; sourceTree = "<group>"; };
 		FE60D8443838C9949B848A55 /* DatabaseQuery+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DatabaseQuery+Rx.swift"; sourceTree = "<group>"; };
-		FE60D84DFF80188CD650F9B0 /* Observable+toPromise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+toPromise.swift"; sourceTree = "<group>"; };
+		FE60D84DFF80188CD650F9B0 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		FE60D8857112C672E4539782 /* UserRecommendedEventsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRecommendedEventsRepository.swift; sourceTree = "<group>"; };
 		FE60D88E211AE49C5E81D26B /* FacebookRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookRepository.swift; sourceTree = "<group>"; };
 		FE60D8B1EAA6631A1267DD55 /* GraphAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphAPI.swift; sourceTree = "<group>"; };
@@ -1035,6 +1047,7 @@
 				8594C5CB2094D2A600405F5A /* UserRepository.swift */,
 				FE60DA761C6BF6E1308CBC17 /* UserSponsoredEventsRepository.swift */,
 				85FA35AB20A3076A0068BF48 /* UserSwipeRepository.swift */,
+				85FA828F20AB0822004EE48B /* BaseRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -1186,7 +1199,7 @@
 				85FD07AE2073808E001618C3 /* Sequence+group.swift */,
 				FE60DEE68D6D6FDD541E5397 /* StorageReference+Promise.swift */,
 				FE60D8443838C9949B848A55 /* DatabaseQuery+Rx.swift */,
-				FE60D84DFF80188CD650F9B0 /* Observable+toPromise.swift */,
+				FE60D84DFF80188CD650F9B0 /* Observable.swift */,
 				FE60DCDA2ABFA7782538F4F5 /* String.swift */,
 			);
 			name = Extensions;
@@ -1230,6 +1243,7 @@
 				FE60D0D33C7D04581BB621CD /* GraphAPI+Friend.swift */,
 				FE60DC36A69842C34EEE237C /* GraphAPI+Album.swift */,
 				FE60D6A60275D356E7078F58 /* GraphAPI+Event.swift */,
+				85FA829320AB32A5004EE48B /* GraphAPI+ProfilePicture.swift */,
 			);
 			name = GraphAPI;
 			sourceTree = "<group>";
@@ -1252,6 +1266,7 @@
 				FE60DD5FC157902ABC37D9DD /* LoginManager.swift */,
 				FE60DD7F18F3770747D603E9 /* ShareService.swift */,
 				FE60DD110CDDFDEC7F3F1E4E /* Notifier.swift */,
+				85FA828B20AAFA33004EE48B /* AuthManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1967,6 +1982,7 @@
 				FE60D492623919F91F560E1D /* GraphAPI.swift in Sources */,
 				FE60D5DBFCA0467E6FD445A7 /* GraphAPI+Profile.swift in Sources */,
 				FE60D7A0EBE7B9AC671E2A0F /* GraphAPI+Location.swift in Sources */,
+				85FA829020AB0822004EE48B /* BaseRepository.swift in Sources */,
 				FE60D95D4820539B13B16861 /* UserProfilePictureGraphRequest.swift in Sources */,
 				FE60D7D841ECACB42AD7162C /* GraphAPI+Picture.swift in Sources */,
 				FE60D4BBCBE361BDCEE1549D /* LoginViewModel.swift in Sources */,
@@ -1985,9 +2001,10 @@
 				FE60DE90705EFE4DA0EEAD6D /* DatabaseQuery+Rx.swift in Sources */,
 				FE60DA03CFB3FE296C401E5C /* UserNotificationRepository.swift in Sources */,
 				FE60D7C4CE24F43F73300B76 /* GraphAPI+Album.swift in Sources */,
+				85FA829420AB32A5004EE48B /* GraphAPI+ProfilePicture.swift in Sources */,
 				FE60D7567CB84487F7A90E9E /* UserCandidateRepository.swift in Sources */,
 				859910ED20A8DB4E00EDB846 /* NotificationsSettingsViewModel.swift in Sources */,
-				FE60D0A026D101C72BD4D140 /* Observable+toPromise.swift in Sources */,
+				FE60D0A026D101C72BD4D140 /* Observable.swift in Sources */,
 				FE60D169967BD01FA59E0DF5 /* UserReportRepository.swift in Sources */,
 				FE60D83F8CCC74515DEFC846 /* UserMatchRepository.swift in Sources */,
 				FE60D36744196D493D039C13 /* EventbriteRepository.swift in Sources */,
@@ -2007,6 +2024,7 @@
 				FE60D0B9F7334EB394CD3F83 /* ShareService.swift in Sources */,
 				FE60DE710AE22367D0C8E7D6 /* MatchesViewModel.swift in Sources */,
 				FE60D67165F97AC184B7D1C8 /* FacebookAlbumPhotosViewModel.swift in Sources */,
+				85FA828C20AAFA33004EE48B /* AuthManager.swift in Sources */,
 				FE60D76D55D9E40E1E28048C /* Notifier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2122,6 +2140,7 @@
 				FE60D06B23757A1F1B279033 /* GraphAPI.swift in Sources */,
 				FE60D49DDFC2AE17814B6B83 /* GraphAPI+Profile.swift in Sources */,
 				FE60D4FF9479365946ECB602 /* GraphAPI+Location.swift in Sources */,
+				85FA829120AB0822004EE48B /* BaseRepository.swift in Sources */,
 				FE60D6446672345EDC1DF1F3 /* UserProfilePictureGraphRequest.swift in Sources */,
 				FE60D94783403570380D49E3 /* GraphAPI+Picture.swift in Sources */,
 				FE60DFE4EB4813B6260136B2 /* LoginViewModel.swift in Sources */,
@@ -2140,9 +2159,10 @@
 				FE60D964FFC76C357BD7A82E /* DatabaseQuery+Rx.swift in Sources */,
 				FE60DB601EDEBB3C42D38C73 /* UserNotificationRepository.swift in Sources */,
 				FE60D17428D09B2CB66B9A1F /* GraphAPI+Album.swift in Sources */,
+				85FA829520AB32A5004EE48B /* GraphAPI+ProfilePicture.swift in Sources */,
 				FE60D5DF667800418681FA36 /* UserCandidateRepository.swift in Sources */,
 				859910EE20A8DB4E00EDB846 /* NotificationsSettingsViewModel.swift in Sources */,
-				FE60DE3A8DB2252E3728B6E0 /* Observable+toPromise.swift in Sources */,
+				FE60DE3A8DB2252E3728B6E0 /* Observable.swift in Sources */,
 				FE60DEB7EDA51B9259208A83 /* UserReportRepository.swift in Sources */,
 				FE60D9F6F9A53F35C5471BDD /* UserMatchRepository.swift in Sources */,
 				FE60DA365A2DB2888F20B852 /* EventbriteRepository.swift in Sources */,
@@ -2162,6 +2182,7 @@
 				FE60DE96259E792EA81693E9 /* ShareService.swift in Sources */,
 				FE60D85B176693450D8215F0 /* MatchesViewModel.swift in Sources */,
 				FE60D324390494DF8CAEE31F /* FacebookAlbumPhotosViewModel.swift in Sources */,
+				85FA828D20AAFA33004EE48B /* AuthManager.swift in Sources */,
 				FE60DC2A7E8D6965745359B9 /* Notifier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2277,6 +2298,7 @@
 				FE60DC33CD5B3291F03C5DF5 /* GraphAPI.swift in Sources */,
 				FE60D8EA609A77F33BD79A27 /* GraphAPI+Profile.swift in Sources */,
 				FE60D492A23FB5524C27ED23 /* GraphAPI+Location.swift in Sources */,
+				85FA829220AB0822004EE48B /* BaseRepository.swift in Sources */,
 				FE60D6A5CB146F6466089732 /* UserProfilePictureGraphRequest.swift in Sources */,
 				FE60D5A10AF530591E74B918 /* GraphAPI+Picture.swift in Sources */,
 				FE60D10E86BE14AA3C938866 /* LoginViewModel.swift in Sources */,
@@ -2295,9 +2317,10 @@
 				FE60D98A095A9250BDBDB2B5 /* DatabaseQuery+Rx.swift in Sources */,
 				FE60D25CE91376BA4007FACE /* UserNotificationRepository.swift in Sources */,
 				FE60D0CC3DF63D9C247C4136 /* GraphAPI+Album.swift in Sources */,
+				85FA829620AB32A5004EE48B /* GraphAPI+ProfilePicture.swift in Sources */,
 				FE60DE1AA276A4642F5347A5 /* UserCandidateRepository.swift in Sources */,
 				859910EF20A8DB4E00EDB846 /* NotificationsSettingsViewModel.swift in Sources */,
-				FE60D5955F897BEB73A29817 /* Observable+toPromise.swift in Sources */,
+				FE60D5955F897BEB73A29817 /* Observable.swift in Sources */,
 				FE60DAC8E5AE315A2C8C04BD /* UserReportRepository.swift in Sources */,
 				FE60D7A1DE01773120539271 /* UserMatchRepository.swift in Sources */,
 				FE60DF352463B6A07F4517C2 /* EventbriteRepository.swift in Sources */,
@@ -2317,6 +2340,7 @@
 				FE60DF5BE282923AEE8708DF /* ShareService.swift in Sources */,
 				FE60DC65010F86B225A449A5 /* MatchesViewModel.swift in Sources */,
 				FE60DE6CE8058D70863F8275 /* FacebookAlbumPhotosViewModel.swift in Sources */,
+				85FA828E20AAFA33004EE48B /* AuthManager.swift in Sources */,
 				FE60D86FEA93A29054F1C738 /* Notifier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

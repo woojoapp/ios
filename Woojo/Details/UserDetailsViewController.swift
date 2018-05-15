@@ -89,7 +89,7 @@ class UserDetailsViewController<T: OtherUser>: UIViewController, UITableViewData
                         self.otherUser = otherUser
                         self.tableView.reloadData()
                     }
-                }, onError: { error in
+                }, onError: { _ in
 
                 }).disposed(by: disposeBag)
     }

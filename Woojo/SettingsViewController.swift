@@ -75,14 +75,18 @@ class SettingsViewController: UITableViewController, AuthStateAware {
                 if let storageReference = storageReference {
                     self.profilePhotoImageView.sd_setImage(with: storageReference)
                 }
-             }).disposed(by: disposeBag)
+            }, onError: { _ in
+                
+            }).disposed(by: disposeBag)
 
         settingsViewModel.getUserFirstName()
-                .bind(to: nameLabel.rx.text)
+                .asDriver(onErrorJustReturn: nil)
+                .drive(nameLabel.rx.text)
                 .disposed(by: disposeBag)
         
         settingsViewModel.getUserShortDescription()
-                .bind(to: descriptionLabel.rx.text)
+                .asDriver(onErrorJustReturn: "")
+                .drive(descriptionLabel.rx.text)
                 .disposed(by: disposeBag)
     }
     

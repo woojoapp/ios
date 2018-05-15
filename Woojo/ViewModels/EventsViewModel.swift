@@ -33,9 +33,7 @@ class EventsViewModel {
     }
 
     func isEventbriteIntegrated() -> Observable<Bool> {
-        return UserEventbriteIntegrationRepository.shared
-                .getEventbriteAccessToken()
-                .map { $0 != nil }
+        return UserEventbriteIntegrationRepository.shared.isEventbriteIntegrated()
     }
 
     func isFacebookIntegrated() -> Observable<Bool> {

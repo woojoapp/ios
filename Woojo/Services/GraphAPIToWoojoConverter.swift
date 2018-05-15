@@ -15,7 +15,8 @@ class GraphAPIToWoojoConverter {
         let profile = Woojo.User.Profile()
         profile.firstName = graphApiProfile.firstName
         profile.birthday = graphApiProfile.birthday
-        profile.location = convertLocation(graphApiLocation: graphApiProfile.location)
+        profile.gender = graphApiProfile.gender
+        profile.location = convertLocation(graphApiLocation: graphApiProfile.location?.location)
         return profile
     }
 

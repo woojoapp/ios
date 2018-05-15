@@ -56,16 +56,17 @@ class FacebookRepository {
         }
     }
 
-    func getProfilePicture(width: Int, height: Int) -> Promise<GraphAPI.Picture> {
-        return Promise<GraphAPI.Picture> { fulfill, reject in
+    func getProfilePicture(width: Int, height: Int) -> Promise<GraphAPI.ProfilePicture> {
+        return Promise<GraphAPI.ProfilePicture> { fulfill, reject in
             UserProfilePictureGraphRequest(width: width, height: height).start { response, result in
                 switch result {
                 case .success(let response):
-                    if var picture: GraphAPI.Picture = response.picture,
-                       let urlString = picture.data?.url,
+                    if var picture: GraphAPI.ProfilePicture = response.picture,
+                       let urlString = picture.picture?.data?.url,
                        let url = URL(string: urlString) {
+                        print("LOGGIN PICTURE \(urlString)")
                         self.downloadPicture(url: url).then { data in
-                            picture.data?.data = data
+                            picture.picture?.data?.data = data
                             fulfill(picture)
                         }
                     } else { reject(DownloadError.pictureUrlMissing) }

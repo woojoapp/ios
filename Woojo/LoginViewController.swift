@@ -130,16 +130,19 @@ class LoginViewController: UIViewController {
         Analytics.setUserProperties(properties: ["pre_login_onboarded": "true"])
         Analytics.Log(event: "Onboarding_pre_complete")
         setWorking(working: true)
-        LoginViewModel.shared.loginWithFacebook(viewController: self)
-                .catch { error in
-                    self.setWorking(working: false)
-                    if let loginError = error as? LoginManager.LoginError {
-                        if case let .facebookPermissionsDeclined(permissions) = loginError {
-                                Analytics.Log(event: "Account_log_in_missing_permissions", with: permissions)
-                                self.showDeclinedPermissionsErrorDialog()
-                        }
-                    }
+        LoginViewModel.shared.loginWithFacebook(viewController: self).then { _ in
+            self.dismiss(animated: true, completion: {
+                self.setWorking(working: false)
+            })
+        }.catch { error in
+            self.setWorking(working: false)
+            if let loginError = error as? LoginManager.LoginError {
+                if case let .facebookPermissionsDeclined(permissions) = loginError {
+                        Analytics.Log(event: "Account_log_in_missing_permissions", with: permissions)
+                        self.showDeclinedPermissionsErrorDialog()
                 }
+            }
+        }
     }
 
     private func showDeclinedPermissionsErrorDialog() {

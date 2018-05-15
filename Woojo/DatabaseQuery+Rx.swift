@@ -28,11 +28,16 @@ extension DatabaseQuery {
             let handle = self.observe(event, with: { (snapshot) in
                 observer.onNext(snapshot)
             }, withCancel: { (error) in
-                observer.onError(error)
+                print("RXX ONERROR", error, self.ref)
+                observer.onError(ListenerCancelledError.listenerCancelled(reference: self.ref.url))
             })
             return Disposables.create {
                 self.removeObserver(withHandle: handle)
             }
         })
     }
+}
+
+enum ListenerCancelledError: Error {
+    case listenerCancelled(reference: String)
 }

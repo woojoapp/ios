@@ -6,7 +6,7 @@
 import Foundation
 
 extension GraphAPI {
-    struct Friend {
+    struct Friend: Codable {
         var id: String?
         var firstName: String?
         var picture: Picture?

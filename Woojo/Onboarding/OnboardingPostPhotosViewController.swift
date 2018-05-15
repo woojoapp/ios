@@ -42,6 +42,8 @@ class OnboardingPostPhotosViewController: OnboardingPostBaseViewController, Phot
             .subscribe(onNext: { photos in
                 self.photos = photos
                 self.photosCollectionView.reloadData()
+            }, onError: { _ in
+                
             }).disposed(by: disposeBag)
     }
     

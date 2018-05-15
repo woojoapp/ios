@@ -9,65 +9,52 @@ import FirebaseStorage
 import RxSwift
 import Promises
 
-class UserEventbriteIntegrationRepository: EventIdsToEventsConversion {
-    private let firebaseAuth = Auth.auth()
-    private let firebaseDatabase = Database.database()
-
+class UserEventbriteIntegrationRepository: BaseRepository, EventIdsToEventsConversion {
     static let shared = UserEventbriteIntegrationRepository()
-    private init() {}
-
-    private func getUid() -> String { return firebaseAuth.currentUser!.uid }
-
-    private func getUserDatabaseReference(uid: String) -> DatabaseReference {
-        return firebaseDatabase
-                .reference()
-                .child("users")
-                .child(uid)
-    }
-
-    private func getCurrentUserDatabaseReference() -> DatabaseReference {
-        return getUserDatabaseReference(uid: getUid())
-    }
-
-    private func getEventbriteIntegrationReference() -> DatabaseReference {
-        return getCurrentUserDatabaseReference().child("integrations/eventbrite")
-    }
-
-    private func getEventbriteAccessTokenReference() -> DatabaseReference {
-        return getEventbriteIntegrationReference().child("access_token")
-    }
-
-    private func getEventbriteEventIdsReference() -> DatabaseReference {
-        return getEventbriteIntegrationReference().child("events")
+    
+    override private init() {
+        super.init()
     }
     
     func isEventbriteIntegrated() -> Observable<Bool> {
-        return getEventbriteAccessTokenReference()
-            .rx_observeEvent(event: .value)
-            .map { $0.exists() }
+        return withCurrentUser {
+            $0.child("integrations/eventbrite/access_token")
+                .rx_observeEvent(event: .value)
+                .map { $0.exists() }
+        }
     }
 
     func removeEventbriteIntegration() -> Promise<Void> {
-        return getEventbriteIntegrationReference().removeValuePromise()
+        return doWithCurrentUser { $0.removeValuePromise() }
     }
 
     func getEventbriteEvents() -> Observable<[Event]> {
-        return getEventbriteEventIdsReference()
+        return withCurrentUser {
+            $0.child("integrations/eventbrite/events")
                 .rx_observeEvent(event: .value)
                 .flatMap({ self.transformEventIdsToEvents(dataSnapshot: $0, source: .eventbrite) { $0.key } })
+            }.catchError({ (error) -> Observable<[Event]> in
+                print("NNEW CATCH ERROR", error)
+                return Observable.of([])
+            })
     }
 
     func getEventbriteAccessToken() -> Observable<String?> {
-        return getEventbriteAccessTokenReference()
+        return withCurrentUser {
+            $0.child("integrations/eventbrite/access_token")
                 .rx_observeEvent(event: .value)
                 .map {
                     print("EVVENT", $0)
                     return $0.value as? String
                 }
+        }
     }
     
     func setEventbriteAccessToken(accessToken: String) -> Promise<Void> {
-        return getEventbriteAccessTokenReference().setValuePromise(value: accessToken)
+        return doWithCurrentUser {
+            $0.child("integrations/eventbrite/access_token")
+                .setValuePromise(value: accessToken)
+        }
     }
 
     func syncEventbriteEvents() -> Promise<Void> {
@@ -85,7 +72,10 @@ class UserEventbriteIntegrationRepository: EventIdsToEventsConversion {
     }
 
     private func writeEventbriteEventIds(eventIds: [String: Bool]) -> Promise<Void> {
-        return getEventbriteEventIdsReference().setValuePromise(value: eventIds)
+        return doWithCurrentUser {
+            $0.child("integrations/eventbrite/events")
+                .setValuePromise(value: eventIds)
+        }
     }
 
     enum EventbriteIntegrationError: Error {

@@ -31,7 +31,8 @@ class LoginManager {
 
     private func setProfilePictureFromFacebook() -> Promise<String> {
         return FacebookRepository.shared.getProfilePicture(width: 3000, height: 3000).then { picture -> Promise<String> in
-            if let data = picture.data?.data {
+            print("LOGGIN AFTER DOWNLOAD", picture)
+            if let data = picture.picture?.data?.data {
                 return UserProfileRepository.shared.setPhoto(data: data, position: 0)
             }
             return Promise(LoginError.facebookPictureDownloadFailed)
@@ -71,18 +72,27 @@ class LoginManager {
     }
 
     private func setUserFromFacebook() -> Promise<Void> {
-        return setProfileFromFacebook().then {
+        print("LOGGIN SET PROFILE")
+        return setProfileFromFacebook().then { _ -> Promise<String> in
+            print("LOGGIN SET PROFILE PICTURE")
             return self.setProfilePictureFromFacebook()
-        }.then {
+        }.then { _ -> Promise<Void> in
+            print("LOGGIN SET PAGE LIKES")
             return self.setPageLikesFromFacebook()
-        }.then {
+        }.then { _ -> Promise<Void> in
+            print("LOGGIN SET FRIENDS")
             return self.setFriendsFromFacebook()
-        }.then {
+        }.then { _ -> Promise<Void> in
+            print("LOGGIN SET PREFERENCES")
             return self.setDefaultPreferences()
-        }.then {
+        }.then { _ -> Promise<Void> in
+            print("LOGGIN SET LAST SEEN")
             return self.setLastSeen()
-        }.then {
+        }.then { _ -> Promise<Void> in
+            print("LOGGIN SET SIGN UP")
             return self.setSignUp()
+        }.catch { error in
+            print("WOOOPS", error)
         }
     }
 
@@ -144,13 +154,15 @@ class LoginManager {
     }
 
     func loginWithFacebook(viewController: UIViewController) -> Promise<FirebaseAuth.User> {
-        return facebookLogin(viewController: viewController).then { facebookResult in
+        return facebookLogin(viewController: viewController).then { facebookResult -> Promise<FirebaseAuth.User> in
             return self.firebaseLogin(credential: facebookResult.credential, permissions: facebookResult.permissions)
-        }.then { firebaseUser in
-            return UserRepository.shared.isUserSignedUp().then { isUserSignedUp in
+        }.then { firebaseUser -> Promise<FirebaseAuth.User> in
+            return UserRepository.shared.isUserSignedUp().then { isUserSignedUp -> Promise<FirebaseAuth.User> in
                 if isUserSignedUp {
+                    print("LOGGIN HERE 1")
                     return Promise(firebaseUser)
                 }
+                print("LOGGIN HERE 2")
                 return self.setUserFromFacebook().then {
                     return Promise(firebaseUser)
                 }
@@ -177,9 +189,10 @@ class LoginManager {
 
     func deleteAccount() {
         Analytics.Log(event: "Account_delete")
-        UserRepository.shared.removeCurrentUser().catch { _ in }
-        logOut()
-        Auth.auth().currentUser?.delete(completion: nil)
+        UserRepository.shared.removeCurrentUser().then {
+            self.logOut()
+            Auth.auth().currentUser?.delete(completion: nil)
+        }.catch { _ in }
     }
 
     enum LoginError: Error {

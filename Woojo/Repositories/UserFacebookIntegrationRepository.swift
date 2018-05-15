@@ -11,71 +11,52 @@ import FirebaseStorage
 import RxSwift
 import Promises
 
-class UserFacebookIntegrationRepository: EventIdsToEventsConversion {
-    private let firebaseAuth = Auth.auth()
-    private let firebaseDatabase = Database.database()
-
+class UserFacebookIntegrationRepository: BaseRepository, EventIdsToEventsConversion {
     static let shared = UserFacebookIntegrationRepository()
-    private init() {}
-
-    private func getUid() -> String { return firebaseAuth.currentUser!.uid }
-
-    private func getUserDatabaseReference(uid: String) -> DatabaseReference {
-        return firebaseDatabase
-                .reference()
-                .child("users")
-                .child(uid)
+    
+    override private init() {
+        super.init()
     }
 
-    private func getCurrentUserDatabaseReference() -> DatabaseReference {
-        return getUserDatabaseReference(uid: getUid())
-    }
-
-    private func getFacebookIntegrationReference() -> DatabaseReference {
-        return getCurrentUserDatabaseReference().child("integrations/facebook")
-    }
-
-    private func getFacebookAccessTokenReference() -> DatabaseReference {
-        return getFacebookIntegrationReference().child("access_token")
-    }
-
-    private func getFacebookEventIdsReference() -> DatabaseReference {
-        return getFacebookIntegrationReference().child("events")
-    }
-
-    func removeFacebookIntegration(completion: @escaping (Error?, DatabaseReference) -> Void) {
-        getFacebookIntegrationReference().removeValue(completionBlock: completion)
+    func removeFacebookIntegration() -> Promise<Void> {
+        return doWithCurrentUser { $0.child("integrations/facebook").removeValuePromise() }
     }
     
     func isFacebookIntegrated() -> Observable<Bool> {
-        return getFacebookAccessTokenReference()
-            .rx_observeEvent(event: .value)
-            .map { $0.exists() }
+        return withCurrentUser {
+            $0.child("integrations/facebook/access_token")
+                .rx_observeEvent(event: .value)
+                .map { $0.exists() }
+        }
     }
 
     func getFacebookEvents() -> Observable<[Event]> {
-        return getFacebookEventIdsReference()
+        return withCurrentUser {
+            $0.child("integrations/facebook/events")
                 .rx_observeEvent(event: .value)
                 .flatMap({ self.transformEventIdsToEvents(dataSnapshot: $0, source: .facebook) { $0.key } })
+        }
     }
 
     func getFacebookAccessToken() -> Observable<String?> {
-        return getFacebookAccessTokenReference()
+        return withCurrentUser {
+            $0.child("integrations/facebook/access_token")
                 .rx_observeEvent(event: .value)
                 .map { $0.value as? String }
+        }
     }
 
     func setPageLikes(pageLikes: [PageLike]) -> Promise<Void> {
-        let dictionary = pageLikes.reduce(into: [String: PageLike]()) { result, pageLike in
-            if let id = pageLike.id { result[id] = pageLike }
+        let dictionary = pageLikes.reduce(into: [String: [String: Any]]()) { result, pageLike in
+            if let id = pageLike.id { result[id] = pageLike.dictionary }
         }
-        return getCurrentUserDatabaseReference().child("page-likes").setValuePromise(value: dictionary)
+        return doWithCurrentUser { $0.child("page-likes").setValuePromise(value: dictionary) }
     }
 
     func setFriends(friends: [Friend]) -> Promise<Void> {
-        let dictionary = friends.reduce(into: [String: Friend]()) { result, friend in
-            if let id = friend.id { result[id] = friend }
+        let dictionary = friends.reduce(into: [String: [String: Any]]()) { result, friend in
+            if let id = friend.id { result[id] = friend.dictionary }
         }
-        return getCurrentUserDatabaseReference().child("friends").setValuePromise(value: dictionary)
+        return doWithCurrentUser { $0.child("friends").setValuePromise(value: dictionary) }
     }
 }

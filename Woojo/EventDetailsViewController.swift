@@ -26,6 +26,8 @@ class EventDetailsViewController: UITableViewController {
                     self.event = event
                     self.tableView.reloadData()
                 }
+            }, onError: { _ in
+                
             }).disposed(by: disposeBag)
         }
     }

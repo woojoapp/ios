@@ -9,42 +9,26 @@ import FirebaseStorage
 import RxSwift
 import Promises
 
-class UserActiveEventRepository {
-    private let firebaseAuth = Auth.auth()
-    private let firebaseDatabase = Database.database()
-
+class UserActiveEventRepository: BaseRepository {
     static let shared = UserActiveEventRepository()
-    private init() {}
-
-    private func getUid() -> String { return firebaseAuth.currentUser!.uid }
-
-    private func getUserDatabaseReference(uid: String) -> DatabaseReference {
-        return firebaseDatabase
-                .reference()
-                .child("users")
-                .child(uid)
-    }
-
-    private func getCurrentUserDatabaseReference() -> DatabaseReference {
-        return getUserDatabaseReference(uid: getUid())
-    }
-
-    private func getActiveEventsInfoReference() -> DatabaseReference {
-        return getCurrentUserDatabaseReference().child("events")
+    
+    override private init() {
+        super.init()
     }
 
     func getActiveEventsInfo() -> Observable<DataSnapshot> {
-        return getActiveEventsInfoReference()
-                .rx_observeEvent(event: .value)
+        return withCurrentUser {
+                $0.child("events")
+                    .rx_observeEvent(event: .value)
+        }
     }
 
     func activateEvent(eventId: String, rsvpStatus: String? = "unsure") -> Promise<Void> {
-        return getActiveEventsInfoReference().child(eventId).setValuePromise(value: rsvpStatus)
+        return doWithCurrentUser { $0.child("events").child(eventId).setValuePromise(value: rsvpStatus) }
     }
 
     func deactivateEvent(eventId: String) -> Promise<Void> {
-        
-        return getActiveEventsInfoReference().child(eventId).removeValuePromise()
+        return doWithCurrentUser { $0.child("events").child(eventId).removeValuePromise() }
     }
     
     enum UserActiveEventRepositoryError: Error {

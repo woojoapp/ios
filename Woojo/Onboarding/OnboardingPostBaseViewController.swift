@@ -21,6 +21,8 @@ class OnboardingPostBaseViewController: UIViewController {
             if let photo = photo {
                 self.profileImageView.sd_setImage(with: photo)
             }
+        }, onError: { _ in
+            
         }).disposed(by: disposeBag)
     }
     

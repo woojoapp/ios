@@ -10,7 +10,9 @@ struct UserProfileGraphRequest: GraphRequestProtocol {
     struct Response: GraphResponseProtocol {
 
         init(rawResponse: Any?) {
-            profile = GraphAPI.Profile(from: rawResponse)
+            print("TRUCC iciii llaaa", rawResponse as? [String: Any])
+            profile = GraphAPI.Profile(from: rawResponse as? [String: Any])
+            profile?.firstName = (rawResponse as? [String: Any])?["first_name"] as? String
         }
 
         var profile: GraphAPI.Profile?
@@ -27,6 +29,6 @@ struct UserProfileGraphRequest: GraphRequestProtocol {
         return ["fields": fields.joined(separator: ",")]
     }()
     var httpMethod: GraphRequestHTTPMethod = .GET
-    var apiVersion: GraphAPIVersion = .defaultVersion
+    var apiVersion: GraphAPIVersion = .init(stringLiteral: "2.12")
 
 }

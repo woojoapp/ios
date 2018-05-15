@@ -196,26 +196,30 @@ class Notifier {
     }
     
     func announcement(notification: MessageNotification, completion: ((Announcement?, Error?) -> Void)? = nil) {
-        UserProfileRepository.shared.getProfile(uid: notification.otherId).toPromise().then { profile in
-            if let profile = profile,
-               let displayName = profile.firstName {
-                UserProfileRepository.shared.getPhotoAsImage(position: 0, size: .thumbnail).toPromise().then { image in
-                    let announcement = Announcement(title: Constants.User.Notification.Interaction.Message.announcement.title, subtitle: "\(displayName): \(notification.excerpt ?? "")", image: image, duration: Constants.User.Notification.Interaction.Message.announcement.duration, action: {
-                        self.tapOnNotification(notification: notification)
-                    })
-                    completion?(announcement, nil)
-                    }.catch { error in
-                        completion?(nil, error)
+        if let otherId = notification.otherId {
+            UserProfileRepository.shared.getProfile(uid: otherId).toPromise().then { profile in
+                if let profile = profile,
+                   let displayName = profile.firstName {
+                    UserProfileRepository.shared.getPhotoAsImage(position: 0, size: .thumbnail).toPromise().then { image in
+                        let announcement = Announcement(title: Constants.User.Notification.Interaction.Message.announcement.title, subtitle: "\(displayName): \(notification.excerpt ?? "")", image: image, duration: Constants.User.Notification.Interaction.Message.announcement.duration, action: {
+                            self.tapOnNotification(notification: notification)
+                        })
+                        completion?(announcement, nil)
+                        }.catch { error in
+                            completion?(nil, error)
+                    }
+                } else {
+                    print("Unable to create announcement for message notification: missing some profile data.")
+                    completion?(nil, nil)
                 }
-            } else {
-                print("Unable to create announcement for message notification: missing some profile data.")
-                completion?(nil, nil)
+            }.catch { error in
+                print("Unable to load profile to create announcement for message notification: \(error.localizedDescription)")
+                completion?(nil, error)
             }
-        }.catch { error in
-            print("Unable to load profile to create announcement for message notification: \(error.localizedDescription)")
-            completion?(nil, error)
+        } else {
+            print("Unable to create announcement for message notification: missing some profile data.")
+            completion?(nil, nil)
         }
-
     }
     
     /*func startMonitoringReachability() {

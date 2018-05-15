@@ -73,51 +73,33 @@ class ProfileViewController: UITableViewController, PhotoSource, AuthStateAware 
     }
     
     func bindViewModel() {
-        /* let userPhotos = User.current.asObservable()
-            .flatMap { user -> Observable<[User.Profile.Photo?]> in
-                if let currentUser = user {
-                    return currentUser.profile.photos.asObservable()
-                } else {
-                    return Variable([nil]).asObservable()
-                }
-            }
-            
-        userPhotos.subscribe(onNext: { photos in
-            if let profilePhoto = photos[0] {
-                if let image = profilePhoto.images[User.Profile.Photo.Size.thumbnail] {
-                    self.profilePhotoImageView.image = image
-                } else {
-                    profilePhoto.download(size: .thumbnail) {
-                        self.profilePhotoImageView.image = profilePhoto.images[User.Profile.Photo.Size.thumbnail]
-                    }
-                }
-            } else {
-                self.profilePhotoImageView.image = #imageLiteral(resourceName: "placeholder_40x40")
-            }
-        })
-            .disposed(by: disposeBag) */
-
         profileViewModel.getPhotos(size: .thumbnail)
-        .subscribe(onNext: { photos in
-            if let main = photos[0] {
-                self.profilePhotoImageView.sd_setImage(with: main)
-            }
-            self.photos = photos
-            self.photosCollectionView.reloadData()
-        }).disposed(by: disposeBag)
+            .subscribe(onNext: { photos in
+                if let main = photos[0] {
+                    self.profilePhotoImageView.sd_setImage(with: main)
+                }
+                self.photos = photos
+                self.photosCollectionView.reloadData()
+            }, onError: { _ in
+                
+            }).disposed(by: disposeBag)
 
         profileViewModel.getNameAge()
-            .bind(to: nameLabel.rx.text)
+            .asDriver(onErrorJustReturn: "")
+            .drive(nameLabel.rx.text)
             .disposed(by: disposeBag)
 
         profileViewModel.getCity()
-            .bind(to: cityLabel.rx.text)
+            .asDriver(onErrorJustReturn: nil)
+            .drive(cityLabel.rx.text)
             .disposed(by: disposeBag)
 
         profileViewModel.getOccupation()
             .subscribe(onNext: { occupation in
                 self.occupationsTableViewCell.selectedOccupation = occupation
                 self.occupationLabel.text = occupation
+            }, onError: { _ in
+                
             })
             .disposed(by: disposeBag)
 
@@ -131,7 +113,8 @@ class ProfileViewController: UITableViewController, PhotoSource, AuthStateAware 
                         return description!
                     }
                 }
-                .bind(to: bioTableViewCell.bioTextView.rx.text)
+                .asDriver(onErrorJustReturn: "")
+                .drive(bioTableViewCell.bioTextView.rx.text)
                 .disposed(by: disposeBag)
 
 
@@ -144,8 +127,8 @@ class ProfileViewController: UITableViewController, PhotoSource, AuthStateAware 
                     self.occupationsTableViewCell.textView.textColor = UIColor.black
                     return occupation!
                 }
-            }
-            .bind(to: occupationsTableViewCell.textView.rx.text)
+            }.asDriver(onErrorJustReturn: "")
+            .drive(occupationsTableViewCell.textView.rx.text)
             .disposed(by: disposeBag)
         
         self.longPressGestureRecognizer.addTarget(self, action: #selector(longPress))

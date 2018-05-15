@@ -36,6 +36,8 @@ class EventMatchCollectionViewCell: UICollectionViewCell {
                     self.imageView.sd_setImage(with: storageReference, placeholderImage: #imageLiteral(resourceName: "placeholder_40x40"))
                     self.setNeedsLayout()
                 }
+            }, onError: { _ in
+                
             }).disposed(by: disposeBag)
         }
     }

@@ -10,10 +10,11 @@ struct UserProfilePictureGraphRequest: GraphRequestProtocol {
     struct Response: GraphResponseProtocol {
 
         init(rawResponse: Any?) {
-            picture = GraphAPI.Picture(from: rawResponse)
+            print("LOGGIN GRAPH REQUEST \(rawResponse)")
+            picture = GraphAPI.ProfilePicture(from: rawResponse)
         }
 
-        var picture: GraphAPI.Picture?
+        var picture: GraphAPI.ProfilePicture?
     }
 
     init(width: Int, height: Int) {
@@ -25,7 +26,7 @@ struct UserProfilePictureGraphRequest: GraphRequestProtocol {
     private var height: Int
     var graphPath = "/me"
     var parameters: [String:Any]? {
-        return ["fields": "picture.width(\(width).height(\(height)"]
+        return ["fields": "picture.width(\(width)).height(\(height))"]
     }
     var accessToken = AccessToken.current
     var httpMethod: GraphRequestHTTPMethod = .GET

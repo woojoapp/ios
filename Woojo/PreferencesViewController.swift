@@ -45,6 +45,8 @@ class PreferencesViewController: UITableViewController {
                 self.ageRangeSlider.upperValue = Double(self.ageRange.max)
                 self.ageRangeSlider.lowerValue = Double(self.ageRange.min)
                 self.ageRangeSliderValueChanged(self.ageRangeSlider)
+            }, onError: { _ in
+                
             })
             .disposed(by: disposeBag)
         
@@ -53,6 +55,8 @@ class PreferencesViewController: UITableViewController {
                 if let gender = gender, let index = self.genderSelectorData.index(of: gender) {
                     self.genderSelector.selectedSegmentIndex = index
                 }
+            }, onError: { _ in
+                
             })
             .disposed(by: disposeBag)
     }

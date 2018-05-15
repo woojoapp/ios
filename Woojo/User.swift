@@ -28,12 +28,25 @@ class User: Equatable, Codable {
         var description: String?
         var location: Location?
         var occupation: String?
-        var photoIds: [String: String] = [:]
+        var photoIds: [Int: String]? = nil
 
         private enum CodingKeys: String, CodingKey {
             case uid, gender, birthday, description, location, occupation
             case firstName = "first_name"
-            case photoIds = "photos"
+            //case photoIds = "photos"
+        }
+        
+        convenience init?(dataSnapshot: DataSnapshot) {
+            self.init(from: dataSnapshot.value as? [String: Any])
+            if let array = dataSnapshot.childSnapshot(forPath: "photos").value as? NSArray {
+                var photos = [Int: String]()
+                for (i, element) in array.enumerated() {
+                    if let photoId = element as? String {
+                        photos[i] = photoId
+                    }
+                }
+                self.photoIds = photos
+            }
         }
 
         func getBirthDate() -> Date? {

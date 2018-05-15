@@ -72,8 +72,8 @@ class ALChatManager: NSObject {
             alUser.applicationId = Constants.Env.Chat.applozicApplicationId
             alUser.userId = profile?.uid
             alUser.displayName = profile?.firstName
-            if let pictureId = profile?.photoIds["0"] {
-                UserProfileRepository.shared.getPhotoStorageReference(pictureId: pictureId, size: .thumbnail).downloadURL { url, error in
+            if let pictureId = profile?.photoIds?[0], let uid = profile?.uid {
+                UserProfileRepository.shared.getPhotoStorageReferenceSnapshot(uid: uid, pictureId: pictureId, size: .thumbnail).downloadURL { url, error in
                     alUser.imageLink = url?.absoluteString
                     ALUserDefaultsHandler.setUserId(alUser.userId)
                     ALUserDefaultsHandler.setDisplayName(alUser.displayName)

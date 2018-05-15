@@ -10,6 +10,17 @@ extension GraphAPI {
         var id: String?
         var firstName: String?
         var birthday: String?
-        var location: GraphAPI.Location?
+        var gender: String?
+        var location: GraphAPI.Profile.Location?
+        
+        struct Location: Codable {
+            var id: String?
+            var location: GraphAPI.Location?
+        }
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case id, birthday, location
+        case firstName = "first_name"
     }
 }

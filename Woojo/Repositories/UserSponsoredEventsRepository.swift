@@ -9,10 +9,10 @@ import RxSwift
 import Promises
 
 class UserSponsoredEventsRepository: EventIdsToEventsConversion {
-    private let firebaseAuth = Auth.auth()
     private let firebaseDatabase = Database.database()
 
     static let shared = UserSponsoredEventsRepository()
+    
     private init() {}
 
     private func getSponsoredEventIdsReference() -> DatabaseReference {
