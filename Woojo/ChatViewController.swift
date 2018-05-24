@@ -23,6 +23,8 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
     let translucentColor = UIColor(red: 247.0/255.0, green: 247.0/255.0, blue: 247.0/255.0, alpha: 0.95)
     var unmatchObserverHandle: UInt?
     var disposeBag = DisposeBag()
+    var matchesReference: DatabaseReference?
+    var matchesDisposable: Disposable?
     
     override var individualLaunch: Bool {
         get {
@@ -40,6 +42,12 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
         ALApplozicSettings.setColorForSendMessages(self.view.tintColor)
         
         mTableView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 50.0, right: 0.0)
+        
+        UserMatchRepository.shared.getMatchesReference().subscribe(onNext: {
+            self.matchesReference = $0
+        }, onError: { _ in
+            
+        }).disposed(by: disposeBag)
         
         /*if let navigationController = navigationController {
             let userChatBannerView = UserChatBannerView(frame: CGRect(x: 0, y: UIApplication.shared.statusBarFrame.height + navigationController.navigationBar.frame.height, width: view.frame.width, height: 100))
@@ -105,7 +113,12 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
         
         self.setContactProfilePhoto()
         
-        self.wireUnmatchObserver()
+        matchesDisposable = UserMatchRepository.shared.getMatchesReference().subscribe(onNext: {
+            self.matchesReference = $0
+            self.wireUnmatchObserver()
+        }, onError: { _ in
+            
+        })
         
         label.textColor = label.textColor.withAlphaComponent(0.6)
         
@@ -169,6 +182,8 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "APP_ENETER_IN_FOREGROUND"), object: nil)
+        
+        matchesDisposable?.dispose()
         self.unwireUnmatchObserver()
     }
     
@@ -178,7 +193,7 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
     }
     
     func wireUnmatchObserver() {
-        self.unmatchObserverHandle = UserMatchRepository.shared.getMatchesReference().observe(.childRemoved, with: { (snap) in
+        self.unmatchObserverHandle = matchesReference?.observe(.childRemoved, with: { (snap) in
             print("UNMATCH DETECTED", snap.key, self.contactIds)
             if snap.key == self.contactIds {
                 self.conversationDeleted()
@@ -188,7 +203,7 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
     
     func unwireUnmatchObserver() {
         if let handle = self.unmatchObserverHandle {
-            UserMatchRepository.shared.getMatchesReference().removeObserver(withHandle: handle)
+            matchesReference?.removeObserver(withHandle: handle)
         }
     }
     
@@ -242,18 +257,25 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
     //}
     
     @objc func showProfile() {
-        if let userDetailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserDetailsViewController") as? UserDetailsViewController {
-            //userDetailsViewController.buttonsType = .options
+        if alContact.userId == "woojo-female" {
+            let userDetailsViewController = UserDetailsViewController<User>(uid: "woojo-female", userType: User.self)
             userDetailsViewController.chatViewController = self
-            userDetailsViewController.otherUserId = self.contactIds
-            userDetailsViewController.otherUserType = Match.self
-            self.present(userDetailsViewController, animated: true) //, completion: {
+            navigationController?.pushViewController(userDetailsViewController, animated: true)
+        } else {
+            let userDetailsViewController = UserDetailsViewController<Match>(uid: alContact.userId, userType: Match.self)
+            userDetailsViewController.chatViewController = self
+            navigationController?.pushViewController(userDetailsViewController, animated: true)
+        }
+        //if let userDetailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserDetailsViewController") as? UserDetailsViewController {
+            //userDetailsViewController.buttonsType = .options
+            //userDetailsViewController.uid = self.contactIds
+            //userDetailsViewController.otherUserType = Match.self
                 //let closeTapGestureRecognizer = UITapGestureRecognizer(target: userDetailsViewController, action: #selector(userDetailsViewController.dismiss(sender:)))
                 //userDetailsViewController.addGestureRecognizer(closeTapGestureRecognizer)
                 // let toggleTapGestureRecognizer = UITapGestureRecognizer(target: userDetailsViewController.cardView, action: #selector(userDetailsViewController.cardView.toggleDescription))
                 // userDetailsViewController.cardView.carouselView.addGestureRecognizer(toggleTapGestureRecognizer)
             //})
-        }
+        //}
     }
     
     @objc func keyboardWillShow(_ notification: NSNotification) {

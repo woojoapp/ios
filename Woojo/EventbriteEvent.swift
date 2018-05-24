@@ -28,7 +28,6 @@ class EventbriteEvent: Codable {
         event.start = formatter.date(from: start.local)
         event.description = description.text
         event.place = venue.toPlace()
-        event.pictureURL = logo.url
         event.coverURL = logo.original.url
         event.rsvpStatus = Event.RSVP.attending.rawValue
         event.end = formatter.date(from: end.local)

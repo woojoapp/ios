@@ -22,14 +22,14 @@ class SettingsViewController: UITableViewController, AuthStateAware {
     
     let disposeBag = DisposeBag()
     var reachabilityObserver: AnyObject?
-    private let settingsViewModel = SettingsViewModel.shared
+    private let viewModel = SettingsViewModel()
     var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
 
     @IBAction func logout(sender: UIButton) {
         let logoutAlert = UIAlertController(title: NSLocalizedString("Logout", comment: ""), message: NSLocalizedString("Sure you want to logout?", comment: ""), preferredStyle: .alert)
         logoutAlert.addAction(UIAlertAction(title: NSLocalizedString("Logout", comment: ""), style: .default) { _ in
             self.dismiss(animated: true, completion: nil)
-            self.settingsViewModel.logOut()
+            self.viewModel.logOut()
         })
         logoutAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
         logoutAlert.popoverPresentationController?.sourceView = self.view
@@ -40,7 +40,7 @@ class SettingsViewController: UITableViewController, AuthStateAware {
         let deleteAccountAlert = UIAlertController(title: NSLocalizedString("Delete Account", comment: ""), message: NSLocalizedString("Sure you want to delete your account?", comment: ""), preferredStyle: .alert)
         deleteAccountAlert.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive) { _ in
             self.dismiss(animated: true, completion: nil)
-            self.settingsViewModel.deleteAccount()
+            self.viewModel.deleteAccount()
         })
         deleteAccountAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
         deleteAccountAlert.popoverPresentationController?.sourceView = self.view
@@ -70,22 +70,15 @@ class SettingsViewController: UITableViewController, AuthStateAware {
     }
     
     func bindViewModel() {
-        settingsViewModel.getFullMainUserProfilePicture()
-            .subscribe(onNext: { storageReference in
-                if let storageReference = storageReference {
-                    self.profilePhotoImageView.sd_setImage(with: storageReference)
-                }
-            }, onError: { _ in
-                
-            }).disposed(by: disposeBag)
+        viewModel.fullMainPicture()
+            .drive(onNext: { $0?.download().then { self.profilePhotoImageView.image = $0 } })
+            .disposed(by: disposeBag)
 
-        settingsViewModel.getUserFirstName()
-                .asDriver(onErrorJustReturn: nil)
+        viewModel.firstName
                 .drive(nameLabel.rx.text)
                 .disposed(by: disposeBag)
         
-        settingsViewModel.getUserShortDescription()
-                .asDriver(onErrorJustReturn: "")
+        viewModel.shortDescription
                 .drive(descriptionLabel.rx.text)
                 .disposed(by: disposeBag)
     }
@@ -122,7 +115,7 @@ class SettingsViewController: UITableViewController, AuthStateAware {
     
     @IBAction
     func share() {
-        settingsViewModel.share(from: self)
+        viewModel.share(from: self)
     }
 
 }

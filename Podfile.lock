@@ -111,6 +111,9 @@ PODS:
   - ImageSlideshow (1.5.0):
     - ImageSlideshow/Core (= 1.5.0)
   - ImageSlideshow/Core (1.5.0)
+  - ImageSlideshow/SDWebImage (1.5.0):
+    - ImageSlideshow/Core
+    - SDWebImage (< 5.0, >= 3.7)
   - Koloda (4.3.1):
     - pop (~> 1.0)
   - leveldb-library (1.20)
@@ -126,6 +129,9 @@ PODS:
   - PromisesSwift (1.1.0):
     - PromisesObjC (= 1.1.0)
   - Protobuf (3.5.0)
+  - R.swift (4.0.0):
+    - R.swift.Library (~> 4.0.0)
+  - R.swift.Library (4.0.0)
   - RPCircularProgress (0.3.0)
   - RSKImageCropper (1.6.1)
   - RxCocoa (4.1.2):
@@ -158,10 +164,12 @@ DEPENDENCIES:
   - FirebaseUI/Storage (= 4.5.1)
   - HMSegmentedControl (= 1.5.4)
   - ImageSlideshow (= 1.5.0)
+  - ImageSlideshow/SDWebImage
   - Koloda (from `https://github.com/woojoapp/Koloda.git`)
   - NMRangeSlider (= 1.2.1)
   - PKHUD (= 5.0.0)
   - PromisesSwift (= 1.1)
+  - R.swift (= 4.0.0)
   - RPCircularProgress (= 0.3.0)
   - RSKImageCropper (= 1.6.1)
   - RxCocoa (= 4.1.2)
@@ -210,6 +218,8 @@ SPEC REPOS:
     - PromisesObjC
     - PromisesSwift
     - Protobuf
+    - R.swift
+    - R.swift.Library
     - RPCircularProgress
     - RSKImageCropper
     - RxCocoa
@@ -267,6 +277,8 @@ SPEC CHECKSUMS:
   PromisesObjC: 9ee393d5fb075baf186b99a00608f5ce3fb341fd
   PromisesSwift: 057256ad36b989ff105c1b748afb3a3d57f3dd29
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
+  R.swift: d6a5ec2f55a8441dc0ed9f1f8b37d7d11ae85c66
+  R.swift.Library: c3af34921024333546e23b70e70d0b4e0cffca75
   RPCircularProgress: 46bee24642e0cb8de53f49e6c85733b9c45dee33
   RSKImageCropper: 0df8c99e77a8ea7ca7a8b83ef468556f31584254
   RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
@@ -275,6 +287,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   Whisper: 169760fc4bab0abf24d5529f9276f95c25cf1025
 
-PODFILE CHECKSUM: 844eeb7a9e605428db3dfbd899bab94e3d34cbb6
+PODFILE CHECKSUM: 88806d256b582b78ca5d4cdeb9562c7bf084ce47
 
 COCOAPODS: 1.5.2

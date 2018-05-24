@@ -22,7 +22,7 @@ class OnboardingPostPhotosViewController: OnboardingPostBaseViewController, Phot
     private let reuseIdentifier = "OnboardingPhotoCell"
     private let itemsPerRow: CGFloat = 3
     private let sectionInsets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
-    private let profileViewModel = ProfileViewModel.shared
+    private let viewModel = ProfileViewModel()
     private var photos = [Int: StorageReference]()
     
     let imagePickerController = UIImagePickerController()
@@ -38,12 +38,10 @@ class OnboardingPostPhotosViewController: OnboardingPostBaseViewController, Phot
         self.longPressGestureRecognizer.addTarget(self, action: #selector(longPress))
         photosCollectionView.delegate = self
         photosCollectionView.dataSource = self
-        profileViewModel.getPhotos(size: .thumbnail)
-            .subscribe(onNext: { photos in
-                self.photos = photos
+        viewModel.thumbnails
+            .drive(onNext: { photos in
+                self.photos = photos ?? [:]
                 self.photosCollectionView.reloadData()
-            }, onError: { _ in
-                
             }).disposed(by: disposeBag)
     }
     
@@ -119,7 +117,7 @@ extension OnboardingPostPhotosViewController: UICollectionViewDelegate {
                 let facebookButton = UIAlertAction(title: NSLocalizedString("Facebook", comment: ""), style: .default, handler: { (action) -> Void in
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let navigationController = storyboard.instantiateViewController(withIdentifier: "FacebookPhotosNavigationController")
-                    if let albumTableViewController = navigationController.childViewControllers[0] as? AlbumsTableViewController {
+                    if let albumTableViewController = navigationController.childViewControllers[0] as? FacebookAlbumsViewController {
                         albumTableViewController.photoIndex = indexPath.row
                         albumTableViewController.profileViewController = self
                         self.present(navigationController, animated: true, completion: nil)
@@ -219,16 +217,16 @@ extension OnboardingPostPhotosViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         if let photo = photos[sourceIndexPath.row] {
-            profileViewModel.setPhoto(position: destinationIndexPath.row, photo: photo).then {
+            viewModel.setPhoto(position: destinationIndexPath.row, photo: photo).then {
                 Analytics.Log(event: "Onboarding_photos_reordered", with: ["photo_count": String(self.photos.count)])
             }
         }
         for i in 0..<Int(photoCount) {
             if let cell = collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? ProfilePhotoCollectionViewCell {
                 if let photo = cell.photo {
-                    profileViewModel.setPhoto(position: i, photo: photo).catch { _ in }
+                    viewModel.setPhoto(position: i, photo: photo).catch { _ in }
                 } else {
-                    profileViewModel.removePhoto(position: i).catch { _ in }
+                    viewModel.removePhoto(position: i).catch { _ in }
                 }
             }
         }
@@ -325,7 +323,7 @@ extension OnboardingPostPhotosViewController: RSKImageCropViewControllerDelegate
         // if let selectedIndex = photosCollectionView.indexPathsForSelectedItems?[0].row {
         if let selectedIndex = selectedIndex,
             let data = UIImagePNGRepresentation(croppedImage) {
-            profileViewModel.setPhoto(position: selectedIndex, data: data).then { generatedPictureId in
+            viewModel.setPhoto(position: selectedIndex, data: data).then { generatedPictureId in
                 self.navigationController?.dismiss(animated: true, completion: nil)
                 HUD.show(.labeledSuccess(title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("Photo added!", comment: "")))
                 HUD.hide(afterDelay: 1.0)

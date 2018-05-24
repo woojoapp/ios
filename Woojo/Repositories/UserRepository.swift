@@ -21,6 +21,35 @@ class UserRepository: BaseRepository {
         super.init()
     }
     
+    func getUser() -> Observable<User?> {
+        return withCurrentUser { $0.rx_observeEvent(event: .value).map { User(from: $0) } }
+    }
+    
+    func getUser(uid: String) -> Observable<User?> {
+        return withCurrentUser { _ in
+            return self.getUserDatabaseReference(uid: uid)
+                .rx_observeEvent(event: .value)
+                .map { User(from: $0) }
+        }
+    }
+    
+    func getUser(appScopedId: String) -> Observable<User?> {
+        return withCurrentUser { _ in
+            return self.firebaseDatabase.reference()
+                .child("users")
+                .queryOrdered(byChild: "profile/app_scoped_id")
+                .queryEqual(toValue: appScopedId)
+                .queryLimited(toFirst: 1)
+                .rx_observeEvent(event: .value)
+                .map { dataSnapshot -> User? in
+                    if let childSnapshot = dataSnapshot.children.nextObject() as? DataSnapshot {
+                        return User(from: childSnapshot)
+                    }
+                    return nil
+                }
+        }
+    }
+    
     func getPreferences() -> Observable<Preferences?> {
         return withCurrentUser { $0.child("preferences").rx_observeEvent(event: .value).map { Preferences(from: $0) } }
     }
@@ -44,7 +73,7 @@ class UserRepository: BaseRepository {
     }
 
     func addDevice(device: Device) -> Promise<Void> {
-        if device.token.isNullOrEmpty()  { return Promise(UserRepositoryError.deviceTokenNullOrEmpty) }
+        if device.token.isNullOrEmpty  { return Promise(UserRepositoryError.deviceTokenNullOrEmpty) }
         return doWithCurrentUser { $0.child("devices").child(device.token!).setValuePromise(value: device.dictionary) }
     }
 

@@ -66,29 +66,28 @@ class ALChatManager: NSObject {
      
      }*/
     
-    func setup() {
-        UserProfileRepository.shared.getProfile().toPromise().then { profile in
-            let alUser : ALUser =  ALUser();
-            alUser.applicationId = Constants.Env.Chat.applozicApplicationId
-            alUser.userId = profile?.uid
-            alUser.displayName = profile?.firstName
-            if let pictureId = profile?.photoIds?[0], let uid = profile?.uid {
-                UserProfileRepository.shared.getPhotoStorageReferenceSnapshot(uid: uid, pictureId: pictureId, size: .thumbnail).downloadURL { url, error in
-                    alUser.imageLink = url?.absoluteString
-                    ALUserDefaultsHandler.setUserId(alUser.userId)
-                    ALUserDefaultsHandler.setDisplayName(alUser.displayName)
-                    ALUserDefaultsHandler.setApplicationKey(alUser.applicationId)
-                    ALUserDefaultsHandler.setUserAuthenticationTypeId(Int16(APPLOZIC.rawValue))
-                    ALUserDefaultsHandler.setProfileImageLink(alUser.imageLink)
+    func setup(user: User?) {
+        print("APPLOZIPROFILE 1", user?.uid, user?.profile?.firstName)
+        let alUser : ALUser =  ALUser();
+        alUser.applicationId = Constants.Env.Chat.applozicApplicationId
+        alUser.userId = user?.uid
+        alUser.displayName = user?.profile?.firstName
+        if let pictureId = user?.profile?.photoIds?[0], let uid = user?.uid {
+            UserProfileRepository.shared.getPhotoStorageReferenceSnapshot(uid: uid, pictureId: pictureId, size: .thumbnail).downloadURL { url, error in
+                alUser.imageLink = url?.absoluteString
+                ALUserDefaultsHandler.setUserId(alUser.userId)
+                ALUserDefaultsHandler.setDisplayName(alUser.displayName)
+                ALUserDefaultsHandler.setApplicationKey(alUser.applicationId)
+                ALUserDefaultsHandler.setUserAuthenticationTypeId(Int16(APPLOZIC.rawValue))
+                ALUserDefaultsHandler.setProfileImageLink(alUser.imageLink)
 
-                    self.registerUser(alUser) { (response, error) in
-                        if let error = error {
-                            print("Failed to register Applozic user \(error)")
-                        } else {
-                            ALUserDefaultsHandler.setUserKeyString(response.userKey)
-                            ALUserDefaultsHandler.setDeviceKeyString(response.deviceKey)
-                            print("Successful Applozic user registration \(response.message), \(response.userKey), \(response.deviceKey)")
-                        }
+                self.registerUser(alUser) { (response, error) in
+                    if let error = error {
+                        print("Failed to register Applozic user \(error)")
+                    } else {
+                        ALUserDefaultsHandler.setUserKeyString(response.userKey)
+                        ALUserDefaultsHandler.setDeviceKeyString(response.deviceKey)
+                        print("Successful Applozic user registration \(response.message), \(response.userKey), \(response.deviceKey)")
                     }
                 }
             }
@@ -134,9 +133,9 @@ class ALChatManager: NSObject {
                                                              "Woojo.SettingsViewController",
                                                              "Woojo.PreferencesViewController",
                                                              "Woojo.ProfileViewController",
-                                                             "Woojo.AlbumsTableViewController",
-                                                             "Woojo.PhotoCollectionViewController",
-                                                             "Woojo.AboutTableViewController",
+                                                             "Woojo.FacebookAlbumsViewController",
+                                                             "Woojo.FacebookAlbumPhotosViewController",
+                                                             "Woojo.AboutViewController",
                                                              "Woojo.AboutWebViewController",
                                                              "Woojo.ChatViewController",
                                                              "Woojo.MessagesViewController",

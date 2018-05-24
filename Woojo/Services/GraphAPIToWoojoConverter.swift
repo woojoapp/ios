@@ -51,6 +51,23 @@ class GraphAPIToWoojoConverter {
         if let pictureUrl = graphApiFriend.picture?.data?.url { friend.pictureURL = URL(string: pictureUrl) }
         return friend
     }
+    
+    func convertEvent(graphApiEvent: GraphAPI.Event?) -> Woojo.Event? {
+        guard let graphApiEvent = graphApiEvent else { return nil }
+        let event = Woojo.Event()
+        event.id = graphApiEvent.id
+        event.name = graphApiEvent.name
+        event.start = graphApiEvent.start
+        event.end = graphApiEvent.end
+        event.place = graphApiEvent.place
+        event.coverURL = graphApiEvent.cover?.source
+        event.description = graphApiEvent.description
+        event.attendingCount = graphApiEvent.attendingCount
+        event.interestedCount = graphApiEvent.interestedCount
+        event.noReplyCount = graphApiEvent.noReplyCount
+        event.type = graphApiEvent.type
+        return event
+    }
 
     enum ConversionError: Error {
         case conversionFailed

@@ -21,23 +21,11 @@ class UserProfileRepository: BaseRepository {
     }
 
     func getProfile(uid: String) -> Observable<User.Profile?> {
-        return withCurrentUser { _ in
-            return self.getProfileReference(uid: uid)
-                .rx_observeEvent(event: .value)
-                .map{ User.Profile(from: $0) }
-        }
+        return UserRepository.shared.getUser(uid: uid).map { $0?.profile }
     }
 
     func getProfile() -> Observable<User.Profile?> {
-        return withCurrentUser {
-            $0.child("profile")
-                .rx_observeEvent(event: .value)
-                .map{
-                    let profile = User.Profile(dataSnapshot: $0)
-                    print("UUSER", $0.key, profile?.photoIds)
-                    return profile
-                }
-        }
+        return UserRepository.shared.getUser().map { $0?.profile }
     }
 
     func setProfile(profile: User.Profile) -> Promise<Void> {
@@ -59,10 +47,15 @@ class UserProfileRepository: BaseRepository {
     func getPhotoStorageReferenceSnapshot(uid: String, pictureId: String, size: User.Profile.Photo.Size) -> StorageReference {
         return firebaseStorage.reference().child("users").child(uid).child("profile/photos").child(pictureId).child(size.rawValue)
     }
-
+    
     func getPhoto(position: Int, size: User.Profile.Photo.Size) -> Observable<StorageReference?> {
-        return withCurrentUser { ref -> Observable<StorageReference?> in
-            ref.child("profile")
+        return withCurrentUser { self.getPhoto(uid: $0.key, position: position, size: size) }
+    }
+
+    func getPhoto(uid: String, position: Int, size: User.Profile.Photo.Size) -> Observable<StorageReference?> {
+        /* return withCurrentUser { ref -> Observable<StorageReference?> in
+            self.getUserDatabaseReference(uid: uid)
+                .child("profile")
                 .child("photos")
                 .child(String(position))
                 .rx_observeEvent(event: .value)
@@ -73,11 +66,16 @@ class UserProfileRepository: BaseRepository {
                     }
                     return Observable.of(nil)
                 }
-        }
+        } */
+        return getPhotos(uid: uid, size: size).map { $0?[position] }
     }
     
     func getPhotoAsImage(position: Int, size: User.Profile.Photo.Size) -> Observable<UIImage?> {
-        return getPhoto(position: position, size: size).flatMap { photo -> Observable<UIImage?> in
+        return withCurrentUser { self.getPhotoAsImage(uid: $0.key, position: position, size: size) }
+    }
+    
+    func getPhotoAsImage(uid: String, position: Int, size: User.Profile.Photo.Size) -> Observable<UIImage?> {
+        return getPhoto(uid: uid, position: position, size: size).flatMap { photo -> Observable<UIImage?> in
             if let photo = photo {
                 return Observable.create { observer -> Disposable in
                     UIImageView().sd_setImage(with: photo, placeholderImage: nil, completion: { image, error, _, _ in
@@ -94,22 +92,30 @@ class UserProfileRepository: BaseRepository {
             return Observable.just(nil)
         }
     }
-
-    func getPhotos(size: User.Profile.Photo.Size) -> Observable<[Int: StorageReference]> {
-        return withCurrentUser { ref in
-            return ref.child("profile")
-                .child("photos")
-                .rx_observeEvent(event: .value).map { dataSnapshot in
-                    var photos = [Int: StorageReference]()
-                    for childSnapshot in dataSnapshot.children.allObjects as! [DataSnapshot] {
-                        if let position = Int(childSnapshot.key),
-                           let pictureId = childSnapshot.value as? String {
-                            photos[position] = self.getPhotoStorageReferenceSnapshot(uid: ref.key, pictureId: pictureId, size: size)
+    
+    func getPhotosAsImages(uid: String, size: User.Profile.Photo.Size) -> Observable<[Int: UIImage]?> {
+        return getPhotos(uid: uid, size: size).map { photos -> [Int: UIImage]? in
+            if let photos = photos {
+                var images = [Int: UIImage]()
+                for (index, photo) in photos {
+                    UIImageView().sd_setImage(with: photo, placeholderImage: nil, completion: { image, error, _, _ in
+                        if error != nil {
+                            images[index] = image
                         }
-                    }
-                    return photos
+                    })
                 }
+                return images
+            }
+            return nil
         }
+    }
+
+    func getPhotos(size: User.Profile.Photo.Size) -> Observable<[Int: StorageReference]?> {
+        return withCurrentUser { self.getPhotos(uid: $0.key, size: size) }
+    }
+    
+    func getPhotos(uid: String, size: User.Profile.Photo.Size) -> Observable<[Int: StorageReference]?> {
+        return getProfile(uid: uid).map { $0?.photoIds?.mapValues { self.getPhotoStorageReferenceSnapshot(uid: uid, pictureId: $0, size: size) } }
     }
 
     func setPhoto(data: Data, position: Int) -> Promise<String> {

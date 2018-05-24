@@ -25,6 +25,7 @@ class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDataSource()
+        viewControllers?.forEach { let _ = $0.view }
     }
     
     override func viewWillAppear(_ animated: Bool) {

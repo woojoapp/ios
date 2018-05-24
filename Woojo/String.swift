@@ -6,7 +6,11 @@
 import Foundation
 
 extension Optional where Wrapped == String {
-    func isNullOrEmpty() -> Bool {
+    var isNullOrEmpty: Bool {
         return self == nil || self!.isEmpty
+    }
+    
+    func or(_ placeholder: String) -> String {
+        return self.isNullOrEmpty ? placeholder : self!
     }
 }

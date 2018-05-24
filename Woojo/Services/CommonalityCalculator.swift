@@ -35,12 +35,12 @@ class CommonalityCalculator {
     }
 
     func commonality(otherUser: OtherUser) throws -> Int {
-        return try otherUser.commonInfo.commonEvents.reduce(0, { $0 + commonality(rsvpStatusA: $1.rsvpStatus, rsvpStatusB: try rsvpStatus(eventId: $1.id)) })
+        return try otherUser.commonInfo.commonEvents.reduce(0, { $0 + commonality(rsvpStatusA: $1.value.rsvpStatus, rsvpStatusB: try rsvpStatus(eventId: $1.key)) })
     }
 
     func bothGoing(otherUser: OtherUser) throws -> Bool {
         return try otherUser.commonInfo.commonEvents.reduce(false, { (previousResult, commonEventInfo) -> Bool in
-            return try (previousResult && (try rsvpStatus(eventId: commonEventInfo.id) == .attending) && commonEventInfo.rsvpStatus == .attending)
+            return try (previousResult && (try rsvpStatus(eventId: commonEventInfo.key) == .attending) && commonEventInfo.value.rsvpStatus == .attending)
         })
     }
 

@@ -17,7 +17,7 @@ class NotificationsViewController: UITableViewController {
     @IBOutlet weak var peopleNotificationsSwitch: UISwitch!
     @IBOutlet weak var eventsNotificationsSwitch: UISwitch!
     private let disposeBag = DisposeBag()
-    private let notificationsSettingsViewModel = NotificationsSettingsViewModel()
+    private let viewModel = NotificationsSettingsViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,25 +25,25 @@ class NotificationsViewController: UITableViewController {
     }
     
     private func bindViewModel() {
-        notificationsSettingsViewModel
+        viewModel
             .getNotificationsState(type: "match")
             .asDriver(onErrorJustReturn: false)
             .drive(matchNotificationsSwitch.rx.isOn)
             .disposed(by: disposeBag)
         
-        notificationsSettingsViewModel
+        viewModel
             .getNotificationsState(type: "message")
             .asDriver(onErrorJustReturn: false)
             .drive(messageNotificationsSwitch.rx.isOn)
             .disposed(by: disposeBag)
         
-        notificationsSettingsViewModel
+        viewModel
             .getNotificationsState(type: "people")
             .asDriver(onErrorJustReturn: false)
             .drive(peopleNotificationsSwitch.rx.isOn)
             .disposed(by: disposeBag)
         
-        notificationsSettingsViewModel
+        viewModel
             .getNotificationsState(type: "events")
             .asDriver(onErrorJustReturn: false)
             .drive(eventsNotificationsSwitch.rx.isOn)
@@ -68,13 +68,13 @@ class NotificationsViewController: UITableViewController {
                 Analytics.Log(event: "Preferences_push_notifications", with: ["enabled": "false"])
             }
         case matchNotificationsSwitch:
-            notificationsSettingsViewModel.setNotificationsState(type: "match", enabled: sender.isOn).catch { _ in }
+            viewModel.setNotificationsState(type: "match", enabled: sender.isOn).catch { _ in }
         case messageNotificationsSwitch:
-            notificationsSettingsViewModel.setNotificationsState(type: "message", enabled: sender.isOn).catch { _ in }
+            viewModel.setNotificationsState(type: "message", enabled: sender.isOn).catch { _ in }
         case peopleNotificationsSwitch:
-            notificationsSettingsViewModel.setNotificationsState(type: "people", enabled: sender.isOn).catch { _ in }
+            viewModel.setNotificationsState(type: "people", enabled: sender.isOn).catch { _ in }
         case eventsNotificationsSwitch:
-            notificationsSettingsViewModel.setNotificationsState(type: "events", enabled: sender.isOn).catch { _ in }
+            viewModel.setNotificationsState(type: "events", enabled: sender.isOn).catch { _ in }
         default: ()
         }
     }

@@ -9,31 +9,50 @@ import FirebaseStorage
 import RxSwift
 import Promises
 
-class UserEventbriteIntegrationRepository: BaseRepository, EventIdsToEventsConversion {
+class UserEventbriteIntegrationRepository: BaseRepository, EventIdsToEventsConverter {
     static let shared = UserEventbriteIntegrationRepository()
     
     override private init() {
         super.init()
     }
     
-    func isEventbriteIntegrated() -> Observable<Bool> {
+    /* func isEventbriteIntegrated() -> Observable<Bool> {
         return withCurrentUser {
             $0.child("integrations/eventbrite/access_token")
                 .rx_observeEvent(event: .value)
                 .map { $0.exists() }
         }
-    }
+    } */
 
     func removeEventbriteIntegration() -> Promise<Void> {
-        return doWithCurrentUser { $0.removeValuePromise() }
+        return doWithCurrentUser { $0.child("integrations/eventbrite").removeValuePromise() }
     }
 
-    func getEventbriteEvents() -> Observable<[Event]> {
+    func getEventbriteEvents() -> Observable<[User.Event]> {
         return withCurrentUser {
             $0.child("integrations/eventbrite/events")
                 .rx_observeEvent(event: .value)
-                .flatMap({ self.transformEventIdsToEvents(dataSnapshot: $0, source: .eventbrite) { $0.key } })
-            }.catchError({ (error) -> Observable<[Event]> in
+                .flatMap({ dataSnapshot -> Observable<[User.Event]> in
+                    let arrayOfObservables = dataSnapshot.children.reduce(into: [Observable<User.Event?>](), { observables, childSnapshot in
+                        if let childSnapshot = childSnapshot as? DataSnapshot {
+                            let event = EventRepository.shared.get(eventId: childSnapshot.key).map({ e -> User.Event? in
+                                if let e = e {
+                                    return User.Event(event: e, connection: User.Event.Connection.eventbriteTicket)
+                                }
+                                return nil
+                            })
+                            observables.append(event)
+                        }
+                    })
+                    if dataSnapshot.childrenCount == 0 {
+                        return Observable.of([])
+                    }
+                    return Observable
+                        .combineLatest(arrayOfObservables)
+                        .filter({ !$0.contains(where: { $0 == nil }) })
+                        .map({ $0.flatMap{ $0 } as [User.Event] })
+                })
+            }.catchError({ (error) -> Observable<[User.Event]> in
                 print("NNEW CATCH ERROR", error)
                 return Observable.of([])
             })

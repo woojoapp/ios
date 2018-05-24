@@ -21,6 +21,7 @@ class UserReportRepository {
 
     func setReport(onUid: String, message: String?) -> Promise<Void> {
         let report = Report(by: getUid(), on: onUid, message: message)
+        print("ENCC dic", report.dictionary)
         return firebaseDatabase
                 .reference()
                 .child("reports")

@@ -18,7 +18,7 @@ class PreferencesViewController: UITableViewController {
     
     let ageRangeSlider = RangeSlider(frame: CGRect.zero)
     private let disposeBag = DisposeBag()
-    private let preferencesViewModel = PreferencesViewModel()
+    private let viewModel = PreferencesViewModel()
     private var ageRange = Preferences.AgeRange(min: 18, max: 99)
     private var genderSelectorData = [Preferences.Gender.female, Preferences.Gender.male, Preferences.Gender.all]
     
@@ -39,26 +39,20 @@ class PreferencesViewController: UITableViewController {
     }
     
     func bindViewModel() {
-        preferencesViewModel.getAgeRange()
-            .subscribe(onNext: { ageRange in
+        viewModel.ageRange
+            .drive(onNext: { ageRange in
                 self.ageRange = ageRange ?? Preferences.AgeRange(min: 18, max: 99)
                 self.ageRangeSlider.upperValue = Double(self.ageRange.max)
                 self.ageRangeSlider.lowerValue = Double(self.ageRange.min)
                 self.ageRangeSliderValueChanged(self.ageRangeSlider)
-            }, onError: { _ in
-                
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
-        preferencesViewModel.getGender()
-            .subscribe(onNext: { gender in
+        viewModel.gender
+            .drive(onNext: { gender in
                 if let gender = gender, let index = self.genderSelectorData.index(of: gender) {
                     self.genderSelector.selectedSegmentIndex = index
                 }
-            }, onError: { _ in
-                
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
     }
     
     override func viewDidLayoutSubviews() {
@@ -77,7 +71,7 @@ class PreferencesViewController: UITableViewController {
     func savePreferences() {
         let gender = genderSelectorData[genderSelector.selectedSegmentIndex]
         let preferences = Preferences(gender: gender, ageRange: ageRange)
-        preferencesViewModel.setPreferences(preferences: preferences).catch { _ in }
+        viewModel.setPreferences(preferences: preferences).catch { _ in }
     }
     
     @objc func saveAgeRange(_ rangeSlider: RangeSlider) {

@@ -23,10 +23,12 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var acceptLabel: TTTAttributedLabel!
     @IBOutlet var loginFacebook: UIButton!
     
+    private static let PRE_LOGIN_ONBOARDING_COMPLETED = "PRE_LOGIN_ONBOARDING_COMPLETED"
+    
     var onboardingViewController: OnboardingViewController?
     private var loginView: UIView?
-    private let termsText = NSLocalizedString("Terms & Conditions", comment: "")
-    private let privacyText = NSLocalizedString("Privacy Policy", comment: "")
+    private let termsText = R.string.localizable.termsAndConditions()
+    private let privacyText = R.string.localizable.privacyPolicy()
     private let slideNames = [
         "onboarding_welcome",
         "onboarding_events",
@@ -43,10 +45,6 @@ class LoginViewController: UIViewController {
         set {
             super.modalTransitionStyle = .flipHorizontal
         }
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
     }
     
     func showOnboarding() {
@@ -99,7 +97,7 @@ class LoginViewController: UIViewController {
         }
         
         let userDefaults = UserDefaults.standard
-        if !userDefaults.bool(forKey: "PRE_LOGIN_ONBOARDING_COMPLETED") {
+        if !userDefaults.bool(forKey: LoginViewController.PRE_LOGIN_ONBOARDING_COMPLETED) {
             loginFacebook.isHidden = true
             acceptLabel.isHidden = true
         }
@@ -107,7 +105,7 @@ class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if !UserDefaults.standard.bool(forKey: "PRE_LOGIN_ONBOARDING_COMPLETED") {
+        if !UserDefaults.standard.bool(forKey: LoginViewController.PRE_LOGIN_ONBOARDING_COMPLETED) {
             showOnboarding()
         } else {
             acceptLabel.isHidden = false
@@ -125,7 +123,7 @@ class LoginViewController: UIViewController {
     
     @IBAction func login() {
         let userDefaults = UserDefaults.standard
-        userDefaults.set(true, forKey: "PRE_LOGIN_ONBOARDING_COMPLETED")
+        userDefaults.set(true, forKey: LoginViewController.PRE_LOGIN_ONBOARDING_COMPLETED)
         userDefaults.synchronize()
         Analytics.setUserProperties(properties: ["pre_login_onboarded": "true"])
         Analytics.Log(event: "Onboarding_pre_complete")
@@ -146,8 +144,9 @@ class LoginViewController: UIViewController {
     }
 
     private func showDeclinedPermissionsErrorDialog() {
-        let alert = UIAlertController(title: NSLocalizedString("Missing permissions", comment: ""), message: NSLocalizedString("Woojo needs to know at least your birthday and access your events in order to function properly.", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        let alert = UIAlertController(title: R.string.localizable.missingPermissionsTitle(), message: R.string.localizable.missingPermissionsMessage(), preferredStyle: UIAlertControllerStyle.alert)
+        let okAction = UIAlertAction(title: R.string.localizable.missingPermissionsOk(), style: .default, handler: nil)
+        alert.addAction(okAction)
         self.present(alert, animated: true)
     }
     
@@ -174,7 +173,7 @@ extension LoginViewController: TTTAttributedLabelDelegate {
     
     func openPage(title: String, url: URL?) {
         let navigationController = UINavigationController()
-        if let aboutWebViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AboutWebViewController") as? AboutWebViewController {
+        if let aboutWebViewController = R.storyboard.main.aboutWebViewController() {
             aboutWebViewController.url = url
             aboutWebViewController.navigationItem.title = title
             navigationController.pushViewController(aboutWebViewController, animated: false)

@@ -9,16 +9,11 @@
 import Foundation
 
 class CommonEvent: Codable {
-    var id: String
     var name: String?
     var rsvpStatus = Event.RSVP.unsure
     
-    init(id: String) {
-        self.id = id
-    }
-    
     private enum CodingKeys: String, CodingKey {
-        case id, name
+        case name
         case rsvpStatus = "rsvp_status"
     }
     

@@ -20,7 +20,12 @@ class LoginManager {
     private let firebaseAuth = Auth.auth()
 
     private func setProfileFromFacebook() -> Promise<Void> {
-        return FacebookRepository.shared.getProfile().then { profile in
+        return FacebookRepository.shared.getProfile().then { profile -> Promise<GraphAPI.Profile?> in
+            if let appScopedId = profile?.id {
+                return UserFacebookIntegrationRepository.shared.setAppScopedId(appScopedId: appScopedId).then { _ in return Promise(profile) }
+            }
+            return Promise(nil)
+        }.then { profile -> Promise<Void> in
             if let woojoProfile = GraphAPIToWoojoConverter.shared.convertProfile(graphApiProfile: profile) {
                 return UserProfileRepository.shared.setProfile(profile: woojoProfile)
             } else {
@@ -28,10 +33,16 @@ class LoginManager {
             }
         }
     }
+    
+    private func setAccessTokenFromFacebook() -> Promise<Void> {
+        if let accessToken = AccessToken.current?.authenticationToken {
+            return UserFacebookIntegrationRepository.shared.setAccessToken(accessToken: accessToken)
+        }
+        return Promise(LoginError.facebookAccessTokenMissing)
+    }
 
     private func setProfilePictureFromFacebook() -> Promise<String> {
         return FacebookRepository.shared.getProfilePicture(width: 3000, height: 3000).then { picture -> Promise<String> in
-            print("LOGGIN AFTER DOWNLOAD", picture)
             if let data = picture.picture?.data?.data {
                 return UserProfileRepository.shared.setPhoto(data: data, position: 0)
             }
@@ -58,6 +69,15 @@ class LoginManager {
             }
         }
     }
+    
+    private func setEventsFromFacebook() -> Promise<Void> {
+        return all(FacebookRepository.shared.getEvents(), FacebookRepository.shared.getEvents(type: "not_replied")).then { replied, notReplied -> Promise<Void> in
+            let events = (replied ?? []) + (notReplied ?? [])
+            print("LOGGIN FB MGR", events.count)
+            //let woojoEvents = events.flatMap({ event in GraphAPIToWoojoConverter.shared.convertEvent(graphApiEvent: event) })
+            return UserFacebookIntegrationRepository.shared.setEvents(events: events)
+        }
+    }
 
     private func setDefaultPreferences() -> Promise<Void> {
         return UserRepository.shared.setPreferences(preferences: Preferences())
@@ -73,9 +93,15 @@ class LoginManager {
 
     private func setUserFromFacebook() -> Promise<Void> {
         print("LOGGIN SET PROFILE")
-        return setProfileFromFacebook().then { _ -> Promise<String> in
+        return setProfileFromFacebook().then { _ -> Promise<Void> in
+            print("LOGGIN SET ACCESS TOKEN")
+            return self.setAccessTokenFromFacebook()
+        }.then { _ -> Promise<String> in
             print("LOGGIN SET PROFILE PICTURE")
             return self.setProfilePictureFromFacebook()
+        }.then { _ -> Promise<Void> in
+            print("LOGGIN SET EVENTS")
+            return self.setEventsFromFacebook()
         }.then { _ -> Promise<Void> in
             print("LOGGIN SET PAGE LIKES")
             return self.setPageLikesFromFacebook()
@@ -199,5 +225,6 @@ class LoginManager {
         case facebookPictureDownloadFailed
         case facebookLoginCancelled
         case facebookPermissionsDeclined(permissions: [String: String])
+        case facebookAccessTokenMissing
     }
 }

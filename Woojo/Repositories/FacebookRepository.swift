@@ -25,31 +25,6 @@ class FacebookRepository {
             UserProfileGraphRequest().start { response, result in
                 switch result {
                 case .success(let response): fulfill(response.profile)
-                        // Update Firebase with the data loaded from Facebook
-                        /* self.firstName = response.profile?.firstName
-                if let responseAsDictionary = response.profile.dictionary {
-                    print(responseAsDictionary)
-                    self.ref?.updateChildValues(responseAsDictionary) { error, _ in
-                        if let error = error {
-                            print("Failed to update user profile in database: \(error)")
-                        }
-                        if let firstName = response.profile?.displayName {
-                            Analytics.setUserProperties(properties: ["first_name": firstName])
-                        }
-                        if let gender = response.profile?.gender {
-                            Analytics.setUserProperties(properties: ["gender": gender.rawValue])
-                        }
-                        if let birthDate = response.profile?.birthday {
-                            let birthDateString = self.birthdayFirebaseFormatter.string(from: birthDate)
-                            Analytics.setUserProperties(properties: ["birth_date": birthDateString])
-                        }
-                        completion(error)
-                    }
-                    self.ref?.child(Constants.User.Properties.fbAppScopedID).setValue(response.fbAppScopedID)
-                    if let fbAppScopedId = response.fbAppScopedID {
-                        Analytics.setUserProperties(properties: ["facebook_app_scoped_id": fbAppScopedId])
-                    }
-                } */
                 case .failed(let error): reject(error)
                 }
             }
@@ -81,6 +56,17 @@ class FacebookRepository {
             UserPageLikesGraphRequest().start { response, result in
                 switch result {
                 case .success(let response): fulfill(response.pageLikes)
+                case .failed(let error): reject(error)
+                }
+            }
+        }
+    }
+    
+    func getEvents(type: String? = nil) -> Promise<[GraphAPI.Event]?> {
+        return Promise<[GraphAPI.Event]?> { fulfill, reject in
+            UserEventsGraphRequest(type: type).start { response, result in
+                switch result {
+                case .success(let response): fulfill(response.events)
                 case .failed(let error): reject(error)
                 }
             }

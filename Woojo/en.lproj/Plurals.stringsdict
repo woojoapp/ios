@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>peopleDetailsCommonEvents</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>You have %#@eventCount@</string>
+		<key>eventCount</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d common event</string>
+			<key>other</key>
+			<string>%d common events</string>
+		</dict>
+	</dict>
+    <key>peopleDetailsCommonFriends</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>You have %#@friendCount@</string>
+        <key>friendCount</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>%d common friend</string>
+            <key>other</key>
+            <string>%d common friends</string>
+        </dict>
+    </dict>
+    <key>peopleDetailsCommonInterests</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>You have %#@interestCount@</string>
+        <key>interestCount</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>%d common interest</string>
+            <key>other</key>
+            <string>%d common interests</string>
+        </dict>
+    </dict>
+</dict>
+</plist>

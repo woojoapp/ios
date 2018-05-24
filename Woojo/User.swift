@@ -19,9 +19,42 @@ class User: Equatable, Codable {
     init(uid: String) {
         self.uid = uid
     }
+    
+    convenience init(from dataSnapshot: DataSnapshot) {
+        self.init(uid: dataSnapshot.key)
+        self.profile = User.Profile(dataSnapshot: dataSnapshot.childSnapshot(forPath: "profile"))
+        self.profile?.photoIds = getPhotoIds(dataSnapshot: dataSnapshot)
+            // TODO: Only user photos, not photoIds
+        self.profile?.photos = getPhotos(dataSnapshot: dataSnapshot)
+    }
+    
+    private func getPhotos(dataSnapshot: DataSnapshot) -> [Int: ProfilePhoto]? {
+        if let array = dataSnapshot.childSnapshot(forPath: "profile/photos").value as? NSArray {
+            var photos = [Int: ProfilePhoto]()
+            for (i, element) in array.enumerated() {
+                if let photoId = element as? String {
+                    photos[i] = FirebaseProfilePhoto(uid: dataSnapshot.key, id: photoId)
+                }
+            }
+            return photos
+        }
+        return nil
+    }
+    
+    private func getPhotoIds(dataSnapshot: DataSnapshot) -> [Int: String]? {
+        if let array = dataSnapshot.childSnapshot(forPath: "profile/photos").value as? NSArray {
+            var photos = [Int: String]()
+            for (i, element) in array.enumerated() {
+                if let photoId = element as? String {
+                    photos[i] = photoId
+                }
+            }
+            return photos
+        }
+        return nil
+    }
 
     class Profile: Codable {
-        var uid: String?
         var firstName: String?
         var birthday: String?
         var gender: String?
@@ -29,24 +62,16 @@ class User: Equatable, Codable {
         var location: Location?
         var occupation: String?
         var photoIds: [Int: String]? = nil
+        var photos: [Int: ProfilePhoto]? = nil
 
         private enum CodingKeys: String, CodingKey {
-            case uid, gender, birthday, description, location, occupation
+            case gender, birthday, description, location, occupation
             case firstName = "first_name"
             //case photoIds = "photos"
         }
         
         convenience init?(dataSnapshot: DataSnapshot) {
             self.init(from: dataSnapshot.value as? [String: Any])
-            if let array = dataSnapshot.childSnapshot(forPath: "photos").value as? NSArray {
-                var photos = [Int: String]()
-                for (i, element) in array.enumerated() {
-                    if let photoId = element as? String {
-                        photos[i] = photoId
-                    }
-                }
-                self.photoIds = photos
-            }
         }
 
         func getBirthDate() -> Date? {
@@ -80,6 +105,34 @@ class User: Equatable, Codable {
         }
 
     }
+    
+    class Event: Hashable {
+        var event: Woojo.Event
+        var connection: Connection
+        var active: Bool
+        var hashValue: Int {
+            return event.id?.hashValue ?? 0
+        }
+        
+        init(event: Woojo.Event, connection: Connection, active: Bool = false) {
+            self.event = event
+            self.connection = connection
+            self.active = active
+        }
+        
+        enum Connection: String, Codable {
+            case facebookGoing = "attending"
+            case facebookInterested = "unsure"
+            case facebookNotReplied = "not_replied"
+            case eventbriteTicket
+            case recommended
+            case sponsored
+        }
+    }
+}
+
+func == (left: User.Event, right: User.Event) -> Bool {
+    return left.event.id == right.event.id
 }
 
 func == (left: User, right: User) -> Bool {

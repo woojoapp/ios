@@ -15,6 +15,7 @@ struct UserEventsGraphRequest: GraphRequestProtocol {
         
         init(rawResponse: Any?) {
             if let dict = rawResponse as? [String:Any] {
+                print("LOGGIN RAW", dict)
                 events = [GraphAPI.Event](from: dict["data"])
             }
         }
@@ -31,7 +32,7 @@ struct UserEventsGraphRequest: GraphRequestProtocol {
     }()
     
     var type: String?
-    var graphPath = Constants.GraphRequest.UserEvents.path
+    var graphPath = "/me/events"
     var parameters: [String: Any]? {
         get {
             var parameters = [String: String]()
@@ -40,12 +41,12 @@ struct UserEventsGraphRequest: GraphRequestProtocol {
                           "place",
                           "start_time",
                           "end_time",
-                          "picture.type(normal){url}",
                           "cover{source}",
                           "attending_count",
                           "interested_count",
                           "noreply_count",
                           "description",
+                          "rsvp_status",
                           "type"]
             parameters["fields"] = fields.joined(separator: ",")
             if let type = type {

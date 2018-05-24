@@ -10,29 +10,13 @@ import CodableFirebase
 import RxSwift
 import Promises
 
-class UserCandidateRepository {
-
-    private let firebaseAuth = Auth.auth()
-    private let firebaseDatabase = Database.database()
+class UserCandidateRepository: BaseRepository, EventIdsToEventsConverter, AppScopedIdsToUsersConverter {
 
     static let shared = UserCandidateRepository()
-    private init() {}
+    override private init() {}
 
-    private func getUid() -> String { return firebaseAuth.currentUser!.uid }
-
-    private func getUserDatabaseReference(uid: String) -> DatabaseReference {
-        return firebaseDatabase
-                .reference()
-                .child("users")
-                .child(uid)
-    }
-
-    private func getCurrentUserDatabaseReference() -> DatabaseReference {
-        return getUserDatabaseReference(uid: getUid())
-    }
-
-    func getCandidate(uid: String) -> Observable<OtherUser?> {
-        return Observable.combineLatest(getCommonInfo(uid: uid), UserProfileRepository.shared.getProfile(uid: uid)) { commonInfo, profile -> OtherUser in
+    func getCandidate(uid: String) -> Observable<Candidate?> {
+        return Observable.combineLatest(getCommonInfo(uid: uid), UserProfileRepository.shared.getProfile(uid: uid)) { commonInfo, profile -> Candidate in
             let candidate = Candidate(uid: uid)
             if let commonInfo = commonInfo {
                 candidate.commonInfo = commonInfo
@@ -45,20 +29,26 @@ class UserCandidateRepository {
     }
     
     private func getCommonInfo(uid: String) -> Observable<CommonInfo?> {
-        return getCurrentUserDatabaseReference().child("candidates").child(uid)
-            .rx_observeEvent(event: .value)
-            .map { CommonInfo(from: $0) }
+        let commonInfoDataSnapshot = withCurrentUser { $0.child("candidates").child(uid).rx_observeEvent(event: .value) }
+        let commonInfo = commonInfoDataSnapshot.map { CommonInfo(from: $0) }
+        let commonEvents = commonInfoDataSnapshot.flatMap { self.transformEventIdsToEvents(dataSnapshot: $0.childSnapshot(forPath: "events"), source: .recommended) { $0.key } }
+        let commonFriends = commonInfoDataSnapshot.flatMap { self.transformAppScopedIdsToUsers(dataSnapshot: $0.childSnapshot(forPath: "friends")) }
+        return Observable.combineLatest(commonInfo, commonEvents, commonFriends) { info, events, friends -> CommonInfo? in
+            info?.events = events.reduce(into: [String: Event](), { $0[$1.id!] = $1 })
+            info?.friends = friends.reduce(into: [String: User](), { $0[$1.uid] = $1 })
+            return info
+        }
     }
 
-    func getCandidatesQuery() -> DatabaseQuery {
-        return getCurrentUserDatabaseReference().child("candidates").queryOrdered(byChild: "added")
+    func getCandidatesQuery() -> Observable<DatabaseQuery> {
+        return getCurrentUserDatabaseReference().map { $0.child("candidates").queryOrdered(byChild: "added") }
     }
 
     func removeCandidate(uid: String) -> Promise<Void> {
-        return getCurrentUserDatabaseReference().child("candidates").child(uid).removeValuePromise()
+        return doWithCurrentUser { $0.child("candidates").child(uid).removeValuePromise() }
     }
 
-    func getOtherUserCommonInfo<T: OtherUser>(uid: String?, otherUserType: T.Type) -> Observable<CommonInfo?> {
+    /* func getOtherUserCommonInfo<T: OtherUser>(uid: String?, otherUserType: T.Type) -> Observable<CommonInfo?> {
         guard let uid = uid else { return Observable.of(nil) }
         let otherUserReference: DatabaseReference?
         switch (otherUserType) {
@@ -75,5 +65,5 @@ class UserCandidateRepository {
             return otherUser
         }
         return Observable.of(nil)
-    }
+    } */
 }

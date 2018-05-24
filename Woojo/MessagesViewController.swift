@@ -21,6 +21,11 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIG
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UserRepository.shared.getUser().retry().subscribe(onNext: { user in
+            ALChatManager.shared.setup(user: user)
+        }, onError: { error in
+            
+        }).disposed(by: disposeBag)
     }
     
     override func viewDidLayoutSubviews() {

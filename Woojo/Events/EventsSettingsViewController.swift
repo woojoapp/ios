@@ -16,7 +16,7 @@ class EventsSettingsViewController: UITableViewController {
     @IBOutlet weak var facebookIntegrationContentView: UIView!
     @IBOutlet weak var facebookIntegrationIconImageView: UIImageView!
     private let disposeBag = DisposeBag()
-    private var eventsSettingsViewModel = EventsSettingsViewModel()
+    private var viewModel = EventsSettingsViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,15 +29,13 @@ class EventsSettingsViewController: UITableViewController {
     }
     
     private func setupDataSource() {
-        eventsSettingsViewModel
-            .isEventbriteIntegrated()
-            .asDriver(onErrorJustReturn: false)
+        viewModel
+            .isEventbriteIntegrated
             .drive(eventbriteIntegrationSwitch.rx.isOn)
             .disposed(by: disposeBag)
         
-        eventsSettingsViewModel
-            .isFacebookIntegrated()
-            .asDriver(onErrorJustReturn: false)
+        viewModel
+            .isFacebookIntegrated
             .drive(facebookIntegrationSwitch.rx.isOn)
             .disposed(by: disposeBag)
     }
@@ -66,10 +64,11 @@ class EventsSettingsViewController: UITableViewController {
     
     private func switchEventbriteIntegration(on: Bool) {
         if on {
-            let eventbriteLoginViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventbriteLoginNavigationViewController") as! UINavigationController
-            self.present(eventbriteLoginViewController, animated: true, completion: nil)
+            let navigationController = UINavigationController()
+            navigationController.pushViewController(EventbriteLoginViewController(), animated: false)
+            self.present(navigationController, animated: true, completion: nil)
         } else {
-            eventsSettingsViewModel.removeEventbriteIntegration().catch { _ in }
+            viewModel.removeEventbriteIntegration().catch { _ in }
         }
     }
     

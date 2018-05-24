@@ -48,6 +48,7 @@ def shared_pods
   # pod 'DOFavoriteButton', :git=>'https://github.com/woojoapp/DOFavoriteButton', :tag => 'woojo2.2.3'
   pod 'RPCircularProgress', '0.3.0'
   pod 'ImageSlideshow', '1.5.0'
+  pod 'ImageSlideshow/SDWebImage'
   # pod 'Whisper', :git=> 'https://github.com/woojoapp/Whisper.git', :tag => 'woojo2.0'
   pod 'Whisper', '6.0.2'
   pod 'TTTAttributedLabel', '2.0.0'
@@ -55,6 +56,7 @@ def shared_pods
 
   # Misc
   pod 'SDWebImage', '4.2.2'
+  pod 'R.swift', '4.0.0'
 end
 
 target 'Woojo Development' do
