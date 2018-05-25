@@ -1,5 +1,5 @@
 //
-//  EventbriteOrderResponse.swift
+//  EventbriteAPI.Order.swift
 //  Woojo
 //
 //  Created by Edouard Goossens on 23/02/2018.
@@ -8,6 +8,8 @@
 
 import Foundation
 
-class EventbriteOrderResponse: Codable {
-    var orders: [EventbriteOrder] = []
+extension EventbriteAPI {
+    class Order: Codable {
+        var event: EventbriteAPI.Event
+    }
 }

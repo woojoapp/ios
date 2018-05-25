@@ -30,25 +30,4 @@ struct UserFriendsGraphRequest: GraphRequestProtocol {
     var accessToken: AccessToken? = AccessToken.current
     var httpMethod: GraphRequestHTTPMethod = .GET
     var apiVersion: GraphAPIVersion = .defaultVersion
-    
-    /* private static func deserialize(dict: [String:Any]?) -> Friend? {
-        if let dict = dict,
-            let id = dict[Constants.User.Friend.properties.graphAPIKeys.id] as? String,
-            let name = dict[Constants.User.Friend.properties.graphAPIKeys.name] as? String {
-            let friend = Friend(id: id)
-            if let picture = dict[Constants.User.Friend.properties.graphAPIKeys.picture] as? [String:Any] {
-                if let pictureData = picture[Constants.User.Friend.properties.graphAPIKeys.pictureData] as? [String:Any] {
-                    if let url = pictureData[Constants.User.Friend.properties.graphAPIKeys.pictureDataURL] as? String {
-                        friend.pictureURL = URL(string: url)
-                    }
-                }
-            }
-            friend.name = name
-            return friend
-        } else {
-            print("Failed to create Friend from Graph API dictionary. Nil or missing required data.", dict as Any)
-            return nil
-        }
-    } */
-    
 }

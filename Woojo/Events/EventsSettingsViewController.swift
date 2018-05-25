@@ -21,7 +21,7 @@ class EventsSettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDataSource()
-        disableFacebookIntegration()
+        //disableFacebookIntegration()
     }
     
     @IBAction func dismiss(sender: UIBarButtonItem) {
@@ -45,8 +45,7 @@ class EventsSettingsViewController: UITableViewController {
         case eventbriteIntegrationSwitch:
             switchEventbriteIntegration(on: eventbriteIntegrationSwitch.isOn)
         case facebookIntegrationSwitch:
-            displayFacebookAlert()
-            facebookIntegrationSwitch.isOn = false
+            switchFacebookIntegration(on: facebookIntegrationSwitch.isOn)
         default: ()
         }
     }
@@ -56,11 +55,11 @@ class EventsSettingsViewController: UITableViewController {
         facebookIntegrationIconImageView.image = facebookIntegrationIconImageView.image?.desaturate()
     }
     
-    private func displayFacebookAlert() {
+    /*private func displayFacebookAlert() {
         let alert = UIAlertController(title: NSLocalizedString("Currently unavailable", comment: ""), message: NSLocalizedString("Due to temporary changes in Facebook\'s privacy policy, your events are inaccessible at this time.\n\nThis feature will be re-activated when access is restored.", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
-    }
+    }*/
     
     private func switchEventbriteIntegration(on: Bool) {
         if on {
@@ -69,6 +68,14 @@ class EventsSettingsViewController: UITableViewController {
             self.present(navigationController, animated: true, completion: nil)
         } else {
             viewModel.removeEventbriteIntegration().catch { _ in }
+        }
+    }
+    
+    private func switchFacebookIntegration(on: Bool) {
+        if on {
+            viewModel.syncFacebookEvents(viewController: self).catch { _ in self.facebookIntegrationSwitch.isOn = false }
+        } else {
+            viewModel.removeFacebookIntegration().catch { _ in }
         }
     }
     

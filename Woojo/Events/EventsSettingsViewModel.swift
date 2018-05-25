@@ -25,8 +25,16 @@ class EventsSettingsViewModel {
             .asDriver(onErrorJustReturn: false)
     }()
     
+    func syncFacebookEvents(viewController: UIViewController) -> Promise<Void> {
+        return UserFacebookIntegrationRepository.shared.syncFacebookEvents(viewController: viewController)
+    }
+    
     func removeEventbriteIntegration() -> Promise<Void> {
         return UserEventbriteIntegrationRepository.shared.removeEventbriteIntegration()
+    }
+    
+    func removeFacebookIntegration() -> Promise<Void> {
+        return UserFacebookIntegrationRepository.shared.removeFacebookIntegration()
     }
     
 }

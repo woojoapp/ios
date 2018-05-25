@@ -694,7 +694,7 @@ class CurrentUser: User {
                     if error == nil && data != nil {
                         do {
                             print(response)
-                            let orderResponse = try JSONDecoder().decode(EventbriteOrderResponse.self, from: data!)
+                            let orderResponse = try JSONDecoder().decode(EventbriteAPI.OrderResponse.self, from: data!)
                             DispatchQueue.main.async {
                                 completion(orderResponse.orders.map({ $0.event.toEvent() }))
                             }

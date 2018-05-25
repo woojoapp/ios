@@ -4,7 +4,8 @@
 //
 
 import Foundation
-
+import FacebookCore
+import FacebookLogin
 import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
@@ -19,14 +20,45 @@ class UserFacebookIntegrationRepository: BaseRepository, EventIdsToEventsConvert
     }
 
     func removeFacebookIntegration() -> Promise<Void> {
-        return doWithCurrentUser { $0.child("integrations/facebook").removeValuePromise() }
+        return FacebookRepository.shared.deletePermission(permission: "user_events").then { _ in
+            return wrap { handler in AccessToken.refreshCurrentToken(handler) }
+        }.then { accessToken in
+            if let accessToken = accessToken {
+                return UserFacebookIntegrationRepository.shared.setAccessToken(accessToken: accessToken.authenticationToken)
+            }
+            return Promise(FacebookIntegrationError.removePermissionNoAccessToken)
+        }.then {
+            return self.doWithCurrentUser { $0.child("integrations/facebook/events").removeValuePromise() }
+        }
     }
     
     func isFacebookIntegrated() -> Observable<Bool> {
         return withCurrentUser {
-            $0.child("integrations/facebook/access_token")
+            $0.child("integrations/facebook/accessToken")
                 .rx_observeEvent(event: .value)
-                .map { $0.exists() }
+                .map { dataSnapshot -> AccessToken? in
+                    if let authenticationToken = dataSnapshot.value as? String {
+                        return AccessToken(authenticationToken: authenticationToken)
+                    }
+                    return nil
+                }.flatMapLatest { accessToken -> Observable<Bool> in
+                    if let accessToken = accessToken {
+                        return self.isPermissionGranted(permission: "user_events", accessToken: accessToken)
+                    }
+                    return Observable.just(false)
+                }
+        }
+    }
+    
+    private func isPermissionGranted(permission: String, accessToken: AccessToken) -> Observable<Bool> {
+        return Observable.create { observer in
+            FacebookRepository.shared.getPermissions(accessToken: accessToken).then { permissions in
+                observer.onNext(permissions.contains(where: { $0.permission == "user_events" && $0.status == "granted" }))
+                observer.onCompleted()
+            }.catch { error in
+                observer.onError(error)
+            }
+            return Disposables.create()
         }
     }
 
@@ -60,7 +92,7 @@ class UserFacebookIntegrationRepository: BaseRepository, EventIdsToEventsConvert
 
     func getFacebookAccessToken() -> Observable<String?> {
         return withCurrentUser {
-            $0.child("integrations/facebook/access_token")
+            $0.child("integrations/facebook/accessToken")
                 .rx_observeEvent(event: .value)
                 .map { $0.value as? String }
         }
@@ -68,6 +100,24 @@ class UserFacebookIntegrationRepository: BaseRepository, EventIdsToEventsConvert
     
     func setAccessToken(accessToken: String) -> Promise<Void>{
         return doWithCurrentUser { $0.child("integrations/facebook/accessToken").setValuePromise(value: accessToken) }
+    }
+    
+    func syncFacebookEvents(viewController: UIViewController) -> Promise<Void> {
+        return getFacebookAccessToken().toPromise().then { authenticationToken in
+            if let authenticationToken = authenticationToken {
+                let accessToken = AccessToken(authenticationToken: authenticationToken)
+                if let grantedPermissions = accessToken.grantedPermissions,
+                    grantedPermissions.contains(Permission(name: "user_events")) {
+                    return LoginManager.shared.setEventsFromFacebook()
+                } else {
+                    return LoginManager.shared.facebookLogin(viewController: viewController, readPermissions: [ReadPermission.userEvents]).then { _ in
+                        return LoginManager.shared.setEventsFromFacebook()
+                    }
+                }
+            } else {
+                return Promise(FacebookIntegrationError.syncNoAccessToken)
+            }
+        }
     }
     
     func setAppScopedId(appScopedId: String) -> Promise<Void>{
@@ -93,5 +143,10 @@ class UserFacebookIntegrationRepository: BaseRepository, EventIdsToEventsConvert
             if let id = friend.id { result[id] = friend.dictionary }
         }
         return doWithCurrentUser { $0.child("integrations/facebook/friends").setValuePromise(value: dictionary) }
+    }
+    
+    enum FacebookIntegrationError: Error {
+        case syncNoAccessToken
+        case removePermissionNoAccessToken
     }
 }

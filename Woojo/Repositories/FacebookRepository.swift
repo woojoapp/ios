@@ -19,6 +19,17 @@ class FacebookRepository {
             }
         }
     }
+    
+    func deletePermission(permission: String) -> Promise<Bool> {
+        return Promise<Bool> { fulfill, reject in
+            DeleteUserPermissionGraphRequest(permission: permission).start { response, result in
+                switch result {
+                case .success(let response): fulfill(response.success)
+                case .failed(let error): reject(error)
+                }
+            }
+        }
+    }
 
     func getProfile() -> Promise<GraphAPI.Profile?> {
         return Promise<GraphAPI.Profile?> { fulfill, reject in
@@ -105,8 +116,27 @@ class FacebookRepository {
             }
         }
     }
+    
+    func getPermissions(accessToken: AccessToken? = AccessToken.current) -> Promise<[GraphAPI.Permission]> {
+        return Promise<[GraphAPI.Permission]> { fulfill, reject in
+            if let accessToken = accessToken {
+                UserPermissionsGraphRequest(accessToken: accessToken).start { response, result in
+                    switch result {
+                    case .success(let response): fulfill(response.permissions)
+                    case .failed(let error): reject(error)
+                    }
+                }
+            } else {
+                reject(RequestError.permissionAccessTokenMissing)
+            }
+        }
+    }
 
     enum DownloadError: Error {
         case pictureUrlMissing
+    }
+    
+    enum RequestError: Error {
+        case permissionAccessTokenMissing
     }
 }

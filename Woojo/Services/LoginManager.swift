@@ -12,9 +12,19 @@ import Crashlytics
 import Applozic
 
 class LoginManager {
+    typealias FacebookLoginResult = (accessToken: AccessToken, permissions: [String: String])
+    
     static let shared = LoginManager()
 
     private init() {}
+    
+    private static let facebookPermissions: [ReadPermission] = [.publicProfile,
+                                                                 .userFriends,
+                                                                 .userEvents,
+                                                                 .userPhotos,
+                                                                 .userLocation,
+                                                                 .userBirthday,
+                                                                 .userLikes]
 
     private let facebookLoginManager = FacebookLogin.LoginManager()
     private let firebaseAuth = Auth.auth()
@@ -70,10 +80,9 @@ class LoginManager {
         }
     }
     
-    private func setEventsFromFacebook() -> Promise<Void> {
+    func setEventsFromFacebook() -> Promise<Void> {
         return all(FacebookRepository.shared.getEvents(), FacebookRepository.shared.getEvents(type: "not_replied")).then { replied, notReplied -> Promise<Void> in
             let events = (replied ?? []) + (notReplied ?? [])
-            print("LOGGIN FB MGR", events.count)
             //let woojoEvents = events.flatMap({ event in GraphAPIToWoojoConverter.shared.convertEvent(graphApiEvent: event) })
             return UserFacebookIntegrationRepository.shared.setEvents(events: events)
         }
@@ -138,15 +147,8 @@ class LoginManager {
         }
     }
 
-    private func facebookLogin(viewController: UIViewController) -> Promise<(credential: AuthCredential, permissions: [String: String])> {
-        return Promise<(credential: AuthCredential, permissions: [String: String])> { fulfill, reject in
-            let readPermissions: [FacebookCore.ReadPermission] = [.publicProfile,
-                                                                  .userFriends,
-                                                                  .custom("user_events"),
-                                                                  .custom("user_photos"),
-                                                                  .custom("user_location"),
-                                                                  .custom("user_birthday"),
-                                                                  .custom("user_likes")]
+    func facebookLogin(viewController: UIViewController, readPermissions: [ReadPermission] = LoginManager.facebookPermissions) -> Promise<FacebookLoginResult> {
+        return Promise<FacebookLoginResult> { fulfill, reject in
             self.facebookLoginManager.logIn(readPermissions: readPermissions, viewController: viewController) { loginResult in
                 switch loginResult {
                 case .success(let acceptedPermissions, let declinedPermissions, let accessToken):
@@ -159,14 +161,13 @@ class LoginManager {
                         permissions[permission.name] = "false"
                         Analytics.setUserProperties(properties: ["accepted_\(permission.name)_permission": "false"])
                     }
-                    if declinedPermissions.count > 0 && (declinedPermissions.contains(Permission(name: "user_events")) || declinedPermissions.contains(Permission(name: "user_birthday"))) {
+                    if declinedPermissions.count > 0 && (/*declinedPermissions.contains(Permission(name: "user_events")) || */declinedPermissions.contains(Permission(name: "user_birthday"))) {
                         Analytics.Log(event: "Account_log_in_missing_permissions", with: permissions)
                         reject(LoginError.facebookPermissionsDeclined(permissions: permissions))
                         self.facebookLoginManager.logOut()
                     } else {
                         print("Facebook login success here", accessToken.authenticationToken)
-                        let credential = FacebookAuthProvider.credential(withAccessToken: accessToken.authenticationToken)
-                        fulfill((credential: credential, permissions: permissions))
+                        fulfill((accessToken: accessToken, permissions: permissions))
                     }
                 case .failed(let error):
                     print("Facebook login error: \(error.localizedDescription)")
@@ -180,15 +181,18 @@ class LoginManager {
     }
 
     func loginWithFacebook(viewController: UIViewController) -> Promise<FirebaseAuth.User> {
-        return facebookLogin(viewController: viewController).then { facebookResult -> Promise<FirebaseAuth.User> in
-            return self.firebaseLogin(credential: facebookResult.credential, permissions: facebookResult.permissions)
+        return facebookLogin(viewController: viewController).then { facebookResult -> Promise<FacebookLoginResult> in
+            let authenticationToken = facebookResult.accessToken.authenticationToken
+            return UserFacebookIntegrationRepository.shared.setAccessToken(accessToken: authenticationToken)
+                .then { _ in return Promise(facebookResult) }
+        }.then { facebookResult -> Promise<FirebaseAuth.User> in
+            let credential = FacebookAuthProvider.credential(withAccessToken: facebookResult.accessToken.authenticationToken)
+            return self.firebaseLogin(credential: credential, permissions: facebookResult.permissions)
         }.then { firebaseUser -> Promise<FirebaseAuth.User> in
             return UserRepository.shared.isUserSignedUp().then { isUserSignedUp -> Promise<FirebaseAuth.User> in
                 if isUserSignedUp {
-                    print("LOGGIN HERE 1")
                     return Promise(firebaseUser)
                 }
-                print("LOGGIN HERE 2")
                 return self.setUserFromFacebook().then {
                     return Promise(firebaseUser)
                 }

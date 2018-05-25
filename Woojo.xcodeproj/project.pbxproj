@@ -376,6 +376,18 @@
 		85EE16A120B6BB3F0013A852 /* FirebaseProfilePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE16A020B6BB3F0013A852 /* FirebaseProfilePhoto.swift */; };
 		85EE16A220B6BB3F0013A852 /* FirebaseProfilePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE16A020B6BB3F0013A852 /* FirebaseProfilePhoto.swift */; };
 		85EE16A320B6BB3F0013A852 /* FirebaseProfilePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE16A020B6BB3F0013A852 /* FirebaseProfilePhoto.swift */; };
+		85EE16A520B72F710013A852 /* EventbriteAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE16A420B72F710013A852 /* EventbriteAPI.swift */; };
+		85EE16A620B72F710013A852 /* EventbriteAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE16A420B72F710013A852 /* EventbriteAPI.swift */; };
+		85EE16A720B72F710013A852 /* EventbriteAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE16A420B72F710013A852 /* EventbriteAPI.swift */; };
+		85EE16A920B806B00013A852 /* DeleteUserPermissionGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE16A820B806B00013A852 /* DeleteUserPermissionGraphRequest.swift */; };
+		85EE16AA20B806B00013A852 /* DeleteUserPermissionGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE16A820B806B00013A852 /* DeleteUserPermissionGraphRequest.swift */; };
+		85EE16AB20B806B00013A852 /* DeleteUserPermissionGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE16A820B806B00013A852 /* DeleteUserPermissionGraphRequest.swift */; };
+		85EE16AD20B80E3B0013A852 /* UserPermissionsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE16AC20B80E3B0013A852 /* UserPermissionsGraphRequest.swift */; };
+		85EE16AE20B80E3B0013A852 /* UserPermissionsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE16AC20B80E3B0013A852 /* UserPermissionsGraphRequest.swift */; };
+		85EE16AF20B80E3B0013A852 /* UserPermissionsGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE16AC20B80E3B0013A852 /* UserPermissionsGraphRequest.swift */; };
+		85EE16B120B80EAB0013A852 /* GraphAPI+Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE16B020B80EAB0013A852 /* GraphAPI+Permission.swift */; };
+		85EE16B220B80EAB0013A852 /* GraphAPI+Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE16B020B80EAB0013A852 /* GraphAPI+Permission.swift */; };
+		85EE16B320B80EAB0013A852 /* GraphAPI+Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE16B020B80EAB0013A852 /* GraphAPI+Permission.swift */; };
 		85FA35A520A2F2750068BF48 /* CandidateCardOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA35A320A2F2740068BF48 /* CandidateCardOverlayView.swift */; };
 		85FA35A620A2F2750068BF48 /* CandidateCardOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA35A320A2F2740068BF48 /* CandidateCardOverlayView.swift */; };
 		85FA35A720A2F2750068BF48 /* CandidateCardOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA35A320A2F2740068BF48 /* CandidateCardOverlayView.swift */; };
@@ -471,7 +483,7 @@
 		FE60D1CF66F701A373780C47 /* UserRecommendedEventsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D8857112C672E4539782 /* UserRecommendedEventsRepository.swift */; };
 		FE60D1F2CFC45B1026B77725 /* UserSponsoredEventsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DA761C6BF6E1308CBC17 /* UserSponsoredEventsRepository.swift */; };
 		FE60D21B11D73500B6E34972 /* UserFacebookIntegrationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DE17B9B688237754F0CC /* UserFacebookIntegrationRepository.swift */; };
-		FE60D21BB3BB2C30DFBA5C5C /* EventbriteEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D5185D815742BCB736DD /* EventbriteEvent.swift */; };
+		FE60D21BB3BB2C30DFBA5C5C /* EventbriteAPI+Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D5185D815742BCB736DD /* EventbriteAPI+Event.swift */; };
 		FE60D22C0B3166322248E10E /* GraphAPI+Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D6A60275D356E7078F58 /* GraphAPI+Event.swift */; };
 		FE60D25CE91376BA4007FACE /* UserNotificationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D18FA882363587C8D00F /* UserNotificationRepository.swift */; };
 		FE60D266200EB405151ABA06 /* AuthAware.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D67C17FE32004A85E122 /* AuthAware.swift */; };
@@ -481,7 +493,7 @@
 		FE60D36744196D493D039C13 /* EventbriteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DBDD9A06FF6DB3BCABA7 /* EventbriteRepository.swift */; };
 		FE60D389F8BE2E35090138C6 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D53B21FA76DA0905FC2F /* ProfileViewModel.swift */; };
 		FE60D39CECC0D775120E0747 /* GraphAPIToWoojoConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DEA8016B2B7B76B1D053 /* GraphAPIToWoojoConverter.swift */; };
-		FE60D47174B7BA07C40FED3F /* EventbriteEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D5185D815742BCB736DD /* EventbriteEvent.swift */; };
+		FE60D47174B7BA07C40FED3F /* EventbriteAPI+Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D5185D815742BCB736DD /* EventbriteAPI+Event.swift */; };
 		FE60D48489F8314A33295B6F /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DB09DB69ECF843931DF2 /* Device.swift */; };
 		FE60D48C1A913E1D63F3AB41 /* CandidatesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DE8328250198F04EB89E /* CandidatesViewModel.swift */; };
 		FE60D492623919F91F560E1D /* GraphAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D8B1EAA6631A1267DD55 /* GraphAPI.swift */; };
@@ -494,7 +506,7 @@
 		FE60D50D15527BAD44177C01 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DB09DB69ECF843931DF2 /* Device.swift */; };
 		FE60D52DD921DFE02830D655 /* UserEventbriteIntegrationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DABB498664777B769E22 /* UserEventbriteIntegrationRepository.swift */; };
 		FE60D545F6CC0EF6930FFA13 /* CandidatesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DE8328250198F04EB89E /* CandidatesViewModel.swift */; };
-		FE60D54F015ABE9099190D9F /* EventbriteOrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D5189DA4BAD723AA9FE2 /* EventbriteOrderResponse.swift */; };
+		FE60D54F015ABE9099190D9F /* EventbriteAPI+OrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D5189DA4BAD723AA9FE2 /* EventbriteAPI+OrderResponse.swift */; };
 		FE60D581C9856BB729288D3D /* FacebookAlbumsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DCFA8D65D28AF561098E /* FacebookAlbumsViewModel.swift */; };
 		FE60D5955F897BEB73A29817 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D84DFF80188CD650F9B0 /* Observable.swift */; };
 		FE60D5A10AF530591E74B918 /* GraphAPI+Picture.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DCA81EFF2E646717AD59 /* GraphAPI+Picture.swift */; };
@@ -503,7 +515,7 @@
 		FE60D5B8B892CB9E23D2606A /* UserEventbriteIntegrationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DABB498664777B769E22 /* UserEventbriteIntegrationRepository.swift */; };
 		FE60D5BD68CE01BA783CDD03 /* GraphAPI+Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D6A60275D356E7078F58 /* GraphAPI+Event.swift */; };
 		FE60D5C12F1E4091918679A6 /* AuthAware.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D67C17FE32004A85E122 /* AuthAware.swift */; };
-		FE60D5C3FE4FDEBE8D1F9379 /* EventbriteOrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D5189DA4BAD723AA9FE2 /* EventbriteOrderResponse.swift */; };
+		FE60D5C3FE4FDEBE8D1F9379 /* EventbriteAPI+OrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D5189DA4BAD723AA9FE2 /* EventbriteAPI+OrderResponse.swift */; };
 		FE60D5DBFCA0467E6FD445A7 /* GraphAPI+Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D6DF8294BD63B5002D24 /* GraphAPI+Profile.swift */; };
 		FE60D5DF667800418681FA36 /* UserCandidateRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DCEE8CF1C3399E853939 /* UserCandidateRepository.swift */; };
 		FE60D62739EE5F0A761A49FE /* FacebookAlbumsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DCFA8D65D28AF561098E /* FacebookAlbumsViewModel.swift */; };
@@ -522,7 +534,7 @@
 		FE60D7C4CE24F43F73300B76 /* GraphAPI+Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DC36A69842C34EEE237C /* GraphAPI+Album.swift */; };
 		FE60D7D841ECACB42AD7162C /* GraphAPI+Picture.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DCA81EFF2E646717AD59 /* GraphAPI+Picture.swift */; };
 		FE60D7E4E39B3CA84BD07FFF /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DD5FC157902ABC37D9DD /* LoginManager.swift */; };
-		FE60D817363326C4C348EC3B /* EventbriteOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DBEDA02EEED911546ED4 /* EventbriteOrder.swift */; };
+		FE60D817363326C4C348EC3B /* EventbriteAPI+Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DBEDA02EEED911546ED4 /* EventbriteAPI+Order.swift */; };
 		FE60D83F8CCC74515DEFC846 /* UserMatchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D512E7CDA9B1615CA400 /* UserMatchRepository.swift */; };
 		FE60D86FEA93A29054F1C738 /* Notifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DD110CDDFDEC7F3F1E4E /* Notifier.swift */; };
 		FE60D8983588B3311731A2F7 /* UserRecommendedEventsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D8857112C672E4539782 /* UserRecommendedEventsRepository.swift */; };
@@ -541,7 +553,7 @@
 		FE60D9B10A30B2313AA8BD3A /* UserFacebookIntegrationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DE17B9B688237754F0CC /* UserFacebookIntegrationRepository.swift */; };
 		FE60D9F6F9A53F35C5471BDD /* UserMatchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D512E7CDA9B1615CA400 /* UserMatchRepository.swift */; };
 		FE60DA03CFB3FE296C401E5C /* UserNotificationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D18FA882363587C8D00F /* UserNotificationRepository.swift */; };
-		FE60DA0BF5B7E452FB9C57EF /* EventbriteOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DBEDA02EEED911546ED4 /* EventbriteOrder.swift */; };
+		FE60DA0BF5B7E452FB9C57EF /* EventbriteAPI+Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DBEDA02EEED911546ED4 /* EventbriteAPI+Order.swift */; };
 		FE60DA0C931C96EBC9CDC2AF /* GraphAPI+PageLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DD38769C8DB5929C6CD2 /* GraphAPI+PageLike.swift */; };
 		FE60DA365A2DB2888F20B852 /* EventbriteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DBDD9A06FF6DB3BCABA7 /* EventbriteRepository.swift */; };
 		FE60DA5724C8E5B1197432BA /* EventIdsToEventsConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D8B991391C1F5E7A4A30 /* EventIdsToEventsConverter.swift */; };
@@ -551,9 +563,9 @@
 		FE60DB2479358C077A278069 /* GraphAPI+PageLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DD38769C8DB5929C6CD2 /* GraphAPI+PageLike.swift */; };
 		FE60DB601EDEBB3C42D38C73 /* UserNotificationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D18FA882363587C8D00F /* UserNotificationRepository.swift */; };
 		FE60DB625E567952A1F80225 /* UserProfileGraphRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DE0E8AFC08F113AD2316 /* UserProfileGraphRequest.swift */; };
-		FE60DB80476985C7F45B179B /* EventbriteOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DBEDA02EEED911546ED4 /* EventbriteOrder.swift */; };
+		FE60DB80476985C7F45B179B /* EventbriteAPI+Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DBEDA02EEED911546ED4 /* EventbriteAPI+Order.swift */; };
 		FE60DBD3DF5666C2C01C8F0B /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DE154B2E76682DF89155 /* SettingsViewModel.swift */; };
-		FE60DBD534D7C35A0AD311DD /* EventbriteOrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D5189DA4BAD723AA9FE2 /* EventbriteOrderResponse.swift */; };
+		FE60DBD534D7C35A0AD311DD /* EventbriteAPI+OrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D5189DA4BAD723AA9FE2 /* EventbriteAPI+OrderResponse.swift */; };
 		FE60DC09D9FDD763C52121C2 /* CommonalityCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DC715DE8987B8FB95ABD /* CommonalityCalculator.swift */; };
 		FE60DC19138DD55B8B6D724C /* EventsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DF9D0E7A7B16BCA339B8 /* EventsViewModel.swift */; };
 		FE60DC2A7E8D6965745359B9 /* Notifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DD110CDDFDEC7F3F1E4E /* Notifier.swift */; };
@@ -574,7 +586,7 @@
 		FE60DEB7EDA51B9259208A83 /* UserReportRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DB0EA0977216EE55B247 /* UserReportRepository.swift */; };
 		FE60DEFE70A4E3ACFE04E821 /* StorageReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DEE68D6D6FDD541E5397 /* StorageReference.swift */; };
 		FE60DF05361562E9C44602AE /* UserActiveEventRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D2490246ECC1F576226E /* UserActiveEventRepository.swift */; };
-		FE60DF17E3A3923C4EAB00D2 /* EventbriteEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D5185D815742BCB736DD /* EventbriteEvent.swift */; };
+		FE60DF17E3A3923C4EAB00D2 /* EventbriteAPI+Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D5185D815742BCB736DD /* EventbriteAPI+Event.swift */; };
 		FE60DF352463B6A07F4517C2 /* EventbriteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DBDD9A06FF6DB3BCABA7 /* EventbriteRepository.swift */; };
 		FE60DF5BE282923AEE8708DF /* ShareService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60DD7F18F3770747D603E9 /* ShareService.swift */; };
 		FE60DF75A18D41996D84D7CD /* GraphAPI+Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE60D6A60275D356E7078F58 /* GraphAPI+Event.swift */; };
@@ -729,6 +741,10 @@
 		85EE169820B6BA200013A852 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		85EE169C20B6BB080013A852 /* ProfilePhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePhoto.swift; sourceTree = "<group>"; };
 		85EE16A020B6BB3F0013A852 /* FirebaseProfilePhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseProfilePhoto.swift; sourceTree = "<group>"; };
+		85EE16A420B72F710013A852 /* EventbriteAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventbriteAPI.swift; sourceTree = "<group>"; };
+		85EE16A820B806B00013A852 /* DeleteUserPermissionGraphRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteUserPermissionGraphRequest.swift; sourceTree = "<group>"; };
+		85EE16AC20B80E3B0013A852 /* UserPermissionsGraphRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPermissionsGraphRequest.swift; sourceTree = "<group>"; };
+		85EE16B020B80EAB0013A852 /* GraphAPI+Permission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GraphAPI+Permission.swift"; sourceTree = "<group>"; };
 		85FA35A320A2F2740068BF48 /* CandidateCardOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandidateCardOverlayView.swift; sourceTree = "<group>"; };
 		85FA35A420A2F2740068BF48 /* CandidateCardOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CandidateCardOverlayView.xib; sourceTree = "<group>"; };
 		85FA35AB20A3076A0068BF48 /* UserSwipeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSwipeRepository.swift; sourceTree = "<group>"; };
@@ -765,8 +781,8 @@
 		FE60D2490246ECC1F576226E /* UserActiveEventRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserActiveEventRepository.swift; sourceTree = "<group>"; };
 		FE60D27C3B522606C6BB35B4 /* FacebookAlbumPhotosViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookAlbumPhotosViewModel.swift; sourceTree = "<group>"; };
 		FE60D512E7CDA9B1615CA400 /* UserMatchRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserMatchRepository.swift; sourceTree = "<group>"; };
-		FE60D5185D815742BCB736DD /* EventbriteEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventbriteEvent.swift; sourceTree = "<group>"; };
-		FE60D5189DA4BAD723AA9FE2 /* EventbriteOrderResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventbriteOrderResponse.swift; sourceTree = "<group>"; };
+		FE60D5185D815742BCB736DD /* EventbriteAPI+Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EventbriteAPI+Event.swift"; sourceTree = "<group>"; };
+		FE60D5189DA4BAD723AA9FE2 /* EventbriteAPI+OrderResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EventbriteAPI+OrderResponse.swift"; sourceTree = "<group>"; };
 		FE60D53B21FA76DA0905FC2F /* ProfileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		FE60D67C17FE32004A85E122 /* AuthAware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthAware.swift; sourceTree = "<group>"; };
 		FE60D6A60275D356E7078F58 /* GraphAPI+Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GraphAPI+Event.swift"; sourceTree = "<group>"; };
@@ -783,7 +799,7 @@
 		FE60DB09DB69ECF843931DF2 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		FE60DB0EA0977216EE55B247 /* UserReportRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserReportRepository.swift; sourceTree = "<group>"; };
 		FE60DBDD9A06FF6DB3BCABA7 /* EventbriteRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventbriteRepository.swift; sourceTree = "<group>"; };
-		FE60DBEDA02EEED911546ED4 /* EventbriteOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventbriteOrder.swift; sourceTree = "<group>"; };
+		FE60DBEDA02EEED911546ED4 /* EventbriteAPI+Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EventbriteAPI+Order.swift"; sourceTree = "<group>"; };
 		FE60DC36A69842C34EEE237C /* GraphAPI+Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GraphAPI+Album.swift"; sourceTree = "<group>"; };
 		FE60DC715DE8987B8FB95ABD /* CommonalityCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonalityCalculator.swift; sourceTree = "<group>"; };
 		FE60DCA81EFF2E646717AD59 /* GraphAPI+Picture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GraphAPI+Picture.swift"; sourceTree = "<group>"; };
@@ -926,6 +942,8 @@
 				85B36AA11FADFE7F00A7B599 /* UserPageLikesGraphRequest.swift */,
 				FE60DE0E8AFC08F113AD2316 /* UserProfileGraphRequest.swift */,
 				FE60DEDD0912431A3BAC7275 /* UserProfilePictureGraphRequest.swift */,
+				85EE16A820B806B00013A852 /* DeleteUserPermissionGraphRequest.swift */,
+				85EE16AC20B80E3B0013A852 /* UserPermissionsGraphRequest.swift */,
 			);
 			name = GraphRequests;
 			sourceTree = "<group>";
@@ -1332,6 +1350,7 @@
 				FE60DC36A69842C34EEE237C /* GraphAPI+Album.swift */,
 				FE60D6A60275D356E7078F58 /* GraphAPI+Event.swift */,
 				85FA829320AB32A5004EE48B /* GraphAPI+ProfilePicture.swift */,
+				85EE16B020B80EAB0013A852 /* GraphAPI+Permission.swift */,
 			);
 			name = GraphAPI;
 			sourceTree = "<group>";
@@ -1339,9 +1358,10 @@
 		FE60D2A09BC75C6583275C61 /* EventbriteAPI */ = {
 			isa = PBXGroup;
 			children = (
-				FE60D5189DA4BAD723AA9FE2 /* EventbriteOrderResponse.swift */,
-				FE60DBEDA02EEED911546ED4 /* EventbriteOrder.swift */,
-				FE60D5185D815742BCB736DD /* EventbriteEvent.swift */,
+				85EE16A420B72F710013A852 /* EventbriteAPI.swift */,
+				FE60D5185D815742BCB736DD /* EventbriteAPI+Event.swift */,
+				FE60DBEDA02EEED911546ED4 /* EventbriteAPI+Order.swift */,
+				FE60D5189DA4BAD723AA9FE2 /* EventbriteAPI+OrderResponse.swift */,
 			);
 			name = EventbriteAPI;
 			sourceTree = "<group>";
@@ -2045,6 +2065,7 @@
 				8553DD0A20B4ACFD002AB6F7 /* MyImageSlideShow.swift in Sources */,
 				85B36AC51FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift in Sources */,
 				85651AB120603A5E00763266 /* OnboardingPostAboutViewController.swift in Sources */,
+				85EE16A920B806B00013A852 /* DeleteUserPermissionGraphRequest.swift in Sources */,
 				854DDABF1DE3654E00655EFC /* EventTableViewCell.swift in Sources */,
 				8556C6331F94FB8A00C0AA16 /* UserNotRepliedEventsGraphRequest.swift.bak in Sources */,
 				85662CA31F90BE2200D5701E /* EventsViewController.swift in Sources */,
@@ -2063,6 +2084,7 @@
 				851CDFBE20963C5F000C7A21 /* UIImage.swift in Sources */,
 				85B36ACC1FB1CE5200A7B599 /* CommonItem.swift in Sources */,
 				85EB2EE41DE20BCF00F0A55C /* Profile.swift.bak in Sources */,
+				85EE16AD20B80E3B0013A852 /* UserPermissionsGraphRequest.swift in Sources */,
 				85662CC21F90BE2200D5701E /* ReachabilityAware.swift in Sources */,
 				856B0AB11FA1D2970041C11E /* CommonEvent.swift in Sources */,
 				8502DA8620B341E000EA467A /* UserDetailsView.swift in Sources */,
@@ -2094,6 +2116,7 @@
 				85B36AAA1FB1AEFB00A7B599 /* PageLike.swift in Sources */,
 				85B36AA21FADFE7F00A7B599 /* UserPageLikesGraphRequest.swift in Sources */,
 				854FDBC61FBF5C40006D9352 /* NotificationsViewController.swift in Sources */,
+				85EE16A520B72F710013A852 /* EventbriteAPI.swift in Sources */,
 				858398D51FBB3A1200ECFFE3 /* EventDetailsViewController.swift in Sources */,
 				85E5D4CD1DD9EFBC003E2376 /* CurrentUser.swift.bak in Sources */,
 				85662CC11F90BE2200D5701E /* UnwindThenShowChatSegue.swift in Sources */,
@@ -2130,6 +2153,7 @@
 				FE60DE90705EFE4DA0EEAD6D /* DatabaseQuery.swift in Sources */,
 				FE60DA03CFB3FE296C401E5C /* UserNotificationRepository.swift in Sources */,
 				FE60D7C4CE24F43F73300B76 /* GraphAPI+Album.swift in Sources */,
+				85EE16B120B80EAB0013A852 /* GraphAPI+Permission.swift in Sources */,
 				85FA829420AB32A5004EE48B /* GraphAPI+ProfilePicture.swift in Sources */,
 				FE60D7567CB84487F7A90E9E /* UserCandidateRepository.swift in Sources */,
 				859910ED20A8DB4E00EDB846 /* NotificationsSettingsViewModel.swift in Sources */,
@@ -2143,9 +2167,9 @@
 				FE60DBD3DF5666C2C01C8F0B /* SettingsViewModel.swift in Sources */,
 				FE60DE885AC276BDF46450D7 /* CommonalityCalculator.swift in Sources */,
 				FE60DF75A18D41996D84D7CD /* GraphAPI+Event.swift in Sources */,
-				FE60D54F015ABE9099190D9F /* EventbriteOrderResponse.swift in Sources */,
-				FE60DB80476985C7F45B179B /* EventbriteOrder.swift in Sources */,
-				FE60DF17E3A3923C4EAB00D2 /* EventbriteEvent.swift in Sources */,
+				FE60D54F015ABE9099190D9F /* EventbriteAPI+OrderResponse.swift in Sources */,
+				FE60DB80476985C7F45B179B /* EventbriteAPI+Order.swift in Sources */,
+				FE60DF17E3A3923C4EAB00D2 /* EventbriteAPI+Event.swift in Sources */,
 				FE60D48489F8314A33295B6F /* Device.swift in Sources */,
 				FE60D9060B3DC2D6159F2681 /* String.swift in Sources */,
 				FE60D5ADF09DCE21C9BA2CEC /* FacebookAlbumsViewModel.swift in Sources */,
@@ -2211,6 +2235,7 @@
 				853DBC921FBB567100AC8E3C /* EventMatchCollectionViewCell.swift in Sources */,
 				8594C5CD2094D2A600405F5A /* UserRepository.swift in Sources */,
 				85662CE01F90BE2300D5701E /* ProfilePhotoCollectionViewCell.swift in Sources */,
+				85EE16AA20B806B00013A852 /* DeleteUserPermissionGraphRequest.swift in Sources */,
 				851D176B204B17CD008E6342 /* CommonAnalytics.swift in Sources */,
 				85B36AC61FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift in Sources */,
 				85651AB220603A5E00763266 /* OnboardingPostAboutViewController.swift in Sources */,
@@ -2229,6 +2254,7 @@
 				851D176F204B3E58008E6342 /* Constants+Analytics.swift in Sources */,
 				85662CF21F90BE2300D5701E /* Constants+App.swift in Sources */,
 				851CDFBF20963D0D000C7A21 /* UIImage.swift in Sources */,
+				85EE16AE20B80E3B0013A852 /* UserPermissionsGraphRequest.swift in Sources */,
 				85662C071F90BD6500D5701E /* Candidate.swift in Sources */,
 				8502DA8720B341E000EA467A /* UserDetailsView.swift in Sources */,
 				85B36ACD1FB1CE5200A7B599 /* CommonItem.swift in Sources */,
@@ -2260,6 +2286,7 @@
 				85662C131F90BD7500D5701E /* UserEventsGraphRequest.swift in Sources */,
 				85662CCE1F90BE2300D5701E /* EventsViewController.swift in Sources */,
 				854FDBC71FBF5C40006D9352 /* NotificationsViewController.swift in Sources */,
+				85EE16A620B72F710013A852 /* EventbriteAPI.swift in Sources */,
 				858398D61FBB3A1200ECFFE3 /* EventDetailsViewController.swift in Sources */,
 				85662CE91F90BE2300D5701E /* MainTabBarController.swift in Sources */,
 				85662CDC1F90BE2300D5701E /* PreferencesViewController.swift in Sources */,
@@ -2296,6 +2323,7 @@
 				FE60D964FFC76C357BD7A82E /* DatabaseQuery.swift in Sources */,
 				FE60DB601EDEBB3C42D38C73 /* UserNotificationRepository.swift in Sources */,
 				FE60D17428D09B2CB66B9A1F /* GraphAPI+Album.swift in Sources */,
+				85EE16B220B80EAB0013A852 /* GraphAPI+Permission.swift in Sources */,
 				85FA829520AB32A5004EE48B /* GraphAPI+ProfilePicture.swift in Sources */,
 				FE60D5DF667800418681FA36 /* UserCandidateRepository.swift in Sources */,
 				859910EE20A8DB4E00EDB846 /* NotificationsSettingsViewModel.swift in Sources */,
@@ -2309,9 +2337,9 @@
 				FE60DCF0BFDF1F6A6D5EC004 /* SettingsViewModel.swift in Sources */,
 				FE60DC09D9FDD763C52121C2 /* CommonalityCalculator.swift in Sources */,
 				FE60D22C0B3166322248E10E /* GraphAPI+Event.swift in Sources */,
-				FE60DBD534D7C35A0AD311DD /* EventbriteOrderResponse.swift in Sources */,
-				FE60DA0BF5B7E452FB9C57EF /* EventbriteOrder.swift in Sources */,
-				FE60D47174B7BA07C40FED3F /* EventbriteEvent.swift in Sources */,
+				FE60DBD534D7C35A0AD311DD /* EventbriteAPI+OrderResponse.swift in Sources */,
+				FE60DA0BF5B7E452FB9C57EF /* EventbriteAPI+Order.swift in Sources */,
+				FE60D47174B7BA07C40FED3F /* EventbriteAPI+Event.swift in Sources */,
 				FE60D50D15527BAD44177C01 /* Device.swift in Sources */,
 				FE60D07A0AEF73615629DDE7 /* String.swift in Sources */,
 				FE60D62739EE5F0A761A49FE /* FacebookAlbumsViewModel.swift in Sources */,
@@ -2377,6 +2405,7 @@
 				853DBC931FBB567100AC8E3C /* EventMatchCollectionViewCell.swift in Sources */,
 				8594C5CE2094D2A600405F5A /* UserRepository.swift in Sources */,
 				85662C8E1F90BE1300D5701E /* ProfilePhotoCollectionViewCell.swift in Sources */,
+				85EE16AB20B806B00013A852 /* DeleteUserPermissionGraphRequest.swift in Sources */,
 				851D176C204B17CE008E6342 /* CommonAnalytics.swift in Sources */,
 				85B36AC71FB1CE0E00A7B599 /* UserCommonItemCollectionViewCell.swift in Sources */,
 				85651AB320603A5E00763266 /* OnboardingPostAboutViewController.swift in Sources */,
@@ -2395,6 +2424,7 @@
 				851D1770204B3E58008E6342 /* Constants+Analytics.swift in Sources */,
 				85662CA01F90BE1300D5701E /* Constants+App.swift in Sources */,
 				851CDFC020963D0D000C7A21 /* UIImage.swift in Sources */,
+				85EE16AF20B80E3B0013A852 /* UserPermissionsGraphRequest.swift in Sources */,
 				85662C3A1F90BDD000D5701E /* Candidate.swift in Sources */,
 				8502DA8820B341E000EA467A /* UserDetailsView.swift in Sources */,
 				85B36ACE1FB1CE5200A7B599 /* CommonItem.swift in Sources */,
@@ -2426,6 +2456,7 @@
 				85662C461F90BDD400D5701E /* UserEventsGraphRequest.swift in Sources */,
 				85662C7C1F90BE1300D5701E /* EventsViewController.swift in Sources */,
 				854FDBC81FBF5C40006D9352 /* NotificationsViewController.swift in Sources */,
+				85EE16A720B72F710013A852 /* EventbriteAPI.swift in Sources */,
 				858398D71FBB3A1200ECFFE3 /* EventDetailsViewController.swift in Sources */,
 				85662C971F90BE1300D5701E /* MainTabBarController.swift in Sources */,
 				85662C8A1F90BE1300D5701E /* PreferencesViewController.swift in Sources */,
@@ -2462,6 +2493,7 @@
 				FE60D98A095A9250BDBDB2B5 /* DatabaseQuery.swift in Sources */,
 				FE60D25CE91376BA4007FACE /* UserNotificationRepository.swift in Sources */,
 				FE60D0CC3DF63D9C247C4136 /* GraphAPI+Album.swift in Sources */,
+				85EE16B320B80EAB0013A852 /* GraphAPI+Permission.swift in Sources */,
 				85FA829620AB32A5004EE48B /* GraphAPI+ProfilePicture.swift in Sources */,
 				FE60DE1AA276A4642F5347A5 /* UserCandidateRepository.swift in Sources */,
 				859910EF20A8DB4E00EDB846 /* NotificationsSettingsViewModel.swift in Sources */,
@@ -2475,9 +2507,9 @@
 				FE60DAC6667A6CF367B9529E /* SettingsViewModel.swift in Sources */,
 				FE60D00F9BDBFB7AC685F044 /* CommonalityCalculator.swift in Sources */,
 				FE60D5BD68CE01BA783CDD03 /* GraphAPI+Event.swift in Sources */,
-				FE60D5C3FE4FDEBE8D1F9379 /* EventbriteOrderResponse.swift in Sources */,
-				FE60D817363326C4C348EC3B /* EventbriteOrder.swift in Sources */,
-				FE60D21BB3BB2C30DFBA5C5C /* EventbriteEvent.swift in Sources */,
+				FE60D5C3FE4FDEBE8D1F9379 /* EventbriteAPI+OrderResponse.swift in Sources */,
+				FE60D817363326C4C348EC3B /* EventbriteAPI+Order.swift in Sources */,
+				FE60D21BB3BB2C30DFBA5C5C /* EventbriteAPI+Event.swift in Sources */,
 				FE60DA90DDF7EB6D75D41C59 /* Device.swift in Sources */,
 				FE60D5AF5E0447A8A8F95482 /* String.swift in Sources */,
 				FE60D581C9856BB729288D3D /* FacebookAlbumsViewModel.swift in Sources */,
