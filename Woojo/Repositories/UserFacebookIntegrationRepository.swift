@@ -24,7 +24,9 @@ class UserFacebookIntegrationRepository: BaseRepository, EventIdsToEventsConvert
             return wrap { handler in AccessToken.refreshCurrentToken(handler) }
         }.then { accessToken in
             if let accessToken = accessToken {
-                return UserFacebookIntegrationRepository.shared.setAccessToken(accessToken: accessToken.authenticationToken)
+                return UserFacebookIntegrationRepository.shared.removeAccessToken().then { _ in
+                    return UserFacebookIntegrationRepository.shared.setAccessToken(accessToken: accessToken.authenticationToken)
+                }
             }
             return Promise(FacebookIntegrationError.removePermissionNoAccessToken)
         }.then {
@@ -84,8 +86,8 @@ class UserFacebookIntegrationRepository: BaseRepository, EventIdsToEventsConvert
                     }
                     return Observable
                         .combineLatest(arrayOfObservables)
-                        .filter({ !$0.contains(where: { $0 == nil }) })
-                        .map({ $0.flatMap{ $0 } as [User.Event] })
+                        //.filter({ !$0.contains(where: { $0 == nil }) })
+                        .map({ $0.compactMap{ $0 } as [User.Event] })
                 })
         }
     }
@@ -98,25 +100,38 @@ class UserFacebookIntegrationRepository: BaseRepository, EventIdsToEventsConvert
         }
     }
     
-    func setAccessToken(accessToken: String) -> Promise<Void>{
+    func setAccessToken(accessToken: String) -> Promise<Void> {
         return doWithCurrentUser { $0.child("integrations/facebook/accessToken").setValuePromise(value: accessToken) }
     }
     
-    func syncFacebookEvents(viewController: UIViewController) -> Promise<Void> {
+    func removeAccessToken() -> Promise<Void> {
+        return doWithCurrentUser { $0.child("integrations/facebook/accessToken").removeValuePromise() }
+    }
+    
+    func syncFacebookEvents(viewController: UIViewController, loginIfNecessary: Bool = true) -> Promise<Void> {
         return getFacebookAccessToken().toPromise().then { authenticationToken in
             if let authenticationToken = authenticationToken {
                 let accessToken = AccessToken(authenticationToken: authenticationToken)
-                if let grantedPermissions = accessToken.grantedPermissions,
-                    grantedPermissions.contains(Permission(name: "user_events")) {
-                    return LoginManager.shared.setEventsFromFacebook()
-                } else {
-                    return LoginManager.shared.facebookLogin(viewController: viewController, readPermissions: [ReadPermission.userEvents]).then { _ in
+                return self.isPermissionGranted(permission: "user_events", accessToken: accessToken).toPromise().then { granted in
+                    if granted {
                         return LoginManager.shared.setEventsFromFacebook()
+                    } else if loginIfNecessary {
+                        return self.loginThenSyncEvents(viewController: viewController)
                     }
+                    return Promise(Void())
                 }
-            } else {
-                return Promise(FacebookIntegrationError.syncNoAccessToken)
+            } else if loginIfNecessary {
+                return self.loginThenSyncEvents(viewController: viewController)
             }
+            return Promise(Void())
+        }
+    }
+    
+    private func loginThenSyncEvents(viewController: UIViewController) -> Promise<Void> {
+        return LoginManager.shared.facebookLogin(viewController: viewController, readPermissions: [ReadPermission.userEvents]).then { facebookLoginResult in
+            return UserFacebookIntegrationRepository.shared.setAccessToken(accessToken: facebookLoginResult.accessToken.authenticationToken)
+            }.then { _ in
+                return LoginManager.shared.setEventsFromFacebook()
         }
     }
     

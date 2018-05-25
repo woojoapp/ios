@@ -401,17 +401,17 @@ extension ProfileViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        if let photo = photos[sourceIndexPath.row] {
-            viewModel.setPhoto(position: destinationIndexPath.row, photo: photo).then {
+        if let pictureId = photos[sourceIndexPath.row]?.parent()?.name {
+            viewModel.setPhotoId(position: destinationIndexPath.row, pictureId: pictureId).then { _ in
                 Analytics.Log(event: "Profile_photos_reordered", with: ["photo_count": String(self.photos.count)])
             }
         }
-        for i in 0..<Int(photoCount) {
+        for i in 0..<Int(self.photoCount) {
             if let cell = collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? ProfilePhotoCollectionViewCell {
-                if let photo = cell.photo {
-                    viewModel.setPhoto(position: i, photo: photo).catch { _ in }
+                if let pictureId = cell.photo?.parent()?.name {
+                    self.viewModel.setPhotoId(position: i, pictureId: pictureId).catch { _ in }
                 } else {
-                    viewModel.removePhoto(position: i).catch { _ in }
+                    self.viewModel.removePhotoId(position: i).catch { _ in }
                 }
             }
         }

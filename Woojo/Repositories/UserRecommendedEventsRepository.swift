@@ -38,7 +38,7 @@ class UserRecommendedEventsRepository: BaseRepository, EventIdsToEventsConverter
                     }
                     return Observable
                         .combineLatest(arrayOfObservables)
-                        .filter({ !$0.contains(where: { $0 == nil }) })
+                        //.filter({ !$0.contains(where: { $0 == nil }) })
                         .map({ $0.flatMap{ $0 } as [User.Event] })
                 })
         }

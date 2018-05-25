@@ -83,17 +83,19 @@ class EventTableViewCell: UITableViewCell {
         thumbnailView.layer.cornerRadius = 12.0
         thumbnailView.layer.masksToBounds = true
         thumbnailView.contentMode = .scaleAspectFill
+        
+        if let startDate = event?.start {
+            monthLabel.text = EventTableViewCell.monthFormatter.string(from: startDate).uppercased()
+            dayLabel.text = EventTableViewCell.dayFormatter.string(from: startDate)
+        }
+        
         if let urlString = event?.coverURL,
             let pictureURL = URL(string: urlString) {
             setImage(pictureURL: pictureURL, active: userEvent?.active ?? false)
-            setDateVisibility(hidden: true)
+            //setDateVisibility(hidden: true)
         } else {
-            if let startDate = event?.start {
-                thumbnailView.image = nil
-                monthLabel.text = EventTableViewCell.monthFormatter.string(from: startDate).uppercased()
-                dayLabel.text = EventTableViewCell.dayFormatter.string(from: startDate)
-                setDateVisibility(hidden: false)
-            }
+            thumbnailView.image = nil
+            setDateVisibility(hidden: false)
         }
     }
     
@@ -126,11 +128,17 @@ class EventTableViewCell: UITableViewCell {
     }
     
     private func setImage(pictureURL: URL, active: Bool) {
-        self.thumbnailView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_40x40"), options: [], completed: { _, _, _, _ in
-            if !active {
-                if let image = self.thumbnailView.image {
-                    self.thumbnailView.image = image.desaturate()
+        self.thumbnailView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_40x40"), options: [], completed: { _, error, _, _ in
+            if error == nil {
+                if !active {
+                    if let image = self.thumbnailView.image {
+                        self.thumbnailView.image = image.desaturate()
+                    } /* else {
+                        self.setDateVisibility(hidden: false)
+                    } */
                 }
+            } else {
+                self.setDateVisibility(hidden: false)
             }
         })
     }

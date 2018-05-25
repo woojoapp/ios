@@ -76,9 +76,17 @@ class ProfileViewModel {
         return UserProfileRepository.shared.setPhoto(data: data, position: position)
     }
 
-    func setPhotoIds(photos: [Int: StorageReference]) -> Promise<Void> {
+    /* func setPhotoIds(photos: [Int: StorageReference]) -> Promise<Void> {
         let photoIds = photos.mapValues { $0.parent()!.name }
         return UserProfileRepository.shared.setPhotoIds(photoIds: photoIds)
+    } */
+    
+    func setPhotoId(position: Int, pictureId: String) -> Promise<Void> {
+        return UserProfileRepository.shared.setPhotoId(position: position, pictureId: pictureId)
+    }
+    
+    func removePhotoId(position: Int) -> Promise<Void> {
+        return UserProfileRepository.shared.removePhotoId(position: position)
     }
 
 }

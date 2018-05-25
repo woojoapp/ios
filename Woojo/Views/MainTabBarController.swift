@@ -16,7 +16,7 @@ import FirebaseAuth
 class MainTabBarController: UITabBarController {
     
     let disposeBag = DisposeBag()
-    private var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
+//    private var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
 
@@ -30,16 +30,16 @@ class MainTabBarController: UITabBarController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        authStateDidChangeListenerHandle = Auth.auth().addStateDidChangeListener { auth, user in
+        /*authStateDidChangeListenerHandle = Auth.auth().addStateDidChangeListener { auth, user in
             if user == nil {
                 self.present(LoginViewController(), animated: true, completion: nil)
             }
-        }
+        }*/
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        Auth.auth().removeStateDidChangeListener(authStateDidChangeListenerHandle!)
+        //Auth.auth().removeStateDidChangeListener(authStateDidChangeListenerHandle!)
     }
 
     func setupDataSource() {

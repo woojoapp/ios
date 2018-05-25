@@ -39,13 +39,16 @@ class EventsViewModel {
 
     private(set) lazy var isFacebookIntegrated: Driver<Bool> = {
         return UserFacebookIntegrationRepository.shared
-            .getFacebookAccessToken()
-            .map { $0 != nil }
+            .isFacebookIntegrated()
             .asDriver(onErrorJustReturn: false)
     }()
 
     func syncEventbriteEvents() -> Promise<Void> {
         return UserEventbriteIntegrationRepository.shared.syncEventbriteEvents()
+    }
+    
+    func syncFacebookEvents(viewController: UIViewController, loginIfNecessary: Bool = true) -> Promise<Void> {
+        return UserFacebookIntegrationRepository.shared.syncFacebookEvents(viewController: viewController, loginIfNecessary: loginIfNecessary)
     }
 
     func activateEvent(eventId: String) -> Promise<Void> {

@@ -6,17 +6,31 @@
 //  Copyright © 2017 Tasty Electrons. All rights reserved.
 //
 
+import FirebaseAuth
 import UIKit
 import RxSwift
 
-class EventDetailsViewController: UITableViewController {
+class EventDetailsViewController: UITableViewController, AuthStateAware {
     var event: Event!
     private var matches: [Match] = []
     private let disposeBag = DisposeBag()
+    internal var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         observeEvent()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        startListeningForAuthStateChange()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        stopListeningForAuthStateChange()
     }
     
     private func observeEvent() {

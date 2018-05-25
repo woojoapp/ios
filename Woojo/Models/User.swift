@@ -29,29 +29,41 @@ class User: Equatable, Codable {
     }
     
     private func getPhotos(dataSnapshot: DataSnapshot) -> [Int: ProfilePhoto]? {
-        if let array = dataSnapshot.childSnapshot(forPath: "profile/photos").value as? NSArray {
-            var photos = [Int: ProfilePhoto]()
+        var photos = [Int: ProfilePhoto]()
+        let value =  dataSnapshot.childSnapshot(forPath: "profile/photos").value
+        if let array = value as? NSArray {
             for (i, element) in array.enumerated() {
                 if let photoId = element as? String {
                     photos[i] = FirebaseProfilePhoto(uid: dataSnapshot.key, id: photoId)
                 }
             }
-            return photos
+        } else if let dict = value as? [String: String] {
+            for (i, element) in dict {
+                if let position = Int(i) {
+                    photos[position] = FirebaseProfilePhoto(uid: dataSnapshot.key, id: element)
+                }
+            }
         }
-        return nil
+        return photos
     }
     
     private func getPhotoIds(dataSnapshot: DataSnapshot) -> [Int: String]? {
-        if let array = dataSnapshot.childSnapshot(forPath: "profile/photos").value as? NSArray {
-            var photos = [Int: String]()
+        var photos = [Int: String]()
+        let value = dataSnapshot.childSnapshot(forPath: "profile/photos").value
+        if let array = value as? NSArray {
             for (i, element) in array.enumerated() {
                 if let photoId = element as? String {
                     photos[i] = photoId
                 }
             }
-            return photos
+        } else if let dict = value as? [String: String] {
+            for (i, element) in dict {
+                if let position = Int(i) {
+                    photos[position] = element
+                }
+            }
         }
-        return nil
+        return photos
     }
 
     class Profile: Codable {

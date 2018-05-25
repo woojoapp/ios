@@ -62,7 +62,7 @@ class LoginManager {
 
     private func setPageLikesFromFacebook() -> Promise<Void> {
         return FacebookRepository.shared.getPageLikes().then { pageLikes in
-            if let woojoPageLikes = pageLikes?.flatMap({ pageLike in GraphAPIToWoojoConverter.shared.convertPageLike(graphApiPageLike: pageLike) }) {
+            if let woojoPageLikes = pageLikes?.compactMap({ pageLike in GraphAPIToWoojoConverter.shared.convertPageLike(graphApiPageLike: pageLike) }) {
                 return UserFacebookIntegrationRepository.shared.setPageLikes(pageLikes: woojoPageLikes)
             } else {
                 return Promise(GraphAPIToWoojoConverter.ConversionError.conversionFailed)
@@ -72,7 +72,7 @@ class LoginManager {
 
     private func setFriendsFromFacebook() -> Promise<Void> {
         return FacebookRepository.shared.getFriends().then { friends in
-            if let woojoFriends = friends?.flatMap({ friend in GraphAPIToWoojoConverter.shared.convertFriend(graphApiFriend: friend) }) {
+            if let woojoFriends = friends?.compactMap({ friend in GraphAPIToWoojoConverter.shared.convertFriend(graphApiFriend: friend) }) {
                 return UserFacebookIntegrationRepository.shared.setFriends(friends: woojoFriends)
             } else {
                 return Promise(GraphAPIToWoojoConverter.ConversionError.conversionFailed)
@@ -181,20 +181,21 @@ class LoginManager {
     }
 
     func loginWithFacebook(viewController: UIViewController) -> Promise<FirebaseAuth.User> {
-        return facebookLogin(viewController: viewController).then { facebookResult -> Promise<FacebookLoginResult> in
-            let authenticationToken = facebookResult.accessToken.authenticationToken
-            return UserFacebookIntegrationRepository.shared.setAccessToken(accessToken: authenticationToken)
-                .then { _ in return Promise(facebookResult) }
-        }.then { facebookResult -> Promise<FirebaseAuth.User> in
+        return facebookLogin(viewController: viewController).then { facebookResult -> Promise<FirebaseAuth.User> in
             let credential = FacebookAuthProvider.credential(withAccessToken: facebookResult.accessToken.authenticationToken)
-            return self.firebaseLogin(credential: credential, permissions: facebookResult.permissions)
-        }.then { firebaseUser -> Promise<FirebaseAuth.User> in
-            return UserRepository.shared.isUserSignedUp().then { isUserSignedUp -> Promise<FirebaseAuth.User> in
-                if isUserSignedUp {
-                    return Promise(firebaseUser)
+            return self.firebaseLogin(credential: credential, permissions: facebookResult.permissions).then { user -> Promise<FirebaseAuth.User> in
+                let authenticationToken = facebookResult.accessToken.authenticationToken
+                return UserFacebookIntegrationRepository.shared.setAccessToken(accessToken: authenticationToken).then { _ -> Promise<FirebaseAuth.User> in
+                    return Promise(user)
                 }
-                return self.setUserFromFacebook().then {
-                    return Promise(firebaseUser)
+            }.then { firebaseUser -> Promise<FirebaseAuth.User> in
+                return UserRepository.shared.isUserSignedUp().then { isUserSignedUp -> Promise<FirebaseAuth.User> in
+                    if isUserSignedUp {
+                        return Promise(firebaseUser)
+                    }
+                    return self.setUserFromFacebook().then { _ -> Promise<FirebaseAuth.User> in
+                        return Promise(firebaseUser)
+                    }
                 }
             }
         }

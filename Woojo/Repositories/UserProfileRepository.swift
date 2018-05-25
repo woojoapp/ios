@@ -178,21 +178,24 @@ class UserProfileRepository: BaseRepository {
     }
 
     func removePhoto(position: Int) -> Promise<Void> {
-        return deleteFiles(forPhotoAt: position).then {
+        return deleteFiles(forPhotoAt: position).then { _ in
             return self.removePhotoId(position: position)
         }
     }
 
-    private func removePhotoId(position: Int) -> Promise<Void> {
+    func removePhotoId(position: Int) -> Promise<Void> {
         return doWithCurrentUser { $0.child("profile/photos").child(String(position)).removeValuePromise() }
     }
 
-    private func deleteFiles(forPhotoAt position: Int) -> Promise<Void> {
+    func deleteFiles(forPhotoAt position: Int) -> Promise<Void> {
         return doWithCurrentUser { ref in
             return ref.child("profile/photos").child(String(position)).getDataSnapshot()
-        }.then { dataSnapshot in
+        }.then { dataSnapshot -> Promise<Void> in
             if let id = dataSnapshot.value as? String {
-                return self.doWithCurrentUserStorage { $0.child("profile/photos").child(id).child("full").deletePromise() }
+                let full: Promise<Void> = self.doWithCurrentUserStorage { $0.child("profile/photos").child(id).child("full").deletePromise() }
+                let thumbnail: Promise<Void> = self.doWithCurrentUserStorage { $0.child("profile/photos").child(id).child("thumbnail").deletePromise() }
+                let result: Promise<[Void]> = all(full, thumbnail)
+                return result.then { _ in return Void() }
             } else {
                 return Promise(UserProfileRepositoryError.noPhotoIdAtGivenPosition)
             }

@@ -23,6 +23,9 @@ class OnboardingLoginViewController: UIViewController {
     @IBOutlet weak var message3: UILabel!
 
     private var loginViewModel = LoginViewModel.shared
+    
+    var onboardingViewController: OnboardingViewController?
+    var loginViewController: LoginViewController?
 
     //let loginManager = LoginManager()
     let termsText = NSLocalizedString("Terms & Conditions", comment: "")
@@ -96,7 +99,13 @@ class OnboardingLoginViewController: UIViewController {
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         loginFacebook?.isHidden = true
-        LoginManager.shared.loginWithFacebook(viewController: self).catch { error in
+        LoginManager.shared.loginWithFacebook(viewController: self).then { _ in
+            print("LOGGIN done then", self.onboardingViewController, self.loginViewController)
+            self.onboardingViewController?.dismiss(animated: false, completion: nil)
+            self.loginViewController?.dismiss(animated: true, completion: nil)
+            //self.onboardingViewController?.close(self)
+        }.catch { error in
+            print("LOGGIN done catch", error)
             self.activityIndicator.stopAnimating()
             self.loginFacebook?.isHidden = false
             if let loginError = error as? LoginManager.LoginError {
@@ -109,8 +118,8 @@ class OnboardingLoginViewController: UIViewController {
     }
 
     private func showDeclinedPermissionsErrorDialog() {
-        let alert = UIAlertController(title: NSLocalizedString("Missing permissions", comment: ""), message: NSLocalizedString("Woojo needs to know at least your birthday and access your events in order to function properly.", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        let alert = UIAlertController(title: R.string.localizable.missingPermissionsTitle(), message: R.string.localizable.missingPermissionsMessage(), preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: R.string.localizable.missingPermissionsOk(), style: .default, handler: nil))
         self.present(alert, animated: true, completion: {
             LoginManager.shared.logOut()
             self.activityIndicator.stopAnimating()

@@ -23,13 +23,14 @@ import Crashlytics
 import Amplitude_iOS
 import BWWalkthrough
 
-class CandidatesViewController: UIViewController {
+class CandidatesViewController: UIViewController, AuthStateAware {
     
     @IBOutlet weak var kolodaView: KolodaView!
     @IBOutlet weak var loadingContainerView: UIView!
     @IBOutlet weak var loadingView: RPCircularProgress!
     
     var reachabilityObserver: AnyObject?
+    internal var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
     let disposeBag = DisposeBag()
     var viewModelDisposable: Disposable?
     var onboardingViewController: OnboardingViewController?
@@ -85,13 +86,13 @@ class CandidatesViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        startListeningForAuthStateChange()
         loadingView.layer.cornerRadius = loadingView.frame.size.width / 2
         startMonitoringReachability()
-        //startListeningToCandidates()
         bindViewModel()
         checkReachability()        
         UserRepository.shared.setLastSeen(date: Date()).catch { _ in }
-        if !UserDefaults.standard.bool(forKey: "POST_LOGIN_ONBOARDING_COMPLETED") {
+        if Auth.auth().currentUser != nil && !UserDefaults.standard.bool(forKey: "POST_LOGIN_ONBOARDING_COMPLETED") {
             showOnboarding()
         }
     }
@@ -129,6 +130,7 @@ class CandidatesViewController: UIViewController {
         super.viewDidDisappear(animated)
         stopMonitoringReachability()
         unbindViewModel()
+        stopListeningForAuthStateChange()
         //stopListeningToCandidates()
     }
     

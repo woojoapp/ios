@@ -44,8 +44,8 @@ struct R: Rswift.Validatable {
     static let gothamRoundedMediumOtf = Rswift.FileResource(bundle: R.hostingBundle, name: "Gotham Rounded Medium", pathExtension: "otf")
     /// Resource file `Info.plist`.
     static let infoPlist = Rswift.FileResource(bundle: R.hostingBundle, name: "Info", pathExtension: "plist")
-    /// Resource file `Woojo Staging.entitlements`.
-    static let woojoStagingEntitlements = Rswift.FileResource(bundle: R.hostingBundle, name: "Woojo Staging", pathExtension: "entitlements")
+    /// Resource file `Woojo.entitlements`.
+    static let woojoEntitlements = Rswift.FileResource(bundle: R.hostingBundle, name: "Woojo", pathExtension: "entitlements")
     
     /// `bundle.url(forResource: "GoogleService-Info", withExtension: "plist")`
     static func googleServiceInfoPlist(_: Void = ()) -> Foundation.URL? {
@@ -107,9 +107,9 @@ struct R: Rswift.Validatable {
       return fileResource.bundle.url(forResource: fileResource)
     }
     
-    /// `bundle.url(forResource: "Woojo Staging", withExtension: "entitlements")`
-    static func woojoStagingEntitlements(_: Void = ()) -> Foundation.URL? {
-      let fileResource = R.file.woojoStagingEntitlements
+    /// `bundle.url(forResource: "Woojo", withExtension: "entitlements")`
+    static func woojoEntitlements(_: Void = ()) -> Foundation.URL? {
+      let fileResource = R.file.woojoEntitlements
       return fileResource.bundle.url(forResource: fileResource)
     }
     

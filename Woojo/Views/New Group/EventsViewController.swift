@@ -14,7 +14,7 @@ import DZNEmptyDataSet
 import PKHUD
 import FacebookCore
 
-class EventsViewController: UIViewController {
+class EventsViewController: UIViewController, AuthStateAware {
     
     @IBOutlet weak var tipView: UIView!
     @IBOutlet weak var dismissTipButton: UIButton!
@@ -40,6 +40,7 @@ class EventsViewController: UIViewController {
     
     internal var disposeBag = DisposeBag()
     internal var reachabilityObserver: AnyObject?
+    internal var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
     
     private static let HIDE_EVENTS_TIP = "HIDE_EVENTS_TIP"
     private static let INTEGRATE_EVENTBRITE_LATER = "INTEGRATE_EVENTBRITE_LATER"
@@ -101,7 +102,9 @@ class EventsViewController: UIViewController {
     
     @objc private func refreshEvents() {
         viewModel.syncEventbriteEvents().always {
-            self.tableView.refreshControl?.endRefreshing()
+            self.viewModel.syncFacebookEvents(viewController: self, loginIfNecessary: false).always {
+                self.tableView.refreshControl?.endRefreshing()
+            }
         }
     }
     
@@ -137,6 +140,7 @@ class EventsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        startListeningForAuthStateChange()
         startMonitoringReachability()
         checkReachability()
         UserRepository.shared.setLastSeen(date: Date()).catch { _ in }
@@ -152,6 +156,7 @@ class EventsViewController: UIViewController {
         super.viewDidDisappear(animated)
         
         stopMonitoringReachability()
+        stopListeningForAuthStateChange()
     }
     
     func bindViewModel() {
@@ -168,9 +173,9 @@ class EventsViewController: UIViewController {
             }).disposed(by: disposeBag)
 
         viewModel.isEventbriteIntegrated
-            .map { isIntegrated -> Bool in
+            .map {
                 let integrateEventbriteLater = UserDefaults.standard.bool(forKey: EventsViewController.INTEGRATE_EVENTBRITE_LATER)
-                return isIntegrated || integrateEventbriteLater
+                return $0 || integrateEventbriteLater
             }
             .drive(eventbriteIntegrationView.rx.isHidden)
             .disposed(by: disposeBag)
@@ -203,7 +208,7 @@ class EventsViewController: UIViewController {
     }
     
     @IBAction func integrateFacebook() {
-        
+        viewModel.syncFacebookEvents(viewController: self).catch { _ in }
     }
     
     @IBAction func displayFacebookAlert() {

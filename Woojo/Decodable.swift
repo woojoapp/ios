@@ -23,12 +23,15 @@ extension Decodable {
             if let date = dateFormatter2.date(from: dateString) { return date }
             throw DecodingError.decodingDateFailed
         })
-        //if let decodable = try? decoder.decode(Self.self, from: data) {
-        //self = decodable
-        //}
-        //else { return nil }
-        print("DECODING", data)
-        self = try! decoder.decode(Self.self, from: data)
+        if let decodable = try? decoder.decode(Self.self, from: data) {
+            print("DECODING SUCCESS", data)
+            self = decodable
+        }
+        else {
+            print("DECODING FAILURE", data)
+            return nil
+        }
+        //self = try! decoder.decode(Self.self, from: data)
     }
     
     init?(from any: Any?) {

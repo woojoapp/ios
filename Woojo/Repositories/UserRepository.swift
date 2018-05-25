@@ -84,7 +84,14 @@ class UserRepository: BaseRepository {
     }
 
     func removeCurrentUser() -> Promise<Void> {
-        return doWithCurrentUser { $0.removeValuePromise() }
+        return UserProfileRepository.shared.getPhotos(size: .thumbnail).toPromise().then { photos -> Promise<Void> in
+            if let photos = photos {
+                return all(photos.map { UserProfileRepository.shared.deleteFiles(forPhotoAt: $0.key) }).then { _ in return Void() }
+            }
+            return Promise(Void())
+        }.then { _ in
+            return self.doWithCurrentUser { $0.removeValuePromise() }
+        }
     }
 
     enum UserRepositoryError: Error {

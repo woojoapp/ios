@@ -209,7 +209,7 @@ class Application: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         })
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.rootViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController")
+        self.window?.rootViewController = R.storyboard.main.mainTabBarController()
         self.window?.makeKeyAndVisible()
         
         return true
