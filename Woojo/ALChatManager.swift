@@ -9,6 +9,7 @@
 import UIKit
 import Applozic
 import NotificationCenter
+import Promises
 
 var TYPE_CLIENT : Int16 = 0
 var TYPE_APPLOZIC : Int16 = 1
@@ -66,28 +67,36 @@ class ALChatManager: NSObject {
      
      }*/
     
-    func setup(user: User?) {
-        print("APPLOZIPROFILE 1", user?.uid, user?.profile?.firstName)
-        let alUser : ALUser =  ALUser();
-        alUser.applicationId = Constants.Env.Chat.applozicApplicationId
-        alUser.userId = user?.uid
-        alUser.displayName = user?.profile?.firstName
-        if let pictureId = user?.profile?.photoIds?[0], let uid = user?.uid {
-            UserProfileRepository.shared.getPhotoStorageReferenceSnapshot(uid: uid, pictureId: pictureId, size: .thumbnail).downloadURL { url, error in
-                alUser.imageLink = url?.absoluteString
-                ALUserDefaultsHandler.setUserId(alUser.userId)
-                ALUserDefaultsHandler.setDisplayName(alUser.displayName)
-                ALUserDefaultsHandler.setApplicationKey(alUser.applicationId)
-                ALUserDefaultsHandler.setUserAuthenticationTypeId(Int16(APPLOZIC.rawValue))
-                ALUserDefaultsHandler.setProfileImageLink(alUser.imageLink)
-
-                self.registerUser(alUser) { (response, error) in
+    func setup(user: User?) -> Promise<Void> {
+        return Promise<Void> { fulfill, reject in
+            print("APPLOZIPROFILE 1", user?.uid, user?.profile?.firstName)
+            let alUser : ALUser =  ALUser();
+            alUser.applicationId = Constants.Env.Chat.applozicApplicationId
+            alUser.userId = user?.uid
+            alUser.displayName = user?.profile?.firstName
+            if let pictureId = user?.profile?.photoIds?[0], let uid = user?.uid {
+                UserProfileRepository.shared.getPhotoStorageReferenceSnapshot(uid: uid, pictureId: pictureId, size: .thumbnail).downloadURL { url, error in
                     if let error = error {
-                        print("Failed to register Applozic user \(error)")
-                    } else {
-                        ALUserDefaultsHandler.setUserKeyString(response.userKey)
-                        ALUserDefaultsHandler.setDeviceKeyString(response.deviceKey)
-                        print("Successful Applozic user registration \(response.message), \(response.userKey), \(response.deviceKey)")
+                        print("Failed to get Applozic user photo URL \(error)")
+                        reject(error)
+                    }
+                    alUser.imageLink = url?.absoluteString
+                    ALUserDefaultsHandler.setUserId(alUser.userId)
+                    ALUserDefaultsHandler.setDisplayName(alUser.displayName)
+                    ALUserDefaultsHandler.setApplicationKey(alUser.applicationId)
+                    ALUserDefaultsHandler.setUserAuthenticationTypeId(Int16(APPLOZIC.rawValue))
+                    ALUserDefaultsHandler.setProfileImageLink(alUser.imageLink)
+
+                    self.registerUser(alUser) { (response, error) in
+                        if let error = error {
+                            reject(error)
+                            print("Failed to register Applozic user \(error)")
+                        } else {
+                            ALUserDefaultsHandler.setUserKeyString(response.userKey)
+                            ALUserDefaultsHandler.setDeviceKeyString(response.deviceKey)
+                            fulfill(())
+                            print("Successful Applozic user registration \(response.message), \(response.userKey), \(response.deviceKey)")
+                        }
                     }
                 }
             }
@@ -123,15 +132,15 @@ class ALChatManager: NSObject {
                 }
                 
                 ALApplozicSettings.setListOfViewControllers(["Woojo.EventsViewController",
-                                                             "Woojo.AddEventViewController",
-                                                             "Woojo.MyEventsTableViewController",
-                                                             "Woojo.SearchEventsViewController",
-                                                             "Woojo.ExploreEventsViewController",
+                                                             "Woojo.EventDetailsViewController",
+                                                             "Woojo.UserDetailsViewController",
                                                              "Woojo.CandidatesViewController",
                                                              "Woojo.NavigationController",
                                                              "Woojo.UserDetailsViewController",
                                                              "Woojo.SettingsViewController",
                                                              "Woojo.PreferencesViewController",
+                                                             "Woojo.EventsSettingsViewController",
+                                                             "Woojo.NotificationsViewController",
                                                              "Woojo.ProfileViewController",
                                                              "Woojo.FacebookAlbumsViewController",
                                                              "Woojo.FacebookAlbumPhotosViewController",
@@ -165,12 +174,12 @@ class ALChatManager: NSObject {
                         category == "HIDDEN" {
                         continue
                     }
-                    let messageNotification = MessageNotification()
+                    /* let messageNotification = MessageNotification()
                     messageNotification.id = UUID().uuidString
                     messageNotification.created = Date()
                     messageNotification.otherId = message.contactIds
                     messageNotification.excerpt = excerpt
-                    UserNotificationRepository.shared.setNotification(notification: messageNotification)
+                    UserNotificationRepository.shared.setNotification(notification: messageNotification) */
                 }
             }
         }
@@ -423,7 +432,7 @@ class ALChatManager: NSObject {
         /********************************************* CHAT VIEW SETTINGS  **********************************************/
         
         ALApplozicSettings.setVisibilityForNoMoreConversationMsgVC(false)               /*  SET VISIBILITY NO MORE CONVERSATION (COMES FROM TOP IN MSG VC)  */
-        ALApplozicSettings.setEmptyConversationText(NSLocalizedString("You have no conversations yet", comment: ""))    /*  SET TEXT FOR EMPTY CONVERSATION    */
+        ALApplozicSettings.setEmptyConversationText("")    /*  SET TEXT FOR EMPTY CONVERSATION    */
         ALApplozicSettings.setVisibilityForOnlineIndicator(true)                        /*  SET VISIBILITY FOR ONLINE INDICATOR */
         
         ALApplozicSettings.setColorForSendButton(UIColor.white) /*  SET COLOR FOR SEND BUTTON   */

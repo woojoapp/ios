@@ -17,6 +17,8 @@ class Notifier {
     
     static let shared = Notifier()
     
+    private init() {}
+    
     func shout() {
         if shoutsQueue.count > 0 {
             if !shouldShout(notification: shoutsQueue[0]) {
@@ -35,7 +37,7 @@ class Notifier {
                         self.doShout(announcement: announcement)
                     }
                 }
-            } else if let eventsNotification = shoutsQueue[0] as? EventsNotification {
+            }/* else if let eventsNotification = shoutsQueue[0] as? EventsNotification {
                 announcement(notification: eventsNotification) { announcement, error in
                     if let announcement = announcement {
                         self.doShout(announcement: announcement)
@@ -47,7 +49,7 @@ class Notifier {
                         self.doShout(announcement: announcement)
                     }
                 }
-            }
+            }*/
         }
     }
     
@@ -58,10 +60,15 @@ class Notifier {
     }
     
     fileprivate func moveQueueAndShout() {
+        print("NOTTT MOVE QUEUE AND SHOUT", shoutsQueue.count)
         if shoutsQueue.count > 0 {
             let notification = shoutsQueue.removeFirst()
+            print("NOTTT MOVE QUEUE AND SHOUT", notification.id)
             if let notificationId = notification.id {
-                UserNotificationRepository.shared.setDisplayed(notificationId: notificationId).catch { _ in }
+                print("NOTTT SET DISPLAYED", notificationId)
+                UserNotificationRepository.shared.setDisplayed(notificationId: notificationId).catch { _ in
+                    print("NOTTT SET DISPLAYED FAILED", notificationId)
+                }
                 shout()
             }
         }
@@ -102,7 +109,7 @@ class Notifier {
                         return chatViewController.contactIds != notification.otherId
                     } else { return true }
                 } else { return true }
-            } else if notification is EventsNotification {
+            }/* else if notification is EventsNotification {
                 if let mainTabBarController = topViewController as? MainTabBarController,
                     let navigationController = mainTabBarController.selectedViewController as? NavigationController {
                     if navigationController.topViewController is EventsViewController { return false }
@@ -114,7 +121,7 @@ class Notifier {
                     if navigationController.topViewController is CandidatesViewController { return false }
                     else { return true }
                 } else { return true }
-            } else { return true }
+            }*/ else { return true }
         } else { return false }
     }
     
@@ -123,7 +130,7 @@ class Notifier {
             UserProfileRepository.shared.getProfile(uid: otherId).toPromise().then { profile in
                 if let profile = profile,
                     let displayName = profile.firstName {
-                    UserProfileRepository.shared.getPhotoAsImage(position: 0, size: .thumbnail).toPromise().then { image in
+                    UserProfileRepository.shared.getPhotoAsImage(uid: otherId, position: 0, size: .thumbnail).toPromise().then { image in
                         let announcement = Announcement(title: Constants.User.Notification.Interaction.Match.announcement.title, subtitle: String(format: NSLocalizedString("You matched with %@!", comment: ""), displayName), image: image, duration: Constants.User.Notification.Interaction.Match.announcement.duration, action: {
                             self.tapOnNotification(notification: notification)
                         })
@@ -140,7 +147,7 @@ class Notifier {
         }
     }
     
-    func announcement(notification: EventsNotification, completion: ((Announcement?, Error?) -> Void)? = nil) {
+    /*func announcement(notification: EventsNotification, completion: ((Announcement?, Error?) -> Void)? = nil) {
         if let count = notification.count {
             let announcement = Announcement(title: Constants.User.Notification.Events.announcement.title, subtitle: String(format: NSLocalizedString("Discover people in your %d new events!", comment: ""), count), image: #imageLiteral(resourceName: "events_tab_padded"), duration: Constants.User.Notification.Events.announcement.duration, action: {
                 self.tapOnNotification(notification: notification)
@@ -166,7 +173,7 @@ class Notifier {
         if let applicationDelegate = UIApplication.shared.delegate as? Application {
             applicationDelegate.navigateToPeople()
         }
-    }
+    }*/
     
     func tapOnNotification(notification: InteractionNotification) {
         if let applicationDelegate = UIApplication.shared.delegate as? Application,
@@ -200,7 +207,7 @@ class Notifier {
             UserProfileRepository.shared.getProfile(uid: otherId).toPromise().then { profile in
                 if let profile = profile,
                    let displayName = profile.firstName {
-                    UserProfileRepository.shared.getPhotoAsImage(position: 0, size: .thumbnail).toPromise().then { image in
+                    UserProfileRepository.shared.getPhotoAsImage(uid: otherId, position: 0, size: .thumbnail).toPromise().then { image in
                         let announcement = Announcement(title: Constants.User.Notification.Interaction.Message.announcement.title, subtitle: "\(displayName): \(notification.excerpt ?? "")", image: image, duration: Constants.User.Notification.Interaction.Message.announcement.duration, action: {
                             self.tapOnNotification(notification: notification)
                         })
@@ -235,7 +242,4 @@ class Notifier {
             }
         }
     }*/
-    
-    
-    
 }

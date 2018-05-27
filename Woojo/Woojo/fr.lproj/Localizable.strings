@@ -151,3 +151,5 @@ connectionFacebookGoing = "Tu y vas";
 connectionFacebookInterested = "Tu es intéressé";
 connectionFacebookNotReplied = "Tu es invité";
 connectionRecommended = "Recommandé pour toi";
+turnOnPushNotifications = "Activer";
+managePushNotifications = "Réglages";

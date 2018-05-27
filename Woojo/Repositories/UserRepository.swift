@@ -72,9 +72,8 @@ class UserRepository: BaseRepository {
         }
     }
 
-    func addDevice(device: Device) -> Promise<Void> {
-        if device.token.isNullOrEmpty  { return Promise(UserRepositoryError.deviceTokenNullOrEmpty) }
-        return doWithCurrentUser { $0.child("devices").child(device.token!).setValuePromise(value: device.dictionary) }
+    func setDevice(device: Device) -> Promise<Void> {
+        return doWithCurrentUser { $0.child("devices").child(device.uuid).setValuePromise(value: device.dictionary) }
     }
 
     func getBotUid() -> Promise<String?> {

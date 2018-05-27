@@ -17,10 +17,13 @@ extension Decodable {
         dateFormatter1.dateFormat = "yyyy-MM-dd'T'HH:mm:sszzz"
         let dateFormatter2 = DateFormatter()
         dateFormatter2.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        let dateFormatter3 = DateFormatter()
+        dateFormatter3.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
         decoder.dateDecodingStrategy = .custom({ decoder -> Date in
             let dateString = try decoder.singleValueContainer().decode(String.self)
             if let date = dateFormatter1.date(from: dateString) { return date }
             if let date = dateFormatter2.date(from: dateString) { return date }
+            if let date = dateFormatter3.date(from: dateString) { return date }
             throw DecodingError.decodingDateFailed
         })
         if let decodable = try? decoder.decode(Self.self, from: data) {

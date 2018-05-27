@@ -20,7 +20,7 @@ class UserNotificationRepository: BaseRepository {
             $0.child("notifications")
                 .rx_observeEvent(event: .value)
                 .map {
-                    $0.children.reduce(into: [Notification]()) {
+                    return $0.children.reduce(into: [Notification]()) {
                         if let notification = self.getTypedNotification(dataSnapshot: $1 as? DataSnapshot) {
                             $0.append(notification)
                         }
@@ -29,20 +29,26 @@ class UserNotificationRepository: BaseRepository {
         }
     }
     
+    func addedNotifications() -> Observable<Notification> {
+        return withCurrentUser {
+            $0.child("notifications")
+                .rx_observeEvent(event: .childAdded)
+                .map { self.getTypedNotification(dataSnapshot: $0) }
+                .flatMap { Observable.from(optional: $0) }
+        }
+    }
+    
     private func getTypedNotification(dataSnapshot: DataSnapshot?) -> Notification? {
         guard let dataSnapshot = dataSnapshot else { return nil }
         if dataSnapshot.hasChild("type") {
             if let type = dataSnapshot.childSnapshot(forPath: "type").value as? String,
                 let notificationType = NotificationType(rawValue: type) {
+                print("NOTTT found", type)
                 switch (notificationType) {
-                case .events:
-                    return EventsNotification(from: dataSnapshot)
                 case .match:
-                    return MatchNotification(from: dataSnapshot)
+                    return MatchNotification(withIdFrom: dataSnapshot)
                 case .message:
-                    return MessageNotification(from: dataSnapshot)
-                case .people:
-                    return PeopleNotification(from: dataSnapshot)
+                    return MessageNotification(withIdFrom: dataSnapshot)
                 }
             }
         }
@@ -73,7 +79,7 @@ class UserNotificationRepository: BaseRepository {
             return Promise<Void> { fulfill, reject in
                 let queryRef = ref.child("notifications").queryOrdered(byChild: "otherId").queryEqual(toValue: otherId)
                 queryRef.observeSingleEvent(of: .value, with: { dataSnapshot in
-                    while let childSnapshot = dataSnapshot.children.nextObject() as? DataSnapshot {
+                    for childSnapshot in dataSnapshot.children.allObjects as! [DataSnapshot] {
                         childSnapshot.ref.removeValue()
                     }
                     queryRef.removeAllObservers()
@@ -88,7 +94,7 @@ class UserNotificationRepository: BaseRepository {
             return Promise<Void> { fulfill, reject in
                 let queryRef = ref.child("notifications").queryOrdered(byChild: "type").queryEqual(toValue: type)
                 queryRef.observeSingleEvent(of: .value, with: { dataSnapshot in
-                    while let childSnapshot = dataSnapshot.children.nextObject() as? DataSnapshot {
+                    for childSnapshot in dataSnapshot.children.allObjects as! [DataSnapshot] {
                         childSnapshot.ref.removeValue()
                     }
                     queryRef.removeAllObservers()
@@ -99,17 +105,25 @@ class UserNotificationRepository: BaseRepository {
     }
 
     func setDisplayed(notificationId: String) -> Promise<Void> {
-        return doWithCurrentUser { $0.child("notifications").child(notificationId).child("displayed").setValuePromise(value: true) }
+        return doWithCurrentUser { ref in
+            let notificationRef = ref.child("notifications").child(notificationId)
+            return notificationRef.getDataSnapshot().then { dataSnapshot in
+                if dataSnapshot.exists() {
+                    return notificationRef.child("displayed").setValuePromise(value: true)
+                }
+                return Promise(Void())
+            }
+        }
     }
 
     func removeNotification(notificationId: String) -> Promise<Void> {
         return doWithCurrentUser { $0.child("notifications").child(notificationId).removeValuePromise() }
     }
     
-    func setNotification(notification: Notification) -> Promise<Void> {
+    /* func setNotification(notification: Notification) -> Promise<Void> {
         guard let id = notification.id else { return Promise(UserNotificationRepositoryError.notificationIdMissing) }
         return doWithCurrentUser { $0.child("notifications").child(id).setValuePromise(value: notification.dictionary) }
-    }
+    } */
     
     enum UserNotificationRepositoryError: Error {
         case notificationIdMissing

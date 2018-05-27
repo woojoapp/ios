@@ -25,7 +25,10 @@ class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDataSource()
-        viewControllers?.forEach { let _ = $0.view }
+        viewControllers?.forEach {
+            print("CCHAT loding view")
+            let _ = $0.view.layer
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,22 +46,14 @@ class MainTabBarController: UITabBarController {
     }
 
     func setupDataSource() {
-        UserNotificationRepository.shared.getNotifications()
-            .subscribe(onNext: { notifications in
-                if let eventsTabBarItem = self.tabBar.items?[0] {
-                    let eventsNotifications = notifications.filter({ $0 is EventsNotification })
-                    eventsTabBarItem.badgeValue = (eventsNotifications.count > 0) ? "" : nil
+        UserNotificationRepository.shared
+            .getNotifications()
+            .map { $0.filter { $0 is InteractionNotification }.count }
+            .asDriver(onErrorJustReturn: 0)
+            .drive(onNext: { count in
+                if let chatTabBarItem = self.tabBar.items?[2] {
+                    chatTabBarItem.badgeValue = count > 0 ? String(count) : nil
                 }
-                if let peopleTabBarItem = self.tabBar.items?[1] {
-                    let peopleNotifications = notifications.filter({ $0 is PeopleNotification })
-                    peopleTabBarItem.badgeValue = (peopleNotifications.count > 0) ? "" : nil
-                }
-                if let chatsTabBarItem = self.tabBar.items?[2] {
-                    let interactionNotifications = notifications.filter({ $0 is InteractionNotification })
-                    chatsTabBarItem.badgeValue = (interactionNotifications.count > 0) ? String(interactionNotifications.count) : nil
-                }
-            }, onError: { _ in
-                
             }).disposed(by: disposeBag)
     }
     

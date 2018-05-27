@@ -510,94 +510,32 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="hjH-O7-zjf">
-                                        <rect key="frame" x="0.0" y="143.5" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hjH-O7-zjf" id="Tfo-Lr-Ds2">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iPM-KE-bhe">
-                                                    <rect key="frame" x="255" y="5.5" width="51" height="31"/>
-                                                    <color key="onTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <connections>
-                                                        <action selector="switchNotificationsWithSender:" destination="gOo-0s-PHM" eventType="valueChanged" id="bh5-dT-058"/>
-                                                    </connections>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New People" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PF7-ES-bhp">
-                                                    <rect key="frame" x="16" y="10.5" width="92" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="PF7-ES-bhp" firstAttribute="centerY" secondItem="Tfo-Lr-Ds2" secondAttribute="centerY" id="T9H-B6-vp6"/>
-                                                <constraint firstItem="iPM-KE-bhe" firstAttribute="centerY" secondItem="Tfo-Lr-Ds2" secondAttribute="centerY" id="Wlm-xh-vJX"/>
-                                                <constraint firstItem="PF7-ES-bhp" firstAttribute="leading" secondItem="Tfo-Lr-Ds2" secondAttribute="leadingMargin" id="Y0Q-Ug-H4B"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="iPM-KE-bhe" secondAttribute="trailing" id="s7W-3d-Gj1"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Rd4-zv-go0">
-                                        <rect key="frame" x="0.0" y="187.5" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Rd4-zv-go0" id="aBY-Ep-jvb">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U1K-6w-nJK">
-                                                    <rect key="frame" x="255" y="5.5" width="51" height="31"/>
-                                                    <color key="onTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <connections>
-                                                        <action selector="switchNotificationsWithSender:" destination="gOo-0s-PHM" eventType="valueChanged" id="33p-ZF-1fW"/>
-                                                    </connections>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Events" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aG4-Il-NNE">
-                                                    <rect key="frame" x="16" y="10.5" width="90" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="U1K-6w-nJK" firstAttribute="centerY" secondItem="aBY-Ep-jvb" secondAttribute="centerY" id="61x-JY-1HQ"/>
-                                                <constraint firstItem="aG4-Il-NNE" firstAttribute="centerY" secondItem="aBY-Ep-jvb" secondAttribute="centerY" id="98U-N1-VZ8"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="U1K-6w-nJK" secondAttribute="trailing" id="V5i-9o-07M"/>
-                                                <constraint firstItem="aG4-Il-NNE" firstAttribute="leading" secondItem="aBY-Ep-jvb" secondAttribute="leadingMargin" id="qUm-8V-B4r"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Push notifications" footerTitle="Get notified even when outside the app" id="nHB-DZ-vja">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Pey-5W-IUd">
-                                        <rect key="frame" x="0.0" y="295" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="207" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Pey-5W-IUd" id="oa9-9V-9P3">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="98r-2M-rAg">
-                                                    <rect key="frame" x="255" y="5.5" width="51" height="31"/>
-                                                    <color key="onTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wiq-JH-LiN">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="44" id="Fen-5C-nAs"/>
+                                                    </constraints>
                                                     <connections>
-                                                        <action selector="switchNotificationsWithSender:" destination="gOo-0s-PHM" eventType="valueChanged" id="B2x-ol-4dl"/>
+                                                        <action selector="openNotificationSettings" destination="gOo-0s-PHM" eventType="touchUpInside" id="DmZ-hq-sZZ"/>
                                                     </connections>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enabled" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jOF-Yt-EwC">
-                                                    <rect key="frame" x="16" y="10.5" width="62" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="jOF-Yt-EwC" firstAttribute="centerY" secondItem="oa9-9V-9P3" secondAttribute="centerY" id="8Ec-bk-ilR"/>
-                                                <constraint firstItem="98r-2M-rAg" firstAttribute="centerY" secondItem="oa9-9V-9P3" secondAttribute="centerY" id="WN8-B8-Ota"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="98r-2M-rAg" secondAttribute="trailing" id="i4K-Ig-bTI"/>
-                                                <constraint firstItem="jOF-Yt-EwC" firstAttribute="leading" secondItem="oa9-9V-9P3" secondAttribute="leadingMargin" id="ude-eN-q40"/>
+                                                <constraint firstAttribute="trailing" secondItem="wiq-JH-LiN" secondAttribute="trailing" id="Ijj-1B-lKY"/>
+                                                <constraint firstItem="wiq-JH-LiN" firstAttribute="top" secondItem="oa9-9V-9P3" secondAttribute="top" id="Ke2-Fr-pw7"/>
+                                                <constraint firstItem="wiq-JH-LiN" firstAttribute="leading" secondItem="oa9-9V-9P3" secondAttribute="leading" id="rGf-zb-o87"/>
+                                                <constraint firstAttribute="bottom" secondItem="wiq-JH-LiN" secondAttribute="bottom" id="uHh-KV-w1a"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -610,11 +548,9 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="eventsNotificationsSwitch" destination="U1K-6w-nJK" id="aNI-V8-jUE"/>
+                        <outlet property="managePushNotificationsButton" destination="wiq-JH-LiN" id="4rQ-Sy-Nyb"/>
                         <outlet property="matchNotificationsSwitch" destination="YMj-Y0-jxq" id="DtC-cN-bYF"/>
                         <outlet property="messageNotificationsSwitch" destination="Sih-SO-tzh" id="Q82-6j-lpA"/>
-                        <outlet property="peopleNotificationsSwitch" destination="iPM-KE-bhe" id="wXy-nX-M7r"/>
-                        <outlet property="pushNotificationsSwitch" destination="98r-2M-rAg" id="BL4-ZA-9Od"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="txv-0P-SMn" userLabel="First Responder" sceneMemberID="firstResponder"/>

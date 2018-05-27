@@ -130,6 +130,7 @@ class EventTableViewCell: UITableViewCell {
     private func setImage(pictureURL: URL, active: Bool) {
         self.thumbnailView.sd_setImage(with: pictureURL, placeholderImage: #imageLiteral(resourceName: "placeholder_40x40"), options: [], completed: { _, error, _, _ in
             if error == nil {
+                self.setDateVisibility(hidden: true)
                 if !active {
                     if let image = self.thumbnailView.image {
                         self.thumbnailView.image = image.desaturate()

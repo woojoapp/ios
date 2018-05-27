@@ -22,7 +22,7 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
   
-  /// This `R.file` struct is generated, and contains static references to 11 files.
+  /// This `R.file` struct is generated, and contains static references to 10 files.
   struct file {
     /// Resource file `GoogleService-Info.plist`.
     static let googleServiceInfoPlist = Rswift.FileResource(bundle: R.hostingBundle, name: "GoogleService-Info", pathExtension: "plist")
@@ -44,8 +44,6 @@ struct R: Rswift.Validatable {
     static let gothamRoundedMediumOtf = Rswift.FileResource(bundle: R.hostingBundle, name: "Gotham Rounded Medium", pathExtension: "otf")
     /// Resource file `Info.plist`.
     static let infoPlist = Rswift.FileResource(bundle: R.hostingBundle, name: "Info", pathExtension: "plist")
-    /// Resource file `Woojo.entitlements`.
-    static let woojoEntitlements = Rswift.FileResource(bundle: R.hostingBundle, name: "Woojo", pathExtension: "entitlements")
     
     /// `bundle.url(forResource: "GoogleService-Info", withExtension: "plist")`
     static func googleServiceInfoPlist(_: Void = ()) -> Foundation.URL? {
@@ -104,12 +102,6 @@ struct R: Rswift.Validatable {
     /// `bundle.url(forResource: "Info", withExtension: "plist")`
     static func infoPlist(_: Void = ()) -> Foundation.URL? {
       let fileResource = R.file.infoPlist
-      return fileResource.bundle.url(forResource: fileResource)
-    }
-    
-    /// `bundle.url(forResource: "Woojo", withExtension: "entitlements")`
-    static func woojoEntitlements(_: Void = ()) -> Foundation.URL? {
-      let fileResource = R.file.woojoEntitlements
       return fileResource.bundle.url(forResource: fileResource)
     }
     
@@ -830,7 +822,7 @@ struct R: Rswift.Validatable {
   
   /// This `R.string` struct is generated, and contains static references to 3 localization tables.
   struct string {
-    /// This `R.string.localizable` struct is generated, and contains static references to 121 localization keys.
+    /// This `R.string.localizable` struct is generated, and contains static references to 123 localization keys.
     struct localizable {
       /// Base translation: %d %@ left
       /// 
@@ -1156,6 +1148,10 @@ struct R: Rswift.Validatable {
       /// 
       /// Locales: Base, fr
       static let setAsMainPhoto = Rswift.StringResource(key: "Set as Main Photo", tableName: "Localizable", bundle: R.hostingBundle, locales: ["Base", "fr"], comment: nil)
+      /// Base translation: Settings
+      /// 
+      /// Locales: Base, fr
+      static let managePushNotifications = Rswift.StringResource(key: "managePushNotifications", tableName: "Localizable", bundle: R.hostingBundle, locales: ["Base", "fr"], comment: nil)
       /// Base translation: Success
       /// 
       /// Locales: Base, fr
@@ -1184,6 +1180,10 @@ struct R: Rswift.Validatable {
       /// 
       /// Locales: Base, fr
       static let tryWoojoAndMatchWithPeopleGoingToTheSameEventsAsYou = Rswift.StringResource(key: "Try Woojo and match with people going to the same events as you!", tableName: "Localizable", bundle: R.hostingBundle, locales: ["Base", "fr"], comment: nil)
+      /// Base translation: Turn on
+      /// 
+      /// Locales: Base, fr
+      static let turnOnPushNotifications = Rswift.StringResource(key: "turnOnPushNotifications", tableName: "Localizable", bundle: R.hostingBundle, locales: ["Base", "fr"], comment: nil)
       /// Base translation: Unknown location
       /// 
       /// Locales: Base, fr
@@ -1884,6 +1884,13 @@ struct R: Rswift.Validatable {
         return NSLocalizedString("Set as Main Photo", bundle: R.hostingBundle, value: "Set as Main Photo", comment: "")
       }
       
+      /// Base translation: Settings
+      /// 
+      /// Locales: Base, fr
+      static func managePushNotifications(_: Void = ()) -> String {
+        return NSLocalizedString("managePushNotifications", bundle: R.hostingBundle, value: "Settings", comment: "")
+      }
+      
       /// Base translation: Success
       /// 
       /// Locales: Base, fr
@@ -1931,6 +1938,13 @@ struct R: Rswift.Validatable {
       /// Locales: Base, fr
       static func tryWoojoAndMatchWithPeopleGoingToTheSameEventsAsYou(_: Void = ()) -> String {
         return NSLocalizedString("Try Woojo and match with people going to the same events as you!", bundle: R.hostingBundle, value: "Try Woojo and match with people going to the same events as you!", comment: "")
+      }
+      
+      /// Base translation: Turn on
+      /// 
+      /// Locales: Base, fr
+      static func turnOnPushNotifications(_: Void = ()) -> String {
+        return NSLocalizedString("turnOnPushNotifications", bundle: R.hostingBundle, value: "Turn on", comment: "")
       }
       
       /// Base translation: Unknown location

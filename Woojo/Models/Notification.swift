@@ -11,8 +11,8 @@ import FirebaseDatabase
 enum NotificationType: String, Codable {
     case match
     case message
-    case events
-    case people
+    //case events
+    //case people
 }
 
 class Notification: Codable {
@@ -20,10 +20,18 @@ class Notification: Codable {
     var type: NotificationType?
     var created: Date?
     var displayed: Bool?
+    
+    private enum CodingKeys: String, CodingKey {
+        case type, created, displayed
+    }
 }
 
-class EventsNotification: Notification {
+/*class EventsNotification: Notification {
     var count: Int?
+    
+    private enum CodingKeys: String, CodingKey {
+        case count
+    }
 
     /* init(id: String, created: Date, type: NotificationType, count: Int, displayed: Bool? = nil , data: [String:Any]? = nil) {
         self.count = count
@@ -54,6 +62,10 @@ class EventsNotification: Notification {
 
 class PeopleNotification: Notification {
     var count: Int?
+    
+    private enum CodingKeys: String, CodingKey {
+        case count
+    }
 
     /* init(id: String, created: Date, type: NotificationType, count: Int, displayed: Bool? = nil , data: [String:Any]? = nil) {
         self.count = count
@@ -80,10 +92,27 @@ class PeopleNotification: Notification {
         dict[Constants.User.Notification.People.properties.firebaseNodes.count] = self.count
         return dict
     } */
-}
+}*/
 
 class InteractionNotification: Notification {
     var otherId: String?
+    
+    private enum CodingKeys: String, CodingKey {
+        case otherId
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        try super.init(from: decoder)
+        
+        otherId = try container.decode(String.self, forKey: .otherId)
+    }
+    
+    override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(otherId, forKey: .otherId)
+    }
 
     /* init(id: String, created: Date, type: NotificationType, otherId: String, displayed: Bool? = nil , data: [String:Any]? = nil) {
         self.otherId = otherId
@@ -115,6 +144,11 @@ class InteractionNotification: Notification {
 
 class MatchNotification: InteractionNotification {
 
+    convenience init?(withIdFrom dataSnapshot: DataSnapshot) {
+        self.init(from: dataSnapshot)
+        self.id = dataSnapshot.key
+    }
+    
     /* init(id: String, created: Date, otherId: String, displayed: Bool? = nil , data: [String:Any]? = nil) {
         super.init(id: id, created: created, type: .match, otherId: otherId, displayed: displayed, data: data)
     }
@@ -135,6 +169,32 @@ class MatchNotification: InteractionNotification {
 
 class MessageNotification: InteractionNotification {
     var excerpt: String?
+    
+    private enum CodingKeys: String, CodingKey {
+        case excerpt
+    }
+    
+    convenience init?(withIdFrom dataSnapshot: DataSnapshot) {
+        self.init(from: dataSnapshot)
+        self.id = dataSnapshot.key
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        try super.init(from: decoder)
+        
+        excerpt = try container.decode(String.self, forKey: .excerpt)
+    }
+    
+    override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(excerpt, forKey: .excerpt)
+    }
+    
+    func toString() -> String {
+        return "MessageNotification(id=\(id), type=\(type), created=\(created), displayed=\(displayed), otherId=\(otherId), excerpt=\(excerpt))"
+    }
 
     /* init(id: String, created: Date, otherId: String, excerpt: String, displayed: Bool? = nil, data: [String:Any]? = nil) {
         //self.otherId = otherId

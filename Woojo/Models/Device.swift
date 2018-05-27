@@ -6,11 +6,13 @@
 import Foundation
 
 class Device: Codable {
-    var fcm: String?
-    var token: String?
-    var platform: Platform?
+    var uuid: String
+    var fcm: String
+    var token: String
+    var platform: Platform
 
-    init(fcm: String, token: String, platform: Platform) {
+    init(uuid: String, fcm: String, token: String, platform: Platform) {
+        self.uuid = uuid
         self.fcm = fcm
         self.token = token
         self.platform = platform

@@ -12,9 +12,10 @@ import PKHUD
 import Whisper
 import RxSwift
 import RxCocoa
+import FirebaseAuth
 import FirebaseDatabase
 
-class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
+class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate, AuthStateAware {
     
     @IBOutlet weak var loadEarlierAction: UIButton!
     @IBOutlet weak var loadEarlierActionTopConstraint: NSLayoutConstraint!
@@ -25,6 +26,7 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
     var disposeBag = DisposeBag()
     var matchesReference: DatabaseReference?
     var matchesDisposable: Disposable?
+    var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
     
     override var individualLaunch: Bool {
         get {
@@ -100,6 +102,9 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        startListeningForAuthStateChange()
+        
         navigationController?.navigationBar.layer.shadowOpacity = 0.0
         navigationController?.navigationBar.layer.shadowRadius = 0.0
         navigationController?.navigationBar.layer.shadowOffset = CGSize.zero
@@ -185,6 +190,12 @@ class ChatViewController: ALChatViewController, UIGestureRecognizerDelegate {
         
         matchesDisposable?.dispose()
         self.unwireUnmatchObserver()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        stopListeningForAuthStateChange()
     }
     
     @objc func newMessage() {
