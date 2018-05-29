@@ -12,10 +12,6 @@ import Promises
 class UserProfileRepository: BaseRepository {
     static let shared = UserProfileRepository()
     
-    override private init() {
-        super.init()
-    }
-
     func getProfileReference(uid: String) -> DatabaseReference {
         return firebaseDatabase.reference().child("users").child(uid).child("profile")
     }

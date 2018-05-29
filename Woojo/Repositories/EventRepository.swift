@@ -13,10 +13,6 @@ import RxSwift
 class EventRepository: BaseRepository {
     static var shared = EventRepository()
     
-    override private init() {
-        super.init()
-    }
-    
     private func getEventReference(eventId: String) -> DatabaseReference {
         return firebaseDatabase
             .reference()

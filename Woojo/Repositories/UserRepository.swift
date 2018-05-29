@@ -17,10 +17,6 @@ import Promises
 class UserRepository: BaseRepository {
     static let shared = UserRepository()
     
-    override private init() {
-        super.init()
-    }
-    
     func getUser() -> Observable<User?> {
         return withCurrentUser { $0.rx_observeEvent(event: .value).map { User(from: $0) } }
     }
