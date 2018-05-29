@@ -10,11 +10,8 @@ import Foundation
 import FirebaseDatabase
 import RxSwift
 
-class EventRepository {
-    private let firebaseDatabase = Database.database()
-    
+class EventRepository: BaseRepository {
     static var shared = EventRepository()
-    private init() {}
     
     private func getEventReference(eventId: String) -> DatabaseReference {
         return firebaseDatabase
@@ -24,8 +21,10 @@ class EventRepository {
     }
     
     func get(eventId: String) -> Observable<Event?> {
-        return getEventReference(eventId: eventId)
+        return withCurrentUser { _ in
+            return self.getEventReference(eventId: eventId)
             .rx_observeEvent(event: .value)
-            .map { Event.from(firebase: $0) }
+            .map { Event(from: $0) }
+        }
     }
 }

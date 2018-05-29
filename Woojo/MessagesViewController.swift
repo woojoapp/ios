@@ -12,15 +12,28 @@ import FirebaseAuth
 import RxSwift
 import PKHUD
 
-class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIGestureRecognizerDelegate/*, UITableViewDelegate*/ {
+class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIGestureRecognizerDelegate, AuthStateAware/*, UITableViewDelegate*/ {
     
     var disposeBag = DisposeBag()
-    
+    var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
     var showAfterDidAppear: String?
     var didAppear = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("CCHAT viewDidLoad")
+        UserRepository.shared.getUser().retry().subscribe(onNext: { user in
+            print("CCHAT viewDidLoad SETUP")
+            ALChatManager.shared.setup(user: user).then {
+                print("CCHAT viewDidLoad SETUP COMPLETE")
+                super.viewDidLoad()
+                super.viewWillAppear(false)
+                self.mTableView.reloadData()
+                self.setupUI()
+            }
+        }, onError: { error in
+            
+        }).disposed(by: disposeBag)
     }
     
     override func viewDidLayoutSubviews() {
@@ -35,19 +48,20 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIG
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        /*if self.detailChatViewController != nil {
-            self.detailChatViewController.refreshMainView = true
-        }*/
-        super.viewWillAppear(animated)
-        
+    private func setupUI() {
         navigationController?.navigationBar.layer.shadowOpacity = 0.0
         navigationController?.navigationBar.layer.shadowRadius = 0.0
         navigationController?.navigationBar.layer.shadowOffset = CGSize.zero
-        navigationController?.navigationBar.titleTextAttributes = [:]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.black]
         navigationController?.navigationBar.barTintColor = nil
-        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.isTranslucent = true        
         navigationController?.view.backgroundColor = UIColor.clear
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        startListeningForAuthStateChange()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.newMessageReceived), name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(enteredForeground), name: NSNotification.Name(rawValue: "APP_ENTER_IN_FOREGROUND"), object: nil)
@@ -57,7 +71,9 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIG
         
         reloadData()
         
-        User.current.value?.activity.setLastSeen()
+        setupUI()
+        
+        UserRepository.shared.setLastSeen(date: Date())
     }
     
     @objc func enteredForeground() {
@@ -105,6 +121,7 @@ class MessagesViewController: ALMessagesViewController, ShowsSettingsButton, UIG
         }*/
         //NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: Applozic.NEW_MESSAGE_NOTIFICATION), object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "APP_ENTER_IN_FOREGROUND"), object: nil)
+        stopListeningForAuthStateChange()
     }
     
     override func viewDidDisappear(_ animated: Bool) {

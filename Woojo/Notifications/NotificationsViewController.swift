@@ -7,66 +7,80 @@
 //
 
 import UIKit
+import RxSwift
+import UserNotifications
 
 class NotificationsViewController: UITableViewController {
     
-    @IBOutlet weak var pushNotificationsSwitch: UISwitch!
+    @IBOutlet weak var managePushNotificationsButton: UIButton!
     @IBOutlet weak var matchNotificationsSwitch: UISwitch!
     @IBOutlet weak var messageNotificationsSwitch: UISwitch!
-    @IBOutlet weak var peopleNotificationsSwitch: UISwitch!
-    @IBOutlet weak var eventsNotificationsSwitch: UISwitch!
+    private let disposeBag = DisposeBag()
+    private let viewModel = NotificationsSettingsViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        bindViewModel()
+    }
+    
+    private func bindViewModel() {
+        viewModel
+            .getNotificationsState(type: "match")
+            .asDriver(onErrorJustReturn: false)
+            .drive(matchNotificationsSwitch.rx.isOn)
+            .disposed(by: disposeBag)
+        
+        viewModel
+            .getNotificationsState(type: "message")
+            .asDriver(onErrorJustReturn: false)
+            .drive(messageNotificationsSwitch.rx.isOn)
+            .disposed(by: disposeBag)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.pushNotificationsSwitch.isOn = UIApplication.shared.isRegisteredForRemoteNotifications
-        User.current.value?.getNotificationsState(type: Constants.User.Settings.Notifications.Types.Match) { enabled in
-            self.matchNotificationsSwitch.isOn = enabled
-            Analytics.setUserProperties(properties: ["match_notifications_enabled": String(enabled)])
-        }
-        User.current.value?.getNotificationsState(type: Constants.User.Settings.Notifications.Types.Message) { enabled in
-            self.messageNotificationsSwitch.isOn = enabled
-            Analytics.setUserProperties(properties: ["message_notifications_enabled": String(enabled)])
-        }
-        User.current.value?.getNotificationsState(type: Constants.User.Settings.Notifications.Types.People) { enabled in
-            self.peopleNotificationsSwitch.isOn = enabled
-            Analytics.setUserProperties(properties: ["people_notifications_enabled": String(enabled)])
-        }
-        User.current.value?.getNotificationsState(type: Constants.User.Settings.Notifications.Types.Events) { enabled in
-            self.eventsNotificationsSwitch.isOn = enabled
+        
+        setPushNotificationsButton()
+    }
+    
+    private func setPushNotificationsButton() {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            DispatchQueue.main.async {
+                if settings.authorizationStatus == .notDetermined {
+                    self.managePushNotificationsButton.setTitle(R.string.localizable.turnOnPushNotifications(), for: .normal)
+                } else {
+                    self.managePushNotificationsButton.setTitle(R.string.localizable.managePushNotifications(), for: .normal)
+                }
+            }
         }
     }
     
     @IBAction func switchNotifications(sender: UISwitch) {
         switch sender {
-        case pushNotificationsSwitch:
-            if sender.isOn {
-                if let application = UIApplication.shared.delegate as? Woojo.Application {
-                    application.requestNotifications()
-                }
-            } else {
-                UIApplication.shared.unregisterForRemoteNotifications()
-                Analytics.setUserProperties(properties: ["push_notifications_enabled": "false"])
-                Analytics.Log(event: "Preferences_push_notifications", with: ["enabled": "false"])
-            }
         case matchNotificationsSwitch:
-            User.current.value?.setNotificationsState(type: Constants.User.Settings.Notifications.Types.Match, enabled: sender.isOn, completion: nil)
-            Analytics.setUserProperties(properties: ["match_notifications_enabled": String(sender.isOn)])
-            Analytics.Log(event: "Preferences_match_notifications", with: ["enabled": String(sender.isOn)])
+            viewModel.setNotificationsState(type: "match", enabled: sender.isOn).catch { _ in }
         case messageNotificationsSwitch:
-            User.current.value?.setNotificationsState(type: Constants.User.Settings.Notifications.Types.Message, enabled: sender.isOn, completion: nil)
-            Analytics.setUserProperties(properties: ["message_notifications_enabled": String(sender.isOn)])
-            Analytics.Log(event: "Preferences_message_notifications", with: ["enabled": String(sender.isOn)])
-        case peopleNotificationsSwitch:
-            User.current.value?.setNotificationsState(type: Constants.User.Settings.Notifications.Types.People, enabled: sender.isOn, completion: nil)
-            Analytics.setUserProperties(properties: ["people_notifications_enabled": String(sender.isOn)])
-            Analytics.Log(event: "Preferences_people_notifications", with: ["enabled": String(sender.isOn)])
-        case eventsNotificationsSwitch:
-            User.current.value?.setNotificationsState(type: Constants.User.Settings.Notifications.Types.Events, enabled: sender.isOn, completion: nil)
+            viewModel.setNotificationsState(type: "message", enabled: sender.isOn).catch { _ in }
         default: ()
+        }
+    }
+    
+    @IBAction func openNotificationSettings() {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            if settings.authorizationStatus == .notDetermined {
+                UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .sound, .alert], completionHandler: { granted, _ in
+                    DispatchQueue.main.async {
+                        self.managePushNotificationsButton.setTitle(R.string.localizable.managePushNotifications(), for: .normal)
+                    }
+                })
+            } else {
+                DispatchQueue.main.async {
+                    if let settingsUrl = URL(string: UIApplicationOpenSettingsURLString), UIApplication.shared.canOpenURL(settingsUrl) {
+                        UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
+                    }
+                }
+            }
         }
     }
 

@@ -14,34 +14,42 @@ struct UserPageLikesGraphRequest: GraphRequestProtocol {
     struct Response: GraphResponseProtocol {
         
         init(rawResponse: Any?) {
-            self.rawResponse = rawResponse
-            if let dict = rawResponse as? [String:Any] {
-                let pageLikes = dict[Constants.GraphRequest.UserPageLikes.keys.data] as! NSArray
-                for pageLikeData in pageLikes {
-                    if let pageLike = PageLike.from(graphAPI: pageLikeData as? [String:Any]) {
-                        self.pageLikes.append(pageLike)
-                    }
-                }
+            if let dict = rawResponse as? [String: Any] {
+                pageLikes = try? [GraphAPI.PageLike](from: dict["data"]) ?? []
             }
         }
         
-        var dictionaryValue: [String : Any]? {
-            return rawResponse as? [String : Any]
-        }
-        var rawResponse: Any?
-        var pageLikes: [PageLike] = []
+        var pageLikes: [GraphAPI.PageLike]?
         
     }
     
-    var graphPath = Constants.GraphRequest.UserPageLikes.path
+    var graphPath = "/me/likes"
     var parameters: [String: Any]? = {
-        let fields = [Constants.GraphRequest.UserPageLikes.fields]
-        return [Constants.GraphRequest.fields:fields.joined(separator: Constants.GraphRequest.fieldsSeparator)]
+        return ["fields": "id,name,picture.type(normal){url}"]
     }()
     var accessToken: AccessToken? = AccessToken.current
     var httpMethod: GraphRequestHTTPMethod = .GET
     var apiVersion: GraphAPIVersion = .defaultVersion
     
+    /* private static func deserialize(dict: [String:Any]?) -> PageLike? {
+        if let dict = dict,
+            let id = dict[Constants.User.PageLike.properties.graphAPIKeys.id] as? String,
+            let name = dict[Constants.User.PageLike.properties.graphAPIKeys.name] as? String {
+            let pageLike = PageLike(id: id)
+            if let picture = dict[Constants.User.PageLike.properties.graphAPIKeys.picture] as? [String:Any] {
+                if let pictureData = picture[Constants.User.PageLike.properties.graphAPIKeys.pictureData] as? [String:Any] {
+                    if let url = pictureData[Constants.User.PageLike.properties.graphAPIKeys.pictureDataURL] as? String {
+                        pageLike.pictureURL = URL(string: url)
+                    }
+                }
+            }
+            pageLike.name = name
+            return pageLike
+        } else {
+            print("Failed to create PageLike from Graph API dictionary. Nil or missing required data.", dict as Any)
+            return nil
+        }
+    } */
 }
 
 

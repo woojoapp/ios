@@ -16,11 +16,12 @@ class EventsSettingsViewController: UITableViewController {
     @IBOutlet weak var facebookIntegrationContentView: UIView!
     @IBOutlet weak var facebookIntegrationIconImageView: UIImageView!
     private let disposeBag = DisposeBag()
+    private var viewModel = EventsSettingsViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDataSource()
-        disableFacebookIntegration()
+        //disableFacebookIntegration()
     }
     
     @IBAction func dismiss(sender: UIBarButtonItem) {
@@ -28,17 +29,13 @@ class EventsSettingsViewController: UITableViewController {
     }
     
     private func setupDataSource() {
-        UserRepository.shared
-            .getEventbriteAccessToken()?
-            .map{ $0.exists() }
-            .asDriver(onErrorJustReturn: false)
+        viewModel
+            .isEventbriteIntegrated
             .drive(eventbriteIntegrationSwitch.rx.isOn)
             .disposed(by: disposeBag)
         
-        UserRepository.shared
-            .getFacebookAccessToken()?
-            .map{ $0.exists() }
-            .asDriver(onErrorJustReturn: false)
+        viewModel
+            .isFacebookIntegrated
             .drive(facebookIntegrationSwitch.rx.isOn)
             .disposed(by: disposeBag)
     }
@@ -48,8 +45,7 @@ class EventsSettingsViewController: UITableViewController {
         case eventbriteIntegrationSwitch:
             switchEventbriteIntegration(on: eventbriteIntegrationSwitch.isOn)
         case facebookIntegrationSwitch:
-            displayFacebookAlert()
-            facebookIntegrationSwitch.isOn = false
+            switchFacebookIntegration(on: facebookIntegrationSwitch.isOn)
         default: ()
         }
     }
@@ -59,18 +55,27 @@ class EventsSettingsViewController: UITableViewController {
         facebookIntegrationIconImageView.image = facebookIntegrationIconImageView.image?.desaturate()
     }
     
-    private func displayFacebookAlert() {
+    /*private func displayFacebookAlert() {
         let alert = UIAlertController(title: NSLocalizedString("Currently unavailable", comment: ""), message: NSLocalizedString("Due to temporary changes in Facebook\'s privacy policy, your events are inaccessible at this time.\n\nThis feature will be re-activated when access is restored.", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
-    }
+    }*/
     
     private func switchEventbriteIntegration(on: Bool) {
         if on {
-            let eventbriteLoginViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventbriteLoginNavigationViewController") as! UINavigationController
-            self.present(eventbriteLoginViewController, animated: true, completion: nil)
+            let navigationController = UINavigationController()
+            navigationController.pushViewController(EventbriteLoginViewController(), animated: false)
+            self.present(navigationController, animated: true, completion: nil)
         } else {
-            UserRepository.shared.removeEventbriteIntegration(completionBlock: {_, _ in })
+            viewModel.removeEventbriteIntegration().catch { _ in }
+        }
+    }
+    
+    private func switchFacebookIntegration(on: Bool) {
+        if on {
+            viewModel.syncFacebookEvents(viewController: self).catch { _ in self.facebookIntegrationSwitch.isOn = false }
+        } else {
+            viewModel.removeFacebookIntegration().catch { _ in }
         }
     }
     

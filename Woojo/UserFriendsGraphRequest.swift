@@ -14,32 +14,20 @@ struct UserFriendsGraphRequest: GraphRequestProtocol {
     struct Response: GraphResponseProtocol {
         
         init(rawResponse: Any?) {
-            self.rawResponse = rawResponse
             if let dict = rawResponse as? [String:Any] {
-                let friends = dict[Constants.GraphRequest.UserFriends.keys.data] as! NSArray
-                for friendData in friends {
-                    if let friend = Friend.from(graphAPI: friendData as? [String:Any]) {
-                        self.friends.append(friend)
-                    }
-                }
+                friends = [GraphAPI.Friend](from: dict["data"])
             }
         }
         
-        var dictionaryValue: [String : Any]? {
-            return rawResponse as? [String : Any]
-        }
-        var rawResponse: Any?
-        var friends: [Friend] = []
+        var friends: [GraphAPI.Friend]?
         
     }
     
-    var graphPath = Constants.GraphRequest.UserFriends.path
+    var graphPath = "/me/friends"
     var parameters: [String: Any]? = {
-        let fields = [Constants.GraphRequest.UserFriends.fields]
-        return [Constants.GraphRequest.fields:fields.joined(separator: Constants.GraphRequest.fieldsSeparator)]
+        return ["fields": "id,first_name,picture.type(normal){url}"]
     }()
     var accessToken: AccessToken? = AccessToken.current
     var httpMethod: GraphRequestHTTPMethod = .GET
     var apiVersion: GraphAPIVersion = .defaultVersion
-    
 }
